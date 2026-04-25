@@ -135,3 +135,85 @@ export function requiresProcessing(decision: FirewallDecision): boolean {
 export function isDenied(decision: FirewallDecision): boolean {
   return decision === 'BLOCK' || decision === 'ROUTE70_VOID';
 }
+
+// ============================================================
+// CID ROUTING — FINAL ROUTING MAP
+// ============================================================
+
+/**
+ * CID Decision Types
+ * 
+ * ALLOW      → verified CID + approved lineage → /route71
+ * QUARANTINE → verified CID + unknown lineage  → /route70
+ * BLOCK      → unverified CID                  → /route70
+ */
+export type CIDDecision = 'ALLOW' | 'QUARANTINE' | 'BLOCK';
+
+export type CIDRoute = '/route70' | '/route71';
+
+export type CIDInput = {
+  cid: string;
+  verified: boolean;
+  lineage?: string;
+};
+
+export type CIDResult = {
+  decision: CIDDecision;
+  route: CIDRoute;
+  reason: string;
+  timestamp: string;
+};
+
+/**
+ * Route CID to final destination
+ * 
+ * Invariant:
+ * - verified CID + approved lineage → ALLOW → /route71
+ * - verified CID + unknown lineage  → QUARANTINE → /route70
+ * - unverified CID                  → BLOCK → /route70
+ */
+export function routeCID(decision: CIDDecision): CIDRoute {
+  return decision === 'ALLOW' ? '/route71' : '/route70';
+}
+
+/**
+ * Evaluate CID and return routing decision
+ */
+export function evaluateCID(input: CIDInput): CIDResult {
+  const timestamp = new Date().toISOString();
+
+  // Unverified CID — BLOCK
+  if (!input.verified) {
+    return {
+      decision: 'BLOCK',
+      route: '/route70',
+      reason: 'UNVERIFIED_CID — CID verification failed',
+      timestamp,
+    };
+  }
+
+  // Verified CID + approved lineage — ALLOW
+  if (input.lineage === SOVEREIGN_LINEAGE) {
+    return {
+      decision: 'ALLOW',
+      route: '/route71',
+      reason: 'VERIFIED_CID_APPROVED_LINEAGE — Full admission granted',
+      timestamp,
+    };
+  }
+
+  // Verified CID + unknown lineage — QUARANTINE
+  return {
+    decision: 'QUARANTINE',
+    route: '/route70',
+    reason: 'VERIFIED_CID_UNKNOWN_LINEAGE — Quarantined for review',
+    timestamp,
+  };
+}
+
+/**
+ * Batch evaluate multiple CIDs
+ */
+export function evaluateCIDBatch(inputs: CIDInput[]): CIDResult[] {
+  return inputs.map(evaluateCID);
+}

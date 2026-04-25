@@ -304,9 +304,16 @@ export {
   isAllowed,
   requiresProcessing,
   isDenied,
+  routeCID,
+  evaluateCID,
+  evaluateCIDBatch,
   type FirewallDecision,
   type FirewallSignal,
   type FirewallResult,
+  type CIDDecision,
+  type CIDRoute,
+  type CIDInput,
+  type CIDResult,
 } from './waterfall-firewall';
 
 // ============================================================
