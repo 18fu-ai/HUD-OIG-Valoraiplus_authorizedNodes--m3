@@ -39,7 +39,7 @@ import {
   WIRETAP_INTERCEPTS,
   SYSTEM_PROPERTIES,
   PROTECTED_NODES,
-  FEDERAL_INVESTIGATIONS,
+  INVESTIGATIONS as FEDERAL_INVESTIGATIONS,
 } from '@/lib/cds-data';
 
 // Report sections available for export

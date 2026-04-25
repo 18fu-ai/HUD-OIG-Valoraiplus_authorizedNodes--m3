@@ -8,12 +8,25 @@ import {
   INVESTIGATIONS,
   PROTECTED_NODES,
   SYSTEM_PROPERTIES,
-  BINARY_DEDUCTION,
   DEPT12_CLAWBACK,
   TOTAL_RECOVERY,
-  REPORT_METADATA,
   formatCurrency,
 } from '@/lib/cds-data';
+
+const REPORT_METADATA = {
+  title: 'VALORAIPLUS INTELLIGENCE REPORT',
+  classification: 'OMEGA-UNIFIED',
+  version: '1.4.100D',
+  status: 'ENFORCING',
+  node: 'SAINT_PAUL_55116',
+  truthCycle: '266ms',
+};
+
+const BINARY_DEDUCTION = {
+  adversary: '000000 0000000',
+  sovereign: '111111 1111111',
+  finality: '101010 1010101',
+};
 
 export const dynamic = 'force-dynamic';
 

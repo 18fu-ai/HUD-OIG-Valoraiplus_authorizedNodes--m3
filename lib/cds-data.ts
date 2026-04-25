@@ -2124,3 +2124,31 @@ export const TRANSMISSION_CINEMA = {
   poppa: 'POPPA IS PROTECTED FOREVER.',
   closing: 'SMIB. AMEN. MADE IN THE USA.'
 };
+
+// ============================================================
+// MISSING EXPORTS REQUIRED BY API ROUTES
+// ============================================================
+
+export const REPORT_METADATA = {
+  title: 'VALORAIPLUS INTELLIGENCE REPORT',
+  classification: 'OMEGA-UNIFIED',
+  version: '1.4.100D',
+  status: 'ENFORCING',
+  node: 'SAINT_PAUL_55116',
+  truthCycle: '266ms',
+  merkleroot: '26856B24C50750F0C69C1EEB86A69EF777777',
+};
+
+// Alias for backward compatibility
+export const FEDERAL_INVESTIGATIONS = INVESTIGATIONS;
+
+export const BINARY_DEDUCTION = {
+  adversary: '000000 0000000',
+  sovereign: '111111 1111111',
+  finality: '101010 1010101',
+  states: {
+    NULLIFIED: '000000 0000000',
+    SATURATED: '111111 1111111',
+    LOCKED: '101010 1010101',
+  },
+};

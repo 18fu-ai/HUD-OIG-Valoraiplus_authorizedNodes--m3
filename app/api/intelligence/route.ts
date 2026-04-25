@@ -8,9 +8,17 @@ import {
   INVESTIGATIONS,
   DEPT12_CLAWBACK,
   TOTAL_RECOVERY,
-  REPORT_METADATA,
   type CorroborationStatus,
 } from '@/lib/cds-data';
+
+const REPORT_METADATA = {
+  title: 'VALORAIPLUS INTELLIGENCE REPORT',
+  classification: 'OMEGA-UNIFIED',
+  version: '1.4.100D',
+  status: 'ENFORCING',
+  node: 'SAINT_PAUL_55116',
+  truthCycle: '266ms',
+};
 
 export const dynamic = 'force-dynamic';
 
