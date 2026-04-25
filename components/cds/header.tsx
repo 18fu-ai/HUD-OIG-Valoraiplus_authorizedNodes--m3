@@ -68,6 +68,7 @@ const navItems = [
   { href: '/audit', label: 'Audit', icon: Shield, category: 'system' },
   { href: '/maturity', label: 'Maturity', icon: BarChart3, category: 'system' },
   { href: '/apex', label: 'Apex', icon: Scale, category: 'system' },
+  { href: '/valoraiplus', label: 'ValorAI+', icon: Shield, category: 'system' },
 ];
 
 const categories = [
