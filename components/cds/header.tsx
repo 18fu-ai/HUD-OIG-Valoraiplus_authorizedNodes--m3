@@ -9,7 +9,7 @@ import {
   FileText, Mail, Zap, Flag, RefreshCw, Rocket, Radio, Brain, Ban, 
   Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle,
   Route, FileSearch, Terminal, Layers, CircleDot, Film, Wallet, 
-  CheckCircle2, Circle, ArrowRight, Database, Play, RotateCcw, GitBranch, Eye, Cpu
+  CheckCircle2, Circle, ArrowRight, Database, Play, RotateCcw, GitBranch, Eye, Cpu, Fingerprint
 } from 'lucide-react';
 
 // Protocol Lifecycle Routes - The Verification Pipeline
@@ -46,7 +46,9 @@ const navItems = [
   { href: '/security', label: 'Security', icon: Lock, category: 'security' },
   { href: '/transmit', label: 'HHS OCR', icon: Send, category: 'transmission' },
   { href: '/trinity', label: 'Trinity', icon: Server, category: 'system' },
+  { href: '/gate', label: 'Gate', icon: Fingerprint, category: 'system' },
   { href: '/route66', label: 'Route 66', icon: Route, category: 'system' },
+  { href: '/route70', label: 'Route 70', icon: Ban, category: 'system' },
   { href: '/route71', label: 'Route 71', icon: Route, category: 'system' },
   { href: '/kernel', label: 'Kernel', icon: Cpu, category: 'system' },
   { href: '/protocol', label: 'Protocol', icon: Terminal, category: 'system' },
