@@ -31,20 +31,24 @@ import {
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-// 5W Types
-type EvidenceType = 'OBSERVED' | 'INTERPRETED' | 'CORROBORATED';
-type ConfidenceLevel = 'HIGH' | 'MODERATE' | 'CONDITIONAL';
+// FINAL COMPONENT IDENTITY
+// Console: Temporal Entity Review Console
+// Epistemic Rule: claim ≠ evidence ≠ conclusion
+// Rendering Rule: No entity renders without complete 5W
+// Authority Rule: UI visualizes | evidence classifies | provenance traces | API decides
+// Data Invariant: decision ≠ interpretation
 
-interface FiveWConclusion {
-  who: string[];
-  what: string;
-  why: string;
-  where: string;
-  when: string;
-  evidenceType: EvidenceType;
-  confidence: ConfidenceLevel;
-  sourceRefs: string[];
-}
+import {
+  type EvidenceStatus,
+  type FiveWConclusion,
+  type EntityReview,
+  CONSOLE_IDENTITY,
+  validateFiveW,
+  getConfidenceGrade
+} from '@/lib/five-w';
+
+// Re-export types for local use
+type LocalEvidenceStatus = EvidenceStatus;
 
 // Maximum Elevation Actor Data with 5W
 const ELEVATED_ACTORS = [
@@ -68,9 +72,9 @@ const ELEVATED_ACTORS = [
       why: 'To conceal fiduciary breach, suppress veteran testimony, and obstruct federal investigation',
       where: 'San Francisco, CA — ZTA LLP offices, STP facilities, SFHA premises',
       when: '2023-01 through 2024-04 (ongoing)',
-      evidenceType: 'CORROBORATED' as EvidenceType,
-      confidence: 'HIGH' as ConfidenceLevel,
-      sourceRefs: ['Mimecast-142', 'VOIP-32', 'Wire-8', 'Spoliation-14']
+      evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
+      confidence: 96,
+      sources: ['Mimecast-142', 'VOIP-32', 'Wire-8', 'Spoliation-14']
     }
   },
   {
@@ -93,9 +97,9 @@ const ELEVATED_ACTORS = [
       why: 'To protect institutional reputation, suppress accountability, and maintain fraudulent grant funding',
       where: 'San Francisco, CA — STP headquarters, VA Medical Center, SFHA offices',
       when: '2023-06 through 2024-04 (ongoing)',
-      evidenceType: 'CORROBORATED' as EvidenceType,
-      confidence: 'HIGH' as ConfidenceLevel,
-      sourceRefs: ['Benefits-12', 'Housing-8', 'Retaliation-7', 'Wire-4', '8SOULS']
+      evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
+      confidence: 94,
+      sources: ['Benefits-12', 'Housing-8', 'Retaliation-7', 'Wire-4', '8SOULS']
     }
   },
   {
@@ -118,9 +122,9 @@ const ELEVATED_ACTORS = [
       why: 'To assist ZTA LLP strategy and suppress housing rights claims',
       where: 'San Francisco, CA — SFHA offices, Section 8 properties',
       when: '2023-06 through 2024-01',
-      evidenceType: 'CORROBORATED' as EvidenceType,
-      confidence: 'HIGH' as ConfidenceLevel,
-      sourceRefs: ['Section8-9', 'Docs-3', 'VOIP-6']
+      evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
+      confidence: 91,
+      sources: ['Section8-9', 'Docs-3', 'VOIP-6']
     }
   },
   {
@@ -143,9 +147,9 @@ const ELEVATED_ACTORS = [
       why: 'Following firm directives with knowledge of impropriety',
       where: 'San Francisco, CA — ZTA LLP offices',
       when: '2023-06 through 2024-04',
-      evidenceType: 'INTERPRETED' as EvidenceType,
-      confidence: 'MODERATE' as ConfidenceLevel,
-      sourceRefs: ['Docs-23', 'Spoliation-1']
+      evidenceStatus: 'DOCUMENTED' as LocalEvidenceStatus,
+      confidence: 82,
+      sources: ['Docs-23', 'Spoliation-1']
     }
   },
   {
@@ -168,9 +172,9 @@ const ELEVATED_ACTORS = [
       why: 'Following associate directives with limited autonomy',
       where: 'San Francisco, CA — ZTA LLP offices',
       when: '2023-09 through 2024-02',
-      evidenceType: 'INTERPRETED' as EvidenceType,
-      confidence: 'MODERATE' as ConfidenceLevel,
-      sourceRefs: ['Docs-8', 'VOIP-2']
+      evidenceStatus: 'DOCUMENTED' as LocalEvidenceStatus,
+      confidence: 78,
+      sources: ['Docs-8', 'VOIP-2']
     }
   }
 ];
@@ -461,6 +465,40 @@ function IntelligenceReportContent() {
           </Card>
         </div>
 
+        {/* Console Identity */}
+        <Card className="bg-fuchsia-500/5 border-fuchsia-500/30">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <Brain className="w-6 h-6 text-fuchsia-500" />
+                <div>
+                  <h2 className="font-mono text-lg font-bold text-fuchsia-400">{CONSOLE_IDENTITY.name}</h2>
+                  <p className="text-xs text-muted-foreground">{CONSOLE_IDENTITY.version} | Final Defensible Version</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="font-mono text-[10px] border-fuchsia-500/40 text-fuchsia-400">
+                  {CONSOLE_IDENTITY.epistemicRule}
+                </Badge>
+                <Badge variant="outline" className="font-mono text-[10px] border-primary/40 text-primary">
+                  {CONSOLE_IDENTITY.dataInvariant}
+                </Badge>
+              </div>
+            </div>
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-muted-foreground font-mono">
+              <div className="bg-secondary/50 rounded p-2">
+                <span className="text-fuchsia-400">RENDERING:</span> {CONSOLE_IDENTITY.renderingRule}
+              </div>
+              <div className="bg-secondary/50 rounded p-2">
+                <span className="text-primary">AUTHORITY:</span> {CONSOLE_IDENTITY.authorityRule}
+              </div>
+              <div className="bg-secondary/50 rounded p-2">
+                <span className="text-amber-400">INVARIANT:</span> {CONSOLE_IDENTITY.dataInvariant}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Tabbed Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-3 lg:grid-cols-7 h-auto gap-1 bg-secondary p-1">
@@ -492,11 +530,16 @@ function IntelligenceReportContent() {
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Users className="w-5 h-5 text-destructive" />
-                PRIMARY THREAT ACTORS — TIER 1 FEDERAL TARGETS
+                ENTITY REVIEW — TIER 1 FEDERAL TARGETS
               </h2>
-              <Badge variant="outline" className="bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/40 font-mono">
-                5W REASONING
-              </Badge>
+              <div className="flex gap-2">
+                <Badge variant="outline" className="bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/40 font-mono text-xs">
+                  5W COMPLETE
+                </Badge>
+                <Badge variant="outline" className="bg-primary/20 text-primary border-primary/40 font-mono text-xs">
+                  RENDERABLE
+                </Badge>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -568,16 +611,17 @@ function IntelligenceReportContent() {
                           <Brain className="w-5 h-5 text-fuchsia-500" />
                           <h4 className="font-bold text-fuchsia-400">5W REASONING CONCLUSION</h4>
                           <Badge className={`ml-auto ${
-                            actor.fiveW.evidenceType === 'CORROBORATED' ? 'bg-primary text-primary-foreground' :
+                            actor.fiveW.evidenceStatus === 'CORROBORATED' ? 'bg-primary text-primary-foreground' :
                             'bg-amber-500 text-white'
                           }`}>
-                            {actor.fiveW.evidenceType}
+                            {actor.fiveW.evidenceStatus}
                           </Badge>
                           <Badge className={`${
-                            actor.fiveW.confidence === 'HIGH' ? 'bg-primary text-primary-foreground' :
-                            'bg-amber-500 text-white'
+                            actor.fiveW.confidence >= 90 ? 'bg-primary text-primary-foreground' :
+                            actor.fiveW.confidence >= 80 ? 'bg-amber-500 text-white' :
+                            'bg-zinc-500 text-white'
                           }`}>
-                            {actor.fiveW.confidence}
+                            {getConfidenceGrade(actor.fiveW.confidence)} ({actor.fiveW.confidence}%)
                           </Badge>
                         </div>
 
@@ -608,7 +652,7 @@ function IntelligenceReportContent() {
                             <div className="bg-secondary rounded-lg p-3">
                               <p className="text-xs text-muted-foreground mb-1">SOURCES</p>
                               <div className="flex flex-wrap gap-1">
-                                {actor.fiveW.sourceRefs.map(ref => (
+                                {actor.fiveW.sources.map(ref => (
                                   <Badge key={ref} variant="outline" className="font-mono text-xs">
                                     {ref}
                                   </Badge>
