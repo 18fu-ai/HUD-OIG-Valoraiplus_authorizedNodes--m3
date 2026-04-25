@@ -24,6 +24,11 @@ export type {
   ClosedLoopState,
   HardeningStatus,
   HardeningCapability,
+  // New in v2.0
+  RuntimeSignal,
+  RuntimeDecision,
+  EvidenceBoundary,
+  HardenedReceiptV1,
 } from './types';
 
 // Constants
@@ -38,7 +43,13 @@ export {
   // Provenance
   generateProvenance,
   
-  // Receipt V2
+  // Hardened Receipt V1 (new primary)
+  createHardenedReceipt,
+  createEvidenceBoundary,
+  createRuntimeSignal,
+  createRuntimeDecision,
+  
+  // Receipt V2 (legacy compat)
   createReceiptV2,
   
   // Evidence

@@ -16,6 +16,10 @@ import {
   type ClosedLoopStage,
   type ClosedLoopState,
   type HardeningCapability,
+  type RuntimeSignal,
+  type RuntimeDecision,
+  type EvidenceBoundary,
+  type HardenedReceiptV1,
   PRODUCTION_SCORECARD,
   LAYER_RESPONSIBILITIES,
 } from './types';
@@ -25,7 +29,7 @@ import {
 // ============================================================
 
 /**
- * Generate runtime provenance for a given source
+ * Generate immutable runtime provenance for a given source
  */
 export function generateProvenance(
   routeSource: string,
@@ -35,14 +39,14 @@ export function generateProvenance(
   const buildHash = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) || 'dev-local';
   const environment = (process.env.VERCEL_ENV as 'dev' | 'preview' | 'production') || 'dev';
   
-  return {
+  return Object.freeze({
     buildHash,
     generatedAt: timestamp,
     verifiedBy,
     environment,
+    schemaVersion: 'REV_33' as const,
     routeSource,
-    checksum: generateChecksum(`${buildHash}:${timestamp}:${routeSource}`),
-  };
+  });
 }
 
 /**
@@ -59,10 +63,85 @@ function generateChecksum(input: string): string {
 }
 
 // ============================================================
-// RECEIPT V2 GENERATION
+// HARDENED RECEIPT V1 GENERATION
 // ============================================================
 
 let receiptCounter = 0;
+
+/**
+ * Create an immutable evidence boundary
+ */
+export function createEvidenceBoundary(
+  observed: string[],
+  interpretation: string[],
+  corroboration: CorroborationStatus = 'RUNTIME_VERIFIED'
+): EvidenceBoundary {
+  return Object.freeze({
+    observed: Object.freeze([...observed]),
+    interpretation: Object.freeze([...interpretation]),
+    corroboration,
+  });
+}
+
+/**
+ * Create a runtime signal
+ */
+export function createRuntimeSignal(
+  type: 'identity' | 'mint' | 'verify' | 'topology',
+  payload: Record<string, unknown>
+): RuntimeSignal {
+  return Object.freeze({
+    signalId: `SIG-${Date.now().toString(36).toUpperCase()}-${(++receiptCounter).toString().padStart(4, '0')}`,
+    type,
+    payload: Object.freeze({ ...payload }),
+    timestamp: new Date().toISOString(),
+  });
+}
+
+/**
+ * Create a runtime decision
+ */
+export function createRuntimeDecision(
+  route: string,
+  status: 'ADMITTED' | 'REJECTED' | 'QUARANTINED' | 'NULL',
+  reasonCode: string
+): RuntimeDecision {
+  return Object.freeze({
+    route,
+    status,
+    reasonCode,
+    decidedAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * Create a HardenedReceiptV1 - the central truth artifact
+ * 
+ * Receipt = decision + evidence boundary + provenance
+ */
+export function createHardenedReceipt(
+  signal: RuntimeSignal,
+  decision: RuntimeDecision,
+  observed: string[],
+  interpretation: string[],
+  corroboration: CorroborationStatus = 'RUNTIME_VERIFIED'
+): HardenedReceiptV1 {
+  const provenance = generateProvenance(decision.route, 'runtime');
+  const evidenceBoundary = createEvidenceBoundary(observed, interpretation, corroboration);
+  
+  return Object.freeze({
+    receiptId: `HR1-${Date.now().toString(36).toUpperCase()}-${(++receiptCounter).toString().padStart(4, '0')}`,
+    signal,
+    decision,
+    evidenceBoundary,
+    provenance,
+    createdAt: new Date().toISOString(),
+  });
+}
+
+// ============================================================
+// RECEIPT V2 GENERATION (LEGACY COMPAT)
+// ============================================================
 
 /**
  * Create a hardened ReceiptV2 with full provenance
@@ -72,11 +151,10 @@ export function createReceiptV2(
   decision: string,
   corroboration: CorroborationStatus = 'RUNTIME_VERIFIED'
 ): ReceiptV2 {
-  receiptCounter++;
   const provenance = generateProvenance(route, 'runtime');
   
   return {
-    receiptId: `RV2-${Date.now().toString(36).toUpperCase()}-${receiptCounter.toString().padStart(4, '0')}`,
+    receiptId: `RV2-${Date.now().toString(36).toUpperCase()}-${(++receiptCounter).toString().padStart(4, '0')}`,
     route,
     decision,
     generatedAt: provenance.generatedAt,

@@ -39,27 +39,44 @@ export type CorroborationStatus =
 // ============================================================
 
 /**
- * Runtime Provenance Layer
+ * Runtime Provenance Layer (IMMUTABLE)
  * 
  * Every runtime-confirmed result carries provenance.
  * Provenance prevents ambiguity.
  * 
  * Without provenance: "this happened"
  * With provenance: "this happened because runtime XYZ produced it under build ABC"
+ * 
+ * All fields are readonly to prevent mutation after receipt creation.
  */
 export interface RuntimeProvenance {
-  /** Build hash or commit SHA */
-  buildHash: string;
-  /** ISO timestamp of generation */
-  generatedAt: string;
-  /** Verification source */
-  verifiedBy: 'build' | 'api' | 'runtime';
-  /** Deployment environment */
-  environment: 'dev' | 'preview' | 'production';
-  /** Source route or module */
-  routeSource: string;
-  /** Optional integrity checksum */
-  checksum?: string;
+  readonly buildHash: string;
+  readonly generatedAt: string;
+  readonly verifiedBy: 'runtime' | 'api' | 'build';
+  readonly environment: 'dev' | 'preview' | 'production';
+  readonly schemaVersion: 'REV_33';
+  readonly routeSource?: string;
+}
+
+// ============================================================
+// EVIDENCE BOUNDARY
+// ============================================================
+
+/**
+ * Evidence Boundary Layer
+ * 
+ * Separates what was observed from what was interpreted.
+ * Guarantees: observed != interpreted
+ * 
+ * This is one of the strongest safeguards in the model.
+ */
+export interface EvidenceBoundary {
+  /** Raw observations made by runtime */
+  readonly observed: readonly string[];
+  /** Interpretations derived from observations */
+  readonly interpretation: readonly string[];
+  /** Corroboration status of the evidence */
+  readonly corroboration: CorroborationStatus;
 }
 
 // ============================================================
@@ -99,11 +116,69 @@ export interface EvidenceRow {
 }
 
 // ============================================================
-// RECEIPT V2 MODEL
+// RUNTIME SIGNAL
 // ============================================================
 
 /**
- * Hardened Receipt Layer
+ * Runtime Signal - Input to the evaluation pipeline
+ */
+export interface RuntimeSignal {
+  readonly signalId: string;
+  readonly type: 'identity' | 'mint' | 'verify' | 'topology';
+  readonly payload: Record<string, unknown>;
+  readonly timestamp: string;
+}
+
+// ============================================================
+// RUNTIME DECISION
+// ============================================================
+
+/**
+ * Runtime Decision - Output from the evaluation pipeline
+ */
+export interface RuntimeDecision {
+  readonly route: string;
+  readonly status: 'ADMITTED' | 'REJECTED' | 'QUARANTINED' | 'NULL';
+  readonly reasonCode: string;
+  readonly decidedAt: string;
+}
+
+// ============================================================
+// HARDENED RECEIPT V1
+// ============================================================
+
+/**
+ * HardenedReceiptV1 - Central Truth Artifact
+ * 
+ * Receipt = decision + evidence boundary + provenance
+ * 
+ * This gives every runtime output three separate meanings:
+ *   decision        → what the system did
+ *   evidenceBoundary → what the decision does and does not prove
+ *   provenance      → where, when, and under what build it was created
+ * 
+ * Final invariant:
+ *   runtime evaluates
+ *   evidence qualifies
+ *   provenance explains
+ *   receipt packages
+ *   UI renders
+ */
+export interface HardenedReceiptV1 {
+  readonly receiptId: string;
+  readonly signal: RuntimeSignal;
+  readonly decision: RuntimeDecision;
+  readonly evidenceBoundary: EvidenceBoundary;
+  readonly provenance: RuntimeProvenance;
+  readonly createdAt: string;
+}
+
+// ============================================================
+// RECEIPT V2 MODEL (LEGACY COMPAT)
+// ============================================================
+
+/**
+ * ReceiptV2 - Backward compatible receipt format
  * 
  * Receipt objects distinguish runtime proof from narrative context.
  */
