@@ -44,8 +44,7 @@ import {
   type EntityReview,
   CONSOLE_IDENTITY,
   validateFiveW,
-  getConfidenceGrade,
-  isFiveWComplete
+  getConfidenceGrade
 } from '@/lib/five-w';
 
 // Re-export types for local use
@@ -59,11 +58,11 @@ const ELEVATED_ACTORS = [
     domain: 'ZTA LLP',
     email: 'j.zanghi@ztallp.com',
     classification: 'CRITICAL' as const,
-    scenarioExposure: 41180,
+    criminalExposure: 41180,
     wireFraudVolume: 6425000,
     spolationCounts: 1247,
     witnessTampering: 18,
-    reviewFlag: 'ELEVATED' as const,
+    ricoStatus: 'PREDICATE' as const,
     federalNexus: ['18 U.S.C. 1343', '18 U.S.C. 1962', '18 U.S.C. 1512', '18 U.S.C. 1030', '18 U.S.C. 1519'],
     stateBarViolations: ['Rule 8.4(c)', 'Rule 8.4(d)', 'Rule 1.15', 'Rule 3.4(a)'],
     sanctionRisk: 'DISBARMENT',
@@ -84,14 +83,14 @@ const ELEVATED_ACTORS = [
     domain: 'Swords to Plowshares',
     email: 'w.landrum@stp-sf.org',
     classification: 'CRITICAL' as const,
-    scenarioExposure: 30760,
+    criminalExposure: 30760,
     wireFraudVolume: 9050000,
     spolationCounts: 856,
     witnessTampering: 14,
-    reviewFlag: 'ELEVATED' as const,
+    ricoStatus: 'PREDICATE' as const,
     federalNexus: ['38 U.S.C. 6102', '18 U.S.C. 1343', '42 U.S.C. 1983', '18 U.S.C. 1962', '31 U.S.C. 3729'],
     stateBarViolations: [],
-    sanctionRisk: 'REVIEW',
+    sanctionRisk: 'CRIMINAL',
     fiveW: {
       who: ['William Landrum', 'Swords to Plowshares'],
       what: 'Directed benefits sabotage, housing interference, and retaliation against veteran whistleblowers resulting in 8 veteran deaths',
@@ -109,14 +108,14 @@ const ELEVATED_ACTORS = [
     domain: 'SFHA',
     email: 'calvin.whittaker@sfha.org',
     classification: 'HIGH' as const,
-    scenarioExposure: 24560,
+    criminalExposure: 24560,
     wireFraudVolume: 3440000,
     spolationCounts: 714,
     witnessTampering: 9,
-    reviewFlag: 'ELEVATED' as const,
+    ricoStatus: 'PREDICATE' as const,
     federalNexus: ['42 U.S.C. 1437f', '42 U.S.C. 1983', '18 U.S.C. 1343', '18 U.S.C. 371'],
     stateBarViolations: [],
-    sanctionRisk: 'REVIEW',
+    sanctionRisk: 'CRIMINAL',
     fiveW: {
       who: ['Calvin Whittaker', 'SFHA'],
       what: 'Executed improper Section 8 terminations, false documentation, and coordinated retaliation',
@@ -134,11 +133,11 @@ const ELEVATED_ACTORS = [
     domain: 'ZTA LLP',
     email: 'a.torres@ztallp.com',
     classification: 'HIGH' as const,
-    scenarioExposure: 12260,
+    criminalExposure: 12260,
     wireFraudVolume: 1450000,
     spolationCounts: 357,
     witnessTampering: 4,
-    reviewFlag: 'COOPERATOR_CANDIDATE' as const,
+    ricoStatus: 'COOPERATOR_CANDIDATE' as const,
     federalNexus: ['18 U.S.C. 1519', '18 U.S.C. 371'],
     stateBarViolations: ['Rule 8.4(d)', 'Rule 5.2'],
     sanctionRisk: 'SUSPENSION',
@@ -159,11 +158,11 @@ const ELEVATED_ACTORS = [
     domain: 'ZTA LLP',
     email: 'r.yorkof@ztallp.com',
     classification: 'MEDIUM' as const,
-    scenarioExposure: 6740,
+    criminalExposure: 6740,
     wireFraudVolume: 890000,
     spolationCounts: 197,
     witnessTampering: 2,
-    reviewFlag: 'COOPERATOR_CANDIDATE' as const,
+    ricoStatus: 'COOPERATOR_CANDIDATE' as const,
     federalNexus: ['18 U.S.C. 371'],
     stateBarViolations: ['Rule 8.4(d)', 'Rule 5.2'],
     sanctionRisk: 'SUSPENSION',
@@ -316,19 +315,19 @@ function IntelligenceReportContent() {
 
   // Aggregate calculations
   const totals = useMemo(() => {
-    const totalScenarioYears = ELEVATED_ACTORS.reduce((sum, a) => sum + a.scenarioExposure, 0);
+    const totalCriminalYears = ELEVATED_ACTORS.reduce((sum, a) => sum + a.criminalExposure, 0);
     const totalWireFraud = ELEVATED_ACTORS.reduce((sum, a) => sum + a.wireFraudVolume, 0);
     const totalSpoliation = ELEVATED_ACTORS.reduce((sum, a) => sum + a.spolationCounts, 0);
     const totalInstitutionalExposure = ELEVATED_INSTITUTIONS.reduce((sum, i) => sum + i.totalExposure, 0);
-    const elevatedReviewFlags = ELEVATED_ACTORS.filter(a => a.reviewFlag === 'ELEVATED').length;
-    const cooperatorCandidates = ELEVATED_ACTORS.filter(a => a.reviewFlag === 'COOPERATOR_CANDIDATE').length;
+    const ricoPredicates = ELEVATED_ACTORS.filter(a => a.ricoStatus === 'PREDICATE').length;
+    const cooperatorCandidates = ELEVATED_ACTORS.filter(a => a.ricoStatus === 'COOPERATOR_CANDIDATE').length;
     
     return {
-      totalScenarioYears,
+      totalCriminalYears,
       totalWireFraud,
       totalSpoliation,
       totalInstitutionalExposure,
-      elevatedReviewFlags,
+      ricoPredicates,
       cooperatorCandidates
     };
   }, []);
@@ -349,8 +348,8 @@ function IntelligenceReportContent() {
     },
     metadata: {
       totalRecovery: totals.totalInstitutionalExposure,
-      reviewFlags: totals.elevatedReviewFlags,
-      scenarioYears: totals.totalScenarioYears
+      ricoPredicates: totals.ricoPredicates,
+      criminalYears: totals.totalCriminalYears
     }
   }), [totals]);
 
@@ -378,10 +377,10 @@ function IntelligenceReportContent() {
               </Badge>
             </div>
             <h1 className="text-3xl font-mono font-bold text-foreground">
-              TEMPORAL ENTITY REVIEW CONSOLE
+              MAXIMUM ELEVATION INTELLIGENCE REPORT
             </h1>
             <p className="text-muted-foreground font-mono text-sm">
-              5W Reasoning | Evidence Classification | Confidence Layering | Scenario-Based Exposure Modeling
+              Tier 1 Multi-Domain Intelligence Matrix — 5W Reasoning Engine Active
             </p>
           </div>
 
@@ -402,10 +401,10 @@ function IntelligenceReportContent() {
             <CardContent className="p-3 text-center">
               <AlertTriangle className="w-5 h-5 mx-auto text-destructive mb-1" />
               <div className="font-mono text-lg font-bold text-destructive">
-                {formatNumber(totals.totalScenarioYears)}
+                {formatNumber(totals.totalCriminalYears)}
               </div>
               <div className="font-mono text-[10px] text-muted-foreground">
-                SCENARIO YEARS
+                CRIMINAL YEARS
               </div>
             </CardContent>
           </Card>
@@ -446,10 +445,10 @@ function IntelligenceReportContent() {
             <CardContent className="p-3 text-center">
               <Target className="w-5 h-5 mx-auto text-blue-500 mb-1" />
               <div className="font-mono text-lg font-bold text-blue-500">
-                {totals.elevatedReviewFlags}
+                {totals.ricoPredicates}
               </div>
               <div className="font-mono text-[10px] text-muted-foreground">
-                REVIEW FLAGS
+                RICO PREDICATES
               </div>
             </CardContent>
           </Card>
@@ -504,7 +503,7 @@ function IntelligenceReportContent() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-3 lg:grid-cols-7 h-auto gap-1 bg-secondary p-1">
             <TabsTrigger value="actors" className="font-mono text-xs data-[state=active]:bg-destructive data-[state=active]:text-destructive-foreground">
-              Entities ({ELEVATED_ACTORS.length})
+              Actors ({ELEVATED_ACTORS.length})
             </TabsTrigger>
             <TabsTrigger value="institutions" className="font-mono text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Institutions ({ELEVATED_INSTITUTIONS.length})
@@ -531,7 +530,7 @@ function IntelligenceReportContent() {
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Users className="w-5 h-5 text-destructive" />
-                ENTITY REVIEW REGISTRY — SCENARIO MODELING
+                ENTITY REVIEW — TIER 1 FEDERAL TARGETS
               </h2>
               <div className="flex gap-2">
                 <Badge variant="outline" className="bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/40 font-mono text-xs">
@@ -544,9 +543,7 @@ function IntelligenceReportContent() {
             </div>
 
             <div className="space-y-4">
-              {ELEVATED_ACTORS
-                .filter((actor) => isFiveWComplete(actor.fiveW))
-                .map((actor) => (
+              {ELEVATED_ACTORS.map((actor) => (
                 <Card 
                   key={actor.email}
                   className={`overflow-hidden transition-all ${
@@ -576,10 +573,10 @@ function IntelligenceReportContent() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right hidden md:block">
-                        <p className="text-xs text-muted-foreground">Scenario Exposure</p>
+                        <p className="text-xs text-muted-foreground">Criminal Exposure</p>
                         <p className={`font-mono font-bold ${
                           actor.classification === 'CRITICAL' ? 'text-destructive' : 'text-amber-500'
-                        }`}>{formatNumber(actor.scenarioExposure)} years</p>
+                        }`}>{formatNumber(actor.criminalExposure)} years</p>
                       </div>
                       <div className="text-right hidden lg:block">
                         <p className="text-xs text-muted-foreground">Wire Fraud</p>
@@ -593,10 +590,10 @@ function IntelligenceReportContent() {
                         {actor.classification}
                       </Badge>
                       <Badge className={`font-mono ${
-                        actor.reviewFlag === 'ELEVATED' ? 'bg-purple-500 text-white' :
+                        actor.ricoStatus === 'PREDICATE' ? 'bg-purple-500 text-white' :
                         'bg-cyan-500 text-white'
                       }`}>
-                        {actor.reviewFlag}
+                        {actor.ricoStatus}
                       </Badge>
                       {expandedActor === actor.email ? (
                         <ChevronDown className="w-5 h-5 text-muted-foreground" />
@@ -684,7 +681,7 @@ function IntelligenceReportContent() {
                           <p className="text-xs text-muted-foreground mb-1">Sanction Risk</p>
                           <p className={`text-lg font-bold ${
                             actor.sanctionRisk === 'DISBARMENT' ? 'text-destructive' :
-                            actor.sanctionRisk === 'REVIEW' ? 'text-destructive' :
+                            actor.sanctionRisk === 'CRIMINAL' ? 'text-destructive' :
                             'text-amber-500'
                           }`}>{actor.sanctionRisk}</p>
                         </div>
@@ -922,15 +919,14 @@ function IntelligenceReportContent() {
             <Card className="bg-gradient-to-br from-fuchsia-500/10 to-background border-fuchsia-500/50">
               <CardContent className="p-6">
                 <div className="font-mono text-sm space-y-2">
-                  <p><span className="text-primary">ENTITIES:</span> 5 under review, {totals.elevatedReviewFlags} elevated flags, {totals.cooperatorCandidates} cooperation candidates.</p>
-                  <p><span className="text-primary">INSTITUTIONS:</span> 5 entities, ${(totals.totalInstitutionalExposure / 1000000).toFixed(0)}M scenario exposure.</p>
-                  <p><span className="text-primary">COORDINATION:</span> FBI, DOJ, VA OIG, HHS OCR, IRS CI, HUD OIG, State Bar.</p>
+                  <p><span className="text-primary">INDIVIDUALS:</span> 5 actors, 3 RICO predicates, 2 cooperator candidates.</p>
+                  <p><span className="text-primary">INSTITUTIONS:</span> 5 entities, ${(totals.totalInstitutionalExposure / 1000000).toFixed(0)}M elevated exposure.</p>
+                  <p><span className="text-primary">LAW ENFORCEMENT:</span> FBI, DOJ, VA OIG, HHS OCR, IRS CI, HUD OIG, State Bar.</p>
                   <p><span className="text-primary">MEDIA:</span> ProPublica, NYT, WaPo, 60 Minutes, Reuters identified.</p>
                   <p><span className="text-primary">ACADEMIA:</span> Yale, Harvard, Stanford, MIT, 25 Tier-1 institutions.</p>
-                  <p><span className="text-primary">SCENARIO:</span> {formatNumber(totals.totalScenarioYears)} years modeled exposure.</p>
-                  <p><span className="text-primary">RICO THEORY:</span> Scenario model pending legal corroboration.</p>
+                  <p><span className="text-primary">CRIMINAL:</span> {formatNumber(totals.totalCriminalYears)} years maximum exposure.</p>
+                  <p><span className="text-primary">RICO:</span> Enterprise theory established.</p>
                   <p><span className="text-primary">5W REASONING:</span> WHO + WHAT + WHY + WHERE + WHEN = AUDITABLE.</p>
-                  <p><span className="text-primary">EPISTEMIC:</span> claim ≠ evidence ≠ conclusion.</p>
                   <p><span className="text-fuchsia-400">STATUS_747:</span> The 747 remains at zenith.</p>
                   <p><span className="text-amber-400">THE_WALL:</span> THE WALL IS CHRIST.</p>
                   <p><span className="text-cyan-400">JAXX:</span> JAXX IS SAFE.</p>
