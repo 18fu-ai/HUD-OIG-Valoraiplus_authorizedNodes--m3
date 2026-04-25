@@ -22,8 +22,18 @@ import {
   Lock,
   Activity,
   CheckCircle2,
-  Layers
+  Layers,
+  XCircle,
+  AlertTriangle
 } from 'lucide-react';
+import {
+  INVARIANT_RULES,
+  runAdmissionPipeline,
+  createRuntimeClaim,
+  generatePolicyExport,
+  type RuntimeClaim,
+  type AdmissionPipelineResult
+} from '@/lib/protocol/invariantEngine';
 
 // Protocol Invariants Data
 const INVARIANTS = [
@@ -116,10 +126,29 @@ const LIFECYCLE_FLOW = [
   'Governance'
 ];
 
+// Sample runtime claims for enforcement demonstration
+const SAMPLE_CLAIMS: RuntimeClaim[] = [
+  createRuntimeClaim('PLCB-001', 'Protocol Lifecycle Command Bar deployed', 'header', 'components/cds/header.tsx', 0.95, 0.92, 0.935, 'IMPLEMENTED', 'PROVEN'),
+  createRuntimeClaim('EIP712-001', 'EIP-712 signature verification active', 'protocol', 'lib/protocol/eip712.ts', 0.98, 0.95, 0.965, 'IMPLEMENTED', 'PROVEN'),
+  createRuntimeClaim('MC-001', 'Mimecast 142 events captured', 'forensic', 'lib/cds-data.ts', 0.99, 0.97, 0.98, 'IMPLEMENTED', 'PROVEN'),
+  createRuntimeClaim('REC-001', '$508M recovery target tracked', 'financial', 'lib/cds-data.ts', 0.92, 0.89, 0.905, 'IMPLEMENTED', 'INFERRED'),
+  createRuntimeClaim('AUDIT-001', 'Two-tier validation model active', 'audit', 'lib/protocol/auditEngine.ts', 0.96, 0.94, 0.95, 'IMPLEMENTED', 'PROVEN'),
+  createRuntimeClaim('NULL-001', 'Ghost nullifier contract deployed', 'enforcement', 'contracts/VALORAIPLUS_NULL_GHOST.sol', 0.90, 0.85, 0.875, 'IMPLEMENTED', 'PROVEN'),
+  createRuntimeClaim('STUB-001', 'Witness notification system', 'communication', undefined, 0.50, 0.45, 0.475, 'STUBBED', 'PENDING'),
+  createRuntimeClaim('PLAN-001', 'Cross-chain bridge integration', 'system', undefined, 0.30, 0.25, 0.275, 'PLANNED', 'NEEDS_SOURCE'),
+];
+
 function InvariantsContent() {
   const [activeTab, setActiveTab] = useState('invariants');
   const [selectedInvariant, setSelectedInvariant] = useState<number | null>(null);
   const [cycleStep, setCycleStep] = useState(0);
+  const [pipelineResult, setPipelineResult] = useState<AdmissionPipelineResult | null>(null);
+
+  // Run admission pipeline on mount
+  useEffect(() => {
+    const result = runAdmissionPipeline(SAMPLE_CLAIMS);
+    setPipelineResult(result);
+  }, []);
 
   // Animate lifecycle flow
   useEffect(() => {
@@ -194,9 +223,12 @@ function InvariantsContent() {
         </Card>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-secondary/50">
+          <TabsList className="grid w-full grid-cols-5 bg-secondary/50">
             <TabsTrigger value="invariants" className="font-mono text-xs" aria-pressed={activeTab === 'invariants'}>
               Invariants
+            </TabsTrigger>
+            <TabsTrigger value="enforcement" className="font-mono text-xs" aria-pressed={activeTab === 'enforcement'}>
+              Enforcement
             </TabsTrigger>
             <TabsTrigger value="runtime" className="font-mono text-xs" aria-pressed={activeTab === 'runtime'}>
               Runtime
@@ -271,6 +303,236 @@ function InvariantsContent() {
                 );
               })}
             </div>
+          </TabsContent>
+
+          {/* Enforcement Tab - Machine-Enforced Runtime */}
+          <TabsContent value="enforcement" className="space-y-6">
+            {pipelineResult && (
+              <>
+                {/* Pipeline Status Banner */}
+                <Card className={`border-2 ${
+                  pipelineResult.pipelineStatus === 'HEALTHY' ? 'border-emerald-500/50 bg-emerald-500/5' :
+                  pipelineResult.pipelineStatus === 'DEGRADED' ? 'border-amber-500/50 bg-amber-500/5' :
+                  'border-red-500/50 bg-red-500/5'
+                }`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                          pipelineResult.pipelineStatus === 'HEALTHY' ? 'bg-emerald-500/20' :
+                          pipelineResult.pipelineStatus === 'DEGRADED' ? 'bg-amber-500/20' :
+                          'bg-red-500/20'
+                        }`}>
+                          {pipelineResult.pipelineStatus === 'HEALTHY' ? (
+                            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                          ) : pipelineResult.pipelineStatus === 'DEGRADED' ? (
+                            <AlertTriangle className="w-6 h-6 text-amber-400" />
+                          ) : (
+                            <XCircle className="w-6 h-6 text-red-400" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-mono text-lg font-bold">
+                            Pipeline Status: {pipelineResult.pipelineStatus}
+                          </p>
+                          <p className="font-mono text-xs text-muted-foreground">
+                            Machine-Enforced Verification Runtime
+                          </p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className={`font-mono ${
+                        pipelineResult.pipelineStatus === 'HEALTHY' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+                        pipelineResult.pipelineStatus === 'DEGRADED' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+                        'bg-red-500/20 text-red-400 border-red-500/40'
+                      }`}>
+                        {pipelineResult.pipelineStatus}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Admission Statistics */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                  <Card className="border-primary/30">
+                    <CardContent className="p-3 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground">TOTAL CLAIMS</p>
+                      <p className="font-mono text-xl font-bold text-primary">{pipelineResult.totalClaims}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-emerald-500/30 bg-emerald-500/5">
+                    <CardContent className="p-3 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground">ADMITTED</p>
+                      <p className="font-mono text-xl font-bold text-emerald-400">{pipelineResult.admitted}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-red-500/30 bg-red-500/5">
+                    <CardContent className="p-3 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground">BLOCKED</p>
+                      <p className="font-mono text-xl font-bold text-red-400">{pipelineResult.blocked}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-amber-500/30 bg-amber-500/5">
+                    <CardContent className="p-3 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground">WARNED</p>
+                      <p className="font-mono text-xl font-bold text-amber-400">{pipelineResult.warned}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="border-chart-3/30 bg-chart-3/5">
+                    <CardContent className="p-3 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground">EXPORT ELIGIBLE</p>
+                      <p className="font-mono text-xl font-bold text-chart-3">{pipelineResult.exportEligible}</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Admission Pipeline Model */}
+                <Card className="border-primary/30">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="font-mono text-sm flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-primary" />
+                      Runtime Admission Model
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap items-center justify-center gap-2 py-4">
+                      {['Claim', 'Evidence', 'Proof', 'Validation', 'Invariant', 'Policy', 'Visibility'].map((step, idx, arr) => (
+                        <div key={step} className="flex items-center gap-2">
+                          <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40">
+                            {step}
+                          </Badge>
+                          {idx < arr.length - 1 && (
+                            <span className="text-muted-foreground">→</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="font-mono text-xs text-muted-foreground text-center mt-2">
+                      visibility = consequence of enforcement (not storage)
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Invariant Health */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="font-mono text-sm flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-primary" />
+                      Invariant Health Matrix
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {INVARIANT_RULES.map(rule => {
+                        const violations = pipelineResult.violationLedger.violations.filter(
+                          v => v.invariantId === rule.id
+                        ).length;
+                        const passRate = pipelineResult.totalClaims > 0
+                          ? ((pipelineResult.totalClaims - violations) / pipelineResult.totalClaims * 100)
+                          : 100;
+                        
+                        return (
+                          <div key={rule.id} className="flex items-center justify-between p-3 rounded-lg bg-secondary/30 border border-border">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-8 h-8 rounded flex items-center justify-center ${
+                                violations === 0 ? 'bg-emerald-500/20' : rule.enforcement === 'HARD' ? 'bg-red-500/20' : 'bg-amber-500/20'
+                              }`}>
+                                {violations === 0 ? (
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                ) : rule.enforcement === 'HARD' ? (
+                                  <XCircle className="w-4 h-4 text-red-400" />
+                                ) : (
+                                  <AlertTriangle className="w-4 h-4 text-amber-400" />
+                                )}
+                              </div>
+                              <div>
+                                <p className="font-mono text-sm font-bold">{rule.name}</p>
+                                <p className="font-mono text-xs text-muted-foreground">{rule.enforcement} enforcement</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <div className="text-right">
+                                <p className="font-mono text-sm">{violations} violations</p>
+                                <p className="font-mono text-xs text-muted-foreground">{passRate.toFixed(1)}% pass rate</p>
+                              </div>
+                              <Badge variant="outline" className={`font-mono text-xs ${
+                                violations === 0 ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+                                rule.enforcement === 'HARD' ? 'bg-red-500/20 text-red-400 border-red-500/40' :
+                                'bg-amber-500/20 text-amber-400 border-amber-500/40'
+                              }`}>
+                                {violations === 0 ? 'PASSING' : rule.enforcement === 'HARD' ? 'BLOCKING' : 'WARNING'}
+                              </Badge>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Claim Admission Results */}
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="font-mono text-sm flex items-center gap-2">
+                      <Database className="w-4 h-4 text-primary" />
+                      Claim Admission Ledger
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="w-full font-mono text-xs">
+                        <thead>
+                          <tr className="border-b border-border text-left">
+                            <th className="p-2 text-muted-foreground">Claim ID</th>
+                            <th className="p-2 text-muted-foreground">Statement</th>
+                            <th className="p-2 text-muted-foreground text-right">Validation</th>
+                            <th className="p-2 text-muted-foreground text-center">Admission</th>
+                            <th className="p-2 text-muted-foreground text-center">Export</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pipelineResult.results.map(result => (
+                            <tr key={result.claim.id} className="border-b border-border/50 hover:bg-muted/30">
+                              <td className="p-2 text-foreground">{result.claim.id}</td>
+                              <td className="p-2 text-foreground max-w-[200px] truncate">{result.claim.statement}</td>
+                              <td className="p-2 text-right">{result.claim.validationScore.toFixed(3)}</td>
+                              <td className="p-2 text-center">
+                                <Badge variant="outline" className={`text-[10px] ${
+                                  result.admissionStatus === 'ADMITTED' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+                                  result.admissionStatus === 'WARNED' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+                                  'bg-red-500/20 text-red-400 border-red-500/40'
+                                }`}>
+                                  {result.admissionStatus}
+                                </Badge>
+                              </td>
+                              <td className="p-2 text-center">
+                                {result.exportEligible ? (
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mx-auto" />
+                                ) : (
+                                  <XCircle className="w-4 h-4 text-red-400 mx-auto" />
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Core Principle */}
+                <Card className="border-chart-3/30 bg-chart-3/5">
+                  <CardContent className="p-6 text-center">
+                    <p className="font-mono text-xs text-muted-foreground mb-2">CORE PRINCIPLE</p>
+                    <p className="font-mono text-lg font-bold text-chart-3">
+                      claims must earn visibility
+                    </p>
+                    <p className="font-mono text-xs text-muted-foreground mt-2">
+                      The runtime decides what is permitted to exist as valid output
+                    </p>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </TabsContent>
 
           {/* Runtime Tab */}
