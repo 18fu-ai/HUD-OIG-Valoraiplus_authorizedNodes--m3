@@ -286,6 +286,17 @@ export {
   type VerifyResponse,
 } from './verify-contract';
 
+// Topology Authority (4-Route Invariant)
+export {
+  ValoraiplusTopologyAuthority,
+  topologyAuthority,
+  enforceTopology,
+  type SovereignRoute,
+  type TopologyReasonCode,
+  type RuntimeSignal as TopologyRuntimeSignal,
+  type TopologyDecision,
+} from './topology-authority';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
