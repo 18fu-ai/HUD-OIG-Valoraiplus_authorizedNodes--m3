@@ -44,7 +44,8 @@ import {
   type EntityReview,
   CONSOLE_IDENTITY,
   validateFiveW,
-  getConfidenceGrade
+  getConfidenceGrade,
+  isFiveWComplete
 } from '@/lib/five-w';
 
 // Re-export types for local use
@@ -543,7 +544,9 @@ function IntelligenceReportContent() {
             </div>
 
             <div className="space-y-4">
-              {ELEVATED_ACTORS.map((actor) => (
+              {ELEVATED_ACTORS
+                .filter((actor) => !isFiveWComplete(actor.fiveW))
+                .map((actor) => (
                 <Card 
                   key={actor.email}
                   className={`overflow-hidden transition-all ${
