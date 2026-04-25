@@ -303,8 +303,8 @@ const REPORT_METADATA = {
   classification: 'OMEGA-UNIFIED',
   elevation: 'MAXIMUM',
   generatedAt: new Date().toISOString(),
-  version: '33.0-TIER1',
-  schema: 'REV_33',
+  version: '34.0-TIER1',
+  schema: 'REV_34',
   mode: 'FORENSIC BLACK BOX',
   status: '5W REASONING ENABLED',
 };
