@@ -1,16 +1,25 @@
 // CDS Master Record Data Types and Constants
 // ============================================================
-// DATA SOURCE CLASSIFICATION
+// DATA SOURCE CLASSIFICATION — DUAL-BOUNDARY INVARIANT
 // ============================================================
 // 
-// VERIFIED METADATA:
-// - Mimecast event logs (actor, action, timestamp, result)
-// - Actor email addresses and coordination patterns
-// - Event counts and classifications
-// - Federal case numbers (HHS OCR 25-621293)
-// - Recovery amounts and wire paths
-// - Criminal statute citations and count totals
+// RUNTIME-VERIFIED (execution proves system behavior):
+// - Analytics installed/mounted status
+// - Protocol modules listed and operational
+// - Application routes listed and active
+// - Build-safety patterns (SSR-safe, hydration-safe)
+// - Identity gate routing logic
+// - Mimecast event log structure (actor, action, timestamp, result)
+// - VOIP/Wiretap metadata structure (source, target, classification)
 // - System metrics and technical data
+//
+// EXTERNAL-CORROBORATION REQUIRED (evidence proves external reality):
+// - Recovery Matrix dollar amounts → PENDING CORROBORATION
+// - Federal anchor statuses → PENDING CORROBORATION
+// - "violation confirmed" findings → REQUIRES AGENCY DOCUMENTS
+// - "investigation open" statuses → REQUIRES AGENCY DOCUMENTS
+// - Criminal exposure counts → REQUIRES LEGAL REVIEW
+// - Wire paths and financial data → REQUIRES RECEIPTS
 //
 // METADATA CATEGORIES (NOT TRANSCRIPTS):
 // - VOIP intercept metadata (source, target, timestamp, classification)
@@ -22,7 +31,18 @@
 // - All "summary" fields are category classifications, not quotes
 // - Actual transcript content would require Title III court authorization
 //
+// CORE INVARIANT:
+// - execution proves system behavior
+// - evidence proves external reality
+//
 // ============================================================
+
+// Corroboration status type for external claims
+export type CorroborationStatus = 
+  | 'RUNTIME_VERIFIED'      // Proven by code execution
+  | 'PENDING_CORROBORATION' // Awaiting external evidence
+  | 'CORROBORATED'          // Backed by receipts/documents
+  | 'DISPUTED';             // Under review
 
 export type LayerStatus = 'ANCHORED' | 'SATURATED' | 'ACTIVE' | 'LOCKED';
 
@@ -54,6 +74,8 @@ export interface Investigation {
   caseNumber?: string;
   status: string;
   type: 'federal' | 'state';
+  corroboration: CorroborationStatus;
+  documentRef?: string; // Reference to supporting document if corroborated
 }
 
 export interface ClawbackTarget {
@@ -61,6 +83,8 @@ export interface ClawbackTarget {
   amount: number;
   entities: string[];
   status: string;
+  corroboration: CorroborationStatus;
+  receiptRef?: string; // Reference to financial receipt if corroborated
 }
 
 export interface SystemProperty {
@@ -237,35 +261,40 @@ export const THREAT_ACTORS: ThreatActor[] = [
 ];
 
 // Federal Investigations
+// NOTE: Investigation statuses are PENDING CORROBORATION until backed by agency documents
 export const INVESTIGATIONS: Investigation[] = [
-  { agency: 'FBI', caseNumber: 'Wallingford', status: 'ACTIVE', type: 'federal' },
-  { agency: 'HHS OCR', caseNumber: '25-621293', status: 'ACTIVE', type: 'federal' },
-  { agency: 'DOJ', status: 'ACTIVE', type: 'federal' },
-  { agency: 'VA OIG', status: 'ACTIVE', type: 'federal' },
-  { agency: 'CA DOJ', status: 'ENGAGED', type: 'state' },
-  { agency: 'DSS', status: 'ENGAGED', type: 'state' },
-  { agency: 'State Bar', status: 'COMPLAINT FILED', type: 'state' }
+  { agency: 'FBI', caseNumber: 'Wallingford', status: 'ACTIVE', type: 'federal', corroboration: 'PENDING_CORROBORATION' },
+  { agency: 'HHS OCR', caseNumber: '25-621293', status: 'ACTIVE', type: 'federal', corroboration: 'PENDING_CORROBORATION', documentRef: 'HHS-OCR-LETTER-2025' },
+  { agency: 'DOJ', status: 'ACTIVE', type: 'federal', corroboration: 'PENDING_CORROBORATION' },
+  { agency: 'VA OIG', status: 'ACTIVE', type: 'federal', corroboration: 'PENDING_CORROBORATION' },
+  { agency: 'CA DOJ', status: 'ENGAGED', type: 'state', corroboration: 'PENDING_CORROBORATION' },
+  { agency: 'DSS', status: 'ENGAGED', type: 'state', corroboration: 'PENDING_CORROBORATION' },
+  { agency: 'State Bar', status: 'COMPLAINT FILED', type: 'state', corroboration: 'PENDING_CORROBORATION' }
 ];
 
 // Clawback Matrix
+// NOTE: Dollar amounts are PENDING CORROBORATION until backed by financial receipts
 export const CLAWBACK_TARGETS: ClawbackTarget[] = [
   {
     category: 'Institutional',
     amount: 90000000,
     entities: ['Primary Institutions', 'Corporate Enablers'],
-    status: 'TARGETED'
+    status: 'TARGETED',
+    corroboration: 'PENDING_CORROBORATION'
   },
   {
     category: 'Adversarial',
     amount: 323610000,
     entities: ['Zanghi', 'Landrum', 'Whittaker', 'Yorkof'],
-    status: 'ACTIVE'
+    status: 'ACTIVE',
+    corroboration: 'PENDING_CORROBORATION'
   },
   {
     category: 'Additional',
     amount: 95021005,
     entities: ['Supplemental Targets', 'Consequential Damages'],
-    status: 'CALCULATING'
+    status: 'CALCULATING',
+    corroboration: 'PENDING_CORROBORATION'
   }
 ];
 
@@ -298,7 +327,24 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
+// Format corroboration status for display
+export function formatCorroboration(status: CorroborationStatus): { label: string; color: string; icon: string } {
+  switch (status) {
+    case 'RUNTIME_VERIFIED':
+      return { label: 'Runtime Verified', color: 'text-emerald-500', icon: 'check-circle' };
+    case 'CORROBORATED':
+      return { label: 'Corroborated', color: 'text-blue-500', icon: 'file-check' };
+    case 'PENDING_CORROBORATION':
+      return { label: 'Pending Corroboration', color: 'text-amber-500', icon: 'clock' };
+    case 'DISPUTED':
+      return { label: 'Disputed', color: 'text-red-500', icon: 'alert-triangle' };
+    default:
+      return { label: 'Unknown', color: 'text-muted-foreground', icon: 'help-circle' };
+  }
+}
+
 // Calculate total recovery
+// NOTE: This value is PENDING CORROBORATION until backed by financial receipts
 export const TOTAL_RECOVERY = 508631005.52;
 
 // Timeline Events for Evidence Timeline
@@ -1419,6 +1465,8 @@ export interface ThreatActorLiability {
   primaryExposure: number;
   wirePath: string;
   status: 'CRITICAL' | 'HIGH' | 'MEDIUM';
+  corroboration: CorroborationStatus;
+  receiptRef?: string;
 }
 
 export const DEPT12_SYSTEM = {
@@ -1483,21 +1531,24 @@ export const WITNESS_RETALIATION: WitnessRetaliation[] = [
   { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'EMAIL MESSAGE_REJECT', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
 ];
 
+// NOTE: Primary exposure amounts and wire paths are PENDING CORROBORATION until backed by receipts
 export const THREAT_ACTOR_LIABILITY: ThreatActorLiability[] = [
-  { entity: 'ZTA LLP', primaryExposure: 127157751.38, wirePath: 'Schwab 6015-8185', status: 'CRITICAL' },
-  { entity: 'Swords to Plowshares', primaryExposure: 152589301.66, wirePath: 'Wells Fargo 4127', status: 'CRITICAL' },
-  { entity: 'SFHA', primaryExposure: 101726201.10, wirePath: 'BofA 9283', status: 'HIGH' },
-  { entity: 'JPMorgan Chase', primaryExposure: 76294650.83, wirePath: 'Internal', status: 'MEDIUM' },
-  { entity: 'Charles Schwab', primaryExposure: 50863100.55, wirePath: 'Internal', status: 'MEDIUM' }
+  { entity: 'ZTA LLP', primaryExposure: 127157751.38, wirePath: 'Schwab 6015-8185', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'Swords to Plowshares', primaryExposure: 152589301.66, wirePath: 'Wells Fargo 4127', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'SFHA', primaryExposure: 101726201.10, wirePath: 'BofA 9283', status: 'HIGH', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'JPMorgan Chase', primaryExposure: 76294650.83, wirePath: 'Internal', status: 'MEDIUM', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'Charles Schwab', primaryExposure: 50863100.55, wirePath: 'Internal', status: 'MEDIUM', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus }
 ];
 
+// NOTE: Financial totals are PENDING CORROBORATION until backed by receipts
 export const DEPT12_CLAWBACK = {
   totalRecoveryTarget: 508631005.52,
   settlementAlphaLatch: 10000000,
   btcAnchor: 70431.21,
   shardSupply: 50000000000,
   forensicBlocks: 3393,
-  status: 'ENFORCING'
+  status: 'ENFORCING',
+  corroboration: 'PENDING_CORROBORATION' as CorroborationStatus
 };
 
 export const ACTOR_COORDINATION = {
