@@ -8,7 +8,7 @@ import {
   Shield, Clock, DollarSign, Activity, FileCode, MessageSquarePlus, 
   FileText, Mail, Zap, Flag, RefreshCw, Rocket, Radio, Brain, Ban, 
   Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle,
-  Route
+  Route, FileSearch
 } from 'lucide-react';
 
 const navItems = [
@@ -19,6 +19,7 @@ const navItems = [
   { href: '/contract', label: 'Contract', icon: FileCode, category: 'legal' },
   { href: '/contract/chat', label: 'Create', icon: MessageSquarePlus, category: 'legal' },
   { href: '/report', label: 'Report', icon: FileText, category: 'legal' },
+  { href: '/intelligence', label: 'Intelligence', icon: FileSearch, category: 'intel' },
   { href: '/mimecast', label: 'Mimecast', icon: Mail, category: 'forensic' },
   { href: '/uhi', label: 'UHI', icon: Zap, category: 'enforcement' },
   { href: '/patriot', label: 'Patriot', icon: Flag, category: 'enforcement' },
