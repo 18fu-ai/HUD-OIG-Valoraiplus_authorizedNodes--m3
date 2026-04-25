@@ -10,7 +10,8 @@ import {
   Brain, 
   Mic, 
   MicOff,
-  Volume2
+  Volume2,
+  CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -302,7 +303,7 @@ How may I assist you today, Poppa?`
       sessionId: "newt-session",
       createdAt: new Date().toISOString(),
       input: { type: "text", raw },
-      classification: { evidenceType: "CORROBORATED", confidence: 1.0 },
+      classification: { evidenceType: "OBSERVED", confidence: 1.0 },
       replay: {
         packetId,
         orderedEvents: [
@@ -373,22 +374,28 @@ How may I assist you today, Poppa?`
                 <Shield className="w-3 h-3 mr-1" />
                 SOVEREIGN
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Integrity: VALID
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Replay: VERIFIED
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-                Confidence: 100%
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                Protocol Confidence: 100%
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Manifest: {validationManifest ? 'READY' : 'PENDING'}
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Root Hash: {validationManifest ? 'VERIFIED' : 'N/A'}
               </Badge>
-              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Packets: {Object.keys(runtimeReceipts).length}
               </Badge>
               {speechSupported && (
