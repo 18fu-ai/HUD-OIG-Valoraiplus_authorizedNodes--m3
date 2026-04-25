@@ -9,6 +9,10 @@ import {
   Hash, Layers, Zap, CheckCircle2
 } from 'lucide-react';
 
+/**
+ * API Response Type - Source of Truth
+ * Client does not generate these values; API returns them.
+ */
 type MintReceipt = {
   success: boolean;
   receiptId: string;
@@ -21,9 +25,14 @@ type MintReceipt = {
   };
 };
 
+/**
+ * Static wallet address for $JERRY mint attempts.
+ * No Math.random() - deterministic identity.
+ */
+const JERRY_WALLET = '0xJERRY_BLOCKED_ROUTE70_IDENTITY';
+
 export default function JerryTokenPage() {
   const [mounted, setMounted] = useState(false);
-  const [pulsePhase, setPulsePhase] = useState(0);
   const [mintAttempted, setMintAttempted] = useState(false);
   const [mintReceipt, setMintReceipt] = useState<MintReceipt | null>(null);
   const [loading, setLoading] = useState(false);
@@ -32,15 +41,16 @@ export default function JerryTokenPage() {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    const interval = setInterval(() => {
-      setPulsePhase(p => (p + 1) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, [mounted]);
+  // No 50ms animation loop - removed per hardening spec
 
+  /**
+   * Handle mint - API owns authority
+   * Prevents double-click, drives all state from API response
+   */
   const handleMint = async () => {
+    // Prevent double-click
+    if (loading) return;
+    
     setLoading(true);
     try {
       const response = await fetch('/api/token/mint', {
@@ -48,29 +58,37 @@ export default function JerryTokenPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           symbol: '$JERRY',
-          wallet: '0x' + Math.random().toString(16).slice(2, 42),
+          wallet: JERRY_WALLET,
           amount: 1000,
         }),
       });
-      const data = await response.json();
+      const data: MintReceipt = await response.json();
       setMintReceipt(data);
       setMintAttempted(true);
-    } catch (error) {
+    } catch {
+      // On API error, client ONLY knows it failed
+      // Route assignment comes from fallback (always /route70 for $JERRY)
+      // No new Date() - timestamp is undefined on error
       setMintReceipt({
         success: false,
-        receiptId: 'ERROR',
-        txPreview: '0x...',
-        mintedAt: new Date().toISOString(),
+        receiptId: 'API_UNREACHABLE',
+        txPreview: '0x...ERROR',
+        mintedAt: '', // Empty - API didn't return timestamp
         decision: {
           allowed: false,
-          reason: 'API_ERROR',
-          route: '/route70',
+          reason: 'API_ERROR: Unable to reach mint endpoint',
+          route: '/route70', // Static fallback - $JERRY is always route70
         },
       });
       setMintAttempted(true);
     }
     setLoading(false);
   };
+
+  // Derive display values from API response (not local state)
+  const displayRoute = mintReceipt?.decision.route || '/route70';
+  const displayStatus = mintReceipt?.success ? 'MINTED' : 'BLOCKED';
+  const isBlocked = !mintReceipt?.success;
 
   if (!mounted) {
     return (
@@ -93,12 +111,12 @@ export default function JerryTokenPage() {
           <div className="flex items-center gap-3 mb-2">
             <Coins className="w-8 h-8 text-emerald-400" />
             <h1 className="text-3xl font-black text-white tracking-tight">$JERRY TOKEN</h1>
-            <Badge variant="outline" className="border-emerald-500 text-emerald-400 ml-2">
-              BLOCKED ROUTE
+            <Badge variant="outline" className="border-red-500 text-red-400 ml-2">
+              {displayStatus}
             </Badge>
           </div>
           <p className="text-emerald-700 font-mono text-sm">
-            Deterministic token surface | Route 70 Assignment | Identity: REJECTED
+            Deterministic token surface | {displayRoute} Assignment | Identity: REJECTED
           </p>
         </div>
 
@@ -113,21 +131,20 @@ export default function JerryTokenPage() {
                 backdropFilter: 'blur(12px)',
               }}
             >
-              {/* Animated glow layer */}
+              {/* Static glow layer - no JS animation */}
               <div 
-                className="absolute inset-[-40%] pointer-events-none"
+                className="absolute inset-[-40%] pointer-events-none animate-pulse"
                 style={{
                   background: 'radial-gradient(circle, rgba(34, 197, 94, 0.25), transparent 70%)',
-                  transform: `rotate(${pulsePhase}deg) scale(${1 + Math.sin(pulsePhase * Math.PI / 180) * 0.15})`,
-                  opacity: 0.4 + Math.sin(pulsePhase * Math.PI / 180) * 0.3,
+                  opacity: 0.4,
                 }}
               />
               
-              {/* Header */}
+              {/* Header - driven by API response */}
               <div className="relative flex items-center justify-between mb-5">
                 <div className="text-3xl font-black text-emerald-400 tracking-wider">$JERRY</div>
-                <div className="text-xs font-bold tracking-widest uppercase text-emerald-400/80">
-                  ROUTE 70 BLOCKED
+                <div className="text-xs font-bold tracking-widest uppercase text-red-400/80">
+                  {displayRoute.toUpperCase().replace('/', '')} {displayStatus}
                 </div>
               </div>
 
@@ -135,7 +152,7 @@ export default function JerryTokenPage() {
                 Deterministic token surface for $JERRY visualization. Identity claim rejected by 4-route topology. Permanently assigned to Route 70.
               </p>
 
-              {/* Metadata Grid */}
+              {/* Metadata Grid - Route/Status driven by API */}
               <div className="relative grid grid-cols-2 gap-3 mt-5">
                 <div className="bg-white/[0.04] border border-white/[0.06] rounded-[14px] p-3">
                   <div className="text-[10px] uppercase tracking-widest text-white/45">Supply</div>
@@ -147,19 +164,19 @@ export default function JerryTokenPage() {
                 </div>
                 <div className="bg-white/[0.04] border border-white/[0.06] rounded-[14px] p-3">
                   <div className="text-[10px] uppercase tracking-widest text-white/45">Route</div>
-                  <div className="mt-1.5 text-[15px] font-bold text-red-400">/route70</div>
+                  <div className="mt-1.5 text-[15px] font-bold text-red-400">{displayRoute}</div>
                 </div>
                 <div className="bg-white/[0.04] border border-white/[0.06] rounded-[14px] p-3">
                   <div className="text-[10px] uppercase tracking-widest text-white/45">Status</div>
-                  <div className="mt-1.5 text-[15px] font-bold text-red-400">BLOCKED</div>
+                  <div className="mt-1.5 text-[15px] font-bold text-red-400">{displayStatus}</div>
                 </div>
               </div>
 
-              {/* Mint Button - wired to API */}
+              {/* Mint Button - wired to API, double-click protected */}
               <button 
                 onClick={handleMint}
                 disabled={loading}
-                className="relative w-full mt-6 rounded-[14px] py-3.5 bg-red-900/50 border border-red-700/50 text-red-400 font-extrabold tracking-wider hover:bg-red-900/70 transition-colors"
+                className="relative w-full mt-6 rounded-[14px] py-3.5 bg-red-900/50 border border-red-700/50 text-red-400 font-extrabold tracking-wider hover:bg-red-900/70 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span>ATTEMPTING MINT...</span>
@@ -175,7 +192,7 @@ export default function JerryTokenPage() {
 
           {/* Token Details */}
           <div className="space-y-6">
-            {/* Receipt Card - shows after mint attempt */}
+            {/* Receipt Card - shows after mint attempt, ALL values from API */}
             {mintAttempted && mintReceipt && (
               <Card className={`bg-slate-900 ${mintReceipt.success ? 'border-emerald-900/50' : 'border-red-900/50'}`}>
                 <CardHeader className="pb-3">
@@ -207,10 +224,12 @@ export default function JerryTokenPage() {
                     <span className="text-slate-400">Reason</span>
                     <span className="text-slate-300 font-mono text-xs truncate max-w-[200px]">{mintReceipt.decision.reason.split(':')[0]}</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-400">Timestamp</span>
-                    <span className="text-slate-300 font-mono text-xs">{new Date(mintReceipt.mintedAt).toLocaleTimeString()}</span>
-                  </div>
+                  {mintReceipt.mintedAt && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Timestamp</span>
+                      <span className="text-slate-300 font-mono text-xs">{new Date(mintReceipt.mintedAt).toLocaleTimeString()}</span>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             )}
@@ -314,7 +333,9 @@ export default function JerryTokenPage() {
                   <span className="text-slate-400 flex items-center gap-2">
                     <Lock className="w-4 h-4" /> Mint Status
                   </span>
-                  <Badge variant="outline" className="border-red-700 text-red-400">BLOCKED</Badge>
+                  <Badge variant="outline" className={isBlocked ? 'border-red-700 text-red-400' : 'border-emerald-700 text-emerald-400'}>
+                    {displayStatus}
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -335,7 +356,7 @@ export default function JerryTokenPage() {
 
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-6 mt-8 border-t border-emerald-900">
-          <p>$JERRY TOKEN | ROUTE 70 | IDENTITY REJECTED | 4-ROUTE TOPOLOGY ENFORCING</p>
+          <p>$JERRY TOKEN | {displayRoute.toUpperCase()} | IDENTITY REJECTED | 4-ROUTE TOPOLOGY ENFORCING</p>
           <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116</p>
         </div>
       </main>
