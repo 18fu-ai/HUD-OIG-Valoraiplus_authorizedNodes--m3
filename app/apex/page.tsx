@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { 
   Activity,
   Cpu,
-  Globe,
   Key,
   Landmark,
   LockKeyhole,
@@ -70,7 +69,7 @@ export default function ApexFinalityMonitor() {
         {/* APEX METRICS */}
         <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[
-            { label: "Recovery Matrix", val: "$508,631,005.52", icon: Landmark, color: "text-emerald-500" },
+            { label: "Recovery Model", val: "Pending Review", icon: Landmark, color: "text-emerald-500" },
             { label: "Spoliation Blocked", val: "100%", icon: ShieldCheck, color: "text-blue-500" },
             { label: "API Endpoints", val: "19", icon: Activity, color: "text-fuchsia-500" },
             { label: "Truth Cycle", val: "266ms", icon: Cpu, color: "text-white" }
@@ -118,7 +117,7 @@ export default function ApexFinalityMonitor() {
            {/* RIGHT: EXTERNAL CORROBORATION */}
            <section className="lg:col-span-5 bg-slate-900 border-2 border-fuchsia-500/30 p-8 relative shadow-inner">
               <div className="flex items-center gap-3 mb-6">
-                <Globe className="text-fuchsia-500" />
+                <Scale className="text-fuchsia-500" />
                 <h3 className="text-lg font-black text-white uppercase italic tracking-widest">Evidence Corroboration Path</h3>
               </div>
               <div className="space-y-4">
