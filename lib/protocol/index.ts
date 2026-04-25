@@ -297,6 +297,18 @@ export {
   type TopologyDecision,
 } from './topology-authority';
 
+// Waterfall Firewall (Build-Safe Admission Gate)
+export {
+  waterfallFirewall,
+  waterfallFirewallBatch,
+  isAllowed,
+  requiresProcessing,
+  isDenied,
+  type FirewallDecision,
+  type FirewallSignal,
+  type FirewallResult,
+} from './waterfall-firewall';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
