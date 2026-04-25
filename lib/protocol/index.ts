@@ -269,6 +269,23 @@ export {
   type IdentityResult,
 } from './machine-enforced-runtime-surface';
 
+// Verify Contract (REV_33)
+export {
+  decideVisibility,
+  simpleHash,
+  createVerifyReceipt,
+  verifySignal,
+  type InvariantState as VerifyInvariantState,
+  type RuntimeSignalStatus,
+  type RouteDestination,
+  type ReasonCode as VerifyReasonCode,
+  type RuntimeSignal as VerifyRuntimeSignal,
+  type PolicyDecision,
+  type ReceiptV1 as VerifyReceiptV1,
+  type VerifyRequest,
+  type VerifyResponse,
+} from './verify-contract';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
