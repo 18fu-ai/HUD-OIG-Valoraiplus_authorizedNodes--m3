@@ -13,7 +13,8 @@ import {
   Binary,
   FileX,
   Clock,
-  Hash
+  Hash,
+  Home
 } from 'lucide-react';
 
 interface ReceiptV1 {
@@ -63,11 +64,20 @@ export default function Route70VoidBoundary() {
       <div className="pointer-events-none absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
       <header className="z-10 flex w-full items-center justify-between border-b border-red-500/20 bg-slate-950/80 p-6 backdrop-blur-md mb-6">
-        <div className="flex items-center gap-3">
-          <Shield className="text-red-500" size={32} />
-          <h1 className="text-xl font-black uppercase tracking-tighter text-white italic">
-            ROUTE 70 // VOID BOUNDARY
-          </h1>
+        <div className="flex items-center gap-4">
+          <Link 
+            href="/" 
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-red-900 bg-black/50 hover:bg-red-950 hover:border-red-500 transition-colors"
+            aria-label="Return to Home"
+          >
+            <Home className="text-red-500" size={20} />
+          </Link>
+          <div className="flex items-center gap-3">
+            <Shield className="text-red-500" size={32} />
+            <h1 className="text-xl font-black uppercase tracking-tighter text-white italic">
+              ROUTE 70 // VOID BOUNDARY
+            </h1>
+          </div>
         </div>
 
         <div className="text-right">

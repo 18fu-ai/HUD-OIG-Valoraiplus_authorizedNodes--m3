@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { 
   ShieldCheck, 
   Activity, 
@@ -8,7 +9,8 @@ import {
   Coins, 
   Lock, 
   Scale, 
-  Cpu
+  Cpu,
+  Home
 } from 'lucide-react';
 
 /**
@@ -134,6 +136,13 @@ export default function MintGatewayPage() {
       {/* HEADER OMEGA */}
       <header className="relative z-20 border-b-4 border-fuchsia-500 bg-black/90 backdrop-blur-xl p-6 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-[0_15px_40px_rgba(255,0,255,0.1)]">
         <div className="flex items-center gap-4">
+          <Link 
+            href="/" 
+            className="flex items-center justify-center w-12 h-12 rounded-lg border border-emerald-900 bg-black/50 hover:bg-emerald-950 hover:border-emerald-500 transition-colors"
+            aria-label="Return to Home"
+          >
+            <Home className="text-emerald-500" size={24} />
+          </Link>
           <span className="text-4xl animate-pulse select-none">USA</span>
           <div>
             <h1 className="text-3xl font-black italic tracking-tighter text-white uppercase leading-none font-mono">VALORAIPLUS</h1>

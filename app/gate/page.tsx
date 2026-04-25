@@ -11,7 +11,8 @@ import {
   CheckCircle2,
   ArrowRight,
   Scale,
-  FileJson
+  FileJson,
+  Home
 } from 'lucide-react';
 import type { ReceiptV1 } from '@/lib/protocol/client';
 
@@ -81,11 +82,20 @@ export default function ValoraiplusIdentityGate() {
       <div className="pointer-events-none absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
       <header className="absolute top-0 z-10 flex w-full items-center justify-between border-b border-fuchsia-500/20 bg-slate-950/80 p-8 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <Shield className="animate-pulse text-white" size={32} />
-          <h1 className="text-xl font-black uppercase tracking-tighter text-white italic">
-            VALORAIPLUS // MEVR Gating
-          </h1>
+        <div className="flex items-center gap-4">
+          <Link 
+            href="/" 
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-emerald-900 bg-black/50 hover:bg-emerald-950 hover:border-emerald-500 transition-colors"
+            aria-label="Return to Home"
+          >
+            <Home className="text-emerald-500" size={20} />
+          </Link>
+          <div className="flex items-center gap-3">
+            <Shield className="animate-pulse text-white" size={32} />
+            <h1 className="text-xl font-black uppercase tracking-tighter text-white italic">
+              VALORAIPLUS // MEVR Gating
+            </h1>
+          </div>
         </div>
 
         <div className="text-right">

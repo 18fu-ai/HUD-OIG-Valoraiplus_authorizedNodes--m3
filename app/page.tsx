@@ -13,7 +13,8 @@ import { Badge } from '@/components/ui/badge';
 import { 
   FileText, Lock, Shield, Clock, DollarSign, Mail, Brain, Radio, 
   Coins, Send, Flag, Rocket, RefreshCw, Zap, Ban, Activity, Server,
-  MessageCircle, FileCode, MessageSquarePlus, Navigation, FileSearch, Terminal, Layers, CircleDot, Film, Eye
+  MessageCircle, FileCode, MessageSquarePlus, Navigation, FileSearch, Terminal, Layers, CircleDot, Film, Eye,
+  Fingerprint, Scale, Cpu
 } from 'lucide-react';
 
 // Quick access modules - ALL working routes
@@ -47,6 +48,12 @@ const quickModules = [
   { href: '/invariants', label: 'Invariants', icon: Eye, color: 'text-teal-500', desc: 'Protocol Guarantees' },
   { href: '/nullifier', label: 'Nullifier', icon: Ban, color: 'text-destructive', desc: 'Ghost Null' },
   { href: '/audit', label: 'Audit', icon: Shield, color: 'text-chart-3', desc: 'Self-Audit' },
+  { href: '/gate', label: 'Gate', icon: Fingerprint, color: 'text-fuchsia-400', desc: 'Identity Gating' },
+  { href: '/route70', label: 'Route 70', icon: Ban, color: 'text-red-500', desc: 'Void Boundary' },
+  { href: '/mint', label: 'Mint', icon: Coins, color: 'text-emerald-400', desc: 'Sovereign Mint' },
+  { href: '/apex', label: 'Apex', icon: Scale, color: 'text-fuchsia-500', desc: 'Finality Monitor' },
+  { href: '/valoraiplus', label: 'ValorAI+', icon: Cpu, color: 'text-fuchsia-300', desc: 'Governance Engine' },
+  { href: '/maturity', label: 'Maturity', icon: Activity, color: 'text-blue-400', desc: 'System Maturity' },
 ];
 
 export default function DashboardPage() {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import Link from 'next/link';
 import { 
   Shield, 
   Activity, 
@@ -9,7 +10,8 @@ import {
   Cpu,
   Lock,
   RefreshCw,
-  Fingerprint
+  Fingerprint,
+  Home
 } from 'lucide-react';
 
 // ============================================================
@@ -254,6 +256,13 @@ export default function ValorAIPlusGovernancePage() {
         {/* Header */}
         <header className="border-b border-zinc-800 pb-6">
           <div className="flex items-center gap-4 mb-2">
+            <Link 
+              href="/" 
+              className="flex items-center justify-center w-12 h-12 rounded-lg border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 hover:border-fuchsia-500 transition-colors"
+              aria-label="Return to Home"
+            >
+              <Home className="text-fuchsia-500" size={24} />
+            </Link>
             <Shield className="w-10 h-10 text-fuchsia-500" />
             <div>
               <h1 className="text-3xl font-black tracking-tight">
