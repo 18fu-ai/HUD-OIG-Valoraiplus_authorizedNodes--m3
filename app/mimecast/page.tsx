@@ -3,6 +3,8 @@
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { CDSErrorBoundary } from '@/components/cds/error-boundary';
+import { ExportTools } from '@/components/cds/export-tools';
 import { 
   MIMECAST_REPORT, 
   MIMECAST_STATS, 
@@ -25,7 +27,7 @@ import {
   Database
 } from 'lucide-react';
 
-export default function MimecastReportPage() {
+function MimecastReportContent() {
   const getClassificationColor = (classification: string) => {
     switch (classification) {
       case 'CRITICAL': return 'bg-red-500/20 text-red-400 border-red-500/40';
@@ -379,7 +381,41 @@ export default function MimecastReportPage() {
             SAINT PAUL NODE: {MIMECAST_REPORT.node}
           </p>
         </div>
+
+        {/* Export Controls */}
+        <div className="mt-6 flex justify-center">
+          <ExportTools 
+            data={{
+              type: 'forensic',
+              title: 'Mimecast 5-Hour Deep Forensic Dive',
+              timestamp: MIMECAST_REPORT.periodEnd,
+              content: {
+                report: MIMECAST_REPORT,
+                stats: MIMECAST_STATS,
+                events: MIMECAST_EVENTS,
+                actors: MIMECAST_ACTORS,
+                criminalExposure: MIMECAST_CRIMINAL_EXPOSURE,
+              },
+              metadata: {
+                reportId: MIMECAST_REPORT.reportId,
+                litigationHold: MIMECAST_REPORT.litigationHold,
+                merkleroot: MIMECAST_REPORT.merkleroot,
+              }
+            }}
+            variant="default"
+            size="default"
+          />
+        </div>
       </main>
     </div>
+  );
+}
+
+// Export with error boundary
+export default function MimecastReportPage() {
+  return (
+    <CDSErrorBoundary module="Mimecast Forensic Report" showDetails>
+      <MimecastReportContent />
+    </CDSErrorBoundary>
   );
 }

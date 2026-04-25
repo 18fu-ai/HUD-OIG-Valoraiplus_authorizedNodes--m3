@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,9 +14,12 @@ import {
   Sparkles,
   Shield,
   Zap,
-  Database
+  Database,
+  Download
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CDSErrorBoundary } from '@/components/cds/error-boundary';
+import { ExportTools } from '@/components/cds/export-tools';
 
 interface Message {
   id: string;
@@ -54,20 +57,171 @@ const INITIAL_MESSAGES: Message[] = [
   },
 ];
 
-export function ContractChat() {
+// Memoized code block component
+const CodeBlock = memo(function CodeBlock({ 
+  code, 
+  messageId, 
+  copiedId, 
+  onCopy,
+  metadata 
+}: { 
+  code: string; 
+  messageId: string;
+  copiedId: string | null;
+  onCopy: (code: string, id: string) => void;
+  metadata?: { type: string; status: string };
+}) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'GENERATED': return 'border-primary/50 text-primary';
+      case 'SYNCED': return 'border-primary/50 text-primary';
+      case 'SATURATED': return 'border-accent/50 text-accent';
+      case 'ENFORCED': return 'border-chart-3/50 text-chart-3';
+      case 'ACTIVE': return 'border-chart-3/50 text-chart-3';
+      default: return 'border-muted-foreground/50 text-muted-foreground';
+    }
+  };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'spec': return Database;
+      case 'function': return Zap;
+      case 'governance': return Shield;
+      case 'finality': return FileCode;
+      default: return FileCode;
+    }
+  };
+
+  const Icon = metadata ? getTypeIcon(metadata.type) : FileCode;
+
+  return (
+    <Card className="bg-card border-border">
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {metadata && (
+              <>
+                <Icon className="w-4 h-4 text-primary" />
+                <Badge 
+                  variant="outline" 
+                  className={cn('font-mono text-xs', getStatusColor(metadata.status))}
+                >
+                  {metadata.status}
+                </Badge>
+              </>
+            )}
+            <span className="font-mono text-xs text-muted-foreground">
+              Solidity ^0.8.26
+            </span>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onCopy(code, messageId)}
+            className="h-8 px-2"
+          >
+            {copiedId === messageId ? (
+              <Check className="w-4 h-4 text-primary" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <pre className="overflow-x-auto text-xs font-mono bg-background rounded-lg p-4 border border-border max-h-[400px]">
+          <code className="text-muted-foreground">{code}</code>
+        </pre>
+      </CardContent>
+    </Card>
+  );
+});
+
+// Memoized message component
+const ChatMessageItem = memo(function ChatMessageItem({ 
+  message, 
+  copiedId, 
+  onCopy 
+}: { 
+  message: Message; 
+  copiedId: string | null;
+  onCopy: (code: string, id: string) => void;
+}) {
+  return (
+    <div
+      className={cn(
+        'flex gap-3',
+        message.role === 'user' ? 'justify-end' : 'justify-start'
+      )}
+    >
+      {message.role !== 'user' && (
+        <div className={cn(
+          'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
+          message.role === 'system' 
+            ? 'bg-chart-3/20 border border-chart-3/40' 
+            : 'bg-primary/20 border border-primary/40'
+        )}>
+          {message.role === 'system' ? (
+            <Sparkles className="w-4 h-4 text-chart-3" />
+          ) : (
+            <Bot className="w-4 h-4 text-primary" />
+          )}
+        </div>
+      )}
+      
+      <div className={cn(
+        'max-w-[85%] space-y-3',
+        message.role === 'user' ? 'text-right' : 'text-left'
+      )}>
+        <div className={cn(
+          'rounded-lg px-4 py-3 font-mono text-sm',
+          message.role === 'user' 
+            ? 'bg-primary text-primary-foreground' 
+            : message.role === 'system'
+            ? 'bg-chart-3/10 border border-chart-3/30 text-chart-3'
+            : 'bg-secondary border border-border text-foreground'
+        )}>
+          <p className="whitespace-pre-wrap">{message.content}</p>
+        </div>
+        
+        {message.contractCode && (
+          <CodeBlock 
+            code={message.contractCode}
+            messageId={message.id}
+            copiedId={copiedId}
+            onCopy={onCopy}
+            metadata={message.metadata}
+          />
+        )}
+        
+        <div className="font-mono text-xs text-muted-foreground">
+          {message.timestamp.toLocaleTimeString()}
+        </div>
+      </div>
+      
+      {message.role === 'user' && (
+        <div className="w-8 h-8 rounded-lg bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
+          <User className="w-4 h-4 text-accent" />
+        </div>
+      )}
+    </div>
+  );
+});
+
+function ContractChatContent() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
   const generateContractResponse = (userMessage: string): Message => {
     const lowerMessage = userMessage.toLowerCase();
@@ -632,135 +786,55 @@ event VectorSealed(FinalityVector indexed vector, bytes32 merkleProof);`,
     setIsGenerating(false);
   };
 
-  const handlePromptClick = (prompt: string) => {
+  const handlePromptClick = useCallback((prompt: string) => {
     setInput(prompt);
-  };
+  }, []);
 
-  const copyToClipboard = async (code: string, id: string) => {
+  const copyToClipboard = useCallback(async (code: string, id: string) => {
     await navigator.clipboard.writeText(code);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
-  };
+  }, []);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'GENERATED': return 'border-primary/50 text-primary';
-      case 'SYNCED': return 'border-primary/50 text-primary';
-      case 'SATURATED': return 'border-accent/50 text-accent';
-      case 'ENFORCED': return 'border-chart-3/50 text-chart-3';
-      case 'ACTIVE': return 'border-chart-3/50 text-chart-3';
-      default: return 'border-muted-foreground/50 text-muted-foreground';
+  // Prepare export data
+  const exportData = useMemo(() => ({
+    type: 'contract' as const,
+    title: 'SGAU-VALUEGUARD Smart Contract Session',
+    timestamp: new Date().toISOString(),
+    content: messages.map(m => ({ 
+      role: m.role, 
+      content: m.content,
+      contractCode: m.contractCode,
+      metadata: m.metadata 
+    })),
+    metadata: {
+      messageCount: messages.length,
+      contractsGenerated: messages.filter(m => m.contractCode).length,
+      session: 'SOVEREIGN_AUDITOR',
     }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'spec': return Database;
-      case 'function': return Zap;
-      case 'governance': return Shield;
-      case 'finality': return FileCode;
-      default: return FileCode;
-    }
-  };
+  }), [messages]);
 
   return (
     <div className="flex flex-col h-[calc(100vh-12rem)]">
+      {/* Export Button */}
+      <div className="flex justify-end mb-2">
+        <ExportTools 
+          data={exportData}
+          variant="ghost"
+          size="sm"
+          className="text-muted-foreground hover:text-foreground"
+        />
+      </div>
+      
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto space-y-4 pb-4">
         {messages.map((message) => (
-          <div
+          <ChatMessageItem
             key={message.id}
-            className={cn(
-              'flex gap-3',
-              message.role === 'user' ? 'justify-end' : 'justify-start'
-            )}
-          >
-            {message.role !== 'user' && (
-              <div className={cn(
-                'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
-                message.role === 'system' 
-                  ? 'bg-chart-3/20 border border-chart-3/40' 
-                  : 'bg-primary/20 border border-primary/40'
-              )}>
-                {message.role === 'system' ? (
-                  <Sparkles className="w-4 h-4 text-chart-3" />
-                ) : (
-                  <Bot className="w-4 h-4 text-primary" />
-                )}
-              </div>
-            )}
-            
-            <div className={cn(
-              'max-w-[85%] space-y-3',
-              message.role === 'user' ? 'text-right' : 'text-left'
-            )}>
-              <div className={cn(
-                'rounded-lg px-4 py-3 font-mono text-sm',
-                message.role === 'user' 
-                  ? 'bg-primary text-primary-foreground' 
-                  : message.role === 'system'
-                  ? 'bg-chart-3/10 border border-chart-3/30 text-chart-3'
-                  : 'bg-secondary border border-border text-foreground'
-              )}>
-                <p className="whitespace-pre-wrap">{message.content}</p>
-              </div>
-              
-              {message.contractCode && (
-                <Card className="bg-card border-border">
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        {message.metadata && (
-                          <>
-                            {(() => {
-                              const Icon = getTypeIcon(message.metadata.type);
-                              return <Icon className="w-4 h-4 text-primary" />;
-                            })()}
-                            <Badge 
-                              variant="outline" 
-                              className={cn('font-mono text-xs', getStatusColor(message.metadata.status))}
-                            >
-                              {message.metadata.status}
-                            </Badge>
-                          </>
-                        )}
-                        <span className="font-mono text-xs text-muted-foreground">
-                          Solidity ^0.8.26
-                        </span>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(message.contractCode!, message.id)}
-                        className="h-8 px-2"
-                      >
-                        {copiedId === message.id ? (
-                          <Check className="w-4 h-4 text-primary" />
-                        ) : (
-                          <Copy className="w-4 h-4" />
-                        )}
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <pre className="overflow-x-auto text-xs font-mono bg-background rounded-lg p-4 border border-border">
-                      <code className="text-muted-foreground">{message.contractCode}</code>
-                    </pre>
-                  </CardContent>
-                </Card>
-              )}
-              
-              <div className="font-mono text-xs text-muted-foreground">
-                {message.timestamp.toLocaleTimeString()}
-              </div>
-            </div>
-            
-            {message.role === 'user' && (
-              <div className="w-8 h-8 rounded-lg bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-accent" />
-              </div>
-            )}
-          </div>
+            message={message}
+            copiedId={copiedId}
+            onCopy={copyToClipboard}
+          />
         ))}
         
         {isGenerating && (
@@ -822,5 +896,14 @@ event VectorSealed(FinalityVector indexed vector, bytes32 merkleProof);`,
         </div>
       </form>
     </div>
+  );
+}
+
+// Export wrapped component with error boundary
+export function ContractChat() {
+  return (
+    <CDSErrorBoundary module="Contract Generator" showDetails>
+      <ContractChatContent />
+    </CDSErrorBoundary>
   );
 }

@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo, useCallback, memo } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CDSErrorBoundary } from '@/components/cds/error-boundary';
+import { ExportTools } from '@/components/cds/export-tools';
 import {
   Activity,
   Shield,
@@ -19,7 +21,8 @@ import {
   TrendingUp,
   Layers,
   FileSearch,
-  Wallet
+  Wallet,
+  Download
 } from 'lucide-react';
 import {
   Chart as ChartJS,
@@ -60,7 +63,34 @@ function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-export default function Route71Page() {
+// Memoized metric card for performance
+const MetricCard = memo(function MetricCard({ 
+  icon: Icon, 
+  label, 
+  value, 
+  colorClass 
+}: { 
+  icon: React.ComponentType<{ className?: string }>; 
+  label: string; 
+  value: string | number;
+  colorClass: string;
+}) {
+  return (
+    <Card className={`border-${colorClass}/30 bg-${colorClass}/5`}>
+      <CardContent className="p-4">
+        <div className="flex items-center gap-3">
+          <Icon className={`w-5 h-5 text-${colorClass}`} />
+          <div>
+            <p className="font-mono text-[10px] text-muted-foreground">{label}</p>
+            <p className={`font-mono text-sm font-bold text-${colorClass}`}>{value}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+});
+
+function Route71Content() {
   const [state, setState] = useState<Route71State | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -257,6 +287,21 @@ export default function Route71Page() {
               <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40 animate-pulse">
                 {state._metadata.version}
               </Badge>
+              <ExportTools 
+                data={{
+                  type: 'dashboard',
+                  title: 'Route 71 Omega-Divine Dashboard',
+                  timestamp: currentTime,
+                  content: state,
+                  metadata: {
+                    truthCycle,
+                    activeTab,
+                    mode: state._metadata.mode,
+                  }
+                }}
+                variant="outline"
+                size="sm"
+              />
             </div>
           </div>
 
@@ -718,5 +763,14 @@ export default function Route71Page() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Export with error boundary
+export default function Route71Page() {
+  return (
+    <CDSErrorBoundary module="Route 71 Dashboard" showDetails>
+      <Route71Content />
+    </CDSErrorBoundary>
   );
 }
