@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { 
   Activity,
   Cpu,
@@ -28,6 +28,28 @@ import {
 export default function ApexFinalityMonitor() {
   const [cycle, setCycle] = useState(144000);
   const [mounted, setMounted] = useState(false);
+
+  // Memoized and frozen static datasets - guarantees no mutation
+  const apexMetrics = useMemo(() => Object.freeze([
+    { label: "Recovery Model", val: "Pending Review", icon: Landmark, color: "text-emerald-500" },
+    { label: "Spoliation Blocked", val: "100%", icon: ShieldCheck, color: "text-blue-500" },
+    { label: "API Endpoints", val: "19", icon: Activity, color: "text-fuchsia-500" },
+    { label: "Truth Cycle", val: "266ms", icon: Cpu, color: "text-white" }
+  ]), []);
+
+  const executionLedger = useMemo(() => Object.freeze([
+    { id: 'MOD_19', act: 'BARREL_ISOLATION', res: 'LATCHED' },
+    { id: 'GATE_40', act: 'TOPOLOGY_ENFORCEMENT', res: 'SATURATED' },
+    { id: 'MINT_01', act: 'CLOSED_LOOP_MINT', res: 'ENFORCED' },
+    { id: 'AMATH_X', act: 'DEEP_FREEZE_INVARIANT', res: 'ACTIVE' }
+  ]), []);
+
+  const finalityDeductions = useMemo(() => Object.freeze([
+    "1. Runtime layer contains metadata-only records; no transcripts are rendered.",
+    "2. Spoliation-related events are tracked as system-classified metadata.",
+    "3. Runtime state transitions are represented by local audit commits.",
+    "4. External legal conclusions require corroborating records and review."
+  ]), []);
 
   useEffect(() => {
     setMounted(true);
@@ -68,12 +90,7 @@ export default function ApexFinalityMonitor() {
         
         {/* APEX METRICS */}
         <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {[
-            { label: "Recovery Model", val: "Pending Review", icon: Landmark, color: "text-emerald-500" },
-            { label: "Spoliation Blocked", val: "100%", icon: ShieldCheck, color: "text-blue-500" },
-            { label: "API Endpoints", val: "19", icon: Activity, color: "text-fuchsia-500" },
-            { label: "Truth Cycle", val: "266ms", icon: Cpu, color: "text-white" }
-          ].map((m, i) => (
+          {apexMetrics.map((m, i) => (
             <div key={i} className="bg-slate-900 border border-emerald-900 p-4 shadow-2xl flex flex-col gap-1">
               <div className="flex items-center gap-2 text-[8px] text-emerald-700 font-black uppercase tracking-tighter">
                 <m.icon size={12} /> {m.label}
@@ -94,12 +111,7 @@ export default function ApexFinalityMonitor() {
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter">Sovereign Execution Ledger</h3>
               </div>
               <div className="space-y-3">
-                 {[
-                   { id: 'MOD_19', act: 'BARREL_ISOLATION', res: 'LATCHED' },
-                   { id: 'GATE_40', act: 'TOPOLOGY_ENFORCEMENT', res: 'SATURATED' },
-                   { id: 'MINT_01', act: 'CLOSED_LOOP_MINT', res: 'ENFORCED' },
-                   { id: 'AMATH_X', act: 'DEEP_FREEZE_INVARIANT', res: 'ACTIVE' }
-                 ].map(e => (
+                 {executionLedger.map(e => (
                    <div key={e.id} className="flex justify-between items-center p-3 border-l-4 border-fuchsia-500 bg-black/60 group hover:border-emerald-500 transition-all">
                       <span className="text-[10px] font-black text-white">{e.id}</span>
                       <span className="text-[9px] text-zinc-500 uppercase tracking-widest">{e.act}</span>
@@ -145,10 +157,9 @@ export default function ApexFinalityMonitor() {
             <h3 className="text-xl font-black text-white uppercase italic tracking-widest">Protocol Finality Deductions</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-[10px] font-bold text-emerald-100/60 uppercase font-mono italic">
-            <p>1. Runtime layer contains metadata-only records; no transcripts are rendered.</p>
-            <p>2. Spoliation-related events are tracked as system-classified metadata.</p>
-            <p>3. Runtime state transitions are represented by local audit commits.</p>
-            <p>4. External legal conclusions require corroborating records and review.</p>
+            {finalityDeductions.map((d, i) => (
+              <p key={i}>{d}</p>
+            ))}
             <p className="col-span-2 text-center text-fuchsia-500 mt-6 tracking-[0.5em] not-italic font-black text-lg animate-pulse border-t border-zinc-800 pt-4">
               DG77.77X LOCKED // MADE IN THE USA
             </p>
