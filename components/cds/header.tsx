@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { 
   Shield, Clock, DollarSign, Activity, FileCode, MessageSquarePlus, 
   FileText, Mail, Zap, Flag, RefreshCw, Rocket, Radio, Brain, Ban, 
-  Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle,
+  Coins, Lock, Send, Home, Menu, X, Server, MessageCircle,
   Route, FileSearch, Terminal, Layers, CircleDot, Film, Wallet, 
   CheckCircle2, Circle, ArrowRight, Database, Play, RotateCcw, GitBranch, Eye, Cpu, Fingerprint, Vault
 } from 'lucide-react';
@@ -93,7 +93,6 @@ interface ProtocolState {
 export function CDSHeader() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLifecycle, setShowLifecycle] = useState(false);
   const [showProtocolState, setShowProtocolState] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [pulsePhase, setPulsePhase] = useState(0);
@@ -208,8 +207,8 @@ export function CDSHeader() {
               
               return (
                 <div key={route.href} className="flex items-center">
-                  <button
-                    onClick={() => setShowLifecycle(!showLifecycle)}
+                  <Link
+                    href={route.href}
                     className={cn(
                       'flex items-center gap-1 px-2 py-1 rounded text-[10px] font-mono transition-all',
                       isActive && 'bg-primary/20 text-primary border border-primary/40',
@@ -225,7 +224,7 @@ export function CDSHeader() {
                       <Circle className="w-3 h-3" />
                     )}
                     <span className="hidden 2xl:inline">{route.label}</span>
-                  </button>
+                  </Link>
                   {index < lifecycleRoutes.length - 1 && (
                     <ArrowRight className={cn(
                       "w-3 h-3 mx-0.5",
