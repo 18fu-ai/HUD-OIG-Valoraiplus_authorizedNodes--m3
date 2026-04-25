@@ -278,7 +278,7 @@ How may I assist you today, Poppa?`
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Handle form submission with REV_34 envelope
+  // Handle form submission with REV_34 envelope - SYNC version for proper form handling
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -291,7 +291,10 @@ How may I assist you today, Poppa?`
       setInterimTranscript("");
     }
 
-    // Generate packet and envelope asynchronously without blocking submission
+    // Submit the form first (sync)
+    handleSubmit(e);
+
+    // Then process REV_34 envelope asynchronously
     const packetId = `pkt_${Date.now()}`;
 
     const envelope: ConversationEnvelope = {
@@ -315,7 +318,7 @@ How may I assist you today, Poppa?`
       },
     };
 
-    // Process hash and manifest asynchronously
+    // Process hash and manifest asynchronously without blocking
     (async () => {
       const integrityHash = await sha256(canonicalize(envelope));
 
@@ -331,9 +334,6 @@ How may I assist you today, Poppa?`
       const manifest = await createValidationManifest("newt-session", packets);
       setValidationManifest(manifest);
     })();
-
-    // Submit immediately without waiting for hash
-    handleSubmit(e);
   };
 
   // Handle keyboard shortcuts
@@ -341,11 +341,10 @@ How may I assist you today, Poppa?`
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if ((input ?? '').trim() && !isLoading) {
-        // Create a synthetic form event for submission
+        // Create synthetic form submit event
         const form = e.currentTarget.closest('form');
         if (form) {
-          const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-          form.dispatchEvent(submitEvent);
+          form.requestSubmit();
         }
       }
     }
