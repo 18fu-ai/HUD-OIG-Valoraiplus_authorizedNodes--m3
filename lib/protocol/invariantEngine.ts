@@ -437,6 +437,181 @@ export interface PolicyExport {
   }>;
 }
 
+// ============================================================
+// INVARIANT STATE CLASSIFICATION
+// ============================================================
+
+export type InvariantState = 
+  | 'VALID'           // All checks passed, fully compliant
+  | 'INCOMPLETE'      // Missing required evidence
+  | 'NONDETERMINISTIC' // Replay inconsistency detected
+  | 'UNSOURCED'       // No source lineage
+  | 'BLOCKED';        // Hard invariant violation
+
+/**
+ * Classify the invariant state of a claim
+ */
+export function classifyInvariantState(claim: RuntimeClaim): InvariantState {
+  // Check for hard blocks first
+  if (!claim.isObservable || !claim.hasExplicitAuthority) {
+    return 'BLOCKED';
+  }
+  
+  // Check for non-determinism
+  if (!claim.isDeterministic) {
+    return 'NONDETERMINISTIC';
+  }
+  
+  // Check for missing source
+  if (!claim.hasSourceRef) {
+    return 'UNSOURCED';
+  }
+  
+  // Check for incomplete evidence
+  if (!claim.isLedgerAnchored || !claim.isReplayable) {
+    return 'INCOMPLETE';
+  }
+  
+  return 'VALID';
+}
+
+// ============================================================
+// DOCUMENT-SPECIFIED API
+// ============================================================
+
+export interface SingleInvariantValidation {
+  invariantId: InvariantId;
+  passed: boolean;
+  reason: string;
+  enforcement: 'HARD' | 'SOFT';
+}
+
+/**
+ * Validate a single invariant against a claim
+ * API: validateInvariant(claim, invariantId)
+ */
+export function validateInvariant(
+  claim: RuntimeClaim, 
+  invariantId: InvariantId
+): SingleInvariantValidation {
+  const rule = INVARIANT_RULES.find(r => r.id === invariantId);
+  if (!rule) {
+    return {
+      invariantId,
+      passed: false,
+      reason: `Unknown invariant: ${invariantId}`,
+      enforcement: 'HARD',
+    };
+  }
+  
+  const result = rule.check(claim);
+  return {
+    invariantId: result.invariantId,
+    passed: result.passed,
+    reason: result.reason,
+    enforcement: rule.enforcement,
+  };
+}
+
+export interface RuntimeClaimEnforcement {
+  invariantSatisfied: boolean;
+  invariantState: InvariantState;
+  exportEligible: boolean;
+  visibilityGranted: boolean;
+  reasoning: string[];
+  violations: string[];
+  score: number;
+  threshold: number;
+  classification: string;
+  deterministic: boolean;
+  reproducible: boolean;
+}
+
+/**
+ * Enforce all runtime rules against a claim
+ * API: enforceRuntimeClaim(claim)
+ */
+export function enforceRuntimeClaim(claim: RuntimeClaim): RuntimeClaimEnforcement {
+  const invariantState = classifyInvariantState(claim);
+  const enforcement = enforceInvariants(claim);
+  
+  const reasoning: string[] = [];
+  const violations: string[] = [];
+  
+  // Build reasoning chain
+  for (const ir of enforcement.invariantResults) {
+    if (ir.passed) {
+      reasoning.push(`PASS: ${ir.invariantId} — ${ir.reason}`);
+    } else {
+      violations.push(`${ir.severity}: ${ir.invariantId} — ${ir.reason}`);
+    }
+  }
+  
+  // Add score analysis
+  reasoning.push(`ValidationScore = ${claim.validationScore.toFixed(3)}`);
+  reasoning.push(`Threshold = 0.75`);
+  reasoning.push(`InvariantState = ${invariantState}`);
+  
+  return {
+    invariantSatisfied: enforcement.allPassed,
+    invariantState,
+    exportEligible: enforcement.exportEligible,
+    visibilityGranted: enforcement.visibilityGranted,
+    reasoning,
+    violations,
+    score: claim.validationScore,
+    threshold: 0.75,
+    classification: invariantState,
+    deterministic: claim.isDeterministic,
+    reproducible: claim.isReplayable,
+  };
+}
+
+/**
+ * Validate a batch of claims
+ * API: validateClaimBatch(claims)
+ */
+export function validateClaimBatch(claims: RuntimeClaim[]): {
+  results: RuntimeClaimEnforcement[];
+  summary: {
+    total: number;
+    valid: number;
+    incomplete: number;
+    nondeterministic: number;
+    unsourced: number;
+    blocked: number;
+  };
+} {
+  const results = claims.map(claim => enforceRuntimeClaim(claim));
+  
+  return {
+    results,
+    summary: {
+      total: claims.length,
+      valid: results.filter(r => r.invariantState === 'VALID').length,
+      incomplete: results.filter(r => r.invariantState === 'INCOMPLETE').length,
+      nondeterministic: results.filter(r => r.invariantState === 'NONDETERMINISTIC').length,
+      unsourced: results.filter(r => r.invariantState === 'UNSOURCED').length,
+      blocked: results.filter(r => r.invariantState === 'BLOCKED').length,
+    },
+  };
+}
+
+/**
+ * Get only claims eligible for export
+ * API: getExportableClaims(claims)
+ */
+export function getExportableClaims(claims: RuntimeClaim[]): RuntimeClaim[] {
+  return claims.filter(claim => {
+    const enforcement = enforceRuntimeClaim(claim);
+    return enforcement.exportEligible;
+  });
+}
+
+// ============================================================
+// POLICY EXPORT
+// ============================================================
+
 /**
  * Generate export-ready policy document
  */
