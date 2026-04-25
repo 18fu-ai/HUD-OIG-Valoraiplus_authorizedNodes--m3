@@ -53,6 +53,7 @@ const navItems = [
   { href: '/stack', label: 'Stack', icon: CircleDot, category: 'system' },
   { href: '/cinema', label: 'Cinema', icon: Film, category: 'core' },
   { href: '/invariants', label: 'Invariants', icon: Eye, category: 'system' },
+  { href: '/nullifier', label: 'Nullifier', icon: Ban, category: 'enforcement' },
 ];
 
 const categories = [
