@@ -4,15 +4,29 @@ import { useState, useEffect } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { 
   Coins, Shield, Lock, AlertTriangle, Ban, 
-  Clock, Hash, Layers, Zap, ExternalLink
+  Hash, Layers, Zap, FileText, CheckCircle2
 } from 'lucide-react';
+
+type MintReceipt = {
+  success: boolean;
+  receiptId: string;
+  txPreview: string;
+  mintedAt: string;
+  decision: {
+    allowed: boolean;
+    reason: string;
+    route: string;
+  };
+};
 
 export default function JerryTokenPage() {
   const [mounted, setMounted] = useState(false);
   const [pulsePhase, setPulsePhase] = useState(0);
+  const [mintAttempted, setMintAttempted] = useState(false);
+  const [mintReceipt, setMintReceipt] = useState<MintReceipt | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -25,6 +39,38 @@ export default function JerryTokenPage() {
     }, 50);
     return () => clearInterval(interval);
   }, [mounted]);
+
+  const handleMint = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/token/mint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          symbol: '$JERRY',
+          wallet: '0x' + Math.random().toString(16).slice(2, 42),
+          amount: 1000,
+        }),
+      });
+      const data = await response.json();
+      setMintReceipt(data);
+      setMintAttempted(true);
+    } catch (error) {
+      setMintReceipt({
+        success: false,
+        receiptId: 'ERROR',
+        txPreview: '0x...',
+        mintedAt: new Date().toISOString(),
+        decision: {
+          allowed: false,
+          reason: 'API_ERROR',
+          route: '/route70',
+        },
+      });
+      setMintAttempted(true);
+    }
+    setLoading(false);
+  };
 
   if (!mounted) {
     return (
@@ -109,19 +155,66 @@ export default function JerryTokenPage() {
                 </div>
               </div>
 
-              {/* Blocked Button */}
+              {/* Mint Button - wired to API */}
               <button 
-                disabled
-                className="relative w-full mt-6 rounded-[14px] py-3.5 bg-red-900/50 border border-red-700/50 text-red-400 font-extrabold tracking-wider cursor-not-allowed opacity-75"
+                onClick={handleMint}
+                disabled={loading}
+                className="relative w-full mt-6 rounded-[14px] py-3.5 bg-red-900/50 border border-red-700/50 text-red-400 font-extrabold tracking-wider hover:bg-red-900/70 transition-colors"
               >
-                <Ban className="w-4 h-4 inline mr-2" />
-                MINT BLOCKED — ROUTE 70
+                {loading ? (
+                  <span>ATTEMPTING MINT...</span>
+                ) : (
+                  <>
+                    <Ban className="w-4 h-4 inline mr-2" />
+                    ATTEMPT MINT — $JERRY
+                  </>
+                )}
               </button>
             </div>
           </div>
 
           {/* Token Details */}
           <div className="space-y-6">
+            {/* Receipt Card - shows after mint attempt */}
+            {mintAttempted && mintReceipt && (
+              <Card className={`bg-slate-900 ${mintReceipt.success ? 'border-emerald-900/50' : 'border-red-900/50'}`}>
+                <CardHeader className="pb-3">
+                  <CardTitle className={`text-lg flex items-center gap-2 ${mintReceipt.success ? 'text-emerald-400' : 'text-red-400'}`}>
+                    {mintReceipt.success ? <CheckCircle2 className="w-5 h-5" /> : <Ban className="w-5 h-5" />}
+                    Mint Receipt
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">Receipt ID</span>
+                    <span className="text-white font-mono text-xs truncate max-w-[200px]">{mintReceipt.receiptId}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">TX Preview</span>
+                    <span className="text-emerald-400 font-mono text-xs">{mintReceipt.txPreview}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">Status</span>
+                    <Badge variant="outline" className={mintReceipt.success ? 'border-emerald-700 text-emerald-400' : 'border-red-700 text-red-400'}>
+                      {mintReceipt.success ? 'MINTED' : 'BLOCKED'}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">Route</span>
+                    <span className="text-red-400 font-mono">{mintReceipt.decision.route}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">Reason</span>
+                    <span className="text-slate-300 font-mono text-xs truncate max-w-[200px]">{mintReceipt.decision.reason.split(':')[0]}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">Timestamp</span>
+                    <span className="text-slate-300 font-mono text-xs">{new Date(mintReceipt.mintedAt).toLocaleTimeString()}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Identity Rejection */}
             <Card className="bg-slate-900 border-red-900/50">
               <CardHeader className="pb-3">
