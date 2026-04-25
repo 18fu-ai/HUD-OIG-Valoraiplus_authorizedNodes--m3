@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
+import { DefaultChatTransport, UIMessage } from 'ai';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { 
   Send, 
@@ -153,6 +153,38 @@ function getMessageText(message: { parts?: Array<{ type: string; text?: string }
   return (message as { content?: string }).content || '';
 }
 
+// Stable transport instance (must be outside component to avoid re-creation on each render)
+const chatTransport = new DefaultChatTransport({ api: '/api/newt/chat' });
+
+const WELCOME_MESSAGE: UIMessage = {
+  id: 'system-welcome',
+  role: 'assistant' as const,
+  parts: [
+    {
+      type: 'text' as const,
+      text: `**N.E.W.T. ONLINE -- Neural Evidence Witness Terminal**
+
+I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
+
+**Current Status:**
+- Schema: REV_34
+- Node: SAINT PAUL 55116
+- Forensic Blocks: 3,393 saturated
+- Spoliation Defense: 100% block rate
+
+**I can assist with:**
+- Evidence classification and 5W reasoning
+- Temporal provenance queries
+- Governance architecture analysis
+- Recovery hypothesis modeling
+- Adversary interaction reports
+
+How may I assist you today, Poppa?`
+    }
+  ],
+  createdAt: new Date(),
+};
+
 /**
  * N.E.W.T. Chat Runtime
  * Neural Evidence Witness Terminal
@@ -175,38 +207,10 @@ export default function NewtChatRuntime() {
   const [validationManifest, setValidationManifest] = useState<ValidationManifest | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   
-  // AI SDK 6: useChat with DefaultChatTransport
+  // AI SDK 6: useChat with stable transport
   const { messages, sendMessage, status, error } = useChat({
-    transport: new DefaultChatTransport({ api: '/api/newt/chat' }),
-    initialMessages: [
-      {
-        id: 'system-welcome',
-        role: 'assistant',
-        parts: [
-          {
-            type: 'text',
-            text: `**N.E.W.T. ONLINE — Neural Evidence Witness Terminal**
-
-I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
-
-**Current Status:**
-- Schema: REV_34
-- Node: SAINT PAUL 55116
-- Forensic Blocks: 3,393 saturated
-- Spoliation Defense: 100% block rate
-
-**I can assist with:**
-- Evidence classification and 5W reasoning
-- Temporal provenance queries
-- Governance architecture analysis
-- Recovery hypothesis modeling
-- Adversary interaction reports
-
-How may I assist you today, Poppa?`
-          }
-        ]
-      }
-    ]
+    transport: chatTransport,
+    initialMessages: [WELCOME_MESSAGE],
   });
 
   // Derive loading state from status

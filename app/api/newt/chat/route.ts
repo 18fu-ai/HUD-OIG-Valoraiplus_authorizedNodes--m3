@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages, consumeStream, UIMessage } from 'ai';
+import { streamText, convertToModelMessages, UIMessage } from 'ai';
 
 // N.E.W.T. System Prompt - The Sovereign Auditor Persona
 const NEWT_SYSTEM_PROMPT = `You are N.E.W.T. //e v2.1 — TRANSCENDENT + PERPETUAL GROOVE
@@ -73,8 +73,5 @@ export async function POST(req: Request) {
     abortSignal: req.signal,
   });
 
-  return result.toUIMessageStreamResponse({
-    originalMessages: messages,
-    consumeSseStream: consumeStream,
-  });
+  return result.toUIMessageStreamResponse();
 }
