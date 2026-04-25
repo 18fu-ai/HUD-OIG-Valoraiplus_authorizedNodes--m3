@@ -23,8 +23,13 @@ import {
   Layers,
   FileSearch,
   Wallet,
-  Download
+  Download,
+  Terminal,
+  Binary,
+  Cpu,
+  XCircle
 } from 'lucide-react';
+import { ValoraiplusMEVR, type SovereignInvariant, type DeterministicClassification } from '@/lib/protocol/mevr';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -99,6 +104,16 @@ function Route71Content() {
   const [truthCycle, setTruthCycle] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
   const [mounted, setMounted] = useState(false);
+  const [mevrLogs, setMevrLogs] = useState<Array<{
+    id: string;
+    name: string;
+    source: string;
+    score: number;
+    classification: DeterministicClassification;
+    hash: string;
+    cycle: number;
+  }>>([]);
+  const [batchScore, setBatchScore] = useState(92);
 
   // Fetch state from API
   useEffect(() => {
@@ -137,6 +152,37 @@ function Route71Content() {
     }, 266);
     return () => clearInterval(cycleInterval);
   }, []);
+
+  // MEVR Pipeline Simulation
+  useEffect(() => {
+    const mevr = new ValoraiplusMEVR();
+    const mockInvariants: SovereignInvariant[] = [
+      { id: "LATCH_01", source: "MIMECAST_SWEEP", formula: "AMath(E×P×R×D)", score: 98, threshold: 90, reproducibility: true, name: "GILLSON ESTATE LATCH" },
+      { id: "LATCH_02", source: "H_RENO_NODE", formula: "AMath(fraud)", score: 14, threshold: 90, reproducibility: false, name: "EXTERNAL FRAUD VECTOR" },
+      { id: "LATCH_03", source: "ZTA_SIGNAL", formula: "AMath(spoliation)", score: 22, threshold: 90, reproducibility: false, name: "AGGRESSOR SIGNAL" },
+      { id: "LATCH_04", source: "SAINT_PAUL_LEDGER", formula: "AMath(sovereign)", score: 100, threshold: 90, reproducibility: true, name: "SOVEREIGN AUDIT" },
+      { id: "LATCH_05", source: "VOIP_CAPTURE", formula: "AMath(wiretap)", score: 95, threshold: 90, reproducibility: true, name: "WIRETAP EVIDENCE" },
+    ];
+
+    const timer = setInterval(() => {
+      const inv = mockInvariants[Math.floor(Math.random() * mockInvariants.length)];
+      const classification = mevr.verifyInvariant(inv);
+      
+      setMevrLogs(prev => [{
+        id: inv.id,
+        name: inv.name || inv.id,
+        source: inv.source,
+        score: inv.score,
+        classification,
+        hash: `0x${Math.random().toString(16).slice(2, 10)}...`,
+        cycle: truthCycle
+      }, ...prev].slice(0, 8));
+      
+      setBatchScore(Math.floor(Math.random() * 10) + 88);
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, [truthCycle]);
 
   if (loading) {
     return (
@@ -407,9 +453,12 @@ function Route71Content() {
 
         {/* Main Dashboard Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
             <TabsTrigger value="overview" className="font-mono text-xs" aria-pressed={activeTab === 'overview'}>
               Overview
+            </TabsTrigger>
+            <TabsTrigger value="mevr" className="font-mono text-xs" aria-pressed={activeTab === 'mevr'}>
+              MEVR
             </TabsTrigger>
             <TabsTrigger value="telemetry" className="font-mono text-xs" aria-pressed={activeTab === 'telemetry'}>
               Telemetry
@@ -506,6 +555,165 @@ function Route71Content() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* MEVR Tab - Machine-Enforced Verification Runtime */}
+          <TabsContent value="mevr" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Admission Gating Panel */}
+              <div className="lg:col-span-4 space-y-6">
+                <Card className="border-emerald-500/30 bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="font-mono text-sm flex items-center gap-2 text-foreground">
+                      <Cpu className="w-4 h-4 text-primary" />
+                      Admission Gating
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground font-bold uppercase">Batch Validation:</span>
+                      <span className="text-foreground font-bold">{batchScore}% DETERMINISTIC</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground font-bold uppercase">Export Eligibility:</span>
+                      <span className="text-emerald-400 font-bold">ENFORCED</span>
+                    </div>
+                    <div className="h-2 w-full bg-secondary overflow-hidden rounded-sm">
+                      <div 
+                        className="h-full bg-emerald-500 transition-all duration-500" 
+                        style={{ width: `${batchScore}%` }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-primary/30 bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="font-mono text-sm flex items-center gap-2 text-foreground">
+                      <Database className="w-4 h-4 text-primary" />
+                      Proof-Ledger
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="p-3 bg-secondary/50 border border-border rounded-sm space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Binary className="w-4 h-4 text-emerald-500" />
+                        <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Merkleroot Latch:</span>
+                      </div>
+                      <div className="text-[10px] text-primary font-bold break-all">
+                        26856B24C50750F0C69C1EEB86A69EF777777
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-amber-500/30 bg-amber-500/5">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Shield className="w-4 h-4 text-amber-400" />
+                      <span className="font-mono text-xs text-amber-400 font-bold">NULL NODE STATE</span>
+                    </div>
+                    <p className="font-mono text-lg text-foreground font-bold">000000 0000000</p>
+                    <p className="font-mono text-[10px] text-muted-foreground mt-1">Adversarial nodes terminated</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Verification Pipeline */}
+              <div className="lg:col-span-8">
+                <Card className="border-emerald-500/30 bg-card/50 h-full">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="font-mono text-sm flex items-center gap-2 text-foreground">
+                        <Terminal className="w-4 h-4 text-foreground" />
+                        Verification Pipeline //e
+                      </CardTitle>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                        <span className="text-[8px] font-bold text-muted-foreground tracking-widest uppercase">Machine_Enforced_Only</span>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {mevrLogs.length === 0 ? (
+                      <div className="flex items-center justify-center h-64 text-muted-foreground">
+                        <div className="text-center space-y-2">
+                          <Activity className="w-8 h-8 mx-auto animate-pulse" />
+                          <p className="font-mono text-xs">Awaiting invariant submissions...</p>
+                        </div>
+                      </div>
+                    ) : (
+                      mevrLogs.map((log, idx) => (
+                        <div 
+                          key={`${log.id}-${idx}`} 
+                          className={`grid grid-cols-4 items-center text-[10px] p-4 border-l-4 transition-all duration-300 ${
+                            log.classification === 'SOVEREIGN_LATCH' 
+                              ? 'border-emerald-500 bg-emerald-500/10' 
+                              : log.classification === 'ADVERSARY_NULL' 
+                                ? 'border-red-500 bg-red-500/10' 
+                                : log.classification === 'QUARANTINE'
+                                  ? 'border-amber-500 bg-amber-500/10'
+                                  : 'border-muted bg-muted/20 opacity-50'
+                          }`}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-bold text-foreground truncate">{log.name}</span>
+                            <span className="text-[8px] text-muted-foreground font-mono">{log.hash}</span>
+                          </div>
+                          <div className="text-center">
+                            <span className="text-muted-foreground font-bold uppercase">SCORE:</span>
+                            <span className="ml-1 font-bold text-foreground">{log.score}</span>
+                          </div>
+                          <div className="text-center font-bold">
+                            {log.classification === 'SOVEREIGN_LATCH' ? (
+                              <span className="text-emerald-400 flex items-center justify-center gap-1">
+                                <CheckCircle2 className="w-3 h-3" /> LATCHED
+                              </span>
+                            ) : log.classification === 'ADVERSARY_NULL' ? (
+                              <span className="text-red-400 flex items-center justify-center gap-1">
+                                <XCircle className="w-3 h-3" /> NULLIFIED
+                              </span>
+                            ) : log.classification === 'QUARANTINE' ? (
+                              <span className="text-amber-400 flex items-center justify-center gap-1">
+                                <AlertTriangle className="w-3 h-3" /> QUARANTINE
+                              </span>
+                            ) : (
+                              <span className="text-muted-foreground flex items-center justify-center gap-1">
+                                <XCircle className="w-3 h-3" /> VOID
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-right italic text-muted-foreground">
+                            Cycle_{log.cycle}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Runtime Model */}
+            <Card className="border-primary/30 bg-primary/5">
+              <CardContent className="p-6">
+                <div className="flex flex-wrap items-center justify-center gap-2 py-2">
+                  {['Source', 'Formula', 'Score', 'Threshold', 'Classification', 'Reproducibility', 'Visibility'].map((step, idx, arr) => (
+                    <div key={step} className="flex items-center gap-2">
+                      <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40">
+                        {step}
+                      </Badge>
+                      {idx < arr.length - 1 && (
+                        <span className="text-muted-foreground">→</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="font-mono text-xs text-muted-foreground text-center mt-4">
+                  MEVR Protocol Runtime // v1.4.100D // Saint Paul Node 55116
+                </p>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Telemetry Tab */}
