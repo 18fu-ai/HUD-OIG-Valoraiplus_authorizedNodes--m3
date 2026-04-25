@@ -114,7 +114,7 @@ const PipelineStep = ({ name, status, active, icon: Icon }: PipelineStepProps) =
   </div>
 );
 
-interface LedgerEntry {
+interface ProofArtifact {
   id: string;
   timestamp: string;
   type: string;
@@ -122,12 +122,26 @@ interface LedgerEntry {
   policy: string;
   result: 'LATCHED' | 'NULLIFIED';
   merkleroot: string;
+  // First-class proof artifact fields
+  evidenceSource: string;
+  formula: string;
+  proofScore: number;
+  confidenceScore: number;
+  validationScore: number;
+  threshold: number;
+  replayValidated: boolean;
+  invariantResult: 'VALID' | 'INCOMPLETE' | 'NONDETERMINISTIC' | 'UNSOURCED' | 'BLOCKED';
+  exportEligible: boolean;
+  reasonCode: string;
+  traceId: string;
 }
 
 export default function KernelPage() {
   const [truthCycle, setTruthCycle] = useState(144000);
   const [pipelineIdx, setPipelineIdx] = useState(0);
-  const [ledger, setLedger] = useState<LedgerEntry[]>([]);
+  const [ledger, setLedger] = useState<ProofArtifact[]>([]);
+  const [selectedArtifact, setSelectedArtifact] = useState<ProofArtifact | null>(null);
+  const [activeModule, setActiveModule] = useState<string>('kernel');
 
   const pipeline = useMemo(() => [
     { name: "Claim", icon: Fingerprint },
@@ -140,12 +154,42 @@ export default function KernelPage() {
   ], []);
 
   const MOCK_INPUTS = useMemo(() => [
-    { type: 'SOVEREIGN_LATCH', detail: 'Saint Paul Node Sync', policy: 'AUTHORIZED_AUDIT' },
-    { type: 'FRICTION_EVENT', detail: 'H. RENO NODE ACCESS', policy: 'NULL_ADMISSION' },
-    { type: 'STATE_TRANSITION', detail: '$508M Resolution Update', policy: 'POLICY_REPRODUCIBLE' },
-    { type: 'GHOST_SIGNAL', detail: 'Low Freq Pulse Detected', policy: 'OMEGA_UNIFIED' },
-    { type: 'MIMECAST_SWEEP', detail: '142 Events Captured', policy: 'FORENSIC_ANCHORED' },
-    { type: 'ZTA_NULLIFICATION', detail: 'Adversary Signal Blocked', policy: 'NULL_ADMISSION' },
+    { 
+      type: 'SOVEREIGN_LATCH', detail: 'Saint Paul Node Sync', policy: 'AUTHORIZED_AUDIT',
+      evidenceSource: 'lib/cds-data.ts', formula: 'P=(E×P×R×D)^0.25', 
+      proofScore: 0.96, confidenceScore: 0.94, threshold: 0.75,
+      invariantResult: 'VALID' as const, reasonCode: 'A-001', exportEligible: true
+    },
+    { 
+      type: 'FRICTION_EVENT', detail: 'H. RENO NODE ACCESS', policy: 'NULL_ADMISSION',
+      evidenceSource: 'external/adversary', formula: 'NULL_GATE', 
+      proofScore: 0.12, confidenceScore: 0.08, threshold: 0.75,
+      invariantResult: 'BLOCKED' as const, reasonCode: 'R-001', exportEligible: false
+    },
+    { 
+      type: 'STATE_TRANSITION', detail: '$508M Resolution Update', policy: 'POLICY_REPRODUCIBLE',
+      evidenceSource: 'lib/protocol/governanceKernel.ts', formula: 'V=(P+C)/2', 
+      proofScore: 0.92, confidenceScore: 0.89, threshold: 0.75,
+      invariantResult: 'VALID' as const, reasonCode: 'A-002', exportEligible: true
+    },
+    { 
+      type: 'GHOST_SIGNAL', detail: 'Low Freq Pulse Detected', policy: 'OMEGA_UNIFIED',
+      evidenceSource: 'lib/protocol/mevr.ts', formula: 'AMath(Σ,t)', 
+      proofScore: 0.88, confidenceScore: 0.85, threshold: 0.75,
+      invariantResult: 'VALID' as const, reasonCode: 'A-003', exportEligible: true
+    },
+    { 
+      type: 'MIMECAST_SWEEP', detail: '142 Events Captured', policy: 'FORENSIC_ANCHORED',
+      evidenceSource: 'lib/cds-data.ts:mimecastEvents', formula: 'P=(E×P×R×D)^0.25', 
+      proofScore: 0.98, confidenceScore: 0.97, threshold: 0.75,
+      invariantResult: 'VALID' as const, reasonCode: 'A-004', exportEligible: true
+    },
+    { 
+      type: 'ZTA_NULLIFICATION', detail: 'Adversary Signal Blocked', policy: 'NULL_ADMISSION',
+      evidenceSource: 'external/ZTA_LLP', formula: 'NULL_GATE', 
+      proofScore: 0.22, confidenceScore: 0.18, threshold: 0.75,
+      invariantResult: 'BLOCKED' as const, reasonCode: 'R-002', exportEligible: false
+    },
   ], []);
 
   useEffect(() => {
@@ -157,13 +201,28 @@ export default function KernelPage() {
         if (next === 0) {
           const input = MOCK_INPUTS[Math.floor(Math.random() * MOCK_INPUTS.length)];
           const isSuccess = input.policy !== 'NULL_ADMISSION';
-          setLedger(prev => [{
+          const validationScore = (input.proofScore + input.confidenceScore) / 2;
+          const artifact: ProofArtifact = {
             id: Math.random().toString(16).slice(2, 10),
             timestamp: new Date().toLocaleTimeString(),
-            ...input,
+            type: input.type,
+            detail: input.detail,
+            policy: input.policy,
             result: isSuccess ? 'LATCHED' : 'NULLIFIED',
-            merkleroot: SAINT_PAUL_MERKLE.slice(0, 10) + "..."
-          }, ...prev].slice(0, 6));
+            merkleroot: SAINT_PAUL_MERKLE.slice(0, 10) + "...",
+            evidenceSource: input.evidenceSource,
+            formula: input.formula,
+            proofScore: input.proofScore,
+            confidenceScore: input.confidenceScore,
+            validationScore,
+            threshold: input.threshold,
+            replayValidated: isSuccess,
+            invariantResult: input.invariantResult,
+            exportEligible: input.exportEligible,
+            reasonCode: input.reasonCode,
+            traceId: `TRACE-${Math.random().toString(16).slice(2, 6).toUpperCase()}`
+          };
+          setLedger(prev => [artifact, ...prev].slice(0, 6));
         }
         return next;
       });
@@ -273,6 +332,37 @@ export default function KernelPage() {
               </div>
             </div>
 
+            {/* Module Selection - Live Runtime Introspection */}
+            <div className="p-4 bg-slate-900/80 border-2 border-[#FF00FF]/30">
+              <div className="flex items-center gap-2 mb-3">
+                <Search className="text-[#FF00FF]" size={16} />
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Runtime Modules</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { id: 'kernel', label: 'Kernel', file: 'governanceKernel.ts' },
+                  { id: 'codes', label: 'Codes', file: 'reasonCodes.ts' },
+                  { id: 'trace', label: 'Trace', file: 'traceGraph.ts' },
+                  { id: 'replay', label: 'Replay', file: 'replayValidator.ts' },
+                  { id: 'export', label: 'Export', file: 'exportPolicy.ts' },
+                  { id: 'mevr', label: 'MEVR', file: 'mevr.ts' },
+                ].map(mod => (
+                  <button
+                    key={mod.id}
+                    onClick={() => setActiveModule(mod.id)}
+                    className={`p-2 text-[9px] font-bold uppercase text-left transition-all ${
+                      activeModule === mod.id 
+                        ? 'bg-[#FF00FF]/20 border border-[#FF00FF] text-[#FF00FF]' 
+                        : 'bg-black/30 border border-zinc-800 text-zinc-500 hover:border-zinc-600'
+                    }`}
+                  >
+                    <span className="block">{mod.label}</span>
+                    <span className="text-[7px] font-mono opacity-60">{mod.file}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Merkleroot Anchor */}
             <div className="p-4 bg-emerald-950/20 border-2 border-emerald-900/40">
               <div className="flex items-center gap-2 mb-3">
@@ -287,15 +377,15 @@ export default function KernelPage() {
 
           {/* RIGHT: ROUTE 71 INTROSPECTION SURFACE */}
           <section className="lg:col-span-7 bg-slate-900/80 border-2 border-emerald-900 p-8">
-            <div className="flex items-center justify-between mb-8 border-b border-emerald-900/50 pb-4">
+            <div className="flex items-center justify-between mb-6 border-b border-emerald-900/50 pb-4">
               <div className="flex items-center gap-3">
                 <Binary className="text-white" size={24} />
-                <h2 className="text-xl font-black uppercase text-white italic tracking-tighter">Route 71: Why This Exists</h2>
+                <h2 className="text-lg font-black uppercase text-white italic tracking-tighter">Runtime Explanation Graph</h2>
               </div>
-              <div className="text-[8px] text-zinc-600 uppercase font-black">Audit_Stream_v1</div>
+              <div className="text-[8px] text-zinc-600 uppercase font-black">Proof_Artifact_Stream</div>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-4">
               {ledger.length === 0 ? (
                 <div className="flex items-center justify-center h-48 text-zinc-600">
                   <div className="text-center space-y-2">
@@ -307,27 +397,102 @@ export default function KernelPage() {
                 ledger.map((entry) => (
                   <div 
                     key={entry.id} 
-                    className={`p-4 border-l-4 transition-all duration-500 ${
+                    onClick={() => setSelectedArtifact(selectedArtifact?.id === entry.id ? null : entry)}
+                    className={`p-4 border-l-4 transition-all duration-500 cursor-pointer hover:bg-slate-800/50 ${
                       entry.result === 'LATCHED' 
                         ? 'border-emerald-500 bg-emerald-950/20' 
-                        : 'border-red-600 bg-red-950/20 opacity-60'
-                    }`}
+                        : 'border-red-600 bg-red-950/20 opacity-80'
+                    } ${selectedArtifact?.id === entry.id ? 'ring-2 ring-[#FF00FF]' : ''}`}
                   >
-                    <div className="flex justify-between items-start mb-2">
+                    {/* Header Row */}
+                    <div className="flex justify-between items-start mb-3">
                       <div>
                         <p className="text-xs font-black text-white">{entry.detail}</p>
                         <p className="text-[9px] text-[#FF00FF] font-bold">{entry.policy}</p>
                       </div>
-                      <span className={`text-[8px] font-black px-2 py-0.5 rounded-sm ${
-                        entry.result === 'LATCHED' 
-                          ? 'bg-emerald-600 text-black' 
-                          : 'bg-red-950 text-red-500'
-                      }`}>
-                        {entry.result}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[8px] font-black px-2 py-0.5 rounded-sm ${
+                          entry.invariantResult === 'VALID' ? 'bg-emerald-600 text-black' :
+                          entry.invariantResult === 'BLOCKED' ? 'bg-red-950 text-red-500' :
+                          'bg-amber-950 text-amber-500'
+                        }`}>
+                          {entry.invariantResult}
+                        </span>
+                        <span className={`text-[8px] font-black px-2 py-0.5 rounded-sm ${
+                          entry.result === 'LATCHED' 
+                            ? 'bg-emerald-600 text-black' 
+                            : 'bg-red-950 text-red-500'
+                        }`}>
+                          {entry.result}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center text-[8px] font-mono text-zinc-600 border-t border-zinc-800/30 pt-2">
-                      <span>TX_ID: {entry.id}</span>
+                    
+                    {/* Proof Artifact Details - Always visible */}
+                    <div className="grid grid-cols-4 gap-2 text-[8px] mb-3 p-2 bg-black/30 rounded">
+                      <div>
+                        <span className="text-zinc-500 block">Proof</span>
+                        <span className={`font-bold ${entry.proofScore >= 0.75 ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {(entry.proofScore * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-zinc-500 block">Confidence</span>
+                        <span className={`font-bold ${entry.confidenceScore >= 0.75 ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {(entry.confidenceScore * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-zinc-500 block">Validation</span>
+                        <span className={`font-bold ${entry.validationScore >= 0.75 ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {(entry.validationScore * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-zinc-500 block">Threshold</span>
+                        <span className="font-bold text-zinc-300">{(entry.threshold * 100).toFixed(0)}%</span>
+                      </div>
+                    </div>
+
+                    {/* Expanded Details */}
+                    {selectedArtifact?.id === entry.id && (
+                      <div className="mt-3 pt-3 border-t border-zinc-800/50 space-y-2 animate-in fade-in duration-300">
+                        <div className="grid grid-cols-2 gap-3 text-[9px]">
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Evidence Source</span>
+                            <span className="text-emerald-400 font-mono">{entry.evidenceSource}</span>
+                          </div>
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Formula</span>
+                            <span className="text-[#FF00FF] font-mono">{entry.formula}</span>
+                          </div>
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Replay Validated</span>
+                            <span className={entry.replayValidated ? 'text-emerald-400' : 'text-red-400'}>
+                              {entry.replayValidated ? 'YES' : 'NO'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Export Eligible</span>
+                            <span className={entry.exportEligible ? 'text-emerald-400' : 'text-red-400'}>
+                              {entry.exportEligible ? 'YES' : 'NO'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Reason Code</span>
+                            <span className="text-white font-mono">{entry.reasonCode}</span>
+                          </div>
+                          <div>
+                            <span className="text-zinc-500 block mb-1">Trace ID</span>
+                            <span className="text-zinc-400 font-mono">{entry.traceId}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Footer Row */}
+                    <div className="flex justify-between items-center text-[8px] font-mono text-zinc-600 border-t border-zinc-800/30 pt-2 mt-2">
+                      <span>TX: {entry.id}</span>
                       <span>MERKLE: {entry.merkleroot}</span>
                       <span>{entry.timestamp}</span>
                     </div>
