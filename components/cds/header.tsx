@@ -47,6 +47,7 @@ const navItems = [
   { href: '/reputation', label: 'Reputation', icon: Ban, category: 'token' },
   { href: '/token', label: '$CSSS', icon: Coins, category: 'token' },
   { href: '/jerry', label: '$JERRY', icon: Ban, category: 'token' },
+  { href: '/mint', label: 'Mint Gateway', icon: Coins, category: 'token' },
   { href: '/security', label: 'Security', icon: Lock, category: 'security' },
   { href: '/transmit', label: 'HHS OCR', icon: Send, category: 'transmission' },
   { href: '/trinity', label: 'Trinity', icon: Server, category: 'system' },
