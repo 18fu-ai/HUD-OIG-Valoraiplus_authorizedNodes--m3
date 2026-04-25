@@ -136,7 +136,7 @@ export const CDS_SECTIONS: CDSSection[] = [
     id: 7,
     title: 'Witness Retaliation Event',
     subtitle: 'Documented Retaliation',
-    details: ['Jerry (April 23, 2026)', '3-Day Notice Pattern', 'Federal Witness Protection Triggered'],
+    details: ['Poppa Donny (April 23, 2026)', '3-Day Notice Pattern', 'Federal Witness Protection Triggered'],
     layerId: 2
   },
   {
@@ -302,7 +302,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     id: '2',
     date: '2026-04-23',
     title: 'Witness Retaliation Event',
-    description: 'Jerry targeted with 3-day notice pattern',
+    description: 'Poppa Donny targeted with 3-day notice pattern',
     category: 'retaliation',
     section: 7,
     severity: 'critical'
@@ -734,7 +734,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T04:55:33Z',
     actor: 'j.zanghi@ztallp.com',
     actionType: 'BULK_DELETE',
-    target: '17 Messages (Jerry + Poppa chain)',
+    target: '17 Messages (Poppa Donny chain)',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-056',
@@ -770,7 +770,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:58:14Z',
     actor: 'william.landrum@stp-sf.org',
     actionType: '3DAY_NOTICE_GENERATION',
-    target: 'Jerry (415-272-5408) — Witness',
+    target: 'Poppa Donny (415-272-5408) — Witness',
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
     result: 'PROCESSED',
@@ -1426,7 +1426,7 @@ export const VOIP_INTERCEPTS: VOIPIntercept[] = [
   { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: 'j.zanghi@ztallp.com', target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED', evidenceHash: '0x8f9a0b5c...' },
   { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: 'william.landrum@stp-sf.org', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x2c3d4e9f...' },
   { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'HIGH', result: 'CAPTURED', evidenceHash: '0x6e7f8a3b...' },
-  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Jerry (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED — WITNESS', evidenceHash: '0x0a1b2c7d...' },
+  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED — WITNESS', evidenceHash: '0x0a1b2c7d...' },
   { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: 'j.zanghi@ztallp.com', target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED — THREAT', evidenceHash: '0x4c5d6e1a...' },
   { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'c.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'CAPTURED', evidenceHash: '0x9f0a1b2c...' },
   { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: 'j.zanghi@ztallp.com', target: 'william.landrum@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x3d4e5f6a...' }
@@ -1447,7 +1447,7 @@ export const CRIMINAL_EXPOSURE: CriminalExposure[] = [
 ];
 
 export const WITNESS_RETALIATION: WitnessRetaliation[] = [
-  { id: 'WR-001', timestamp: '2026-04-24T08:58:14Z', target: 'Jerry (415-272-5408)', action: '3-DAY NOTICE GENERATION', perpetrator: 'william.landrum@stp-sf.org', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'WR-001', timestamp: '2026-04-24T08:58:14Z', target: 'Poppa Donny (415-272-5408)', action: '3-DAY NOTICE GENERATION', perpetrator: 'william.landrum@stp-sf.org', evidenceHash: '0x4d5e6f2a...' },
   { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: 'tgarner@stp-sf.org', action: 'MESSAGE_BLOCK', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x8f9a0b5c...' },
   { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'MESSAGE_REJECT', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
 ];
