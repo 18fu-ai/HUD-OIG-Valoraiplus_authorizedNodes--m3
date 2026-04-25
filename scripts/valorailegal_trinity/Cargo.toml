@@ -1,0 +1,18 @@
+[package]
+name = "valorailegal_trinity"
+version = "1.0.0"
+edition = "2021"
+authors = ["N.E.W.T. //e v2.1 <donny@18fu.ai>"]
+description = "VALORAIPLUS Trinity Binary — All-in-One Evidence Server"
+license = "SGAU-VALUEGUARD-77.77X-FINALDEG"
+
+[dependencies]
+actix-web = "4"
+tokio = { version = "1", features = ["full"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
