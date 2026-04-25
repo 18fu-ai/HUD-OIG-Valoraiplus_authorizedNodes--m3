@@ -251,6 +251,24 @@ export {
   type CreateReceiptInput,
 } from './receipt';
 
+// Machine-Enforced Runtime Surface
+export {
+  computeValidationScore,
+  evaluateRuntimeSignal,
+  evaluateIdentity,
+  buildRuntimeSurface,
+  type RuntimeCategory,
+  type InvariantState,
+  type ReplayStatus,
+  type RuntimeRoute,
+  type ReasonCode,
+  type RuntimeSignalInput,
+  type RuntimeSignal,
+  type ProofArtifact as RuntimeProofArtifact,
+  type IdentityInvariant,
+  type IdentityResult,
+} from './machine-enforced-runtime-surface';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
