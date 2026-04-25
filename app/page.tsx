@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { 
   FileText, Lock, Shield, Clock, DollarSign, Mail, Brain, Radio, 
   Coins, Send, Flag, Rocket, RefreshCw, Zap, Ban, Activity, Server,
-  MessageCircle, FileCode, MessageSquarePlus
+  MessageCircle, FileCode, MessageSquarePlus, Navigation
 } from 'lucide-react';
 
 // Quick access modules - ALL working routes
@@ -37,6 +37,7 @@ const quickModules = [
   { href: '/contract/chat', label: 'Create', icon: MessageSquarePlus, color: 'text-lime-400', desc: 'New Contract' },
   { href: '/uhi', label: 'UHI', icon: Zap, color: 'text-fuchsia-400', desc: 'High Income' },
   { href: '/report', label: 'Report', icon: FileText, color: 'text-sky-400', desc: 'Full Report' },
+  { href: '/route66', label: 'Route 66', icon: Navigation, color: 'text-amber-400', desc: 'Mother Road' },
   { href: '/route71', label: 'Route 71', icon: Activity, color: 'text-orange-500', desc: 'Omega-Divine' },
 ];
 

@@ -32,6 +32,7 @@ const navItems = [
   { href: '/security', label: 'Security', icon: Lock, category: 'security' },
   { href: '/transmit', label: 'HHS OCR', icon: Send, category: 'transmission' },
   { href: '/trinity', label: 'Trinity', icon: Server, category: 'system' },
+  { href: '/route66', label: 'Route 66', icon: Route, category: 'system' },
   { href: '/route71', label: 'Route 71', icon: Route, category: 'system' },
 ];
 
