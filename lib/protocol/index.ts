@@ -120,6 +120,91 @@ export {
   quickVerify,
 } from './verificationPipeline';
 
+// Reason Codes
+export {
+  ADMISSION_CODES,
+  REJECTION_CODES,
+  WARNING_CODES,
+  QUARANTINE_CODES,
+  ESCALATION_CODES,
+  REASON_CODE_REGISTRY,
+  getReasonCode,
+  getReasonCodesByCategory,
+  getReasonCodesBySeverity,
+  assignReasonCodes,
+  formatReasonAssignment,
+  type ReasonCode,
+  type ReasonCategory,
+  type ReasonSeverity,
+  type ReasonAssignment,
+} from './reasonCodes';
+
+// Trace Graph
+export {
+  TraceGraphBuilder,
+  constructTraceGraph,
+  getDecisionPath,
+  getNodesByType,
+  generateTraceSummary,
+  serializeTraceGraph,
+  deserializeTraceGraph,
+  type TraceNodeType,
+  type TraceNode,
+  type TraceEdge,
+  type TraceGraph,
+  type TraceInput,
+} from './traceGraph';
+
+// Replay Validator
+export {
+  hashClaimInputs,
+  hashClaimOutputs,
+  storeSnapshot,
+  getSnapshots,
+  clearSnapshots,
+  createSnapshot,
+  validateReplayConsistency,
+  performReplayValidation,
+  computeReplayAnalytics,
+  type ReplaySnapshot,
+  type ReplayValidationResult,
+  type ReplayAnalytics,
+} from './replayValidator';
+
+// Export Policy
+export {
+  EXPORT_POLICIES,
+  evaluateExportEligibility,
+  findBestPolicy,
+  generateExportManifest,
+  serializeManifest,
+  type ExportFormat,
+  type ExportLevel,
+  type ExportPolicy,
+  type ExportEligibility,
+  type ExportCandidate,
+  type ExportManifest,
+} from './exportPolicy';
+
+// Governance Kernel
+export {
+  GovernanceKernel,
+  GOVERNANCE_CONFIGS,
+  getGovernanceKernel,
+  resetGovernanceKernel,
+  type GovernanceMode,
+  type GovernanceConfig,
+  type GovernanceDecision,
+} from './governanceKernel';
+
+// MEVR Runtime
+export {
+  ValoraiplusMEVR,
+  type SovereignInvariant,
+  type DeterministicClassification,
+  type ProofArtifact,
+} from './mevr';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
