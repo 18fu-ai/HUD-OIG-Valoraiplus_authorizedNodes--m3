@@ -70,6 +70,7 @@ const navItems = [
   { href: '/apex', label: 'Apex', icon: Scale, category: 'system' },
   { href: '/valoraiplus', label: 'ValorAI+', icon: Shield, category: 'system' },
   { href: '/valuation', label: 'Valuation', icon: DollarSign, category: 'legal' },
+  { href: '/evaluative', label: 'Evaluative', icon: Activity, category: 'system' },
 ];
 
 const categories = [
