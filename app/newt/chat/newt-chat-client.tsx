@@ -287,10 +287,16 @@ export default function NewtChatClient() {
     }
   }, [handleSubmit]);
 
+  const [exportTimestamp, setExportTimestamp] = useState<string>('');
+
+  useEffect(() => {
+    setExportTimestamp(new Date().toISOString());
+  }, [messages]);
+
   const exportData = useMemo(() => ({
     type: 'transcript' as const,
     title: 'N.E.W.T. Chat Transcript',
-    timestamp: new Date().toISOString(),
+    timestamp: exportTimestamp || '2026-01-01T00:00:00Z',
     content: messages.map(m => ({ role: m.role, content: m.content })),
     metadata: {
       messageCount: messages.length,
@@ -298,7 +304,7 @@ export default function NewtChatClient() {
       session: 'SOVEREIGN_AUDITOR',
       firewall: firewallResult?.decision || 'PENDING',
     }
-  }), [messages, firewallResult]);
+  }), [messages, firewallResult, exportTimestamp]);
 
   if (!mounted) {
     return (
