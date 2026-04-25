@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { 
   FileText, Lock, Shield, Clock, DollarSign, Mail, Brain, Radio, 
   Coins, Send, Flag, Rocket, RefreshCw, Zap, Ban, Activity, Server,
-  MessageCircle, FileCode, MessageSquarePlus, Navigation, FileSearch
+  MessageCircle, FileCode, MessageSquarePlus, Navigation, FileSearch, Terminal
 } from 'lucide-react';
 
 // Quick access modules - ALL working routes
@@ -40,6 +40,7 @@ const quickModules = [
   { href: '/intelligence', label: 'Intelligence', icon: FileSearch, color: 'text-red-500', desc: 'Full Intel' },
   { href: '/route66', label: 'Route 66', icon: Navigation, color: 'text-amber-400', desc: 'Mother Road' },
   { href: '/route71', label: 'Route 71', icon: Activity, color: 'text-orange-500', desc: 'Omega-Divine' },
+  { href: '/protocol', label: 'Protocol', icon: Terminal, color: 'text-cyan-400', desc: 'Execution Layer' },
 ];
 
 export default function DashboardPage() {
