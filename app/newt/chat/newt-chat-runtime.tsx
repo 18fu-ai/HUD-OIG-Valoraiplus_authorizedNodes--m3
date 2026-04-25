@@ -111,6 +111,12 @@ How may I assist you today, Poppa?`
     ]
   });
 
+  // Track input in a ref for speech recognition callback
+  const inputRef2 = useRef(input);
+  useEffect(() => {
+    inputRef2.current = input;
+  }, [input]);
+
   // Check for speech recognition support
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -137,8 +143,9 @@ How may I assist you today, Poppa?`
           }
           
           if (finalTranscript) {
-            // Append final transcript to input
-            const newValue = (input + ' ' + finalTranscript).trim();
+            // Append final transcript to input using ref for current value
+            const currentInput = inputRef2.current || '';
+            const newValue = (currentInput + ' ' + finalTranscript).trim();
             handleInputChange({ target: { value: newValue } } as React.ChangeEvent<HTMLTextAreaElement>);
             setInterimTranscript('');
           } else {
@@ -165,7 +172,7 @@ How may I assist you today, Poppa?`
         recognitionRef.current.abort();
       }
     };
-  }, []);
+  }, [handleInputChange]);
 
   // Toggle voice listening
   const toggleListening = useCallback(() => {
@@ -341,7 +348,7 @@ How may I assist you today, Poppa?`
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
-                value={input + (interimTranscript ? ' ' + interimTranscript : '')}
+                value={input ?? ''}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 placeholder={isListening ? "Listening... speak now" : "Query the Sovereign Auditor..."}
