@@ -25,8 +25,10 @@ export type {
 // Receipt types
 export type {
   ReceiptV1,
+  ReceiptV2,
   ReceiptProof,
   ReceiptBlock,
+  AdmissionStatus,
 } from './receipt';
 
 // Topology types
@@ -103,6 +105,33 @@ export {
   type ProofStatistics,
   type SpoliationEvent,
 } from './auditEngine';
+
+// ============================================================
+// AMATH DUAL-BOUNDARY TYPES (v2.0)
+// ============================================================
+
+export type {
+  CorroborationStatus,
+  RuntimeProvenance,
+  SourceType,
+  EvidenceRow,
+  RuntimeLayer,
+  ObservedFact,
+  Interpretation,
+  ClosedLoopStage,
+  ClosedLoopState,
+  HardeningStatus,
+  HardeningCapability,
+} from '@/lib/amath';
+
+export {
+  LAYER_RESPONSIBILITIES,
+  PRODUCTION_SCORECARD,
+  HARDENED_INVARIANT,
+  isTrusted,
+  isUncertain,
+  getDefaultCorroboration,
+} from '@/lib/amath';
 
 // ============================================================
 // CONSTANTS (compile-time values)
