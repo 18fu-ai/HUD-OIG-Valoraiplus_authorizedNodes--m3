@@ -10,14 +10,25 @@ import {
   XCircle,
   CheckCircle2,
   ArrowRight,
-  Scale
+  Scale,
+  FileJson
 } from 'lucide-react';
-import { validateIdentityClaim, type IdentityClaim } from '@/lib/protocol/mevr';
+import type { ReceiptV1 } from '@/lib/protocol/receipt';
 
 type GateResult = {
-  status: 'ADMITTED' | 'BLOCKED';
+  status: 'ADMITTED' | 'BLOCKED' | 'QUARANTINED';
   reason: string;
-  claim: IdentityClaim;
+  identityClaim: {
+    name: string;
+    status: string;
+    invariantState: string;
+    exportEligible: boolean;
+    route: string;
+    replacement?: string;
+    sourceLineage?: string;
+  };
+  receipt: ReceiptV1;
+  isReplay: boolean;
 };
 
 export default function ValoraiplusIdentityGate() {
@@ -31,27 +42,39 @@ export default function ValoraiplusIdentityGate() {
     return () => clearInterval(interval);
   }, []);
 
-  const validateIdentity = () => {
+  const validateIdentity = async () => {
     if (!identityInput.trim() || processing) return;
 
     setProcessing(true);
     setResult(null);
 
-    setTimeout(() => {
-      const claim = validateIdentityClaim(identityInput);
-      const isSovereign = claim.status === 'VERIFIED';
-
-      setResult({
-        status: isSovereign ? 'ADMITTED' : 'BLOCKED',
-        reason: claim.reasonCode,
-        claim,
+    try {
+      const response = await fetch('/api/identity/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: identityInput }),
       });
-
+      
+      const data = await response.json();
+      
+      if (data.receipt) {
+        setResult({
+          status: data.receipt.status === 'ADMITTED' ? 'ADMITTED' : 
+                  data.receipt.status === 'QUARANTINED' ? 'QUARANTINED' : 'BLOCKED',
+          reason: data.receipt.reason,
+          identityClaim: data.identityClaim,
+          receipt: data.receipt,
+          isReplay: data.isReplay,
+        });
+      }
+    } catch (error) {
+      console.error('[v0] Gate verification error:', error);
+    } finally {
       setProcessing(false);
-    }, 1500);
+    }
   };
 
-  const destination = result?.status === 'ADMITTED' ? '/route71' : '/route70';
+  const destination = result?.identityClaim?.route || (result?.status === 'ADMITTED' ? '/route71' : '/route70');
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 p-6 font-mono text-emerald-400">
@@ -136,7 +159,9 @@ export default function ValoraiplusIdentityGate() {
             className={`border-l-4 p-4 ${
               result.status === 'ADMITTED'
                 ? 'border-emerald-500 bg-emerald-950/20'
-                : 'border-red-600 bg-red-950/20'
+                : result.status === 'QUARANTINED'
+                  ? 'border-amber-500 bg-amber-950/20'
+                  : 'border-red-600 bg-red-950/20'
             }`}
           >
             <div className="mb-2 flex items-center justify-between">
@@ -144,7 +169,9 @@ export default function ValoraiplusIdentityGate() {
                 className={`text-xs font-black uppercase ${
                   result.status === 'ADMITTED'
                     ? 'text-emerald-500'
-                    : 'text-red-500'
+                    : result.status === 'QUARANTINED'
+                      ? 'text-amber-500'
+                      : 'text-red-500'
                 }`}
               >
                 {result.status}
@@ -161,21 +188,57 @@ export default function ValoraiplusIdentityGate() {
               {result.reason}
             </p>
             
-            {result.claim.replacement && (
+            {result.isReplay && (
+              <p className="mb-2 text-[9px] text-cyan-400">
+                REPLAY DETECTED — returning cached receipt
+              </p>
+            )}
+            
+            {result.identityClaim?.replacement && (
               <p className="mb-2 text-[9px] text-amber-400">
-                Suggested: {result.claim.replacement}
+                Suggested: {result.identityClaim.replacement}
               </p>
             )}
 
-            {result.claim.sourceLineage && (
+            {result.identityClaim?.sourceLineage && (
               <p className="mb-2 text-[9px] text-emerald-400">
-                Lineage: {result.claim.sourceLineage}
+                Lineage: {result.identityClaim.sourceLineage}
               </p>
             )}
+            
+            {/* Receipt Card */}
+            <div className="mt-3 border border-zinc-800 bg-black/50 p-3">
+              <div className="mb-2 flex items-center gap-2 text-[9px] text-zinc-500">
+                <FileJson size={12} />
+                <span>RECEIPT v{result.receipt.receiptVersion}</span>
+              </div>
+              <div className="space-y-1 text-[8px]">
+                <div className="flex justify-between">
+                  <span className="text-zinc-600">TX_ID</span>
+                  <span className="text-white">{result.receipt.transactionId}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-600">SIGNER</span>
+                  <span className="text-fuchsia-400">{result.receipt.signer}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-600">VALIDATOR</span>
+                  <span className="text-emerald-400">{result.receipt.validator}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-600">BLOCK</span>
+                  <span className="text-white">{result.receipt.blockNumber}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-600">NONCE</span>
+                  <span className="text-white">{result.receipt.nonce}</span>
+                </div>
+              </div>
+            </div>
 
             <Link
               href={destination}
-              className="flex items-center gap-2 text-[10px] font-black text-fuchsia-500 hover:underline"
+              className="mt-3 flex items-center gap-2 text-[10px] font-black text-fuchsia-500 hover:underline"
             >
               PROCEED TO {result.status === 'ADMITTED' ? 'ROUTE 71' : 'VOID BOUNDARY'}
               <ArrowRight size={12} />

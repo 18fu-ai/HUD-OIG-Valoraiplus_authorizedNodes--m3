@@ -227,6 +227,30 @@ export {
   type BatchTopologyResult,
 } from './runtimeTopology';
 
+// Receipt System
+export {
+  RECEIPT_VERSION,
+  createReceipt,
+  getReceipt,
+  getAllReceipts,
+  getReceiptsByStatus,
+  getTelemetry,
+  logQuarantine,
+  getQuarantineLog,
+  generateIntentHash,
+  generateReceiptHash,
+  findByIntentHash,
+  findBySignerNonce,
+  type AdmissionStatus,
+  type ReceiptV1,
+  type ReceiptDomain,
+  type ReceiptEventWindow,
+  type ReceiptArtifacts,
+  type ReceiptAnchor,
+  type ReceiptTelemetry,
+  type CreateReceiptInput,
+} from './receipt';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================

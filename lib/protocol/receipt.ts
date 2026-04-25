@@ -1,0 +1,291 @@
+/**
+ * RECEIPT JSON v1
+ * Frozen data contract for admission decisions
+ * Used by /api/verify, /api/receipts/[txid], and Route 71 telemetry
+ */
+
+export const RECEIPT_VERSION = '1.0.0';
+
+// ============================================================
+// RECEIPT TYPES
+// ============================================================
+
+export type AdmissionStatus = 'ADMITTED' | 'REJECTED' | 'QUARANTINED';
+
+export interface ReceiptDomain {
+  name: string;
+  version: string;
+  chainId: number;
+}
+
+export interface ReceiptEventWindow {
+  from: string; // ISO timestamp
+  to: string;   // ISO timestamp
+}
+
+export interface ReceiptArtifacts {
+  total: number;
+  voipIntercepts: number;
+  mimecastBreaches: number;
+  spoliationEvents: number;
+}
+
+export interface ReceiptAnchor {
+  node: string;
+  bitcoinAnchor: string;
+  integrityHash: string;
+}
+
+export interface ReceiptV1 {
+  receiptVersion: string;
+  transactionId: string;
+  intentHash: string;
+  receiptHash: string;
+  status: AdmissionStatus;
+  reason: string;
+  signer: string;
+  validator: string;
+  domain: ReceiptDomain;
+  nonce: number;
+  blockNumber: number;
+  eventWindow: ReceiptEventWindow;
+  artifacts: ReceiptArtifacts;
+  anchor: ReceiptAnchor;
+  classification: string;
+  generatedAt: string;
+}
+
+// ============================================================
+// RECEIPT STORE (In-memory for demo, would be database in production)
+// ============================================================
+
+const receiptStore = new Map<string, ReceiptV1>();
+const intentHashIndex = new Map<string, string>(); // intentHash -> transactionId
+const signerNonceIndex = new Map<string, string>(); // `${signer}:${nonce}` -> transactionId
+
+// ============================================================
+// RECEIPT GENERATION
+// ============================================================
+
+/**
+ * Generate a deterministic hash from input
+ */
+function generateHash(input: string): string {
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    const char = input.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return '0x' + Math.abs(hash).toString(16).padStart(40, '0');
+}
+
+/**
+ * Generate intent hash from claim data
+ */
+export function generateIntentHash(signer: string, nonce: number, timestamp: string): string {
+  return generateHash(`${signer}:${nonce}:${timestamp}`);
+}
+
+/**
+ * Generate receipt hash from receipt data
+ */
+export function generateReceiptHash(receipt: Omit<ReceiptV1, 'receiptHash'>): string {
+  return generateHash(JSON.stringify(receipt));
+}
+
+/**
+ * Check for duplicate by intentHash
+ */
+export function findByIntentHash(intentHash: string): ReceiptV1 | undefined {
+  const txid = intentHashIndex.get(intentHash);
+  return txid ? receiptStore.get(txid) : undefined;
+}
+
+/**
+ * Check for duplicate by signer + nonce
+ */
+export function findBySignerNonce(signer: string, nonce: number): ReceiptV1 | undefined {
+  const key = `${signer}:${nonce}`;
+  const txid = signerNonceIndex.get(key);
+  return txid ? receiptStore.get(txid) : undefined;
+}
+
+/**
+ * Get receipt by transaction ID
+ */
+export function getReceipt(transactionId: string): ReceiptV1 | undefined {
+  return receiptStore.get(transactionId);
+}
+
+/**
+ * Get all receipts (for telemetry)
+ */
+export function getAllReceipts(): ReceiptV1[] {
+  return Array.from(receiptStore.values()).sort(
+    (a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
+  );
+}
+
+/**
+ * Get receipts by status
+ */
+export function getReceiptsByStatus(status: AdmissionStatus): ReceiptV1[] {
+  return getAllReceipts().filter(r => r.status === status);
+}
+
+// ============================================================
+// RECEIPT CREATION
+// ============================================================
+
+let nonceCounter = 144000;
+
+export interface CreateReceiptInput {
+  signer: string;
+  status: AdmissionStatus;
+  reason: string;
+  artifacts?: Partial<ReceiptArtifacts>;
+}
+
+/**
+ * Create a new receipt with deduplication
+ * Returns existing receipt on replay
+ */
+export function createReceipt(input: CreateReceiptInput): { receipt: ReceiptV1; isReplay: boolean } {
+  const nonce = nonceCounter++;
+  const timestamp = new Date().toISOString();
+  const intentHash = generateIntentHash(input.signer, nonce, timestamp);
+  
+  // Check for replay by signer (simplified - in production would check intentHash)
+  const existing = findBySignerNonce(input.signer, nonce - 1);
+  if (existing && existing.status === input.status) {
+    return { receipt: existing, isReplay: true };
+  }
+  
+  const transactionId = `TX-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+  
+  const receiptWithoutHash: Omit<ReceiptV1, 'receiptHash'> = {
+    receiptVersion: RECEIPT_VERSION,
+    transactionId,
+    intentHash,
+    status: input.status,
+    reason: input.reason,
+    signer: input.signer,
+    validator: 'Saint Paul Node',
+    domain: {
+      name: 'VALORAIPLUS_PROTOCOL',
+      version: 'REV.33',
+      chainId: 1,
+    },
+    nonce,
+    blockNumber: 55116,
+    eventWindow: {
+      from: '2026-04-22T17:00:00Z',
+      to: '2026-04-22T23:00:00Z',
+    },
+    artifacts: {
+      total: input.artifacts?.total ?? 102,
+      voipIntercepts: input.artifacts?.voipIntercepts ?? 47,
+      mimecastBreaches: input.artifacts?.mimecastBreaches ?? 12,
+      spoliationEvents: input.artifacts?.spoliationEvents ?? 9,
+    },
+    anchor: {
+      node: 'Saint Paul',
+      bitcoinAnchor: '26856b24c50750f0c69c1eeb86a69ef710551555c2c220e34d57521cbc8d75c2',
+      integrityHash: 'f4ff2fdab9a577184da7db088c68def4d0751899',
+    },
+    classification: input.status === 'ADMITTED' ? 'FEDERAL_ARTIFACT_REGISTRY' : 'QUARANTINE_LOG',
+    generatedAt: timestamp,
+  };
+  
+  const receipt: ReceiptV1 = {
+    ...receiptWithoutHash,
+    receiptHash: generateReceiptHash(receiptWithoutHash),
+  };
+  
+  // Store with indexes
+  receiptStore.set(transactionId, receipt);
+  intentHashIndex.set(intentHash, transactionId);
+  signerNonceIndex.set(`${input.signer}:${nonce}`, transactionId);
+  
+  return { receipt, isReplay: false };
+}
+
+// ============================================================
+// QUARANTINE LOG
+// ============================================================
+
+const quarantineLog: Array<{
+  timestamp: string;
+  signer: string;
+  reason: string;
+  intentHash: string;
+  rawInput: string;
+}> = [];
+
+/**
+ * Log a quarantined/rejected claim for forensic review
+ */
+export function logQuarantine(signer: string, reason: string, rawInput: unknown): void {
+  const timestamp = new Date().toISOString();
+  const intentHash = generateIntentHash(signer, Date.now(), timestamp);
+  
+  quarantineLog.push({
+    timestamp,
+    signer,
+    reason,
+    intentHash,
+    rawInput: JSON.stringify(rawInput),
+  });
+}
+
+/**
+ * Get quarantine log entries
+ */
+export function getQuarantineLog() {
+  return [...quarantineLog];
+}
+
+// ============================================================
+// TELEMETRY
+// ============================================================
+
+export interface ReceiptTelemetry {
+  totalReceipts: number;
+  admitted: number;
+  rejected: number;
+  quarantined: number;
+  recentReceipts: ReceiptV1[];
+  artifactTotals: ReceiptArtifacts;
+  lastUpdated: string;
+}
+
+/**
+ * Get telemetry summary for Route 71
+ */
+export function getTelemetry(): ReceiptTelemetry {
+  const all = getAllReceipts();
+  const admitted = all.filter(r => r.status === 'ADMITTED');
+  const rejected = all.filter(r => r.status === 'REJECTED');
+  const quarantined = all.filter(r => r.status === 'QUARANTINED');
+  
+  const artifactTotals = admitted.reduce(
+    (acc, r) => ({
+      total: acc.total + r.artifacts.total,
+      voipIntercepts: acc.voipIntercepts + r.artifacts.voipIntercepts,
+      mimecastBreaches: acc.mimecastBreaches + r.artifacts.mimecastBreaches,
+      spoliationEvents: acc.spoliationEvents + r.artifacts.spoliationEvents,
+    }),
+    { total: 0, voipIntercepts: 0, mimecastBreaches: 0, spoliationEvents: 0 }
+  );
+  
+  return {
+    totalReceipts: all.length,
+    admitted: admitted.length,
+    rejected: rejected.length,
+    quarantined: quarantined.length,
+    recentReceipts: all.slice(0, 10),
+    artifactTotals,
+    lastUpdated: new Date().toISOString(),
+  };
+}
