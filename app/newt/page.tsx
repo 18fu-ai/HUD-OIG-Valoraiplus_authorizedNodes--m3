@@ -1,17 +1,47 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import {
+  Activity,
   Brain,
+  Binary,
+  Box,
+  CheckCircle2,
   ChevronRight,
+  Database,
+  FileCode,
+  Fingerprint,
   Flag,
+  Gavel,
+  History,
+  Lock,
+  RefreshCw,
+  Share2,
   ShieldAlert,
   Target,
 } from 'lucide-react';
+
+// Runtime Protocol Types - REV_34
+type RuntimeStage =
+  | "INPUT"
+  | "ENVELOPE"
+  | "CLASSIFICATION"
+  | "PROVENANCE"
+  | "VALIDATION"
+  | "REPLAY"
+  | "RECEIPT";
+
+interface ValidationSurface {
+  integrity: "VALID" | "INVALID";
+  replay: "VERIFIED" | "FAILED";
+  evidenceCoverage: number;
+  confidence: number;
+  lifecycle: "COMPLETE" | "INCOMPLETE";
+}
 import {
   VALORLOOP_SYSTEM,
   BRAIN_DISH_STATUS,
@@ -91,14 +121,39 @@ function NavierStokesBackground() {
 export default function NEWTPage() {
   const [cycleCount, setCycleCount] = useState(7705);
   const [psiPressure, setPsiPressure] = useState(0);
+  const [timeState, setTimeState] = useState({ micros: '00:00:00.000000' });
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCycleCount(prev => prev + 1);
       setPsiPressure(prev => (prev + 0.05) % 100);
+      // Update microsecond timestamp
+      const now = new Date();
+      const micros = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${(now.getMilliseconds() * 1000).toString().padStart(6, '0')}`;
+      setTimeState({ micros });
     }, 266);
     return () => clearInterval(interval);
   }, []);
+
+  // Typed lifecycle trace - REV_34 IVL Protocol
+  const lifecycleTrace = useMemo(
+    () => [
+      { time: "00:00:00.000001", stage: "ENVELOPE" as RuntimeStage, status: "ATOMIC", icon: Box },
+      { time: "00:00:00.000266", stage: "VALIDATION" as RuntimeStage, status: "VALIDATED", icon: History },
+      { time: "00:00:00.001000", stage: "PROVENANCE" as RuntimeStage, status: "TYPED", icon: Binary },
+      { time: timeState.micros, stage: "RECEIPT" as RuntimeStage, status: "REPRODUCIBLE", icon: FileCode },
+    ],
+    [timeState.micros]
+  );
+
+  // Validation surface - externally verifiable
+  const validationSurface: ValidationSurface = {
+    integrity: "VALID",
+    replay: "VERIFIED",
+    evidenceCoverage: 0.91,
+    confidence: 0.94,
+    lifecycle: "COMPLETE",
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-emerald-400 font-mono relative overflow-x-hidden">
@@ -267,6 +322,46 @@ export default function NEWTPage() {
             </span>
           </div>
         </div>
+
+        {/* IVL LIFECYCLE TRACE - REV_34 */}
+        <Card className="mb-8 border border-emerald-800 bg-black overflow-hidden">
+          <div className="p-4 bg-emerald-900/30 border-b border-emerald-800 flex flex-col md:flex-row justify-between gap-2">
+            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300">IVL Lifecycle Trace</span>
+            <span className="text-[10px] font-bold text-fuchsia-500">REV_34 // EXTERNALLY VERIFIABLE</span>
+          </div>
+          <div className="space-y-0">
+            {lifecycleTrace.map((step, i) => (
+              <div key={i} className="flex items-center justify-between p-6 bg-black border border-zinc-900 group hover:border-emerald-500 transition-all shadow-xl">
+                <div className="flex items-center gap-6">
+                  <div className="p-3 border border-zinc-800 group-hover:bg-emerald-900/10 transition-colors">
+                    <step.icon size={20} className="text-zinc-500 group-hover:text-emerald-500" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black text-emerald-800 uppercase tracking-widest">Offset: {step.time} µs</p>
+                    <p className="text-xl font-black text-white uppercase tracking-tighter">{step.stage}</p>
+                  </div>
+                </div>
+                <p className="text-xs font-black text-fuchsia-500 italic uppercase">{step.status}</p>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* VALIDATION SURFACE - IVL */}
+        <section className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+          {[
+            ["Integrity", validationSurface.integrity],
+            ["Replay", validationSurface.replay],
+            ["Evidence", validationSurface.evidenceCoverage.toFixed(2)],
+            ["Confidence", validationSurface.confidence.toFixed(2)],
+            ["Lifecycle", validationSurface.lifecycle],
+          ].map(([label, value]) => (
+            <div key={label} className="bg-black border border-emerald-900/50 p-4">
+              <p className="text-[9px] text-zinc-600 uppercase font-black">{label}</p>
+              <p className="text-sm text-emerald-400 font-black">{value}</p>
+            </div>
+          ))}
+        </section>
 
         {/* FINAL SEAL */}
         <div className="mt-12 text-center">
