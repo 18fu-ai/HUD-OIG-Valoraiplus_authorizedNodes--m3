@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback, useMemo, memo } from 'react';
 import { useChat } from '@ai-sdk/react';
-import { waterfallFirewall, type FirewallSignal, type FirewallResult } from '@/lib/protocol/waterfall-firewall';
+import { waterfallFirewall, type FirewallSignal, type FirewallResult } from '@/lib/protocol/client';
 import { CDSHeader } from '@/components/cds/header';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

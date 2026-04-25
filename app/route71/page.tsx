@@ -29,7 +29,7 @@ import {
   Cpu,
   XCircle
 } from 'lucide-react';
-import { ValoraiplusMEVR, type SovereignInvariant, type DeterministicClassification } from '@/lib/protocol/mevr';
+import { ValoraiplusMEVR, type SovereignInvariant, type DeterministicClassification } from '@/lib/protocol/client';
 import {
   Chart as ChartJS,
   CategoryScale,

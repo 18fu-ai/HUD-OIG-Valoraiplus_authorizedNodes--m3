@@ -6,7 +6,7 @@ import {
   evaluateCIDBatch,
   type FirewallSignal,
   type CIDInput,
-} from '@/lib/protocol';
+} from '@/lib/protocol/server';
 
 export const dynamic = 'force-dynamic';
 

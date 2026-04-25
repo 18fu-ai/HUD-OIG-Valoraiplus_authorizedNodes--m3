@@ -13,7 +13,7 @@ import {
   Scale,
   FileJson
 } from 'lucide-react';
-import type { ReceiptV1 } from '@/lib/protocol/receipt';
+import type { ReceiptV1 } from '@/lib/protocol/client';
 
 type GateResult = {
   status: 'ADMITTED' | 'BLOCKED' | 'QUARANTINED';

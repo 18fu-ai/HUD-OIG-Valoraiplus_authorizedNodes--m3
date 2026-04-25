@@ -42,7 +42,7 @@ import {
   type ClaimSafety,
   type ProofLedgerEntry,
   type ProofStatistics
-} from '@/lib/protocol/auditEngine';
+} from '@/lib/protocol/client';
 
 const RUNTIME_STAGES: { stage: RuntimeStage; label: string; icon: React.ElementType }[] = [
   { stage: 'OBSERVE', label: 'Observe', icon: Eye },

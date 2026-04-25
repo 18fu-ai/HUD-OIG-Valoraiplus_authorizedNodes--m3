@@ -33,7 +33,7 @@ import {
   generatePolicyExport,
   type RuntimeClaim,
   type AdmissionPipelineResult
-} from '@/lib/protocol/invariantEngine';
+} from '@/lib/protocol/client';
 
 // Protocol Invariants Data
 const INVARIANTS = [

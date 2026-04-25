@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { enforceTopology } from '@/lib/protocol';
+import { enforceTopology } from '@/lib/protocol/server';
 
 export const dynamic = 'force-dynamic';
 
