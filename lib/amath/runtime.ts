@@ -171,7 +171,7 @@ export function createHardenedReceipt(
   const provenance = generateProvenance(decision.route, 'runtime');
   const evidenceBoundary = createEvidenceBoundary(observed, interpretation, corroboration);
   
-return deepFreeze({
+  return deepFreeze({
     receiptId: `HR1-${Date.now().toString(36).toUpperCase()}-${(++receiptCounter).toString().padStart(4, '0')}`,
     signal,
     decision,
