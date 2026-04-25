@@ -8,7 +8,7 @@ import {
   Shield, Clock, DollarSign, Activity, FileCode, MessageSquarePlus, 
   FileText, Mail, Zap, Flag, RefreshCw, Rocket, Radio, Brain, Ban, 
   Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle,
-  Route, FileSearch, Terminal
+  Route, FileSearch, Terminal, Layers
 } from 'lucide-react';
 
 const navItems = [
@@ -36,6 +36,7 @@ const navItems = [
   { href: '/route66', label: 'Route 66', icon: Route, category: 'system' },
   { href: '/route71', label: 'Route 71', icon: Route, category: 'system' },
   { href: '/protocol', label: 'Protocol', icon: Terminal, category: 'system' },
+  { href: '/architecture', label: 'Architecture', icon: Layers, category: 'system' },
 ];
 
 const categories = [
