@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 import { 
   Shield, Clock, DollarSign, Activity, FileCode, MessageSquarePlus, 
   FileText, Mail, Zap, Flag, RefreshCw, Rocket, Radio, Brain, Ban, 
-  Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle
+  Coins, Lock, Send, Home, Menu, X, ChevronDown, Server, MessageCircle,
+  Route
 } from 'lucide-react';
 
 const navItems = [
@@ -31,6 +32,7 @@ const navItems = [
   { href: '/security', label: 'Security', icon: Lock, category: 'security' },
   { href: '/transmit', label: 'HHS OCR', icon: Send, category: 'transmission' },
   { href: '/trinity', label: 'Trinity', icon: Server, category: 'system' },
+  { href: '/route71', label: 'Route 71', icon: Route, category: 'system' },
 ];
 
 const categories = [
