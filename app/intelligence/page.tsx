@@ -56,7 +56,10 @@ import {
   TrendingUp,
   AlertOctagon,
   Fingerprint,
+  Download,
 } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const REPORT_METADATA = {
   reportId: 'CDS-INTEL-FULL-2026-0424',
@@ -148,6 +151,12 @@ function IntelligenceReportContent() {
                 {REPORT_METADATA.status}
               </span>
             </div>
+            <Link href="/intelligence/download">
+              <Button variant="default" className="font-mono gap-2 bg-primary hover:bg-primary/90">
+                <Download className="w-4 h-4" />
+                Download Full Report
+              </Button>
+            </Link>
             <ExportTools 
               data={exportData}
               variant="outline"
