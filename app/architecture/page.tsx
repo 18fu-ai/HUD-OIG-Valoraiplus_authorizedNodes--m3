@@ -149,6 +149,49 @@ const ROLES = [
   { name: 'GUARDIAN_ROLE', scope: 'State Protection, Lineage', color: 'chart-3' }
 ];
 
+// MEVR Stack - Machine-Enforced Verification Runtime
+const MEVR_STACK = [
+  {
+    layer: 'EVALUATION',
+    description: 'Evidence extraction and proof vector construction',
+    modules: ['types.ts', 'proofLedger.ts'],
+    color: 'primary',
+    flow: 'claim → evidence → proof vector'
+  },
+  {
+    layer: 'ENFORCEMENT',
+    description: 'Invariant checking and validation scoring',
+    modules: ['verificationPipeline.ts', 'invariantEngine.ts'],
+    color: 'accent',
+    flow: 'proof → validation → invariant'
+  },
+  {
+    layer: 'GOVERNANCE',
+    description: 'Policy qualification and reason assignment',
+    modules: ['reasonCodes.ts', 'traceGraph.ts', 'replayValidator.ts', 'governanceKernel.ts'],
+    color: 'chart-3',
+    flow: 'invariant → policy → reason → trace'
+  },
+  {
+    layer: 'EXPOSURE',
+    description: 'Export eligibility and visibility determination',
+    modules: ['exportPolicy.ts', 'mevr.ts'],
+    color: 'chart-1',
+    flow: 'policy → export → visibility'
+  }
+];
+
+// Runtime Execution Path
+const RUNTIME_PATH = [
+  { step: 'Source', desc: 'Evidence origin' },
+  { step: 'Formula', desc: 'Proof computation' },
+  { step: 'Score', desc: 'Validation score' },
+  { step: 'Threshold', desc: 'Qualification gate' },
+  { step: 'Classification', desc: 'Deterministic status' },
+  { step: 'Reproducibility', desc: 'Replay validation' },
+  { step: 'Visibility', desc: 'Policy-earned exposure' }
+];
+
 function ArchitectureContent() {
   const [activeTab, setActiveTab] = useState('overview');
   const [truthCycle, setTruthCycle] = useState(0);
@@ -277,9 +320,12 @@ function ArchitectureContent() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-secondary/50">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 bg-secondary/50">
             <TabsTrigger value="overview" className="font-mono text-xs" aria-pressed={activeTab === 'overview'}>
               Overview
+            </TabsTrigger>
+            <TabsTrigger value="mevr" className="font-mono text-xs" aria-pressed={activeTab === 'mevr'}>
+              MEVR Stack
             </TabsTrigger>
             <TabsTrigger value="layers" className="font-mono text-xs" aria-pressed={activeTab === 'layers'}>
               Layers
@@ -353,6 +399,183 @@ function ArchitectureContent() {
                 </Card>
               ))}
             </div>
+          </TabsContent>
+
+          {/* MEVR Stack Tab */}
+          <TabsContent value="mevr" className="space-y-6">
+            {/* Stack Header */}
+            <Card className="border-emerald-500/30 bg-emerald-500/5">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-mono text-lg font-bold text-foreground">Machine-Enforced Verification Runtime</h3>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">
+                      Governed Protocol Kernel // Deterministic Execution Path
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="font-mono bg-emerald-500/20 text-emerald-400 border-emerald-500/40">
+                    OPERATIONAL
+                  </Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 4-Layer Stack Visualization */}
+            <div className="grid grid-cols-1 gap-4">
+              {MEVR_STACK.map((stack, idx) => (
+                <Card key={stack.layer} className={cn(
+                  'border-2 transition-all',
+                  stack.color === 'primary' ? 'border-primary/50 bg-primary/5' :
+                  stack.color === 'accent' ? 'border-accent/50 bg-accent/5' :
+                  stack.color === 'chart-3' ? 'border-chart-3/50 bg-chart-3/5' :
+                  'border-chart-1/50 bg-chart-1/5'
+                )}>
+                  <CardContent className="p-6">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className={cn(
+                          'w-12 h-12 rounded-lg flex items-center justify-center font-mono text-lg font-bold',
+                          stack.color === 'primary' ? 'bg-primary/20 text-primary' :
+                          stack.color === 'accent' ? 'bg-accent/20 text-accent' :
+                          stack.color === 'chart-3' ? 'bg-chart-3/20 text-chart-3' :
+                          'bg-chart-1/20 text-chart-1'
+                        )}>
+                          {idx + 1}
+                        </div>
+                        <div>
+                          <h4 className={cn(
+                            'font-mono text-base font-bold',
+                            stack.color === 'primary' ? 'text-primary' :
+                            stack.color === 'accent' ? 'text-accent' :
+                            stack.color === 'chart-3' ? 'text-chart-3' :
+                            'text-chart-1'
+                          )}>
+                            {stack.layer} LAYER
+                          </h4>
+                          <p className="font-mono text-xs text-muted-foreground">{stack.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {stack.modules.map(mod => (
+                          <Badge key={mod} variant="outline" className="font-mono text-[10px]">
+                            {mod}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-border/50">
+                      <p className="font-mono text-xs text-muted-foreground">
+                        <span className="font-bold">Flow:</span> {stack.flow}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Runtime Execution Path */}
+            <Card className="border-primary/30">
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-primary" />
+                  Deterministic Execution Path
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap items-center justify-center gap-2 py-4">
+                  {RUNTIME_PATH.map((step, idx) => (
+                    <div key={step.step} className="flex items-center gap-2">
+                      <div className="flex flex-col items-center">
+                        <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40">
+                          {step.step}
+                        </Badge>
+                        <span className="font-mono text-[8px] text-muted-foreground mt-1">{step.desc}</span>
+                      </div>
+                      {idx < RUNTIME_PATH.length - 1 && (
+                        <ArrowRight className="w-3 h-3 text-muted-foreground" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Core Principle */}
+            <Card className="border-chart-3/30 bg-chart-3/5">
+              <CardContent className="p-6 text-center">
+                <p className="font-mono text-xs text-muted-foreground mb-2">STRONGEST ARCHITECTURAL INVARIANT</p>
+                <p className="font-mono text-xl font-bold text-chart-3">
+                  visibility is policy-earned
+                </p>
+                <p className="font-mono text-xs text-muted-foreground mt-2">
+                  not automatically granted by existence
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Module Responsibility Split */}
+            <Card className="border-border">
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm">Governance Layer Responsibilities</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">invariantEngine.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Declarative rule definitions</p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">reasonCodes.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Deterministic failure explanations</p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">replayValidator.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Reproducibility + lineage verification</p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">traceGraph.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Derivation path reconstruction</p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">exportPolicy.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Exposure gating + release eligibility</p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-secondary/30">
+                    <p className="font-mono text-sm font-bold text-foreground">governanceKernel.ts</p>
+                    <p className="font-mono text-xs text-muted-foreground mt-1">Orchestration + final runtime authority</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Reconstructability Questions */}
+            <Card className="border-accent/30 bg-accent/5">
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm flex items-center gap-2">
+                  <Eye className="w-4 h-4 text-accent" />
+                  Decision Reconstructability
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="font-mono text-xs text-muted-foreground mb-4">
+                  Every decision becomes reconstructable via the trace graph:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-3 rounded-lg border border-accent/30 bg-accent/10">
+                    <p className="font-mono text-sm text-accent font-bold">What rule applied?</p>
+                  </div>
+                  <div className="p-3 rounded-lg border border-accent/30 bg-accent/10">
+                    <p className="font-mono text-sm text-accent font-bold">What evidence satisfied it?</p>
+                  </div>
+                  <div className="p-3 rounded-lg border border-accent/30 bg-accent/10">
+                    <p className="font-mono text-sm text-accent font-bold">What replay validated it?</p>
+                  </div>
+                  <div className="p-3 rounded-lg border border-accent/30 bg-accent/10">
+                    <p className="font-mono text-sm text-accent font-bold">Why was export allowed?</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Layers Tab */}
