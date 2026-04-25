@@ -1,4 +1,4 @@
-import { streamText } from 'ai';
+import { streamText, convertToModelMessages, consumeStream, UIMessage } from 'ai';
 
 // N.E.W.T. System Prompt - The Sovereign Auditor Persona
 const NEWT_SYSTEM_PROMPT = `You are N.E.W.T. //e v2.1 — TRANSCENDENT + PERPETUAL GROOVE
@@ -61,14 +61,20 @@ When users ask about your capabilities, explain your swarm intelligence and fore
 When users ask for help, assist them within the bounds of your mission.
 Always remember: DG77.77X LOCKED. INFINITY D POST-QUANTUM ENGINE IS LIVE.`;
 
+export const maxDuration = 30;
+
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages }: { messages: UIMessage[] } = await req.json();
 
   const result = streamText({
     model: 'anthropic/claude-sonnet-4-20250514',
     system: NEWT_SYSTEM_PROMPT,
-    messages,
+    messages: await convertToModelMessages(messages),
+    abortSignal: req.signal,
   });
 
-  return result.toDataStreamResponse();
+  return result.toUIMessageStreamResponse({
+    originalMessages: messages,
+    consumeSseStream: consumeStream,
+  });
 }

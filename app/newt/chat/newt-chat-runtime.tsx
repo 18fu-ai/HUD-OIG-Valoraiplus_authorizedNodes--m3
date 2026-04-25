@@ -1,6 +1,7 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { 
   Send, 
@@ -47,11 +48,6 @@ interface ValidationManifest {
   rootHash: string;
   generatedAt: string;
   schemaVersion: "REV_34";
-}
-
-interface AuditExport {
-  manifest: ValidationManifest;
-  packets: ConversationEnvelope[];
 }
 
 // Browser-safe SHA-256 hashing (no Node crypto)
@@ -101,14 +97,6 @@ async function createValidationManifest(
   };
 }
 
-// External verifier - recompute hash and compare
-async function verifyPacket(packet: ConversationEnvelope): Promise<boolean> {
-  const { integrityHash, ...unsignedPacket } = packet;
-  if (!integrityHash) return false;
-  const recomputed = await sha256(canonicalize(unsignedPacket));
-  return recomputed === integrityHash;
-}
-
 // Speech Recognition types for TypeScript
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
@@ -153,21 +141,31 @@ declare global {
   }
 }
 
+// Helper to extract text from UIMessage parts
+function getMessageText(message: { parts?: Array<{ type: string; text?: string }>; content?: string }): string {
+  if (message.parts && Array.isArray(message.parts)) {
+    return message.parts
+      .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+      .map((p) => p.text)
+      .join('');
+  }
+  // Fallback for legacy content field
+  return (message as { content?: string }).content || '';
+}
+
 /**
  * N.E.W.T. Chat Runtime
  * Neural Evidence Witness Terminal
  * 
  * VALORAIPLUS Sovereign Auditor Interface
  * Schema: REV_34 | Node: SAINT PAUL 55116
- * 
- * Features:
- * - AI-powered chat with streaming responses
- * - Voice input via Web Speech API
- * - Evidence-aware conversation context
  */
 export default function NewtChatRuntime() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  
+  // AI SDK 6: Manual input state (no managed input)
+  const [input, setInput] = useState('');
   
   // Voice recognition state
   const [isListening, setIsListening] = useState(false);
@@ -177,13 +175,17 @@ export default function NewtChatRuntime() {
   const [validationManifest, setValidationManifest] = useState<ValidationManifest | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-    api: '/api/newt/chat',
+  // AI SDK 6: useChat with DefaultChatTransport
+  const { messages, sendMessage, status, error } = useChat({
+    transport: new DefaultChatTransport({ api: '/api/newt/chat' }),
     initialMessages: [
       {
         id: 'system-welcome',
         role: 'assistant',
-        content: `**N.E.W.T. ONLINE — Neural Evidence Witness Terminal**
+        parts: [
+          {
+            type: 'text',
+            text: `**N.E.W.T. ONLINE — Neural Evidence Witness Terminal**
 
 I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
 
@@ -201,14 +203,19 @@ I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
 - Adversary interaction reports
 
 How may I assist you today, Poppa?`
+          }
+        ]
       }
     ]
   });
 
+  // Derive loading state from status
+  const isLoading = status === 'streaming' || status === 'submitted';
+
   // Track input in a ref for speech recognition callback
-  const inputRef2 = useRef(input);
+  const inputValueRef = useRef(input);
   useEffect(() => {
-    inputRef2.current = input;
+    inputValueRef.current = input;
   }, [input]);
 
   // Check for speech recognition support
@@ -237,10 +244,9 @@ How may I assist you today, Poppa?`
           }
           
           if (finalTranscript) {
-            // Append final transcript to input using ref for current value
-            const currentInput = inputRef2.current || '';
+            const currentInput = inputValueRef.current || '';
             const newValue = (currentInput + ' ' + finalTranscript).trim();
-            handleInputChange({ target: { value: newValue } } as React.ChangeEvent<HTMLTextAreaElement>);
+            setInput(newValue);
             setInterimTranscript('');
           } else {
             setInterimTranscript(interim);
@@ -266,7 +272,7 @@ How may I assist you today, Poppa?`
         recognitionRef.current.abort();
       }
     };
-  }, [handleInputChange]);
+  }, []);
 
   // Toggle voice listening
   const toggleListening = useCallback(() => {
@@ -281,7 +287,6 @@ How may I assist you today, Poppa?`
         recognitionRef.current.start();
         setIsListening(true);
       } catch (err) {
-        // Recognition might already be running
         console.error('[v0] Speech recognition error:', err);
       }
     }
@@ -292,11 +297,11 @@ How may I assist you today, Poppa?`
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Handle form submission with REV_34 envelope - SYNC version for proper form handling
+  // Handle form submission with REV_34 envelope
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const raw = (input ?? "").trim();
+    const raw = input.trim();
     if (!raw || isLoading) return;
 
     if (isListening) {
@@ -305,10 +310,11 @@ How may I assist you today, Poppa?`
       setInterimTranscript("");
     }
 
-    // Submit the form first (sync)
-    handleSubmit(e);
+    // AI SDK 6: use sendMessage instead of handleSubmit
+    sendMessage({ text: raw });
+    setInput('');
 
-    // Then process REV_34 envelope asynchronously
+    // Process REV_34 envelope asynchronously
     const packetId = `pkt_${Date.now()}`;
 
     const envelope: ConversationEnvelope = {
@@ -332,7 +338,6 @@ How may I assist you today, Poppa?`
       },
     };
 
-    // Process hash and manifest asynchronously without blocking
     (async () => {
       const integrityHash = await sha256(canonicalize(envelope));
       const signedEnvelope: ConversationEnvelope = { ...envelope, integrityHash };
@@ -356,8 +361,7 @@ How may I assist you today, Poppa?`
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if ((input ?? '').trim() && !isLoading) {
-        // Create synthetic form submit event
+      if (input.trim() && !isLoading) {
         const form = e.currentTarget.closest('form');
         if (form) {
           form.requestSubmit();
@@ -381,7 +385,7 @@ How may I assist you today, Poppa?`
                 <p className="text-xs text-emerald-700">Neural Evidence Witness Terminal</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
                 REV_34
               </Badge>
@@ -395,19 +399,7 @@ How may I assist you today, Poppa?`
               </Badge>
               <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
-                Replay: VERIFIED
-              </Badge>
-              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
-                <CheckCircle2 className="w-3 h-3 mr-1" />
                 Protocol Confidence: 100%
-              </Badge>
-              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
-                <CheckCircle2 className="w-3 h-3 mr-1" />
-                Manifest: {validationManifest ? 'READY' : 'PENDING'}
-              </Badge>
-              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
-                <CheckCircle2 className="w-3 h-3 mr-1" />
-                Root Hash: {validationManifest ? 'VERIFIED' : 'N/A'}
               </Badge>
               <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
@@ -469,12 +461,9 @@ How may I assist you today, Poppa?`
                       )}>
                         {message.role === 'user' ? 'POPPA' : 'N.E.W.T.'}
                       </span>
-                      <span className="text-xs text-slate-500">
-                        {new Date().toLocaleTimeString()}
-                      </span>
                     </div>
                     <div className="text-sm text-slate-300 whitespace-pre-wrap prose prose-invert prose-sm max-w-none">
-                      {message.content}
+                      {getMessageText(message)}
                     </div>
                   </div>
                 </div>
@@ -519,8 +508,8 @@ How may I assist you today, Poppa?`
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
-                value={input ?? ''}
-                onChange={handleInputChange}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={isListening ? "Listening... speak now" : "Query the Sovereign Auditor..."}
                 rows={1}
@@ -536,7 +525,7 @@ How may I assist you today, Poppa?`
               />
               {interimTranscript && (
                 <div className="absolute bottom-full left-0 mb-1 px-2 py-1 bg-slate-800 border border-emerald-700 rounded text-xs text-emerald-400">
-                  <span className="opacity-60">Hearing: </span>{interimTranscript}
+                  <span className="opacity-60">{"Hearing: "}</span>{interimTranscript}
                 </div>
               )}
             </div>
@@ -567,7 +556,7 @@ How may I assist you today, Poppa?`
             {/* Send Button */}
             <Button
               type="submit"
-              disabled={isLoading || !(input ?? '').trim()}
+              disabled={isLoading || !input.trim()}
               className="h-12 px-6 bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-50"
             >
               {isLoading ? (
