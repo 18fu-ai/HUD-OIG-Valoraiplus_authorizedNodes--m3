@@ -10,7 +10,7 @@ import {
   Coins, Lock, Send, Home, Menu, X, Server, MessageCircle,
   Route, FileSearch, Terminal, Layers, CircleDot, Film, Wallet, 
   CheckCircle2, Circle, ArrowRight, Database, Play, RotateCcw, GitBranch, 
-  Eye, Cpu, Fingerprint, Vault, Download, BarChart3, Scale, TrendingUp
+  Eye, Cpu, Fingerprint, Vault, Download, BarChart3, Scale, TrendingUp, AlertTriangle
 } from 'lucide-react';
 
 // Protocol Lifecycle Routes - The Verification Pipeline
