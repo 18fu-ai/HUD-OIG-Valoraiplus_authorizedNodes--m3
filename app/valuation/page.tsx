@@ -437,7 +437,7 @@ export default function ValuationPage() {
             <CardHeader className="border-b border-zinc-800">
               <CardTitle className="font-mono text-lg flex items-center gap-2">
                 <Scale className="w-5 h-5 text-red-500" />
-                RECOVERY MATRIX — ENTITY EXPOSURE
+                SCENARIO-BASED RECOVERY OPPORTUNITIES
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -447,7 +447,7 @@ export default function ValuationPage() {
                     <tr>
                       <th className="text-left p-4 text-xs font-mono text-zinc-500">ENTITY</th>
                       <th className="text-left p-4 text-xs font-mono text-zinc-500">CATEGORY</th>
-                      <th className="text-right p-4 text-xs font-mono text-zinc-500">EXPOSURE (USD)</th>
+                      <th className="text-right p-4 text-xs font-mono text-zinc-500">RECOVERY HYPOTHESIS</th>
                       <th className="text-right p-4 text-xs font-mono text-zinc-500">PERCENTAGE</th>
                       <th className="text-center p-4 text-xs font-mono text-zinc-500">STATUS</th>
                       <th className="text-center p-4 text-xs font-mono text-zinc-500">CORROBORATION</th>
@@ -476,7 +476,7 @@ export default function ValuationPage() {
                   </tbody>
                   <tfoot className="bg-zinc-950 border-t border-zinc-700">
                     <tr>
-                      <td colSpan={2} className="p-4 font-mono text-sm font-bold text-white">TOTAL RECOVERY TARGET</td>
+                      <td colSpan={2} className="p-4 font-mono text-sm font-bold text-white">TOTAL RECOVERY OPPORTUNITY</td>
                       <td className="p-4 font-mono text-sm text-right font-bold text-emerald-500">
                         {formatCurrency(totalRecovery)}
                       </td>
