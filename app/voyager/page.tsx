@@ -12,6 +12,7 @@ import {
   TELEMETRY_EVENTS,
   VOYAGER_STATS
 } from '@/lib/cds-data';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   Rocket,
   CheckCircle,

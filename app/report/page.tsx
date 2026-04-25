@@ -18,14 +18,16 @@ import {
   MessageSquare,
   Database,
   Lock,
+
   Eye,
   CheckCircle,
   Clock,
   Users,
   Activity,
 } from 'lucide-react';
-
-function getTypeIcon(type: string) {
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+  
+  function getTypeIcon(type: string) {
   switch (type) {
     case 'voice':
       return Phone;

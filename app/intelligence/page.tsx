@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   CDS_LAYERS,
   CDS_SECTIONS,
@@ -114,8 +115,11 @@ function IntelligenceReportContent() {
     <div className="min-h-screen bg-background">
       <CDSHeader />
 
-      <main className="container mx-auto px-4 py-8 space-y-8">
-        {/* Report Header */}
+<main className="container mx-auto px-4 py-8 space-y-8">
+  {/* Navigation */}
+  <HomeBreadcrumb currentPage="Intelligence" />
+  
+  {/* Report Header */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
@@ -966,8 +970,11 @@ function IntelligenceReportContent() {
             SAINT PAUL NODE: 55116 | OMEGA-UNIFIED | 16 SECTIONS CONSOLIDATED
           </p>
         </footer>
-      </main>
-    </div>
+</main>
+  
+  {/* Floating Home Button */}
+  <HomeButton variant="floating" />
+  </div>
   );
 }
 

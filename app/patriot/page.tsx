@@ -5,6 +5,7 @@ import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Shield, AlertTriangle, Database, Lock, Flag, Server, CheckCircle, Infinity, Zap, Award } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   PATRIOT_SYSTEM,
   PATRIOT_METRICS,

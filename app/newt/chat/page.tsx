@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { MarkdownRenderer } from '@/components/cds/markdown-renderer';
 import { ExportTools } from '@/components/cds/export-tools';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   Brain,
   Send,

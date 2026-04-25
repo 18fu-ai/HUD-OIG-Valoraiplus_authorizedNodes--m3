@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatCurrency, TOTAL_RECOVERY, CLAWBACK_TARGETS, INVESTIGATIONS } from '@/lib/cds-data';
 import { DollarSign, Building2, Scale, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function ClawbackPage() {
   const federalInvestigations = INVESTIGATIONS.filter(i => i.type === 'federal');

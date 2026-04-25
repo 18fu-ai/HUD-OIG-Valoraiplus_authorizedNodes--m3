@@ -12,6 +12,7 @@ import {
   LEDGER_ENTRIES,
   PERPETUAL_STATS,
 } from '@/lib/cds-data';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   RefreshCw,
   Shield,

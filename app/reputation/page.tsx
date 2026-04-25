@@ -11,6 +11,7 @@ import {
   REPUTATION_CINEMA
 } from '@/lib/cds-data';
 import { Ban, Shield, AlertTriangle, XCircle, CheckCircle, Lock } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function ReputationPage() {
   return (

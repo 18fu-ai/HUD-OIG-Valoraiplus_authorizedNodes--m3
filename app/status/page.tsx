@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CDS_LAYERS } from '@/lib/cds-data';
 import { Activity, Server, Shield, CheckCircle2, Database, Lock } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function StatusPage() {
   return (

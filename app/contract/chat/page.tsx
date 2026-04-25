@@ -11,6 +11,7 @@ import {
   Terminal,
   Lock
 } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 const CONTRACT_TEMPLATES = [
   { 

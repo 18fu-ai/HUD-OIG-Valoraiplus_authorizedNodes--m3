@@ -7,6 +7,7 @@ import { CodePreview } from '@/components/cds/code-preview';
 import { CinemaPanel } from '@/components/cds/cinema-panel';
 import { Badge } from '@/components/ui/badge';
 import { FileCode, Lock, Database, Zap, Shield } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function ContractPage() {
   return (

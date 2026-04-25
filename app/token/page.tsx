@@ -13,6 +13,7 @@ import {
   TOKEN_CINEMA 
 } from '@/lib/cds-data';
 import { Coins, Shield, Flame, Lock, Copy, Check, ExternalLink } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function TokenPage() {
   const [copied, setCopied] = useState(false);

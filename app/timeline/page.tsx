@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TIMELINE_EVENTS, CDS_SECTIONS } from '@/lib/cds-data';
 import { Clock, AlertTriangle, FileText, Activity } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 export default function TimelinePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

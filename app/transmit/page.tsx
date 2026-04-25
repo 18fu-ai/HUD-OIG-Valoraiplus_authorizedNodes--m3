@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Send, FileText, Shield, CheckCircle, AlertTriangle, Copy, Download, ExternalLink } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   HHS_OCR_TRANSMISSION,
   TRANSMISSION_EVIDENCE,

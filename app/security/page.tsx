@@ -5,6 +5,7 @@ import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Lock, Shield, ShieldCheck, ShieldAlert, Eye, Hash, Server, Zap, AlertTriangle, CheckCircle, XCircle, Activity } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 const SECURITY_SYSTEM = {
   title: 'VALORAI+ SECURITY MODULE',

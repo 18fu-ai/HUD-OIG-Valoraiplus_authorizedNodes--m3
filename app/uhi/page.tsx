@@ -11,6 +11,7 @@ import {
   UHI_FINALITY_MATRIX,
   UHI_PROJECT_CINEMA
 } from '@/lib/cds-data';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import { 
   Zap, 
   Shield, 

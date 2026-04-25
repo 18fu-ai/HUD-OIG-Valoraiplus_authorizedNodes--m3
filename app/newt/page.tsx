@@ -17,6 +17,7 @@ import {
   BRAIN_DISH_STATUS,
   NEWT_REPORT
 } from '@/lib/cds-data';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 // NavierStokesBackground - High-Density Fluid Dynamics Engine for 18fu.ai
 function NavierStokesBackground() {

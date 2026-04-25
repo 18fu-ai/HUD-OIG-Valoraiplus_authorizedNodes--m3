@@ -7,6 +7,7 @@ import {
   Server, FileText, Mail, Phone, Package, Download, 
   Play, CheckCircle, ExternalLink, Copy, Terminal
 } from 'lucide-react';
+import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 
 const TRINITY_ROUTES = [
   { path: '/', name: 'Index', description: 'Trinity Binary Home', status: 'COMPILED' },
