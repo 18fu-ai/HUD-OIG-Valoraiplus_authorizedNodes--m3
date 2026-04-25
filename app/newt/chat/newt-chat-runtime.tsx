@@ -64,7 +64,20 @@ async function sha256(input: string): Promise<string> {
 }
 
 function canonicalize(input: unknown): string {
-  return JSON.stringify(input, Object.keys(input as object).sort());
+  if (input === null || typeof input !== "object") {
+    return JSON.stringify(input);
+  }
+
+  if (Array.isArray(input)) {
+    return `[${input.map(canonicalize).join(",")}]`;
+  }
+
+  const obj = input as Record<string, unknown>;
+
+  return `{${Object.keys(obj)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${canonicalize(obj[key])}`)
+    .join(",")}}`;
 }
 
 // Generate validation manifest from session packets
@@ -322,18 +335,20 @@ How may I assist you today, Poppa?`
     // Process hash and manifest asynchronously without blocking
     (async () => {
       const integrityHash = await sha256(canonicalize(envelope));
+      const signedEnvelope: ConversationEnvelope = { ...envelope, integrityHash };
 
-      const newReceipts = {
-        ...runtimeReceipts,
-        [packetId]: { ...envelope, integrityHash },
-      };
-      
-      setRuntimeReceipts(newReceipts);
+      setRuntimeReceipts((prev) => {
+        const next = {
+          ...prev,
+          [packetId]: signedEnvelope,
+        };
 
-      // Generate validation manifest with root hash
-      const packets = Object.values(newReceipts);
-      const manifest = await createValidationManifest("newt-session", packets);
-      setValidationManifest(manifest);
+        void createValidationManifest("newt-session", Object.values(next)).then(
+          setValidationManifest
+        );
+
+        return next;
+      });
     })();
   };
 
@@ -374,27 +389,27 @@ How may I assist you today, Poppa?`
                 <Shield className="w-3 h-3 mr-1" />
                 SOVEREIGN
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Integrity: VALID
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Replay: VERIFIED
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Protocol Confidence: 100%
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Manifest: {validationManifest ? 'READY' : 'PENDING'}
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Root Hash: {validationManifest ? 'VERIFIED' : 'N/A'}
               </Badge>
-              <Badge className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Packets: {Object.keys(runtimeReceipts).length}
               </Badge>
