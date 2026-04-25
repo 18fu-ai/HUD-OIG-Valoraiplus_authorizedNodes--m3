@@ -159,7 +159,7 @@ export function CDSHeader() {
   };
 
   return (
-    <header className="border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-50">
+    <header className="border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-[60]">
       {/* Protocol Pulse Bar - 266ms heartbeat */}
       <div className="h-1 bg-background relative overflow-hidden">
         <div 
@@ -289,9 +289,11 @@ export function CDSHeader() {
             {/* Navigation Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md hover:bg-secondary transition-colors"
+              className="p-2 rounded-md hover:bg-secondary transition-colors border border-border hover:border-primary/50"
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? <X className="w-5 h-5 text-primary" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -350,7 +352,14 @@ export function CDSHeader() {
 
       {/* Full Navigation Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 top-[60px] bg-background/98 backdrop-blur-md z-40 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-200">
+        <>
+          {/* Backdrop for closing */}
+          <div 
+            className="fixed inset-0 top-0 bg-black/20 z-40"
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="fixed inset-x-0 top-[60px] bottom-0 bg-background/98 backdrop-blur-md z-50 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="container mx-auto px-4 py-6">
             {/* Lifecycle Progress - Mobile */}
             <div className="lg:hidden mb-6 p-4 bg-card rounded-lg border border-border">
@@ -475,6 +484,7 @@ export function CDSHeader() {
             </div>
           </div>
         </div>
+        </>
       )}
     </header>
   );
