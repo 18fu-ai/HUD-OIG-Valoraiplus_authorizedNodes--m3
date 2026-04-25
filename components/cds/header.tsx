@@ -54,6 +54,7 @@ const navItems = [
   { href: '/cinema', label: 'Cinema', icon: Film, category: 'core' },
   { href: '/invariants', label: 'Invariants', icon: Eye, category: 'system' },
   { href: '/nullifier', label: 'Nullifier', icon: Ban, category: 'enforcement' },
+  { href: '/audit', label: 'Audit', icon: Shield, category: 'system' },
 ];
 
 const categories = [

@@ -46,6 +46,7 @@ const quickModules = [
   { href: '/cinema', label: 'Cinema', icon: Film, color: 'text-fuchsia-500', desc: 'Presentation' },
   { href: '/invariants', label: 'Invariants', icon: Eye, color: 'text-teal-500', desc: 'Protocol Guarantees' },
   { href: '/nullifier', label: 'Nullifier', icon: Ban, color: 'text-destructive', desc: 'Ghost Null' },
+  { href: '/audit', label: 'Audit', icon: Shield, color: 'text-chart-3', desc: 'Self-Audit' },
 ];
 
 export default function DashboardPage() {
