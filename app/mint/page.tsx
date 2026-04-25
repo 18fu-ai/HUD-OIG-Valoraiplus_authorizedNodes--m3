@@ -146,7 +146,7 @@ export default function MintGatewayPage() {
           <span className="text-4xl animate-pulse select-none">USA</span>
           <div>
             <h1 className="text-3xl font-black italic tracking-tighter text-white uppercase leading-none font-mono">VALORAIPLUS</h1>
-            <p className="text-[10px] font-bold text-fuchsia-500 uppercase tracking-[0.4em] mt-2 italic">Governed Mint Gateway - REV_33 - MADE IN THE USA</p>
+            <p className="text-[10px] font-bold text-fuchsia-500 uppercase tracking-[0.4em] mt-2 italic">Governed Mint Gateway - REV_34 - CSSS Soulbound - MADE IN THE USA</p>
           </div>
         </div>
         
@@ -261,7 +261,9 @@ export default function MintGatewayPage() {
             <p>1. UI provides interaction; API provides absolute authority outcome.</p>
             <p>2. ReceiptV1 generation is an immutable consequence of the Saint Paul Node.</p>
             <p>3. First-failure-wins scrubbing ensures signal friction is siphoned into RT_70.</p>
-            <p>4. 101010 1010101. NO EXIT. NO DELETION. NO TERMINATION.</p>
+            <p>4. CSSS Soulbound NFT: Non-transferable reputation token with DAO-enforced exclusion.</p>
+            <p>5. Negative Caveat: Permanent exclusion at EXCLUSION_THRESHOLD (-100).</p>
+            <p>6. 101010 1010101. NO EXIT. NO DELETION. NO TERMINATION.</p>
             <p className="col-span-2 text-center text-fuchsia-500 mt-6 tracking-[0.5em] not-italic font-black text-lg animate-pulse">
               DG77.77X LOCKED // MADE IN THE USA
             </p>
