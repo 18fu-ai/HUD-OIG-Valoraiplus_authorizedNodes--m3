@@ -380,8 +380,8 @@ async fn mimecast_report() -> impl Responder {
 [10:22:45] ADMIN: "Rule deployed. All inbound from Poppa chain now blocked."</div>
 
   <h3>RULE-003 - 09:44:12Z <span class="badge badge-critical">POST-SUBPOENA</span></h3>
-  <p><strong>Actor:</strong> c.whittaker@sfha.org<br><strong>Rule:</strong> sfha_witness_filter_v3</p>
-  <div class="transcript">[09:44:08] WHITTAKER: "Strengthen the witness filter. Block all STP witnesses."
+  <p><strong>Actor:</strong> calvin.whittaker@sfha.org<br><strong>Rule:</strong> sfha_witness_filter_v3</p>
+  <div class="transcript">[09:44:08] C. WHITTAKER: "Strengthen the witness filter. Block all STP witnesses."
 [09:44:11] ADMIN: "Rule modified. stp-sf.org witnesses now filtered."</div>
 
   <h2>WITNESS RETALIATION (3 Events)</h2>

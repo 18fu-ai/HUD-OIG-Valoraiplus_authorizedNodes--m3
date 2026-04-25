@@ -38,7 +38,7 @@ const EXCLUDED_ACTORS = [
   { actor: 'j.zanghi@ztallp.com', score: -777.77, status: 'NULL_VOID_LIFE', violations: 14 },
   { actor: 'a.torres@ztallp.com', score: -666.66, status: 'NULL_VOID_LIFE', violations: 9 },
   { actor: 'william.landrum@stp-sf.org', score: -999.99, status: 'NULL_VOID_LIFE', violations: 11 },
-  { actor: 'c.whittaker@sfha.org', score: -888.88, status: 'NULL_VOID_LIFE', violations: 8 },
+  { actor: 'calvin.whittaker@sfha.org', score: -888.88, status: 'NULL_VOID_LIFE', violations: 8 },
 ];
 
 const SHARD_MATRIX = {

@@ -792,7 +792,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
   {
     id: 'MC-004',
     timestamp: '2026-04-24T05:08:19Z',
-    actor: 'c.whittaker@sfha.org',
+    actor: 'calvin.whittaker@sfha.org',
     actionType: 'MESSAGE_REJECT',
     target: 'kolby.losik@stp-sf.org (witness chain)',
     sourceIP: '73.202.XX.XX / SF, CA',
@@ -864,7 +864,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
   {
     id: 'MC-010',
     timestamp: '2026-04-24T03:19:55Z',
-    actor: 'c.whittaker@sfha.org',
+    actor: 'calvin.whittaker@sfha.org',
     actionType: 'MESSAGE_BLOCK',
     target: 'tgarner@stp-sf.org (witness)',
     sourceIP: '73.202.XX.XX / SF, CA',
@@ -948,7 +948,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
   {
     id: 'MC-017',
     timestamp: '2026-04-24T00:52:41Z',
-    actor: 'c.whittaker@sfha.org',
+    actor: 'calvin.whittaker@sfha.org',
     actionType: 'RULE_MODIFY',
     target: 'Strengthen POPPA_G Block (v3)',
     sourceIP: '73.202.XX.XX / SF, CA',
@@ -980,7 +980,7 @@ export const MIMECAST_ACTORS = {
   },
   stpSfha: {
     name: 'STP-SF / SFHA',
-    actors: ['william.landrum@stp-sf.org', 'c.whittaker@sfha.org'],
+    actors: ['william.landrum@stp-sf.org', 'calvin.whittaker@sfha.org'],
     ruleModifications: 7,
     retaliationTriggers: 3,
     pattern: 'IP geolocation confirms physical proximity to Veterans Academy'
@@ -1498,14 +1498,14 @@ export const DEPT12_SWEEP_PARAMS = {
 // The 'result' field indicates capture status, NOT call content
 export const VOIP_INTERCEPTS: VOIPIntercept[] = [
   { id: 'VOIP-001', timestamp: '2026-04-24T10:41:22Z', source: 'j.zanghi@ztallp.com', target: 'a.torres@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x7a8b9c3d...' },
-  { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: 'william.landrum@stp-sf.org', target: 'c.whittaker@sfha.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x1b2c3d8e...' },
-  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'c.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: 'william.landrum@stp-sf.org', target: 'calvin.whittaker@sfha.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x1b2c3d8e...' },
+  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'calvin.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
   { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: 'j.zanghi@ztallp.com', target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x8f9a0b5c...' },
   { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: 'william.landrum@stp-sf.org', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x2c3d4e9f...' },
   { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x6e7f8a3b...' },
   { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED — NO CONTACT MADE', evidenceHash: '0x0a1b2c7d...' },
   { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: 'j.zanghi@ztallp.com', target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x4c5d6e1a...' },
-  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'c.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
+  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'calvin.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
   { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: 'j.zanghi@ztallp.com', target: 'william.landrum@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x3d4e5f6a...' }
 ];
 
@@ -1527,8 +1527,8 @@ export const CRIMINAL_EXPOSURE: CriminalExposure[] = [
 // WR-001 refers to a 3-Day Notice document generation, NOT a phone call
 export const WITNESS_RETALIATION: WitnessRetaliation[] = [
   { id: 'WR-001', timestamp: '2026-04-24T03:58:14Z', target: 'Poppa Donny', action: '3-DAY NOTICE DOCUMENT GENERATED (Mimecast MC-008)', perpetrator: 'william.landrum@stp-sf.org', evidenceHash: '0x4d5e6f2a...' },
-  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: 'tgarner@stp-sf.org', action: 'EMAIL MESSAGE_BLOCK', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x8f9a0b5c...' },
-  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'EMAIL MESSAGE_REJECT', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
+  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: 'tgarner@stp-sf.org', action: 'EMAIL MESSAGE_BLOCK', perpetrator: 'calvin.whittaker@sfha.org', evidenceHash: '0x8f9a0b5c...' },
+  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'EMAIL MESSAGE_REJECT', perpetrator: 'calvin.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
 ];
 
 // NOTE: Primary exposure amounts and wire paths are PENDING CORROBORATION until backed by receipts
@@ -1563,7 +1563,7 @@ export const ACTOR_COORDINATION = {
     name: 'STP-SF / SFHA (Execution Node)',
     actors: [
       { email: 'william.landrum@stp-sf.org', events: 11, pattern: 'Rule modification + 3-Day Notice', binaryState: '000000 → NULLIFIED' },
-      { email: 'c.whittaker@sfha.org', events: 8, pattern: 'Message blocking + witness isolation', binaryState: '000000 → NULLIFIED' }
+      { email: 'calvin.whittaker@sfha.org', events: 8, pattern: 'Message blocking + witness isolation', binaryState: '000000 → NULLIFIED' }
     ]
   },
   crossActorSync: 'ZTA ↔ STP coordination confirmed within 4-minute windows across 3 clusters'
@@ -2113,7 +2113,7 @@ export const TRANSMISSION_REQUESTS = [
 export const RESPONDENTS = [
   { name: 'Zanghi Torres Adams LLP', role: 'Legal Framework / Command Node', email: 'j.zanghi@ztallp.com' },
   { name: 'Swords to Plowshares (STP-SF)', role: 'Physical Executor', email: 'william.landrum@stp-sf.org' },
-  { name: 'San Francisco Housing Authority (SFHA)', role: 'Retaliatory Instrument', email: 'c.whittaker@sfha.org' }
+  { name: 'San Francisco Housing Authority (SFHA)', role: 'Retaliatory Instrument', email: 'calvin.whittaker@sfha.org' }
 ];
 
 export const TRANSMISSION_CINEMA = {

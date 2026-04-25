@@ -40,7 +40,7 @@ EXCLUDED_ACTORS = {
     "j.zanghi@ztallp.com": {"score": -777.77, "status": "NULL_VOID_LIFE"},
     "a.torres@ztallp.com": {"score": -666.66, "status": "NULL_VOID_LIFE"},
     "william.landrum@stp-sf.org": {"score": -999.99, "status": "NULL_VOID_LIFE"},
-    "c.whittaker@sfha.org": {"score": -888.88, "status": "NULL_VOID_LIFE"},
+    "calvin.whittaker@sfha.org": {"score": -888.88, "status": "NULL_VOID_LIFE"},
 }
 
 
