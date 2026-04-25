@@ -40,6 +40,9 @@ export {
 
 // Runtime functions
 export {
+  // Immutability
+  deepFreeze,
+  
   // Provenance
   generateProvenance,
   

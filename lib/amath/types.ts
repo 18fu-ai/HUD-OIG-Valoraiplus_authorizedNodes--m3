@@ -55,6 +55,7 @@ export interface RuntimeProvenance {
   readonly verifiedBy: 'runtime' | 'api' | 'build';
   readonly environment: 'dev' | 'preview' | 'production';
   readonly schemaVersion: 'REV_33';
+  readonly provenanceFingerprint: string;
   readonly routeSource?: string;
 }
 

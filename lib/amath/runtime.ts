@@ -25,8 +25,48 @@ import {
 } from './types';
 
 // ============================================================
+// IMMUTABILITY LAYER
+// ============================================================
+
+/**
+ * Deep freeze an object and all nested properties
+ * Ensures immutability after receipt creation
+ */
+export function deepFreeze<T>(obj: T): Readonly<T> {
+  Object.freeze(obj);
+
+  Object.getOwnPropertyNames(obj as object).forEach((prop) => {
+    const value = (obj as Record<string, unknown>)[prop];
+
+    if (
+      value &&
+      (typeof value === 'object' || typeof value === 'function') &&
+      !Object.isFrozen(value)
+    ) {
+      deepFreeze(value);
+    }
+  });
+
+  return obj;
+}
+
+// ============================================================
 // PROVENANCE GENERATION
 // ============================================================
+
+/**
+ * Generate provenance fingerprint for integrity verification
+ */
+function generateFingerprint(buildHash: string, timestamp: string, routeSource: string): string {
+  const input = `${buildHash}:${timestamp}:${routeSource}`;
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    const char = input.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return `FP-${Math.abs(hash).toString(16).toUpperCase().padStart(8, '0')}`;
+}
 
 /**
  * Generate immutable runtime provenance for a given source
@@ -38,13 +78,15 @@ export function generateProvenance(
   const timestamp = new Date().toISOString();
   const buildHash = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) || 'dev-local';
   const environment = (process.env.VERCEL_ENV as 'dev' | 'preview' | 'production') || 'dev';
+  const provenanceFingerprint = generateFingerprint(buildHash, timestamp, routeSource);
   
-  return Object.freeze({
+  return deepFreeze({
     buildHash,
     generatedAt: timestamp,
     verifiedBy,
     environment,
     schemaVersion: 'REV_33' as const,
+    provenanceFingerprint,
     routeSource,
   });
 }
@@ -129,7 +171,7 @@ export function createHardenedReceipt(
   const provenance = generateProvenance(decision.route, 'runtime');
   const evidenceBoundary = createEvidenceBoundary(observed, interpretation, corroboration);
   
-  return Object.freeze({
+return deepFreeze({
     receiptId: `HR1-${Date.now().toString(36).toUpperCase()}-${(++receiptCounter).toString().padStart(4, '0')}`,
     signal,
     decision,
