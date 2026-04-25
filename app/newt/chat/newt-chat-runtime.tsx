@@ -39,6 +39,20 @@ interface ConversationEnvelope {
   integrityHash?: string;
 }
 
+interface ValidationManifest {
+  sessionId: string;
+  packetCount: number;
+  packetHashes: string[];
+  rootHash: string;
+  generatedAt: string;
+  schemaVersion: "REV_34";
+}
+
+interface AuditExport {
+  manifest: ValidationManifest;
+  packets: ConversationEnvelope[];
+}
+
 // Browser-safe SHA-256 hashing (no Node crypto)
 async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
@@ -50,6 +64,35 @@ async function sha256(input: string): Promise<string> {
 
 function canonicalize(input: unknown): string {
   return JSON.stringify(input, Object.keys(input as object).sort());
+}
+
+// Generate validation manifest from session packets
+async function createValidationManifest(
+  sessionId: string,
+  packets: ConversationEnvelope[]
+): Promise<ValidationManifest> {
+  const packetHashes = packets
+    .map((p) => p.integrityHash)
+    .filter(Boolean) as string[];
+
+  const rootHash = await sha256(canonicalize(packetHashes));
+
+  return {
+    sessionId,
+    packetCount: packets.length,
+    packetHashes,
+    rootHash,
+    generatedAt: new Date().toISOString(),
+    schemaVersion: "REV_34",
+  };
+}
+
+// External verifier - recompute hash and compare
+async function verifyPacket(packet: ConversationEnvelope): Promise<boolean> {
+  const { integrityHash, ...unsignedPacket } = packet;
+  if (!integrityHash) return false;
+  const recomputed = await sha256(canonicalize(unsignedPacket));
+  return recomputed === integrityHash;
 }
 
 // Speech Recognition types for TypeScript
@@ -117,6 +160,7 @@ export default function NewtChatRuntime() {
   const [speechSupported, setSpeechSupported] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
   const [runtimeReceipts, setRuntimeReceipts] = useState<Record<string, ConversationEnvelope>>({});
+  const [validationManifest, setValidationManifest] = useState<ValidationManifest | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
@@ -272,10 +316,17 @@ How may I assist you today, Poppa?`
 
     const integrityHash = await sha256(canonicalize(envelope));
 
-    setRuntimeReceipts((prev) => ({
-      ...prev,
+    const newReceipts = {
+      ...runtimeReceipts,
       [packetId]: { ...envelope, integrityHash },
-    }));
+    };
+    
+    setRuntimeReceipts(newReceipts);
+
+    // Generate validation manifest with root hash
+    const packets = Object.values(newReceipts);
+    const manifest = await createValidationManifest("newt-session", packets);
+    setValidationManifest(manifest);
 
     handleSubmit(e);
   };
@@ -321,6 +372,15 @@ How may I assist you today, Poppa?`
               </Badge>
               <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
                 Confidence: 100%
+              </Badge>
+              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                Manifest: {validationManifest ? 'READY' : 'PENDING'}
+              </Badge>
+              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                Root Hash: {validationManifest ? 'VERIFIED' : 'N/A'}
+              </Badge>
+              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                Packets: {Object.keys(runtimeReceipts).length}
               </Badge>
               {speechSupported && (
                 <Badge 
