@@ -200,9 +200,12 @@ export {
 // MEVR Runtime
 export {
   ValoraiplusMEVR,
+  validateIdentityClaim,
   type SovereignInvariant,
   type DeterministicClassification,
   type ProofArtifact,
+  type IdentityStatus,
+  type IdentityClaim,
 } from './mevr';
 
 // Runtime Topology

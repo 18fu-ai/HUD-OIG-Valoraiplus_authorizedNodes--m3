@@ -35,6 +35,104 @@ const NULL_NODES: string[] = [
   '0x9f8e7d6c5b4a3928170615f4e3d2c1b0a9f8e7d6c5b4a39281706150f4e3d2c1', // STP-SF
 ];
 
+// ============================================================
+// IDENTITY CLAIM VALIDATION
+// ============================================================
+
+export type IdentityStatus = 'VERIFIED' | 'INVALID' | 'UNVERIFIED' | 'BLOCKED';
+
+export interface IdentityClaim {
+  name: string;
+  status: IdentityStatus;
+  reasonCode: string;
+  invariantState: 'VALID' | 'BLOCKED' | 'PENDING';
+  exportEligible: boolean;
+  route: '/route70' | '/route71';
+  sourceLineage?: string;
+  replacement?: string;
+}
+
+// Blocked identity claims - no verified source lineage
+const BLOCKED_IDENTITIES: Record<string, IdentityClaim> = {
+  'jerry gillson': {
+    name: 'Jerry Gillson',
+    status: 'BLOCKED',
+    reasonCode: 'IDENTITY_MISMATCH',
+    invariantState: 'BLOCKED',
+    exportEligible: false,
+    route: '/route70',
+    replacement: 'Poppa Donny Gillson',
+  },
+  'jerry': {
+    name: 'Jerry',
+    status: 'BLOCKED',
+    reasonCode: 'IDENTITY_MISMATCH',
+    invariantState: 'BLOCKED',
+    exportEligible: false,
+    route: '/route70',
+    replacement: 'Poppa Donny Gillson',
+  },
+};
+
+// Verified identity claims - source lineage confirmed
+const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
+  'poppa donny gillson': {
+    name: 'Poppa Donny Gillson',
+    status: 'VERIFIED',
+    reasonCode: 'A-001',
+    invariantState: 'VALID',
+    exportEligible: true,
+    route: '/route71',
+    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+  },
+  'poppa donny': {
+    name: 'Poppa Donny',
+    status: 'VERIFIED',
+    reasonCode: 'A-001',
+    invariantState: 'VALID',
+    exportEligible: true,
+    route: '/route71',
+    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+  },
+  'donny gillson': {
+    name: 'Donny Gillson',
+    status: 'VERIFIED',
+    reasonCode: 'A-001',
+    invariantState: 'VALID',
+    exportEligible: true,
+    route: '/route71',
+    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+  },
+};
+
+/**
+ * Validate an identity claim through MEVR
+ * Runtime rule: No verified identity source → no sovereign latch → no export → route70
+ */
+export function validateIdentityClaim(name: string): IdentityClaim {
+  const normalized = name.toLowerCase().trim();
+  
+  // Check blocked identities first
+  if (BLOCKED_IDENTITIES[normalized]) {
+    return BLOCKED_IDENTITIES[normalized];
+  }
+  
+  // Check verified identities
+  if (VERIFIED_IDENTITIES[normalized]) {
+    return VERIFIED_IDENTITIES[normalized];
+  }
+  
+  // Unknown identity - default to UNVERIFIED
+  return {
+    name,
+    status: 'UNVERIFIED',
+    reasonCode: 'IDENTITY_UNKNOWN',
+    invariantState: 'PENDING',
+    exportEligible: false,
+    route: '/route70',
+  };
+}
+
 export class ValoraiplusMEVR {
   private readonly SAINT_PAUL_MERKLE = "26856B24C50750F0C69C1EEB86A69EF777777";
   private readonly NULL_NODE_STATE = "000000 0000000";
