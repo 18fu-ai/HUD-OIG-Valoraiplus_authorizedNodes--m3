@@ -205,6 +205,25 @@ export {
   type ProofArtifact,
 } from './mevr';
 
+// Runtime Topology
+export {
+  route66DualEvaluation,
+  kernelGovernance,
+  decisionBoundary,
+  runtimeTopology,
+  batchTopology,
+  createTopologyClaim,
+  createClaimFromValidation,
+  TOPOLOGY_FLOW,
+  type ClaimStatus,
+  type TopologyClaim,
+  type RuntimeResult,
+  type DualEvaluation,
+  type GovernanceResult,
+  type TopologyResult,
+  type BatchTopologyResult,
+} from './runtimeTopology';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
