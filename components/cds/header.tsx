@@ -95,9 +95,10 @@ interface ProtocolState {
 
 export function CDSHeader() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProtocolState, setShowProtocolState] = useState(false);
-  const [currentTime, setCurrentTime] = useState('');
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
   const [pulsePhase, setPulsePhase] = useState(0);
   const [truthCycleCount, setTruthCycleCount] = useState(0);
 
@@ -120,17 +121,27 @@ export function CDSHeader() {
     return route?.stage ?? -1;
   }, [pathname]);
 
+  // Mount guard
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Time update - only after mount
+  useEffect(() => {
+    if (!mounted) return;
+    
     const updateTime = () => {
       setCurrentTime(new Date().toISOString().slice(0, 19) + 'Z');
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]);
 
-  // 266ms Truth Cycle Pulse
+  // 266ms Truth Cycle Pulse - only after mount
   useEffect(() => {
+    if (!mounted) return;
+
     const pulseInterval = setInterval(() => {
       setPulsePhase(p => (p + 1) % 3);
       setTruthCycleCount(c => c + 1);
@@ -143,7 +154,7 @@ export function CDSHeader() {
       }));
     }, 266);
     return () => clearInterval(pulseInterval);
-  }, []);
+  }, [mounted]);
 
   const getIntentStateColor = (state: IntentState) => {
     switch (state) {
@@ -163,6 +174,20 @@ export function CDSHeader() {
       default: return 'text-muted-foreground';
     }
   };
+
+  // SSR fallback - render minimal header before hydration
+  if (!mounted) {
+    return (
+      <header className="border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-[60]">
+        <div className="h-1 bg-background" />
+        <div className="container mx-auto px-4">
+          <div className="h-14 flex items-center text-sm text-muted-foreground font-mono">
+            Loading protocol header...
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-[60]">
@@ -306,7 +331,7 @@ export function CDSHeader() {
       </div>
 
       {/* Protocol State Dropdown */}
-      {showProtocolState && (
+      {mounted && showProtocolState && (
         <div className="absolute right-4 top-14 w-72 bg-card border border-border rounded-lg shadow-xl z-50 animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="p-3 border-b border-border">
             <h3 className="font-mono text-xs font-bold text-primary">PROTOCOL STATUS</h3>
@@ -357,7 +382,7 @@ export function CDSHeader() {
       )}
 
       {/* Full Navigation Overlay */}
-      {isMenuOpen && (
+      {mounted && isMenuOpen && (
         <>
           {/* Backdrop for closing */}
           <div 
