@@ -7,8 +7,16 @@
  * AUTHORITY RULE:   UI visualizes | evidence classifies | provenance traces | API decides
  * DATA INVARIANT:   decision ≠ interpretation
  * 
- * Schema: REV_33
+ * IVL UPGRADE:      REV_33 → REV_34 (Independent Verification Layer)
+ * CORE PRINCIPLE:   runtime generates evidence | external verifier confirms evidence
+ * VERIFICATION:     A packet is trusted because another system can reproduce it
+ * 
+ * Schema: REV_34
+ * Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777
  */
+
+// Re-export Independent Verification Layer
+export * from './ivl';
 
 // ============================================================
 // CORE TYPE DEFINITIONS
@@ -308,11 +316,13 @@ export function classifyEpistemic(
 
 export const CONSOLE_IDENTITY = Object.freeze({
   name: 'Temporal Entity Review Console',
-  version: 'REV_33',
+  version: 'REV_34',
   epistemicRule: 'claim ≠ evidence ≠ conclusion',
   renderingRule: 'No entity renders without complete 5W',
   authorityRule: 'UI visualizes | evidence classifies | provenance traces | API decides',
-  dataInvariant: 'decision ≠ interpretation'
+  dataInvariant: 'decision ≠ interpretation',
+  ivlPrinciple: 'runtime generates evidence | external verifier confirms evidence',
+  verificationRule: 'A packet is trusted because another system can reproduce it'
 });
 
 export const EVIDENCE_STATUS_ORDER: readonly EvidenceStatus[] = Object.freeze([
