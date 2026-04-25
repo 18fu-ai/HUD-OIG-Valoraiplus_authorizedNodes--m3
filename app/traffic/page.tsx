@@ -11,81 +11,35 @@ import {
   RefreshCw, AlertTriangle, CheckCircle2, Settings,
   BarChart3, PieChart, LineChart, Zap
 } from 'lucide-react';
-
-// Simulated traffic data based on actual route structure
-const ROUTE_TRAFFIC = [
-  { route: '/', name: 'Home', views: 1247, unique: 892, avgTime: '2:34', bounce: 23 },
-  { route: '/intelligence', name: 'Intelligence', views: 834, unique: 621, avgTime: '4:12', bounce: 15 },
-  { route: '/intelligence/download', name: 'Download Report', views: 456, unique: 398, avgTime: '1:45', bounce: 42 },
-  { route: '/clawback', name: 'Clawback Matrix', views: 723, unique: 534, avgTime: '3:28', bounce: 18 },
-  { route: '/mimecast', name: 'Mimecast Forensics', views: 612, unique: 445, avgTime: '5:02', bounce: 12 },
-  { route: '/newt/chat', name: 'N.E.W.T. Chat', views: 589, unique: 412, avgTime: '8:34', bounce: 8 },
-  { route: '/gate', name: 'Identity Gate', views: 478, unique: 356, avgTime: '1:22', bounce: 35 },
-  { route: '/route71', name: 'Route 71 (Admitted)', views: 445, unique: 334, avgTime: '2:56', bounce: 20 },
-  { route: '/route70', name: 'Route 70 (Blocked)', views: 234, unique: 189, avgTime: '0:45', bounce: 78 },
-  { route: '/architecture', name: 'Architecture', views: 398, unique: 287, avgTime: '3:15', bounce: 22 },
-  { route: '/protocol', name: 'Protocol', views: 367, unique: 256, avgTime: '4:08', bounce: 19 },
-  { route: '/status', name: 'System Status', views: 534, unique: 423, avgTime: '1:48', bounce: 28 },
-  { route: '/cinema', name: 'Project Cinema', views: 289, unique: 212, avgTime: '2:22', bounce: 31 },
-  { route: '/token', name: 'Token ($SGAU)', views: 445, unique: 334, avgTime: '2:12', bounce: 25 },
-  { route: '/contract', name: 'Smart Contract', views: 312, unique: 234, avgTime: '3:45', bounce: 21 },
-];
-
-const GEOGRAPHIC_DATA = [
-  { country: 'United States', visitors: 4523, percentage: 62.3 },
-  { country: 'United Kingdom', visitors: 892, percentage: 12.3 },
-  { country: 'Canada', visitors: 534, percentage: 7.4 },
-  { country: 'Germany', visitors: 389, percentage: 5.4 },
-  { country: 'Australia', visitors: 312, percentage: 4.3 },
-  { country: 'France', visitors: 234, percentage: 3.2 },
-  { country: 'Other', visitors: 378, percentage: 5.1 },
-];
-
-const DEVICE_DATA = [
-  { type: 'Desktop', icon: Monitor, visitors: 4892, percentage: 67.4 },
-  { type: 'Mobile', icon: Smartphone, visitors: 1923, percentage: 26.5 },
-  { type: 'Tablet', icon: Tablet, visitors: 447, percentage: 6.1 },
-];
-
-const REFERRER_DATA = [
-  { source: 'Direct', visitors: 2834, percentage: 39.1 },
-  { source: 'Google Search', visitors: 1923, percentage: 26.5 },
-  { source: 'Twitter/X', visitors: 892, percentage: 12.3 },
-  { source: 'LinkedIn', visitors: 534, percentage: 7.4 },
-  { source: 'GitHub', visitors: 389, percentage: 5.4 },
-  { source: 'Other', visitors: 690, percentage: 9.3 },
-];
-
-const HOURLY_TRAFFIC = [
-  { hour: '00:00', views: 45 }, { hour: '01:00', views: 32 },
-  { hour: '02:00', views: 28 }, { hour: '03:00', views: 21 },
-  { hour: '04:00', views: 18 }, { hour: '05:00', views: 23 },
-  { hour: '06:00', views: 45 }, { hour: '07:00', views: 89 },
-  { hour: '08:00', views: 156 }, { hour: '09:00', views: 234 },
-  { hour: '10:00', views: 312 }, { hour: '11:00', views: 378 },
-  { hour: '12:00', views: 345 }, { hour: '13:00', views: 389 },
-  { hour: '14:00', views: 423 }, { hour: '15:00', views: 456 },
-  { hour: '16:00', views: 412 }, { hour: '17:00', views: 367 },
-  { hour: '18:00', views: 298 }, { hour: '19:00', views: 234 },
-  { hour: '20:00', views: 189 }, { hour: '21:00', views: 156 },
-  { hour: '22:00', views: 112 }, { hour: '23:00', views: 78 },
-];
+import { getTrafficDataSync, type AnalyticsPayload, type AnalyticsMode } from '@/lib/analytics';
 
 export default function TrafficDashboardPage() {
   const [mounted, setMounted] = useState(false);
-  const [isLive, setIsLive] = useState(false);
+  const [analyticsMode, setAnalyticsMode] = useState<AnalyticsMode>('SIMULATED');
+  const [trafficData, setTrafficData] = useState<AnalyticsPayload | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>('');
 
   useEffect(() => {
     setMounted(true);
+    const data = getTrafficDataSync();
+    setTrafficData(data);
+    setAnalyticsMode(data.mode);
     setLastRefresh(new Date().toLocaleTimeString());
   }, []);
 
-  // Calculate totals
-  const totalViews = ROUTE_TRAFFIC.reduce((sum, r) => sum + r.views, 0);
-  const totalUnique = ROUTE_TRAFFIC.reduce((sum, r) => sum + r.unique, 0);
-  const avgBounce = Math.round(ROUTE_TRAFFIC.reduce((sum, r) => sum + r.bounce, 0) / ROUTE_TRAFFIC.length);
-  const maxHourlyViews = Math.max(...HOURLY_TRAFFIC.map(h => h.views));
+  const handleRefresh = () => {
+    const data = getTrafficDataSync();
+    setTrafficData(data);
+    setAnalyticsMode(data.mode);
+    setLastRefresh(new Date().toLocaleTimeString());
+  };
+
+  // Calculate totals from typed payload
+  const totalViews = trafficData?.summary.totalViews || 0;
+  const totalUnique = trafficData?.summary.uniqueVisitors || 0;
+  const avgBounce = trafficData?.summary.bounceRate || 0;
+  const maxHourlyViews = Math.max(...(trafficData?.hourly.map(h => h.views) || [1]));
+  const isLive = analyticsMode === 'VERCEL_API';
 
   if (!mounted) {
     return (
@@ -135,10 +89,13 @@ export default function TrafficDashboardPage() {
                 </>
               )}
             </Badge>
+            <Badge variant="outline" className="border-slate-700 text-slate-400">
+              Mode: {analyticsMode}
+            </Badge>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setLastRefresh(new Date().toLocaleTimeString())}
+              onClick={handleRefresh}
               className="border-emerald-700 text-emerald-400 hover:bg-emerald-950"
             >
               <RefreshCw className="w-4 h-4 mr-1" />
@@ -249,7 +206,7 @@ export default function TrafficDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-end gap-1 h-32">
-              {HOURLY_TRAFFIC.map((h, i) => (
+              {(trafficData?.hourly || []).map((h, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center">
                   <div 
                     className="w-full bg-emerald-500/80 rounded-t transition-all hover:bg-emerald-400"
@@ -279,16 +236,19 @@ export default function TrafficDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2 max-h-80 overflow-y-auto">
-                {ROUTE_TRAFFIC.sort((a, b) => b.views - a.views).slice(0, 10).map((route, i) => (
+                {[...(trafficData?.routes || [])].sort((a, b) => b.views - a.views).slice(0, 10).map((route, i) => (
                   <div key={route.route} className="flex items-center gap-3 p-2 rounded bg-slate-800/50 hover:bg-slate-800 transition-colors">
                     <span className="text-xs text-emerald-600 w-6">{i + 1}.</span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-white truncate">{route.name}</div>
-                      <div className="text-xs text-emerald-700 truncate">{route.route}</div>
+                      <div className="text-sm text-white truncate">{route.route}</div>
+                      <div className="text-xs text-emerald-700 truncate">
+                        {route.corroboration === 'VERIFIED' ? <CheckCircle2 className="w-3 h-3 inline mr-1 text-emerald-500" /> : null}
+                        {route.corroboration}
+                      </div>
                     </div>
                     <div className="text-right">
                       <div className="text-sm font-bold text-emerald-400">{route.views.toLocaleString()}</div>
-                      <div className="text-xs text-emerald-700">{route.unique} unique</div>
+                      <div className="text-xs text-emerald-700">{route.uniqueVisitors} unique</div>
                     </div>
                   </div>
                 ))}
@@ -309,14 +269,14 @@ export default function TrafficDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {GEOGRAPHIC_DATA.map((geo) => (
+                {(trafficData?.geo || []).map((geo) => (
                   <div key={geo.country} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-3 h-3 text-emerald-600" />
                         <span className="text-white">{geo.country}</span>
                       </div>
-                      <span className="text-emerald-400">{geo.visitors.toLocaleString()} ({geo.percentage}%)</span>
+                      <span className="text-emerald-400">{geo.visits.toLocaleString()} ({geo.percentage}%)</span>
                     </div>
                     <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                       <div 
@@ -342,16 +302,16 @@ export default function TrafficDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {DEVICE_DATA.map((device) => {
-                  const Icon = device.icon;
+                {(trafficData?.devices || []).map((device) => {
+                  const Icon = device.device === 'Desktop' ? Monitor : device.device === 'Mobile' ? Smartphone : Tablet;
                   return (
-                    <div key={device.type} className="flex items-center gap-4">
+                    <div key={device.device} className="flex items-center gap-4">
                       <div className="p-2 rounded bg-emerald-500/10 border border-emerald-500/30">
                         <Icon className="w-5 h-5 text-emerald-400" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-white">{device.type}</span>
+                          <span className="text-white">{device.device}</span>
                           <span className="text-emerald-400 font-bold">{device.percentage}%</span>
                         </div>
                         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -360,7 +320,7 @@ export default function TrafficDashboardPage() {
                             style={{ width: `${device.percentage}%` }}
                           />
                         </div>
-                        <div className="text-xs text-emerald-700 mt-1">{device.visitors.toLocaleString()} visitors</div>
+                        <div className="text-xs text-emerald-700 mt-1">{device.sessions.toLocaleString()} sessions</div>
                       </div>
                     </div>
                   );
@@ -379,11 +339,11 @@ export default function TrafficDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {REFERRER_DATA.map((ref) => (
+                {(trafficData?.sources || []).map((ref) => (
                   <div key={ref.source} className="flex items-center gap-3 p-2 rounded bg-slate-800/50">
                     <div className="flex-1">
                       <div className="text-sm text-white">{ref.source}</div>
-                      <div className="text-xs text-emerald-700">{ref.visitors.toLocaleString()} visitors</div>
+                      <div className="text-xs text-emerald-700">{ref.visits.toLocaleString()} visitors</div>
                     </div>
                     <div className="text-right">
                       <div className="text-lg font-bold text-emerald-400">{ref.percentage}%</div>
@@ -419,22 +379,28 @@ export default function TrafficDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {ROUTE_TRAFFIC.map((route) => (
-                    <tr key={route.route} className="border-b border-emerald-900/30 hover:bg-slate-800/50">
-                      <td className="py-2 px-3">
-                        <div className="text-white">{route.name}</div>
-                        <div className="text-xs text-emerald-700">{route.route}</div>
-                      </td>
-                      <td className="text-right py-2 px-3 text-emerald-400 font-mono">{route.views.toLocaleString()}</td>
-                      <td className="text-right py-2 px-3 text-blue-400 font-mono">{route.unique.toLocaleString()}</td>
-                      <td className="text-right py-2 px-3 text-purple-400 font-mono">{route.avgTime}</td>
-                      <td className="text-right py-2 px-3">
-                        <Badge variant="outline" className={`${route.bounce > 50 ? 'border-red-700 text-red-400' : route.bounce > 30 ? 'border-amber-700 text-amber-400' : 'border-emerald-700 text-emerald-400'}`}>
-                          {route.bounce}%
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
+                  {(trafficData?.routes || []).map((route) => {
+                    const avgTimeFormatted = `${Math.floor(route.avgSessionSeconds / 60)}:${(route.avgSessionSeconds % 60).toString().padStart(2, '0')}`;
+                    return (
+                      <tr key={route.route} className="border-b border-emerald-900/30 hover:bg-slate-800/50">
+                        <td className="py-2 px-3">
+                          <div className="text-white">{route.route}</div>
+                          <div className="text-xs text-emerald-700">
+                            {route.corroboration === 'VERIFIED' ? <CheckCircle2 className="w-3 h-3 inline mr-1 text-emerald-500" /> : <AlertTriangle className="w-3 h-3 inline mr-1 text-amber-500" />}
+                            {route.corroboration}
+                          </div>
+                        </td>
+                        <td className="text-right py-2 px-3 text-emerald-400 font-mono">{route.views.toLocaleString()}</td>
+                        <td className="text-right py-2 px-3 text-blue-400 font-mono">{route.uniqueVisitors.toLocaleString()}</td>
+                        <td className="text-right py-2 px-3 text-purple-400 font-mono">{avgTimeFormatted}</td>
+                        <td className="text-right py-2 px-3">
+                          <Badge variant="outline" className={`${route.bounceRate > 50 ? 'border-red-700 text-red-400' : route.bounceRate > 30 ? 'border-amber-700 text-amber-400' : 'border-emerald-700 text-emerald-400'}`}>
+                            {route.bounceRate}%
+                          </Badge>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -443,8 +409,8 @@ export default function TrafficDashboardPage() {
 
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-4 border-t border-emerald-900">
-          <p>VALORAIPLUS TRAFFIC ANALYTICS | MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777</p>
-          <p className="mt-1">Configure VERCEL_API_TOKEN for live data | SAINT PAUL 55116</p>
+          <p>VALORAIPLUS TRAFFIC ANALYTICS | Mode: {analyticsMode} | Corroboration: {trafficData?.corroboration || 'PENDING'}</p>
+          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116</p>
         </div>
       </main>
     </div>
