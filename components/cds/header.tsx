@@ -56,6 +56,7 @@ const navItems = [
   { href: '/route81', label: 'Route 81', icon: Vault, category: 'system' },
   { href: '/kernel', label: 'Kernel', icon: Cpu, category: 'system' },
   { href: '/protocol', label: 'Protocol', icon: Terminal, category: 'system' },
+  { href: '/api-docs', label: 'API Docs', icon: FileCode, category: 'system' },
   { href: '/architecture', label: 'Architecture', icon: Layers, category: 'system' },
   { href: '/stack', label: 'Stack', icon: CircleDot, category: 'system' },
   { href: '/cinema', label: 'Cinema', icon: Film, category: 'core' },
