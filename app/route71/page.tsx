@@ -694,9 +694,38 @@ function Route71Content() {
               </div>
             </div>
 
+            {/* Authority Chain - Why the runtime allowed the output */}
+            <Card className="border-chart-3/30 bg-chart-3/5">
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm text-chart-3">Runtime Authority Chain</CardTitle>
+                <p className="font-mono text-[10px] text-muted-foreground">Why the runtime allowed the output to exist</p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {[
+                    { authority: 'MEVR', role: 'Admission Authority', status: 'ENFORCING' },
+                    { authority: 'Governance Kernel', role: 'Policy Authority', status: 'ACTIVE' },
+                    { authority: 'Proof Ledger', role: 'Lineage Authority', status: 'ANCHORED' },
+                    { authority: 'Replay Validator', role: 'Reproducibility Authority', status: 'VERIFIED' },
+                    { authority: 'Export Policy', role: 'Exposure Authority', status: 'GATED' },
+                    { authority: 'Route 71', role: 'Introspection Surface', status: 'OBSERVING' },
+                  ].map((auth, idx) => (
+                    <div key={auth.authority} className="p-3 rounded-lg border border-chart-3/30 bg-card/50 text-center">
+                      <p className="font-mono text-[10px] text-muted-foreground mb-1">{auth.role}</p>
+                      <p className="font-mono text-xs font-bold text-foreground">{auth.authority}</p>
+                      <Badge variant="outline" className="mt-2 font-mono text-[8px] bg-chart-3/10 text-chart-3 border-chart-3/30">
+                        {auth.status}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Runtime Model */}
             <Card className="border-primary/30 bg-primary/5">
               <CardContent className="p-6">
+                <p className="font-mono text-[10px] text-muted-foreground text-center mb-4">DETERMINISTIC EXECUTION PATH</p>
                 <div className="flex flex-wrap items-center justify-center gap-2 py-2">
                   {['Source', 'Formula', 'Score', 'Threshold', 'Classification', 'Reproducibility', 'Visibility'].map((step, idx, arr) => (
                     <div key={step} className="flex items-center gap-2">
@@ -712,6 +741,15 @@ function Route71Content() {
                 <p className="font-mono text-xs text-muted-foreground text-center mt-4">
                   MEVR Protocol Runtime // v1.4.100D // Saint Paul Node 55116
                 </p>
+              </CardContent>
+            </Card>
+
+            {/* Core Principle */}
+            <Card className="border-emerald-500/30 bg-emerald-500/5">
+              <CardContent className="p-6 text-center">
+                <p className="font-mono text-[10px] text-muted-foreground mb-2">STRONGEST ARCHITECTURAL INVARIANT</p>
+                <p className="font-mono text-xl font-bold text-emerald-400">visibility is policy-earned</p>
+                <p className="font-mono text-xs text-muted-foreground mt-2">not automatically granted by existence</p>
               </CardContent>
             </Card>
           </TabsContent>
