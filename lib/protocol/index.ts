@@ -253,7 +253,6 @@ export {
 
 // Machine-Enforced Runtime Surface
 export {
-  computeValidationScore as mersComputeValidationScore,
   evaluateRuntimeSignal,
   evaluateIdentity,
   buildRuntimeSurface,
@@ -268,6 +267,9 @@ export {
   type IdentityInvariant,
   type IdentityResult,
 } from './machine-enforced-runtime-surface';
+
+// Re-export MERS computeValidationScore with unique name
+export { computeValidationScore as mersComputeValidationScore } from './machine-enforced-runtime-surface';
 
 // Verify Contract (REV_33)
 export {
