@@ -20,12 +20,7 @@ export type {
   CIDResult,
 } from './waterfall-firewall';
 
-// MEVR types
-export type {
-  SovereignInvariant,
-  DeterministicClassification,
-  MEVRGateResult,
-} from './mevr';
+// MEVR types - exported with ValoraiplusMEVR below
 
 // Receipt types
 export type {
