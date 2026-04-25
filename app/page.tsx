@@ -54,6 +54,7 @@ const quickModules = [
   { href: '/apex', label: 'Apex', icon: Scale, color: 'text-fuchsia-500', desc: 'Finality Monitor' },
   { href: '/valoraiplus', label: 'ValorAI+', icon: Cpu, color: 'text-fuchsia-300', desc: 'Governance Engine' },
   { href: '/maturity', label: 'Maturity', icon: Activity, color: 'text-blue-400', desc: 'System Maturity' },
+  { href: '/valuation', label: 'Valuation', icon: DollarSign, color: 'text-emerald-400', desc: 'Financial Report' },
 ];
 
 export default function DashboardPage() {
