@@ -279,7 +279,7 @@ How may I assist you today, Poppa?`
   }, [messages]);
 
   // Handle form submission with REV_34 envelope
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const raw = (input ?? "").trim();
@@ -291,6 +291,7 @@ How may I assist you today, Poppa?`
       setInterimTranscript("");
     }
 
+    // Generate packet and envelope asynchronously without blocking submission
     const packetId = `pkt_${Date.now()}`;
 
     const envelope: ConversationEnvelope = {
@@ -314,29 +315,38 @@ How may I assist you today, Poppa?`
       },
     };
 
-    const integrityHash = await sha256(canonicalize(envelope));
+    // Process hash and manifest asynchronously
+    (async () => {
+      const integrityHash = await sha256(canonicalize(envelope));
 
-    const newReceipts = {
-      ...runtimeReceipts,
-      [packetId]: { ...envelope, integrityHash },
-    };
-    
-    setRuntimeReceipts(newReceipts);
+      const newReceipts = {
+        ...runtimeReceipts,
+        [packetId]: { ...envelope, integrityHash },
+      };
+      
+      setRuntimeReceipts(newReceipts);
 
-    // Generate validation manifest with root hash
-    const packets = Object.values(newReceipts);
-    const manifest = await createValidationManifest("newt-session", packets);
-    setValidationManifest(manifest);
+      // Generate validation manifest with root hash
+      const packets = Object.values(newReceipts);
+      const manifest = await createValidationManifest("newt-session", packets);
+      setValidationManifest(manifest);
+    })();
 
+    // Submit immediately without waiting for hash
     handleSubmit(e);
   };
 
   // Handle keyboard shortcuts
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if ((input ?? '').trim() && !isLoading) {
-        onSubmit(e);
+        // Create a synthetic form event for submission
+        const form = e.currentTarget.closest('form');
+        if (form) {
+          const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+          form.dispatchEvent(submitEvent);
+        }
       }
     }
   };
