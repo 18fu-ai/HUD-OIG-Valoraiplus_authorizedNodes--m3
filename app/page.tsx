@@ -37,6 +37,7 @@ const quickModules = [
   { href: '/contract/chat', label: 'Create', icon: MessageSquarePlus, color: 'text-lime-400', desc: 'New Contract' },
   { href: '/uhi', label: 'UHI', icon: Zap, color: 'text-fuchsia-400', desc: 'High Income' },
   { href: '/report', label: 'Report', icon: FileText, color: 'text-sky-400', desc: 'Full Report' },
+  { href: '/route71', label: 'Route 71', icon: Activity, color: 'text-orange-500', desc: 'Omega-Divine' },
 ];
 
 export default function DashboardPage() {
