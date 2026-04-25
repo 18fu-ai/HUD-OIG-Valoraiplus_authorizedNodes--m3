@@ -253,17 +253,17 @@ export {
 
 // Machine-Enforced Runtime Surface
 export {
-  computeValidationScore,
+  computeValidationScore as mersComputeValidationScore,
   evaluateRuntimeSignal,
   evaluateIdentity,
   buildRuntimeSurface,
   type RuntimeCategory,
-  type InvariantState,
+  type InvariantState as MERSInvariantState,
   type ReplayStatus,
   type RuntimeRoute,
-  type ReasonCode,
+  type ReasonCode as MERSReasonCode,
   type RuntimeSignalInput,
-  type RuntimeSignal,
+  type RuntimeSignal as MERSRuntimeSignal,
   type ProofArtifact as RuntimeProofArtifact,
   type IdentityInvariant,
   type IdentityResult,
