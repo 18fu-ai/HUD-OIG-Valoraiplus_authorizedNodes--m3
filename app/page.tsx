@@ -57,6 +57,7 @@ const quickModules = [
   { href: '/valuation', label: 'Valuation', icon: DollarSign, color: 'text-emerald-400', desc: 'Financial Report' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, color: 'text-emerald-500', desc: 'Truth Lifecycle' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, color: 'text-blue-400', desc: 'Sovereign Manifest' },
+  { href: '/intelligence', label: 'Intelligence', icon: Brain, color: 'text-red-500', desc: '5W Reasoning' },
 ];
 
 export default function DashboardPage() {
