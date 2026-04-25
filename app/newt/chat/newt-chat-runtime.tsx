@@ -441,7 +441,7 @@ export default function NewtChatRuntime() {
               />
               <Button
                 type="submit"
-                disabled={isLoading || !input.trim()}
+                disabled={isLoading || !(input ?? '').trim()}
                 className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-6 self-end"
               >
                 {isLoading ? (

@@ -765,7 +765,7 @@ event VectorSealed(FinalityVector indexed vector, bytes32 merkleProof);`,
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isGenerating) return;
+    if (!(input ?? '').trim() || isGenerating) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -888,7 +888,7 @@ event VectorSealed(FinalityVector indexed vector, bytes32 merkleProof);`,
           </div>
           <Button 
             type="submit" 
-            disabled={!input.trim() || isGenerating}
+            disabled={!(input ?? '').trim() || isGenerating}
             className="px-4 bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             <Send className="w-4 h-4" />
