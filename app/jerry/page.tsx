@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
   Coins, Shield, Lock, AlertTriangle, Ban, 
-  Hash, Layers, Zap, FileText, CheckCircle2
+  Hash, Layers, Zap, CheckCircle2
 } from 'lucide-react';
 
 type MintReceipt = {
