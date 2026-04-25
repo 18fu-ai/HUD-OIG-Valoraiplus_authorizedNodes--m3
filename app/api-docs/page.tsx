@@ -4,7 +4,7 @@ import { CDSHeader } from '@/components/cds/header';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FileText,
   Copy,
@@ -216,9 +216,11 @@ function EndpointCard({ endpoint }: { endpoint: typeof API_ENDPOINTS[0]['endpoin
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const methodColors: Record<string, string> = {
@@ -296,7 +298,35 @@ function EndpointCard({ endpoint }: { endpoint: typeof API_ENDPOINTS[0]['endpoin
 }
 
 export default function APIDocsPage() {
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://valoraiplus.vercel.app';
+  const [baseUrl, setBaseUrl] = useState('https://valoraiplus.vercel.app');
+  const [mounted, setMounted] = useState(false);
+
+  // Only access window after mount to prevent SSR issues
+  useEffect(() => {
+    setBaseUrl(window.location.origin);
+    setMounted(true);
+  }, []);
+
+  const copyToClipboard = async (text: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+    }
+  };
+
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-background text-foreground font-mono">
+        <div className="h-16 bg-background border-b border-border" />
+        <div className="container mx-auto px-4 py-6 max-w-5xl">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-muted rounded w-1/3" />
+            <div className="h-4 bg-muted rounded w-2/3" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground font-mono">
@@ -331,7 +361,7 @@ export default function APIDocsPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => navigator.clipboard.writeText(baseUrl)}
+              onClick={() => copyToClipboard(baseUrl)}
             >
               <Copy className="w-4 h-4 mr-1" />
               Copy
