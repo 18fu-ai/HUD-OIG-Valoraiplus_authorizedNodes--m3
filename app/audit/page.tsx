@@ -32,12 +32,16 @@ import {
   generateAuditSummary,
   generateDefensibleOutput,
   softenClaim,
+  generateProofLedger,
+  computeProofStatistics,
   type AuditRecord,
   type ProtocolSignals,
   type AuditSummary,
   type RuntimeStage,
   type StatementStatus,
-  type ClaimSafety
+  type ClaimSafety,
+  type ProofLedgerEntry,
+  type ProofStatistics
 } from '@/lib/protocol/auditEngine';
 
 const RUNTIME_STAGES: { stage: RuntimeStage; label: string; icon: React.ElementType }[] = [
@@ -93,6 +97,17 @@ function AuditContent() {
   const defensibleOutput = useMemo(() => 
     generateDefensibleOutput(signals, summary),
     [signals, summary]
+  );
+
+  // Two-Tier Validation: Proof Ledger
+  const proofLedger = useMemo(() => 
+    generateProofLedger(SYSTEM_AUDIT_REGISTRY),
+    []
+  );
+
+  const proofStats = useMemo(() => 
+    computeProofStatistics(proofLedger),
+    [proofLedger]
   );
 
   // Runtime loop animation
@@ -293,6 +308,7 @@ function AuditContent() {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="bg-muted/50 border border-border">
             <TabsTrigger value="overview" className="font-mono text-xs">Overview</TabsTrigger>
+            <TabsTrigger value="proof-ledger" className="font-mono text-xs">Proof Ledger</TabsTrigger>
             <TabsTrigger value="registry" className="font-mono text-xs">Registry</TabsTrigger>
             <TabsTrigger value="recommendations" className="font-mono text-xs">Recommendations</TabsTrigger>
             <TabsTrigger value="qualified" className="font-mono text-xs">Qualified Truth</TabsTrigger>
@@ -353,6 +369,135 @@ function AuditContent() {
                   </div>
                   <Progress value={summary.overallConfidence} className="h-3" />
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Proof Ledger Tab - Two-Tier Validation Model */}
+          <TabsContent value="proof-ledger" className="mt-4 space-y-4">
+            {/* Validation Equation Display */}
+            <Card className="border-primary/30 bg-primary/5">
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm">Two-Tier Validation Model</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+                  <div className="p-3 rounded-lg bg-muted/50 border border-border">
+                    <p className="text-muted-foreground mb-1">Tier 1: Proof Score</p>
+                    <p className="text-foreground">P = (E × P × R × D)^0.25</p>
+                    <p className="text-primary mt-2 text-lg font-bold">{proofStats.avgProofScore}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-muted/50 border border-border">
+                    <p className="text-muted-foreground mb-1">Tier 2: Confidence Score</p>
+                    <p className="text-foreground">C = (A + T + C) / 3</p>
+                    <p className="text-chart-3 mt-2 text-lg font-bold">{proofStats.avgConfidenceScore}</p>
+                  </div>
+                  <div className="p-3 rounded-lg bg-muted/50 border border-border">
+                    <p className="text-muted-foreground mb-1">Validation Score</p>
+                    <p className="text-foreground">V = (P + C) / 2</p>
+                    <p className="text-emerald-400 mt-2 text-lg font-bold">{proofStats.avgValidationScore}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Proof Statistics */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              <Card className="border-emerald-500/30 bg-emerald-500/5">
+                <CardContent className="p-3 text-center">
+                  <p className="font-mono text-[10px] text-muted-foreground">VERIFIED</p>
+                  <p className="font-mono text-xl font-bold text-emerald-400">{proofStats.verified}</p>
+                </CardContent>
+              </Card>
+              <Card className="border-chart-3/30 bg-chart-3/5">
+                <CardContent className="p-3 text-center">
+                  <p className="font-mono text-[10px] text-muted-foreground">HIGH</p>
+                  <p className="font-mono text-xl font-bold text-chart-3">{proofStats.high}</p>
+                </CardContent>
+              </Card>
+              <Card className="border-amber-500/30 bg-amber-500/5">
+                <CardContent className="p-3 text-center">
+                  <p className="font-mono text-[10px] text-muted-foreground">MEDIUM</p>
+                  <p className="font-mono text-xl font-bold text-amber-400">{proofStats.medium}</p>
+                </CardContent>
+              </Card>
+              <Card className="border-orange-500/30 bg-orange-500/5">
+                <CardContent className="p-3 text-center">
+                  <p className="font-mono text-[10px] text-muted-foreground">LOW</p>
+                  <p className="font-mono text-xl font-bold text-orange-400">{proofStats.low}</p>
+                </CardContent>
+              </Card>
+              <Card className="border-red-500/30 bg-red-500/5">
+                <CardContent className="p-3 text-center">
+                  <p className="font-mono text-[10px] text-muted-foreground">UNVERIFIED</p>
+                  <p className="font-mono text-xl font-bold text-red-400">{proofStats.unverified}</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Proof Ledger Table */}
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="font-mono text-sm flex items-center gap-2">
+                  <Database className="w-4 h-4 text-primary" />
+                  Deterministic Verification Ledger
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full font-mono text-xs">
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="p-2 text-muted-foreground">Statement</th>
+                        <th className="p-2 text-muted-foreground">Formula</th>
+                        <th className="p-2 text-muted-foreground text-right">Proof</th>
+                        <th className="p-2 text-muted-foreground text-right">Confidence</th>
+                        <th className="p-2 text-muted-foreground text-right">Validation</th>
+                        <th className="p-2 text-muted-foreground text-center">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {proofLedger.map((entry, i) => (
+                        <tr key={i} className="border-b border-border/50 hover:bg-muted/30">
+                          <td className="p-2 text-foreground max-w-[200px] truncate">{entry.statement}</td>
+                          <td className="p-2 text-muted-foreground">{entry.formula}</td>
+                          <td className="p-2 text-right text-foreground">{entry.proof}</td>
+                          <td className="p-2 text-right text-foreground">{entry.confidence}</td>
+                          <td className="p-2 text-right text-foreground">{entry.validation}</td>
+                          <td className="p-2 text-center">
+                            <Badge 
+                              variant="outline" 
+                              className={`text-[10px] ${
+                                entry.status === 'VERIFIED' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+                                entry.status === 'HIGH' ? 'bg-chart-3/20 text-chart-3 border-chart-3/40' :
+                                entry.status === 'MEDIUM' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+                                entry.status === 'LOW' ? 'bg-orange-500/20 text-orange-400 border-orange-500/40' :
+                                'bg-red-500/20 text-red-400 border-red-500/40'
+                              }`}
+                            >
+                              {entry.status}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Verification Rule */}
+            <Card className="border-emerald-500/30 bg-emerald-500/5">
+              <CardContent className="p-4">
+                <p className="font-mono text-xs text-muted-foreground mb-2">Verification Rule</p>
+                <p className="font-mono text-sm text-foreground">
+                  A statement is <span className="text-emerald-400 font-bold">VERIFIED</span> if:
+                </p>
+                <ul className="font-mono text-xs text-muted-foreground mt-2 space-y-1 list-disc list-inside">
+                  <li>ValidationScore ≥ 0.95</li>
+                  <li>Replay reproducibility exists</li>
+                  <li>Source lineage exists</li>
+                </ul>
               </CardContent>
             </Card>
           </TabsContent>

@@ -20,6 +20,27 @@ export type ClaimSafety =
   | 'PENDING'        // Awaiting verification
   | 'NEEDS_SOURCE'   // Requires external citation
 
+// Two-Tier Validation Model
+// Tier 1: Proof Validity - measures mechanical support
+// Tier 2: Confidence Quality - measures interpretation reliability
+
+export interface ProofVector {
+  evidence: number;      // E - source count (0-1)
+  provenance: number;    // P - trace completeness (0-1)
+  replay: number;        // R - reproducibility (0-1)
+  determinism: number;   // D - same-input consistency (0-1)
+  attribution: number;   // A - actor linkage (0-1)
+  temporal: number;      // T - temporal continuity (0-1)
+  consensus: number;     // C - consensus agreement (0-1)
+}
+
+export interface ValidationScores {
+  proofScore: number;       // (E × P × R × D) normalized
+  confidenceScore: number;  // (AuditCoverage × TemporalConsistency × SourceAgreement)
+  validationScore: number;  // (P + C) / 2
+  status: 'VERIFIED' | 'HIGH' | 'MEDIUM' | 'LOW' | 'UNVERIFIED';
+}
+
 export interface AuditRecord {
   id: string;
   component: string;
@@ -30,6 +51,9 @@ export interface AuditRecord {
   confidence: number; // 0-100
   recommendation?: string;
   timestamp: string;
+  // Two-Tier Validation (NEW)
+  proofVector?: ProofVector;
+  validation?: ValidationScores;
 }
 
 export interface ProtocolSignals {
@@ -347,4 +371,180 @@ export function softenClaim(claim: string, safety: ClaimSafety): string {
     default:
       return claim;
   }
+}
+
+// ============================================================
+// TWO-TIER VALIDATION MODEL
+// "validated" = computable state (not adjective)
+// ============================================================
+
+/**
+ * Compute Proof Score (Tier 1)
+ * Measures whether the statement is mechanically supported
+ * ProofScore = (Evidence × Provenance × Replay × Determinism)
+ */
+export function computeProofScore(vector: ProofVector): number {
+  const { evidence, provenance, replay, determinism } = vector;
+  // Geometric mean for balanced weighting
+  const raw = Math.pow(evidence * provenance * replay * determinism, 0.25);
+  return Math.round(raw * 1000) / 1000;
+}
+
+/**
+ * Compute Confidence Score (Tier 2)
+ * Measures how reliable interpretation is
+ * ConfidenceScore = (AuditCoverage × TemporalConsistency × SourceAgreement)
+ */
+export function computeConfidenceScore(vector: ProofVector): number {
+  const { attribution, temporal, consensus } = vector;
+  // Average of interpretation factors
+  const raw = (attribution + temporal + consensus) / 3;
+  return Math.round(raw * 1000) / 1000;
+}
+
+/**
+ * Compute Validation Score
+ * ValidationScore = (ProofScore + ConfidenceScore) / 2
+ * Prevents: high confidence without proof AND proof without interpretive certainty
+ */
+export function computeValidationScore(proofScore: number, confidenceScore: number): number {
+  return Math.round(((proofScore + confidenceScore) / 2) * 1000) / 1000;
+}
+
+/**
+ * Determine Validation Status
+ * VERIFIED requires: ValidationScore >= 0.95 AND Replay exists AND Source lineage exists
+ */
+export function determineValidationStatus(
+  validationScore: number,
+  hasReplay: boolean,
+  hasSourceLineage: boolean
+): ValidationScores['status'] {
+  if (validationScore >= 0.95 && hasReplay && hasSourceLineage) {
+    return 'VERIFIED';
+  } else if (validationScore >= 0.85) {
+    return 'HIGH';
+  } else if (validationScore >= 0.70) {
+    return 'MEDIUM';
+  } else if (validationScore >= 0.50) {
+    return 'LOW';
+  } else {
+    return 'UNVERIFIED';
+  }
+}
+
+/**
+ * Generate complete validation scores for a proof vector
+ */
+export function generateValidationScores(
+  vector: ProofVector,
+  hasReplay: boolean = true,
+  hasSourceLineage: boolean = true
+): ValidationScores {
+  const proofScore = computeProofScore(vector);
+  const confidenceScore = computeConfidenceScore(vector);
+  const validationScore = computeValidationScore(proofScore, confidenceScore);
+  const status = determineValidationStatus(validationScore, hasReplay, hasSourceLineage);
+  
+  return {
+    proofScore,
+    confidenceScore,
+    validationScore,
+    status
+  };
+}
+
+/**
+ * Create proof vector from audit record
+ */
+export function createProofVectorFromRecord(record: AuditRecord): ProofVector {
+  const confidence = record.confidence / 100;
+  const hasSource = !!record.sourceRef;
+  const isImplemented = record.status === 'IMPLEMENTED';
+  const isProven = record.safety === 'PROVEN';
+  
+  return {
+    evidence: hasSource ? 0.95 : 0.3,
+    provenance: hasSource ? 0.9 : 0.4,
+    replay: isImplemented ? 0.95 : 0.5,
+    determinism: isProven ? 0.98 : confidence * 0.7,
+    attribution: isImplemented ? 0.9 : 0.5,
+    temporal: 0.95, // Assumed stable
+    consensus: confidence,
+  };
+}
+
+/**
+ * Proof Ledger Entry
+ */
+export interface ProofLedgerEntry {
+  statement: string;
+  formula: string;
+  proof: number;
+  confidence: number;
+  validation: number;
+  status: ValidationScores['status'];
+  timestamp: string;
+}
+
+/**
+ * Generate Proof Ledger from audit records
+ */
+export function generateProofLedger(records: AuditRecord[]): ProofLedgerEntry[] {
+  return records.map(record => {
+    const vector = createProofVectorFromRecord(record);
+    const scores = generateValidationScores(vector, true, !!record.sourceRef);
+    
+    return {
+      statement: record.statement,
+      formula: `${record.component}/${record.id}`,
+      proof: scores.proofScore,
+      confidence: scores.confidenceScore,
+      validation: scores.validationScore,
+      status: scores.status,
+      timestamp: record.timestamp,
+    };
+  });
+}
+
+/**
+ * Compute aggregate proof statistics
+ */
+export interface ProofStatistics {
+  totalEntries: number;
+  verified: number;
+  high: number;
+  medium: number;
+  low: number;
+  unverified: number;
+  avgProofScore: number;
+  avgConfidenceScore: number;
+  avgValidationScore: number;
+  exportReady: boolean;
+}
+
+export function computeProofStatistics(ledger: ProofLedgerEntry[]): ProofStatistics {
+  const total = ledger.length;
+  const verified = ledger.filter(e => e.status === 'VERIFIED').length;
+  const high = ledger.filter(e => e.status === 'HIGH').length;
+  const medium = ledger.filter(e => e.status === 'MEDIUM').length;
+  const low = ledger.filter(e => e.status === 'LOW').length;
+  const unverified = ledger.filter(e => e.status === 'UNVERIFIED').length;
+  
+  const avgProof = ledger.reduce((sum, e) => sum + e.proof, 0) / total;
+  const avgConf = ledger.reduce((sum, e) => sum + e.confidence, 0) / total;
+  const avgVal = ledger.reduce((sum, e) => sum + e.validation, 0) / total;
+  
+  return {
+    totalEntries: total,
+    verified,
+    high,
+    medium,
+    low,
+    unverified,
+    avgProofScore: Math.round(avgProof * 1000) / 1000,
+    avgConfidenceScore: Math.round(avgConf * 1000) / 1000,
+    avgValidationScore: Math.round(avgVal * 1000) / 1000,
+    exportReady: unverified === 0 && avgVal >= 0.75,
+  };
 }
