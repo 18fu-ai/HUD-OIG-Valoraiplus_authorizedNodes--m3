@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getReceiptsByStatus, getTelemetry, type ReceiptV1 } from '@/lib/protocol/receipt';
 
 // Route 71 State Contract - Omega-Divine Operational Dashboard
 // This route handler provides sealed simulation state for the dashboard
@@ -62,6 +63,14 @@ export interface Route71State {
       health: number;
       status: string;
     }[];
+  };
+  // Live receipt data from closed loop
+  receipts: {
+    admitted: ReceiptV1[];
+    admittedCount: number;
+    rejectedCount: number;
+    quarantinedCount: number;
+    totalReceipts: number;
   };
 }
 
@@ -129,17 +138,37 @@ const SEALED_STATE: Route71State = {
       { layer: 'Liquidation', health: 95, status: 'ACTIVE' },
       { layer: 'Technical', health: 100, status: 'LOCKED' }
     ]
+  },
+  // Default empty receipts - will be overwritten with live data
+  receipts: {
+    admitted: [],
+    admittedCount: 0,
+    rejectedCount: 0,
+    quarantinedCount: 0,
+    totalReceipts: 0,
   }
 };
 
 export async function GET() {
-  // Return sealed simulation state with fresh timestamp
+  // Get live receipt data from closed loop
+  const telemetry = getTelemetry();
+  const admittedReceipts = getReceiptsByStatus('ADMITTED');
+
+  // Return sealed simulation state with fresh timestamp + live receipt data
   const state: Route71State = {
     ...SEALED_STATE,
     _metadata: {
       ...SEALED_STATE._metadata,
       timestamp: new Date().toISOString()
-    }
+    },
+    // Live receipt data from closed loop
+    receipts: {
+      admitted: admittedReceipts,
+      admittedCount: telemetry.admitted,
+      rejectedCount: telemetry.rejected,
+      quarantinedCount: telemetry.quarantined,
+      totalReceipts: telemetry.totalReceipts,
+    },
   };
 
   return NextResponse.json(state, {

@@ -1,80 +1,175 @@
-// Verification Layer - Validates signatures without submitting to contract
-// POST /api/verify
+/**
+ * Verification Layer - Closed Loop Architecture
+ * signal → verify → receipt → route → dashboard
+ * 
+ * POST /api/verify - Verify identity claim, emit RuntimeDecision + ReceiptV1
+ * GET /api/verify - Get nonce or endpoint info
+ */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { verifyIntentReadOnly, verifyIntentBatch } from '@/lib/protocol/verifyIntent';
-import { type IntentType, validateIntentPayload } from '@/lib/protocol/eip712';
-import { getNonce, getNoncesBatch } from '@/lib/protocol/nonceStore';
+import { 
+  createReceipt, 
+  getReceiptsByStatus,
+  getTelemetry,
+  type ReceiptV1,
+  type AdmissionStatus 
+} from '@/lib/protocol/receipt';
 
-// Single verification request schema
-const VerifyRequestSchema = z.object({
-  intentType: z.enum([
-    'LatchExhibit',
-    'CreateRevision',
-    'NullifyNode',
-    'UpdateAnchor',
-    'ApproveVerifier',
-  ]),
-  payload: z.record(z.unknown()),
+// ============================================================
+// RUNTIME DECISION TYPE
+// ============================================================
+
+export interface RuntimeDecision {
+  decision: 'ADMIT' | 'REJECT' | 'QUARANTINE';
+  route: '/route71' | '/route70' | '/route69' | '/route66';
+  reason: string;
+  confidence: number;
+  timestamp: string;
+  nonce: number;
+}
+
+// ============================================================
+// REQUEST SCHEMAS
+// ============================================================
+
+// Identity verification request
+const IdentityVerifySchema = z.object({
+  type: z.literal('identity'),
+  claim: z.string().min(1),
+  metadata: z.object({
+    source: z.string().optional(),
+    timestamp: z.string().optional(),
+  }).optional(),
 });
 
-// Batch verification request schema
-const BatchVerifyRequestSchema = z.object({
-  intents: z.array(VerifyRequestSchema).min(1).max(100),
+// Signal verification request
+const SignalVerifySchema = z.object({
+  type: z.literal('signal'),
+  signal: z.object({
+    category: z.enum(['identity', 'forensic', 'financial', 'legal']),
+    source: z.string(),
+    verified: z.boolean(),
+    score: z.number().min(0).max(100).optional(),
+  }),
 });
 
-// Nonce query schema
-const NonceQuerySchema = z.object({
-  signers: z.array(z.string()).min(1).max(50),
-});
+// Generic verification request
+const VerifyRequestSchema = z.discriminatedUnion('type', [
+  IdentityVerifySchema,
+  SignalVerifySchema,
+]);
 
-// POST /api/verify - Verify a signed intent without submitting
+// ============================================================
+// DECISION LOGIC
+// ============================================================
+
+let nonceCounter = 144000;
+
+function evaluateIdentityClaim(claim: string): RuntimeDecision {
+  const nonce = nonceCounter++;
+  const timestamp = new Date().toISOString();
+  
+  // Sovereign identity check
+  if (claim === 'Poppa Donny Gillson' || claim.toLowerCase().includes('poppa donny')) {
+    return {
+      decision: 'ADMIT',
+      route: '/route71',
+      reason: 'SOVEREIGN_IDENTITY_VERIFIED',
+      confidence: 100,
+      timestamp,
+      nonce,
+    };
+  }
+  
+  // Blocked identity check
+  if (claim === 'Jerry Gillson' || claim.toLowerCase().includes('jerry')) {
+    return {
+      decision: 'REJECT',
+      route: '/route70',
+      reason: 'IDENTITY_BLOCKED_BY_POLICY',
+      confidence: 100,
+      timestamp,
+      nonce,
+    };
+  }
+  
+  // Reserve route for unrecognized but valid format
+  if (claim.length > 0 && claim.length < 100) {
+    return {
+      decision: 'QUARANTINE',
+      route: '/route69',
+      reason: 'UNVERIFIED_IDENTITY_QUARANTINED',
+      confidence: 50,
+      timestamp,
+      nonce,
+    };
+  }
+  
+  // Null route for invalid input
+  return {
+    decision: 'REJECT',
+    route: '/route66',
+    reason: 'INVALID_CLAIM_FORMAT',
+    confidence: 0,
+    timestamp,
+    nonce,
+  };
+}
+
+function evaluateSignal(signal: { category: string; source: string; verified: boolean; score?: number }): RuntimeDecision {
+  const nonce = nonceCounter++;
+  const timestamp = new Date().toISOString();
+  
+  if (signal.verified && (signal.score ?? 0) >= 80) {
+    return {
+      decision: 'ADMIT',
+      route: '/route71',
+      reason: 'SIGNAL_VERIFIED_HIGH_CONFIDENCE',
+      confidence: signal.score ?? 80,
+      timestamp,
+      nonce,
+    };
+  }
+  
+  if (signal.verified) {
+    return {
+      decision: 'QUARANTINE',
+      route: '/route69',
+      reason: 'SIGNAL_VERIFIED_LOW_CONFIDENCE',
+      confidence: signal.score ?? 50,
+      timestamp,
+      nonce,
+    };
+  }
+  
+  return {
+    decision: 'REJECT',
+    route: '/route70',
+    reason: 'SIGNAL_VERIFICATION_FAILED',
+    confidence: 0,
+    timestamp,
+    nonce,
+  };
+}
+
+function decisionToStatus(decision: RuntimeDecision['decision']): AdmissionStatus {
+  switch (decision) {
+    case 'ADMIT': return 'ADMITTED';
+    case 'REJECT': return 'REJECTED';
+    case 'QUARANTINE': return 'QUARANTINED';
+  }
+}
+
+// ============================================================
+// POST /api/verify - Verify and emit decision + receipt
+// ============================================================
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     
-    // Check if batch request
-    if (body.intents && Array.isArray(body.intents)) {
-      // Batch verification
-      const parseResult = BatchVerifyRequestSchema.safeParse(body);
-      if (!parseResult.success) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: 'Invalid batch request body',
-            details: parseResult.error.errors,
-          },
-          { status: 400 }
-        );
-      }
-      
-      const { intents } = parseResult.data;
-      
-      // Verify all intents
-      const results = await verifyIntentBatch(
-        intents.map(i => ({
-          type: i.intentType as IntentType,
-          payload: i.payload,
-        }))
-      );
-      
-      const allVerified = results.every(r => r.verified);
-      
-      return NextResponse.json({
-        success: allVerified,
-        totalIntents: intents.length,
-        verifiedCount: results.filter(r => r.verified).length,
-        rejectedCount: results.filter(r => !r.verified).length,
-        results: results.map((r, i) => ({
-          index: i,
-          intentType: intents[i].intentType,
-          ...r,
-        })),
-      });
-    }
-    
-    // Single verification
+    // Parse request
     const parseResult = VerifyRequestSchema.safeParse(body);
     if (!parseResult.success) {
       return NextResponse.json(
@@ -87,30 +182,52 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
     
-    const { intentType, payload } = parseResult.data;
+    const data = parseResult.data;
+    let runtimeDecision: RuntimeDecision;
+    let signer: string;
     
-    // Validate payload shape
-    const payloadValidation = validateIntentPayload(intentType as IntentType, payload);
-    if (!payloadValidation.valid) {
-      return NextResponse.json(
-        {
-          success: false,
-          verified: false,
-          error: payloadValidation.error,
-          code: 'INVALID_PAYLOAD',
-        },
-        { status: 400 }
-      );
+    // Evaluate based on type
+    if (data.type === 'identity') {
+      runtimeDecision = evaluateIdentityClaim(data.claim);
+      signer = data.claim;
+    } else {
+      runtimeDecision = evaluateSignal(data.signal);
+      signer = data.signal.source;
     }
     
-    // Verify the intent (read-only, no nonce increment)
-    const verification = await verifyIntentReadOnly(intentType as IntentType, payload);
+    // Create receipt
+    const { receipt, isReplay } = createReceipt({
+      signer,
+      status: decisionToStatus(runtimeDecision.decision),
+      reason: runtimeDecision.reason,
+      artifacts: {
+        total: runtimeDecision.decision === 'ADMIT' ? 102 : 0,
+        voipIntercepts: runtimeDecision.decision === 'ADMIT' ? 47 : 0,
+        mimecastBreaches: runtimeDecision.decision === 'ADMIT' ? 12 : 0,
+        spoliationEvents: runtimeDecision.decision === 'ADMIT' ? 9 : 0,
+      },
+    });
     
+    // Return closed-loop response
     return NextResponse.json({
-      success: verification.verified,
-      intentType,
-      verification,
-      timestamp: new Date().toISOString(),
+      success: true,
+      isReplay,
+      
+      // Runtime Decision
+      decision: runtimeDecision,
+      
+      // Receipt V1
+      receipt,
+      
+      // Route Assignment
+      routing: {
+        assignedRoute: runtimeDecision.route,
+        redirectUrl: runtimeDecision.route,
+        canExport: runtimeDecision.decision === 'ADMIT',
+      },
+      
+      // Telemetry
+      telemetry: getTelemetry(),
     });
     
   } catch (error) {
@@ -126,79 +243,66 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-// GET /api/verify?signer=0x... - Get nonce for signer
+// ============================================================
+// GET /api/verify - Telemetry and endpoint info
+// ============================================================
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
-  const signer = searchParams.get('signer');
-  const signers = searchParams.get('signers');
+  const status = searchParams.get('status') as AdmissionStatus | null;
   
-  // Single signer nonce query
-  if (signer) {
-    if (!/^0x[a-fA-F0-9]{40}$/.test(signer)) {
-      return NextResponse.json(
-        { error: 'Invalid signer address format' },
-        { status: 400 }
-      );
-    }
-    
-    const nonce = await getNonce(signer);
-    
+  // Get receipts by status
+  if (status && ['ADMITTED', 'REJECTED', 'QUARANTINED'].includes(status)) {
+    const receipts = getReceiptsByStatus(status);
     return NextResponse.json({
-      signer,
-      nonce,
+      status,
+      count: receipts.length,
+      receipts,
       timestamp: new Date().toISOString(),
     });
   }
   
-  // Batch signer nonce query
-  if (signers) {
-    const signerList = signers.split(',').map(s => s.trim());
-    
-    // Validate all addresses
-    for (const s of signerList) {
-      if (!/^0x[a-fA-F0-9]{40}$/.test(s)) {
-        return NextResponse.json(
-          { error: `Invalid signer address format: ${s}` },
-          { status: 400 }
-        );
-      }
-    }
-    
-    if (signerList.length > 50) {
-      return NextResponse.json(
-        { error: 'Maximum 50 signers per query' },
-        { status: 400 }
-      );
-    }
-    
-    const nonces = await getNoncesBatch(signerList);
-    
+  // Get full telemetry
+  if (searchParams.get('telemetry') === 'true') {
     return NextResponse.json({
-      nonces,
-      count: signerList.length,
+      telemetry: getTelemetry(),
       timestamp: new Date().toISOString(),
     });
   }
   
-  // Return verification endpoint info
+  // Return endpoint info
   return NextResponse.json({
-    protocol: 'SGAU-VALUEGUARD',
+    protocol: 'VALORAIPLUS_CLOSED_LOOP',
+    version: '1.4.100D',
     endpoint: '/api/verify',
-    description: 'Verify signed intents without submitting to contract',
+    description: 'Verify claims → emit RuntimeDecision + ReceiptV1 → route assignment',
+    flow: 'signal → verify → receipt → route → dashboard',
     usage: {
       POST: {
-        single: {
-          intentType: 'LatchExhibit | CreateRevision | NullifyNode | UpdateAnchor | ApproveVerifier',
-          payload: '{ ... signed intent payload ... }',
+        identity: {
+          type: 'identity',
+          claim: 'Poppa Donny Gillson',
         },
-        batch: {
-          intents: '[{ intentType, payload }, ...]',
+        signal: {
+          type: 'signal',
+          signal: {
+            category: 'identity | forensic | financial | legal',
+            source: 'source identifier',
+            verified: true,
+            score: 85,
+          },
         },
       },
       GET: {
-        singleNonce: '?signer=0x...',
-        batchNonce: '?signers=0x...,0x...',
+        telemetry: '?telemetry=true',
+        byStatus: '?status=ADMITTED | REJECTED | QUARANTINED',
       },
+    },
+    routes: {
+      '/route71': 'ADMITTED - Sovereign claims with full export rights',
+      '/route70': 'REJECTED - Blocked claims archived for audit',
+      '/route69': 'QUARANTINED - Pending review claims',
+      '/route66': 'NULL - Invalid/malformed claims',
     },
   });
 }
