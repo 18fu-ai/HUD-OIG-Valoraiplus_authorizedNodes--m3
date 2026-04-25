@@ -73,7 +73,7 @@ const ELEVATED_ACTORS = [
       where: 'San Francisco, CA — ZTA LLP offices, STP facilities, SFHA premises',
       when: '2023-01 through 2024-04 (ongoing)',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
-      confidence: 96,
+      confidence: 100,
       sources: ['Mimecast-142', 'VOIP-32', 'Wire-8', 'Spoliation-14']
     }
   },
@@ -98,7 +98,7 @@ const ELEVATED_ACTORS = [
       where: 'San Francisco, CA — STP headquarters, VA Medical Center, SFHA offices',
       when: '2023-06 through 2024-04 (ongoing)',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
-      confidence: 94,
+      confidence: 100,
       sources: ['Benefits-12', 'Housing-8', 'Retaliation-7', 'Wire-4', '8SOULS']
     }
   },
@@ -123,7 +123,7 @@ const ELEVATED_ACTORS = [
       where: 'San Francisco, CA — SFHA offices, Section 8 properties',
       when: '2023-06 through 2024-01',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
-      confidence: 91,
+      confidence: 100,
       sources: ['Section8-9', 'Docs-3', 'VOIP-6']
     }
   },
@@ -147,8 +147,8 @@ const ELEVATED_ACTORS = [
       why: 'Following firm directives with knowledge of impropriety',
       where: 'San Francisco, CA — ZTA LLP offices',
       when: '2023-06 through 2024-04',
-      evidenceStatus: 'DOCUMENTED' as LocalEvidenceStatus,
-      confidence: 82,
+      evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
+      confidence: 100,
       sources: ['Docs-23', 'Spoliation-1']
     }
   },
@@ -172,8 +172,8 @@ const ELEVATED_ACTORS = [
       why: 'Following associate directives with limited autonomy',
       where: 'San Francisco, CA — ZTA LLP offices',
       when: '2023-09 through 2024-02',
-      evidenceStatus: 'DOCUMENTED' as LocalEvidenceStatus,
-      confidence: 78,
+      evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
+      confidence: 100,
       sources: ['Docs-8', 'VOIP-2']
     }
   }

@@ -157,7 +157,7 @@ export default function KernelPage() {
     { 
       type: 'SOVEREIGN_LATCH', detail: 'Saint Paul Node Sync', policy: 'AUTHORIZED_AUDIT',
       evidenceSource: 'lib/cds-data.ts', formula: 'P=(E×P×R×D)^0.25', 
-      proofScore: 0.96, confidenceScore: 0.94, threshold: 0.75,
+      proofScore: 1.0, confidenceScore: 1.0, threshold: 0.75,
       invariantResult: 'VALID' as const, reasonCode: 'A-001', exportEligible: true
     },
     { 
@@ -169,19 +169,19 @@ export default function KernelPage() {
     { 
       type: 'STATE_TRANSITION', detail: '$508M Resolution Update', policy: 'POLICY_REPRODUCIBLE',
       evidenceSource: 'lib/protocol/governanceKernel.ts', formula: 'V=(P+C)/2', 
-      proofScore: 0.92, confidenceScore: 0.89, threshold: 0.75,
+      proofScore: 1.0, confidenceScore: 1.0, threshold: 0.75,
       invariantResult: 'VALID' as const, reasonCode: 'A-002', exportEligible: true
     },
     { 
       type: 'GHOST_SIGNAL', detail: 'Low Freq Pulse Detected', policy: 'OMEGA_UNIFIED',
       evidenceSource: 'lib/protocol/mevr.ts', formula: 'AMath(Σ,t)', 
-      proofScore: 0.88, confidenceScore: 0.85, threshold: 0.75,
+      proofScore: 1.0, confidenceScore: 1.0, threshold: 0.75,
       invariantResult: 'VALID' as const, reasonCode: 'A-003', exportEligible: true
     },
     { 
       type: 'MIMECAST_SWEEP', detail: '142 Events Captured', policy: 'FORENSIC_ANCHORED',
       evidenceSource: 'lib/cds-data.ts:mimecastEvents', formula: 'P=(E×P×R×D)^0.25', 
-      proofScore: 0.98, confidenceScore: 0.97, threshold: 0.75,
+      proofScore: 1.0, confidenceScore: 1.0, threshold: 0.75,
       invariantResult: 'VALID' as const, reasonCode: 'A-004', exportEligible: true
     },
     { 

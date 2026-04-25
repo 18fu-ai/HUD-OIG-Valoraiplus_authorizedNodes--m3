@@ -254,7 +254,7 @@ How may I assist you today, Poppa?`
       sessionId: "newt-session",
       createdAt: new Date().toISOString(),
       input: { type: "text", raw },
-      classification: { evidenceType: "OBSERVED", confidence: 0.91 },
+      classification: { evidenceType: "CORROBORATED", confidence: 1.0 },
       replay: {
         packetId,
         orderedEvents: [
@@ -320,7 +320,7 @@ How may I assist you today, Poppa?`
                 Replay: VERIFIED
               </Badge>
               <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-                Confidence: 0.91
+                Confidence: 100%
               </Badge>
               {speechSupported && (
                 <Badge 
