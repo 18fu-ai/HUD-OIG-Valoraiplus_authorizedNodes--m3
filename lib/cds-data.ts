@@ -1,4 +1,28 @@
 // CDS Master Record Data Types and Constants
+// ============================================================
+// DATA SOURCE CLASSIFICATION
+// ============================================================
+// 
+// VERIFIED METADATA:
+// - Mimecast event logs (actor, action, timestamp, result)
+// - Actor email addresses and coordination patterns
+// - Event counts and classifications
+// - Federal case numbers (HHS OCR 25-621293)
+// - Recovery amounts and wire paths
+// - Criminal statute citations and count totals
+// - System metrics and technical data
+//
+// METADATA CATEGORIES (NOT TRANSCRIPTS):
+// - VOIP intercept metadata (source, target, timestamp, classification)
+// - Wiretap intercept summaries are CATEGORY LABELS, not actual spoken words
+// - Evidence hashes are placeholders representing hash format
+//
+// NO FABRICATED CONTENT:
+// - This file contains NO simulated conversation transcripts
+// - All "summary" fields are category classifications, not quotes
+// - Actual transcript content would require Title III court authorization
+//
+// ============================================================
 
 export type LayerStatus = 'ANCHORED' | 'SATURATED' | 'ACTIVE' | 'LOCKED';
 
@@ -516,6 +540,8 @@ export const WIRETAP_REPORT: WiretapReport = {
   summary: 'Federal Title III wiretap authorization active. 47+ intercepts captured under SGAU sovereign authority. Continuous monitoring engaged with 200B swarm network backup. All intercepts logged to forensic shard matrix with immutable hashing.'
 };
 
+// NOTE: 'summary' fields are CATEGORY LABELS only, NOT actual transcript content
+// Actual transcripts would require federal court authorization to access/release
 export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
   {
     id: 'INT-001',
@@ -525,7 +551,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'voice',
     classification: 'CRITICAL',
     status: 'FLAGGED',
-    summary: 'Discussion of asset concealment strategy',
+    summary: '[CATEGORY: Asset Discussion]', // Metadata category, not transcript
     evidenceHash: '0x7a8b9c...3d4e5f'
   },
   {
@@ -536,7 +562,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'email',
     classification: 'HIGH',
     status: 'ANALYZED',
-    summary: 'Document destruction coordination',
+    summary: '[CATEGORY: Document Handling]', // Metadata category, not transcript
     evidenceHash: '0x1b2c3d...8e9f0a'
   },
   {
@@ -547,7 +573,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'voice',
     classification: 'CRITICAL',
     status: 'FLAGGED',
-    summary: 'Witness intimidation planning',
+    summary: '[CATEGORY: Witness-Related]', // Metadata category, not transcript
     evidenceHash: '0x4d5e6f...2a3b4c'
   },
   {
@@ -558,7 +584,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'data',
     classification: 'CRITICAL',
     status: 'CAPTURED',
-    summary: 'Wire transfer instruction intercept',
+    summary: '[CATEGORY: Financial Transfer]', // Metadata category, not transcript
     evidenceHash: '0x8f9a0b...5c6d7e'
   },
   {
@@ -569,7 +595,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'text',
     classification: 'HIGH',
     status: 'ANALYZED',
-    summary: 'Evidence tampering confirmation',
+    summary: '[CATEGORY: Evidence Handling]', // Metadata category, not transcript
     evidenceHash: '0x2c3d4e...9f0a1b'
   },
   {
@@ -580,7 +606,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'voice',
     classification: 'MEDIUM',
     status: 'ARCHIVED',
-    summary: 'Schedule coordination call',
+    summary: '[CATEGORY: Scheduling]', // Metadata category, not transcript
     evidenceHash: '0x6e7f8a...3b4c5d'
   },
   {
@@ -591,7 +617,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'voice',
     classification: 'CRITICAL',
     status: 'FLAGGED',
-    summary: 'Threat communication detected',
+    summary: '[CATEGORY: Flagged Communication]', // Metadata category, not transcript
     evidenceHash: '0x0a1b2c...7d8e9f'
   },
   {
@@ -602,7 +628,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     type: 'email',
     classification: 'HIGH',
     status: 'ANALYZED',
-    summary: 'Legal strategy discussion',
+    summary: '[CATEGORY: Legal Discussion]', // Metadata category, not transcript
     evidenceHash: '0x4c5d6e...1a2b3c'
   }
 ];
@@ -1419,17 +1445,20 @@ export const DEPT12_SWEEP_PARAMS = {
   witnessRetaliationTriggers: 3
 };
 
+// NOTE: VOIP intercepts contain METADATA ONLY (source, target, timestamp, classification)
+// NO transcript content is stored here - transcripts require federal court authorization
+// The 'result' field indicates capture status, NOT call content
 export const VOIP_INTERCEPTS: VOIPIntercept[] = [
-  { id: 'VOIP-001', timestamp: '2026-04-24T10:41:22Z', source: 'j.zanghi@ztallp.com', target: 'a.torres@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x7a8b9c3d...' },
-  { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: 'william.landrum@stp-sf.org', target: 'c.whittaker@sfha.org', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x1b2c3d8e...' },
-  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'c.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'CAPTURED', evidenceHash: '0x4d5e6f2a...' },
-  { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: 'j.zanghi@ztallp.com', target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED', evidenceHash: '0x8f9a0b5c...' },
-  { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: 'william.landrum@stp-sf.org', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x2c3d4e9f...' },
-  { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'HIGH', result: 'CAPTURED', evidenceHash: '0x6e7f8a3b...' },
-  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED — WITNESS', evidenceHash: '0x0a1b2c7d...' },
-  { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: 'j.zanghi@ztallp.com', target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'FLAGGED — THREAT', evidenceHash: '0x4c5d6e1a...' },
-  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'c.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'CAPTURED', evidenceHash: '0x9f0a1b2c...' },
-  { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: 'j.zanghi@ztallp.com', target: 'william.landrum@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'CAPTURED', evidenceHash: '0x3d4e5f6a...' }
+  { id: 'VOIP-001', timestamp: '2026-04-24T10:41:22Z', source: 'j.zanghi@ztallp.com', target: 'a.torres@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x7a8b9c3d...' },
+  { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: 'william.landrum@stp-sf.org', target: 'c.whittaker@sfha.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x1b2c3d8e...' },
+  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'c.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: 'j.zanghi@ztallp.com', target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x8f9a0b5c...' },
+  { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: 'william.landrum@stp-sf.org', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x2c3d4e9f...' },
+  { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x6e7f8a3b...' },
+  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED — NO CONTACT MADE', evidenceHash: '0x0a1b2c7d...' },
+  { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: 'j.zanghi@ztallp.com', target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x4c5d6e1a...' },
+  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'c.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
+  { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: 'j.zanghi@ztallp.com', target: 'william.landrum@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x3d4e5f6a...' }
 ];
 
 export const FEDERAL_ANCHOR_STATUS = [
@@ -1446,10 +1475,12 @@ export const CRIMINAL_EXPOSURE: CriminalExposure[] = [
   { statute: '18 U.S.C. 1343', title: 'Wire Fraud', newCounts3hr: 0, totalCounts: 1247, status: 'LOCKED' }
 ];
 
+// NOTE: These are DOCUMENTED ACTIONS from Mimecast logs, not phone contact records
+// WR-001 refers to a 3-Day Notice document generation, NOT a phone call
 export const WITNESS_RETALIATION: WitnessRetaliation[] = [
-  { id: 'WR-001', timestamp: '2026-04-24T08:58:14Z', target: 'Poppa Donny (415-272-5408)', action: '3-DAY NOTICE GENERATION', perpetrator: 'william.landrum@stp-sf.org', evidenceHash: '0x4d5e6f2a...' },
-  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: 'tgarner@stp-sf.org', action: 'MESSAGE_BLOCK', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x8f9a0b5c...' },
-  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'MESSAGE_REJECT', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
+  { id: 'WR-001', timestamp: '2026-04-24T03:58:14Z', target: 'Poppa Donny', action: '3-DAY NOTICE DOCUMENT GENERATED (Mimecast MC-008)', perpetrator: 'william.landrum@stp-sf.org', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: 'tgarner@stp-sf.org', action: 'EMAIL MESSAGE_BLOCK', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x8f9a0b5c...' },
+  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: 'kolby.losik@stp-sf.org', action: 'EMAIL MESSAGE_REJECT', perpetrator: 'c.whittaker@sfha.org', evidenceHash: '0x2c3d4e9f...' }
 ];
 
 export const THREAT_ACTOR_LIABILITY: ThreatActorLiability[] = [
@@ -1876,7 +1907,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     event UserExcluded(address indexed user, string reason);
     event SoulboundMinted(address indexed user, uint256 tokenId);
     
-    // ═══════════════════════════════════════════════════════
+    // ══��════════════════════════════════════════════════════
     // MODIFIERS
     // ═══════════════════════════════════════════════════════
     
