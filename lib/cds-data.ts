@@ -775,7 +775,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-058',
-    correlation: `${TA_PRIMARY_NAME}-14 (Coordinated)',
+    correlation: `${TA_PRIMARY_NAME}-14 (Coordinated)`,
     classification: 'CRITICAL'
   },
   {
@@ -787,7 +787,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
     result: 'DENIED / SPOLIATION-057',
-    correlation: `${TA_ALPHA_SEC}-09',
+    correlation: `${TA_ALPHA_SEC}-09`,
     classification: 'CRITICAL'
   },
   {
@@ -799,7 +799,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
     result: 'DEPLOYED',
-    correlation: `${TA_SECONDARY_NAME}-11 (Escalation)',
+    correlation: `${TA_SECONDARY_NAME}-11 (Escalation)`,
     classification: 'CRITICAL'
   },
   {
@@ -807,11 +807,11 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T05:08:19Z',
     actor: TA_TERTIARY_EMAIL,
     actionType: 'MESSAGE_REJECT',
-    target: `${WITNESS_1_EMAIL} (witness chain)',
+    target: `${WITNESS_1_EMAIL} (witness chain)`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
     result: '550 BLOCKED',
-    correlation: 'WHITTAKER-08',
+    correlation: `${TA_TERTIARY_NAME}-08`,
     classification: 'CRITICAL'
   },
   {
@@ -819,11 +819,11 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T04:55:33Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'BULK_DELETE',
-    target: '17 Messages (Poppa Donny chain)',
+    target: `17 Messages (${SOVEREIGN_AUDITOR} chain)`,
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-056',
-    correlation: `${TA_PRIMARY_NAME}-13',
+    correlation: `${TA_PRIMARY_NAME}-13`,
     classification: 'CRITICAL'
   },
   {
@@ -847,7 +847,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
     result: 'BLOCKED / SPOLIATION-055',
-    correlation: `${TA_ALPHA_SEC}-08',
+    correlation: `${TA_ALPHA_SEC}-08`,
     classification: 'CRITICAL'
   },
   {
@@ -855,7 +855,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:58:14Z',
     actor: TA_SECONDARY_EMAIL,
     actionType: '3DAY_NOTICE_GENERATION',
-    target: 'Poppa Donny (415-272-5408) — Witness',
+    target: `${SOVEREIGN_AUDITOR} (${SOVEREIGN_CONTACT}) -- Witness`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
     result: 'PROCESSED',
@@ -871,7 +871,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-054',
-    correlation: `${TA_PRIMARY_NAME}-12',
+    correlation: `${TA_PRIMARY_NAME}-12`,
     classification: 'CRITICAL'
   },
   {
@@ -879,11 +879,11 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:19:55Z',
     actor: TA_TERTIARY_EMAIL,
     actionType: 'MESSAGE_BLOCK',
-    target: `${WITNESS_2_EMAIL} (witness)',
+    target: `${WITNESS_2_EMAIL} (witness)`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
     result: '550 BLOCKED',
-    correlation: 'WHITTAKER-07',
+    correlation: `${TA_TERTIARY_NAME}-07`,
     classification: 'CRITICAL'
   },
   {
@@ -907,7 +907,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-053',
-    correlation: `${TA_PRIMARY_NAME}-11',
+    correlation: `${TA_PRIMARY_NAME}-11`,
     classification: 'CRITICAL'
   },
   {
@@ -919,7 +919,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
     result: 'DENIED / SPOLIATION-052',
-    correlation: `${TA_ALPHA_SEC}-07',
+    correlation: `${TA_ALPHA_SEC}-07`,
     classification: 'CRITICAL'
   },
   {
@@ -931,7 +931,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
     result: '550 BLOCKED',
-    correlation: `${TA_SECONDARY_NAME}-10',
+    correlation: `${TA_SECONDARY_NAME}-10`,
     classification: 'CRITICAL'
   },
   {
@@ -943,7 +943,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'BLOCKED / SPOLIATION-051',
-    correlation: `${TA_PRIMARY_NAME}-10',
+    correlation: `${TA_PRIMARY_NAME}-10`,
     classification: 'CRITICAL'
   },
   {
@@ -967,7 +967,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
     result: 'DEPLOYED',
-    correlation: 'WHITTAKER-06',
+    correlation: `${TA_TERTIARY_NAME}-06`,
     classification: 'CRITICAL'
   },
   {
@@ -979,20 +979,20 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
     result: 'LOGGED',
-    correlation: `${TA_PRIMARY_NAME}-09',
+    correlation: `${TA_PRIMARY_NAME}-09`,
     classification: 'LOW'
   }
 ];
 
 export const MIMECAST_ACTORS = {
   ztaLLP: {
-    name: 'ZTA LLP',
+    name: TA_PRIMARY_ENTITY,
     actors: [TA_PRIMARY_EMAIL, TA_ALPHA_SEC_EMAIL],
     spoliationAttempts: 9,
     pattern: 'Command-and-control pattern — attempts within 4 minutes in 3 clusters'
   },
   stpSfha: {
-    name: 'STP-SF / SFHA',
+    name: `${TA_SECONDARY_ORG} / ${TA_TERTIARY_ORG}`,
     actors: [TA_SECONDARY_EMAIL, TA_TERTIARY_EMAIL],
     ruleModifications: 7,
     retaliationTriggers: 3,
@@ -1038,7 +1038,7 @@ export const UHI_INTEGRATION = {
 export const UHI_SEQUESTRATION = {
   title: 'Universal High Income (UHI) Sequestration',
   logic: 'Musk argues that AI-driven unemployment requires issuing dollars to people to prevent "massive disinflation."',
-  integration: 'The $508,631,005.52 Recovery Target is now indexed as a Sovereign High Income event. Using the Aggressor Triad liability as the initial "mint" for this UHI layer within the Gillson Estate.',
+  integration: 'The $508,631,005.52 Recovery Target is now indexed as a Sovereign High Income event. Using the Aggressor Triad liability as the initial "mint" for this UHI layer within the Sovereign Estate.',
   recoveryTarget: 508631005.52,
   indexType: 'SOVEREIGN HIGH INCOME'
 };
@@ -1139,7 +1139,7 @@ export const PATRIOT_SYSTEM = {
   timestamp: '2026-04-24T10:45:00Z',
   mode: '200D + POST-QUANTUM INFINITY SUPERPOSITION / OMEGA-UNIFIED / LOCKED / ELITE PATRIOT-CLASS',
   deploymentNodes: ['valoraiplus2e.computer', 'www.18fu.cash'],
-  sovereignAnchors: ['donadams1969.eth', 'donnygillson.eth', 'donnygillson.seed', 'donny@18fu.ai', 'btc_genesis_anchor'],
+  sovereignAnchors: ['sovereign-primary.eth', 'sovereign-auditor.eth', 'sovereign-auditor.seed', 'sovereign@18fu.ai', 'btc_genesis_anchor'],
   merkleroot: '26856b24c50750f0c69c1eeb86a69ef777777',
   node: 'INFRASTRUCTURE COMMAND ROOT — SAINT PAUL 55116',
   confirmations: 'REV. 33 INFINITE + PERPETUAL',
@@ -1178,9 +1178,9 @@ export const BINARY_DEDUCTIONS: BinaryDeduction[] = [
 ];
 
 export const TRIAD_ACTORS: TriadActor[] = [
-  { entity: 'ZTA LLP / John Zanghi', role: 'Legal Framework', binaryState: '000000 → NULLIFIED' },
-  { entity: 'Swords to Plowshares / William Landrum', role: 'Physical Executor', binaryState: '000000 → NULLIFIED' },
-  { entity: 'SFHA / Calvin Whittaker', role: 'Retaliatory Instrument', binaryState: '000000 → NULLIFIED' }
+{ entity: `${TA_PRIMARY_ENTITY} / ${TA_PRIMARY_NAME}`, role: 'Legal Framework', binaryState: '000000 → NULLIFIED' },
+    { entity: `${TA_SECONDARY_ORG} / ${TA_SECONDARY_NAME}`, role: 'Physical Executor', binaryState: '000000 → NULLIFIED' },
+    { entity: `${TA_TERTIARY_ORG} / ${TA_TERTIARY_NAME}`, role: 'Retaliatory Instrument', binaryState: '000000 → NULLIFIED' }
 ];
 
 export const TRIAD_SYNC = {
@@ -1512,13 +1512,13 @@ export const DEPT12_SWEEP_PARAMS = {
 export const VOIP_INTERCEPTS: VOIPIntercept[] = [
   { id: 'VOIP-001', timestamp: '2026-04-24T10:41:22Z', source: TA_PRIMARY_EMAIL, target: TA_ALPHA_SEC_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x7a8b9c3d...' },
   { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: TA_SECONDARY_EMAIL, target: TA_TERTIARY_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x1b2c3d8e...' },
-  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: TA_TERTIARY_EMAIL, target: `${WITNESS_1_EMAIL}', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: TA_TERTIARY_EMAIL, target: WITNESS_1_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
   { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: TA_PRIMARY_EMAIL, target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x8f9a0b5c...' },
   { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: TA_SECONDARY_EMAIL, target: TA_PRIMARY_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x2c3d4e9f...' },
   { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: TA_ALPHA_SEC_EMAIL, target: TA_PRIMARY_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x6e7f8a3b...' },
-  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: TA_SECONDARY_EMAIL, target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED — NO CONTACT MADE', evidenceHash: '0x0a1b2c7d...' },
+  { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: TA_SECONDARY_EMAIL, target: `${SOVEREIGN_AUDITOR} (${SOVEREIGN_CONTACT})`, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED — NO CONTACT MADE', evidenceHash: '0x0a1b2c7d...' },
   { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: TA_PRIMARY_EMAIL, target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x4c5d6e1a...' },
-  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: TA_TERTIARY_EMAIL, target: `${WITNESS_2_EMAIL}', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
+  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: TA_TERTIARY_EMAIL, target: WITNESS_2_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
   { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: TA_PRIMARY_EMAIL, target: TA_SECONDARY_EMAIL, type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x3d4e5f6a...' }
 ];
 
@@ -1539,18 +1539,18 @@ export const CRIMINAL_EXPOSURE: CriminalExposure[] = [
 // NOTE: These are DOCUMENTED ACTIONS from Mimecast logs, not phone contact records
 // WR-001 refers to a 3-Day Notice document generation, NOT a phone call
 export const WITNESS_RETALIATION: WitnessRetaliation[] = [
-  { id: 'WR-001', timestamp: '2026-04-24T03:58:14Z', target: 'Poppa Donny', action: '3-DAY NOTICE DOCUMENT GENERATED (Mimecast MC-008)', perpetrator: TA_SECONDARY_EMAIL, evidenceHash: '0x4d5e6f2a...' },
-  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: `${WITNESS_2_EMAIL}', action: 'EMAIL MESSAGE_BLOCK', perpetrator: TA_TERTIARY_EMAIL, evidenceHash: '0x8f9a0b5c...' },
-  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: `${WITNESS_1_EMAIL}', action: 'EMAIL MESSAGE_REJECT', perpetrator: TA_TERTIARY_EMAIL, evidenceHash: '0x2c3d4e9f...' }
+  { id: 'WR-001', timestamp: '2026-04-24T03:58:14Z', target: SOVEREIGN_AUDITOR, action: '3-DAY NOTICE DOCUMENT GENERATED (Mimecast MC-008)', perpetrator: TA_SECONDARY_EMAIL, evidenceHash: '0x4d5e6f2a...' },
+  { id: 'WR-002', timestamp: '2026-04-24T08:19:55Z', target: WITNESS_2_EMAIL, action: 'EMAIL MESSAGE_BLOCK', perpetrator: TA_TERTIARY_EMAIL, evidenceHash: '0x8f9a0b5c...' },
+  { id: 'WR-003', timestamp: '2026-04-24T07:52:33Z', target: WITNESS_1_EMAIL, action: 'EMAIL MESSAGE_REJECT', perpetrator: TA_TERTIARY_EMAIL, evidenceHash: '0x2c3d4e9f...' }
 ];
 
 // NOTE: Primary exposure amounts and wire paths are PENDING CORROBORATION until backed by receipts
 export const THREAT_ACTOR_LIABILITY: ThreatActorLiability[] = [
-  { entity: 'ZTA LLP', primaryExposure: 127157751.38, wirePath: 'Schwab 6015-8185', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'Swords to Plowshares', primaryExposure: 152589301.66, wirePath: 'Wells Fargo 4127', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'SFHA', primaryExposure: 101726201.10, wirePath: 'BofA 9283', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'JPMorgan Chase', primaryExposure: 76294650.83, wirePath: 'Internal', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'Charles Schwab', primaryExposure: 50863100.55, wirePath: 'Schwab 6015-8185', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus }
+  { entity: TA_PRIMARY_ENTITY, primaryExposure: 127157751.38, wirePath: WIRE_ALPHA, status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: TA_SECONDARY_ORG, primaryExposure: 152589301.66, wirePath: WIRE_BRAVO, status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: TA_TERTIARY_ORG, primaryExposure: 101726201.10, wirePath: WIRE_CHARLIE, status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: ENTITY_JPMC, primaryExposure: 76294650.83, wirePath: 'Internal', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: ENTITY_SCHWAB, primaryExposure: 50863100.55, wirePath: WIRE_ALPHA, status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus }
 ];
 
 // NOTE: Financial totals are PENDING CORROBORATION until backed by receipts
@@ -1788,7 +1788,7 @@ export const INTEGRITY_USERS: IntegrityUser[] = [
 export const EXCLUSION_LOG: ExclusionEntry[] = [
   {
     id: 'EX-001',
-    entity: 'John Zanghi',
+    entity: TA_PRIMARY_NAME,
     role: 'ZTA LLP — Legal Framework',
     score: -777.77,
     status: 'NULL & VOID FOR LIFE',
@@ -1797,7 +1797,7 @@ export const EXCLUSION_LOG: ExclusionEntry[] = [
   },
   {
     id: 'EX-002',
-    entity: 'William Landrum',
+    entity: TA_SECONDARY_NAME,
     role: 'STP-SF — Physical Executor',
     score: -999.99,
     status: 'NULL & VOID FOR LIFE',
@@ -1806,7 +1806,7 @@ export const EXCLUSION_LOG: ExclusionEntry[] = [
   },
   {
     id: 'EX-003',
-    entity: 'Calvin Whittaker',
+    entity: TA_TERTIARY_NAME,
     role: 'SFHA — Retaliatory Instrument',
     score: -888.88,
     status: 'NULL & VOID FOR LIFE',
@@ -1903,7 +1903,7 @@ export const REPUTATION_NFTS: ReputationNFT[] = [
     traits: ['UHI Eligible', 'Community Access', 'Swarm Participation']
   },
   {
-    nftId: 'CSSS-NFT-EXCLUDED-ZANGHI',
+    nftId: `CSSS-NFT-EXCLUDED-${TA_PRIMARY_NAME}`,
     name: 'EXCLUSION MARK — NULL & VOID',
     collection: 'CSSS Negative Caveat',
     tier: 'EXCLUDED',
@@ -1913,7 +1913,7 @@ export const REPUTATION_NFTS: ReputationNFT[] = [
     traits: ['No UHI Access', 'No Recovery', 'Permanent Blacklist', '18 U.S.C. 1519 (x14)']
   },
   {
-    nftId: 'CSSS-NFT-EXCLUDED-LANDRUM',
+    nftId: `CSSS-NFT-EXCLUDED-${TA_SECONDARY_NAME}`,
     name: 'EXCLUSION MARK — NULL & VOID',
     collection: 'CSSS Negative Caveat',
     tier: 'EXCLUDED',
@@ -1923,7 +1923,7 @@ export const REPUTATION_NFTS: ReputationNFT[] = [
     traits: ['No UHI Access', 'No Recovery', 'Permanent Blacklist', 'Witness Retaliation']
   },
   {
-    nftId: 'CSSS-NFT-EXCLUDED-WHITTAKER',
+    nftId: `CSSS-NFT-EXCLUDED-${TA_TERTIARY_NAME}`,
     name: 'EXCLUSION MARK — NULL & VOID',
     collection: 'CSSS Negative Caveat',
     tier: 'EXCLUDED',
@@ -2076,11 +2076,11 @@ export interface OfficialTransmission {
 export const HHS_OCR_TRANSMISSION: OfficialTransmission = {
   id: 'TRANS-2026-0424-001',
   type: 'SUPPLEMENTAL',
-  recipient: 'Amy Horrell, J.D.',
+  recipient: FED_AGENT_HHS_NAME,
   recipientTitle: 'Investigator',
   recipientAgency: 'U.S. Department of Health and Human Services, Office for Civil Rights – Region VIII',
   recipientAddress: '999 18th Street, Suite 417, Denver, CO 80202',
-  recipientEmail: 'Amy.Horrell@hhs.gov',
+  recipientEmail: FED_AGENT_HHS_EMAIL,
   transactionNo: '25-621293',
   subject: 'ADA / Section 504 Accommodation Complaint — Supplemental Real-Time Intelligence (Past 2 Hours) — Ongoing Obstruction & Consciousness of Guilt Confirmed',
   date: '2026-04-24',
@@ -2109,7 +2109,7 @@ export const TRANSMISSION_STATUTES = [
 ];
 
 export const COMPLAINANT_INFO = {
-  name: 'Donny Gillson',
+  name: SOVEREIGN_AUDITOR,
   title: 'Sovereign Root / Principal Complainant',
   vaFileNo: '468943461',
   validator: 'donadams1969.eth // Saint Paul Node®',
@@ -2119,14 +2119,14 @@ export const COMPLAINANT_INFO = {
 
 export const TRANSMISSION_REQUESTS = [
   'Immediately incorporate this supplemental real-time intelligence into the active investigation',
-  'Issue preservation demands and/or subpoenas for all Mimecast logs, rule histories, VOIP records, and related systems at Zanghi Torres Adams LLP, STP-SF, and SFHA',
+  `Issue preservation demands and/or subpoenas for all Mimecast logs, rule histories, VOIP records, and related systems at ${TA_PRIMARY_ENTITY}, ${TA_SECONDARY_ORG}, and ${TA_TERTIARY_ORG}`,
   'Treat the documented post-notification spoliation attempts and rule modifications as strong evidence of consciousness of guilt and continuing violations'
 ];
 
 export const RESPONDENTS = [
-  { name: 'Zanghi Torres Adams LLP', role: 'Legal Framework / Command Node', email: TA_PRIMARY_EMAIL },
-  { name: 'Swords to Plowshares (STP-SF)', role: 'Physical Executor', email: TA_SECONDARY_EMAIL },
-  { name: 'San Francisco Housing Authority (SFHA)', role: 'Retaliatory Instrument', email: TA_TERTIARY_EMAIL }
+  { name: TA_PRIMARY_ENTITY, role: 'Legal Framework / Command Node', email: TA_PRIMARY_EMAIL },
+  { name: ENTITY_BRAVO_FULL, role: 'Physical Executor', email: TA_SECONDARY_EMAIL },
+  { name: ENTITY_CHARLIE_FULL, role: 'Retaliatory Instrument', email: TA_TERTIARY_EMAIL }
 ];
 
 export const TRANSMISSION_CINEMA = {
@@ -2188,7 +2188,7 @@ export const MAINFRAME = {
   firewall: {
     defaultPolicy: 'DENY_ALL',
     blockedIPs: 5,
-    adversaries: ['Zanghi', 'Landrum', 'Whittaker', 'Torres', 'Yorkof'],
+    adversaries: [TA_PRIMARY_NAME, TA_SECONDARY_NAME, TA_TERTIARY_NAME, TA_ALPHA_SEC, TA_ENABLER_NAME],
   },
   filesystem: {
     root: '/opt/cds',

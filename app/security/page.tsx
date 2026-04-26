@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Lock, Shield, ShieldCheck, ShieldAlert, Eye, Hash, Server, Zap, AlertTriangle, CheckCircle, XCircle, Activity } from 'lucide-react';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { TA_PRIMARY_EMAIL, TA_ALPHA_SEC_EMAIL, TA_SECONDARY_EMAIL, TA_TERTIARY_EMAIL } from '@/lib/encrypted-ids';
 
 const SECURITY_SYSTEM = {
   title: 'VALORAI+ SECURITY MODULE',
@@ -27,18 +28,18 @@ const CRYPTO_LAYERS = [
 ];
 
 const THREAT_EVENTS = [
-  { id: 'SPOL-0001', timestamp: '2026-04-24T10:41:22Z', type: 'SPOLIATION_ATTEMPT', actor: 'j.zanghi@ztallp.com', result: 'BLOCKED', hash: '0x7a8b9c3d...' },
-  { id: 'SPOL-0002', timestamp: '2026-04-24T10:22:08Z', type: 'EXPORT_ATTEMPT', actor: 'a.torres@ztallp.com', result: 'BLOCKED', hash: '0x1b2c3d8e...' },
-  { id: 'SPOL-0003', timestamp: '2026-04-24T10:08:33Z', type: 'BULK_DELETE', actor: 'j.zanghi@ztallp.com', result: 'BLOCKED', hash: '0x4d5e6f2a...' },
-  { id: 'RETAL-0001', timestamp: '2026-04-24T10:05:17Z', type: 'WITNESS_RETALIATION', actor: 'william.landrum@stp-sf.org', result: '18 USC 1512', hash: '0x4d5e6f2a...' },
-  { id: 'SPOL-0004', timestamp: '2026-04-24T09:55:17Z', type: 'ACCESS_LOG_PURGE', actor: 'a.torres@ztallp.com', result: 'BLOCKED', hash: '0x8f9a0b5c...' },
+  { id: 'SPOL-0001', timestamp: '2026-04-24T10:41:22Z', type: 'SPOLIATION_ATTEMPT', actor: TA_PRIMARY_EMAIL, result: 'BLOCKED', hash: '0x7a8b9c3d...' },
+  { id: 'SPOL-0002', timestamp: '2026-04-24T10:22:08Z', type: 'EXPORT_ATTEMPT', actor: TA_ALPHA_SEC_EMAIL, result: 'BLOCKED', hash: '0x1b2c3d8e...' },
+  { id: 'SPOL-0003', timestamp: '2026-04-24T10:08:33Z', type: 'BULK_DELETE', actor: TA_PRIMARY_EMAIL, result: 'BLOCKED', hash: '0x4d5e6f2a...' },
+  { id: 'RETAL-0001', timestamp: '2026-04-24T10:05:17Z', type: 'WITNESS_RETALIATION', actor: TA_SECONDARY_EMAIL, result: '18 USC 1512', hash: '0x4d5e6f2a...' },
+  { id: 'SPOL-0004', timestamp: '2026-04-24T09:55:17Z', type: 'ACCESS_LOG_PURGE', actor: TA_ALPHA_SEC_EMAIL, result: 'BLOCKED', hash: '0x8f9a0b5c...' },
 ];
 
 const EXCLUDED_ACTORS = [
-  { actor: 'j.zanghi@ztallp.com', score: -777.77, status: 'NULL_VOID_LIFE', violations: 14 },
-  { actor: 'a.torres@ztallp.com', score: -666.66, status: 'NULL_VOID_LIFE', violations: 9 },
-  { actor: 'william.landrum@stp-sf.org', score: -999.99, status: 'NULL_VOID_LIFE', violations: 11 },
-  { actor: 'calvin.whittaker@sfha.org', score: -888.88, status: 'NULL_VOID_LIFE', violations: 8 },
+  { actor: TA_PRIMARY_EMAIL, score: -777.77, status: 'NULL_VOID_LIFE', violations: 14 },
+  { actor: TA_ALPHA_SEC_EMAIL, score: -666.66, status: 'NULL_VOID_LIFE', violations: 9 },
+  { actor: TA_SECONDARY_EMAIL, score: -999.99, status: 'NULL_VOID_LIFE', violations: 11 },
+  { actor: TA_TERTIARY_EMAIL, score: -888.88, status: 'NULL_VOID_LIFE', violations: 8 },
 ];
 
 const SHARD_MATRIX = {

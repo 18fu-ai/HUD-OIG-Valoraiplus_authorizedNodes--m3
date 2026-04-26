@@ -9,6 +9,13 @@ import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
 import { HomeBreadcrumb } from '@/components/cds/home-button';
 import {
+  TA_PRIMARY_NAME, TA_PRIMARY_ENTITY, TA_PRIMARY_EMAIL, TA_PRIMARY_DOMAIN,
+  TA_ALPHA_SEC, TA_ALPHA_SEC_EMAIL,
+  TA_SECONDARY_NAME, TA_SECONDARY_ORG, TA_SECONDARY_EMAIL, TA_SECONDARY_DOMAIN,
+  TA_TERTIARY_NAME, TA_TERTIARY_ORG, TA_TERTIARY_EMAIL, TA_TERTIARY_DOMAIN,
+  TA_ENABLER_NAME, FED_AGENT_FBI_NAME, ENTITY_JPMC, ENTITY_SCHWAB,
+} from '@/lib/encrypted-ids';
+import {
   CDS_LAYERS,
   THREAT_ACTORS,
   INVESTIGATIONS,
@@ -54,10 +61,10 @@ type LocalEvidenceStatus = EvidenceStatus;
 // Maximum Elevation Actor Data with 5W
 const ELEVATED_ACTORS = [
   {
-    name: 'John Zanghi',
+    name: TA_PRIMARY_NAME,
     role: 'Managing Partner',
-    domain: 'ZTA LLP',
-    email: 'j.zanghi@ztallp.com',
+    domain: TA_PRIMARY_ENTITY,
+    email: TA_PRIMARY_EMAIL,
     classification: 'CRITICAL' as const,
     criminalExposure: 41180,
     wireFraudVolume: 6425000,
@@ -68,10 +75,10 @@ const ELEVATED_ACTORS = [
     stateBarViolations: ['Rule 8.4(c)', 'Rule 8.4(d)', 'Rule 1.15', 'Rule 3.4(a)'],
     sanctionRisk: 'DISBARMENT',
     fiveW: {
-      who: ['John Zanghi', 'ZTA LLP'],
+      who: [TA_PRIMARY_NAME, TA_PRIMARY_ENTITY],
       what: 'Orchestrated systematic evidence destruction, wire fraud, and witness tampering across multiple institutions',
       why: 'To conceal fiduciary breach, suppress veteran testimony, and obstruct federal investigation',
-      where: 'San Francisco, CA — ZTA LLP offices, STP facilities, SFHA premises',
+      where: `San Francisco, CA — ${TA_PRIMARY_ENTITY} offices, ${TA_SECONDARY_ORG} facilities, ${TA_TERTIARY_ORG} premises`,
       when: '2023-01 through 2024-04 (ongoing)',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
       confidence: 100,
@@ -79,10 +86,10 @@ const ELEVATED_ACTORS = [
     }
   },
   {
-    name: 'William Landrum',
+    name: TA_SECONDARY_NAME,
     role: 'Executive Director',
-    domain: 'Swords to Plowshares',
-    email: 'w.landrum@stp-sf.org',
+    domain: TA_SECONDARY_ORG,
+    email: TA_SECONDARY_EMAIL,
     classification: 'CRITICAL' as const,
     criminalExposure: 30760,
     wireFraudVolume: 9050000,
@@ -93,7 +100,7 @@ const ELEVATED_ACTORS = [
     stateBarViolations: [],
     sanctionRisk: 'CRIMINAL',
     fiveW: {
-      who: ['William Landrum', 'Swords to Plowshares'],
+      who: [TA_SECONDARY_NAME, TA_SECONDARY_ORG],
       what: 'Directed benefits sabotage, housing interference, and retaliation against veteran whistleblowers resulting in 8 veteran deaths',
       why: 'To protect institutional reputation, suppress accountability, and maintain fraudulent grant funding',
       where: 'San Francisco, CA — STP headquarters, VA Medical Center, SFHA offices',
@@ -104,10 +111,10 @@ const ELEVATED_ACTORS = [
     }
   },
   {
-    name: 'Calvin Whittaker',
+    name: TA_TERTIARY_NAME,
     role: 'Housing Official',
-    domain: 'SFHA',
-    email: 'calvin.whittaker@sfha.org',
+    domain: TA_TERTIARY_ORG,
+    email: TA_TERTIARY_EMAIL,
     classification: 'CRITICAL' as const,
     criminalExposure: 24560,
     wireFraudVolume: 3440000,
@@ -118,9 +125,9 @@ const ELEVATED_ACTORS = [
     stateBarViolations: [],
     sanctionRisk: 'CRIMINAL',
     fiveW: {
-      who: ['Calvin Whittaker', 'SFHA'],
+      who: [TA_TERTIARY_NAME, TA_TERTIARY_ORG],
       what: 'Executed improper Section 8 terminations, false documentation, and coordinated retaliation',
-      why: 'To assist ZTA LLP strategy and suppress housing rights claims',
+      why: `To assist ${TA_PRIMARY_ENTITY} strategy and suppress housing rights claims`,
       where: 'San Francisco, CA — SFHA offices, Section 8 properties',
       when: '2023-06 through 2024-01',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
@@ -129,10 +136,10 @@ const ELEVATED_ACTORS = [
     }
   },
   {
-    name: 'Amanda Torres',
+    name: TA_ALPHA_SEC,
     role: 'Associate',
-    domain: 'ZTA LLP',
-    email: 'a.torres@ztallp.com',
+    domain: TA_PRIMARY_ENTITY,
+    email: TA_ALPHA_SEC_EMAIL,
     classification: 'CRITICAL' as const,
     criminalExposure: 12260,
     wireFraudVolume: 1450000,
@@ -143,10 +150,10 @@ const ELEVATED_ACTORS = [
     stateBarViolations: ['Rule 8.4(d)', 'Rule 5.2'],
     sanctionRisk: 'SUSPENSION',
     fiveW: {
-      who: ['Amanda Torres', 'ZTA LLP'],
+      who: [TA_ALPHA_SEC, TA_PRIMARY_ENTITY],
       what: 'Participated in document handling and spoliation under direction',
       why: 'Following firm directives with knowledge of impropriety',
-      where: 'San Francisco, CA — ZTA LLP offices',
+      where: `San Francisco, CA — ${TA_PRIMARY_ENTITY} offices`,
       when: '2023-06 through 2024-04',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
       confidence: 100,
@@ -154,10 +161,10 @@ const ELEVATED_ACTORS = [
     }
   },
   {
-    name: 'Robert Yorkof',
+    name: TA_ENABLER_NAME,
     role: 'Associate',
-    domain: 'ZTA LLP',
-    email: 'r.yorkof@ztallp.com',
+    domain: TA_PRIMARY_ENTITY,
+    email: `${TA_ENABLER_NAME}@${TA_PRIMARY_DOMAIN}`,
     classification: 'CRITICAL' as const,
     criminalExposure: 6740,
     wireFraudVolume: 890000,
@@ -168,10 +175,10 @@ const ELEVATED_ACTORS = [
     stateBarViolations: ['Rule 8.4(d)', 'Rule 5.2'],
     sanctionRisk: 'SUSPENSION',
     fiveW: {
-      who: ['Robert Yorkof', 'ZTA LLP'],
+      who: [TA_ENABLER_NAME, TA_PRIMARY_ENTITY],
       what: 'Junior participation in document handling activities',
       why: 'Following associate directives with limited autonomy',
-      where: 'San Francisco, CA — ZTA LLP offices',
+      where: `San Francisco, CA — ${TA_PRIMARY_ENTITY} offices`,
       when: '2023-09 through 2024-02',
       evidenceStatus: 'CORROBORATED' as LocalEvidenceStatus,
       confidence: 100,
@@ -183,7 +190,7 @@ const ELEVATED_ACTORS = [
 // Elevated Institutional Data
 const ELEVATED_INSTITUTIONS = [
   {
-    name: 'Swords to Plowshares',
+    name: TA_SECONDARY_ORG,
     type: 'Veterans Service Organization',
     status: 'TARGETED',
     baseRecovery: 152589301.66,
@@ -196,7 +203,7 @@ const ELEVATED_INSTITUTIONS = [
     taxExemptRevocation: true
   },
   {
-    name: 'ZTA LLP',
+    name: TA_PRIMARY_ENTITY,
     type: 'Law Firm',
     status: 'ACTIVE',
     baseRecovery: 127157751.38,
@@ -209,7 +216,7 @@ const ELEVATED_INSTITUTIONS = [
     taxExemptRevocation: false
   },
   {
-    name: 'SFHA',
+    name: TA_TERTIARY_ORG,
     type: 'Government Agency',
     status: 'FLAGGED',
     baseRecovery: 101726201.10,
@@ -222,7 +229,7 @@ const ELEVATED_INSTITUTIONS = [
     taxExemptRevocation: false
   },
   {
-    name: 'JPMorgan Chase',
+    name: ENTITY_JPMC,
     type: 'Financial Institution',
     status: 'MONITORING',
     baseRecovery: 76294650.83,
@@ -235,7 +242,7 @@ const ELEVATED_INSTITUTIONS = [
     taxExemptRevocation: false
   },
   {
-    name: 'Charles Schwab',
+    name: ENTITY_SCHWAB,
     type: 'Broker-Dealer',
     status: 'ACTIVE',
     baseRecovery: 50863100.55,
@@ -256,7 +263,7 @@ const ELEVATED_INSTITUTIONS = [
 const FEDERAL_AGENCIES = [
   { agency: 'DOJ Criminal Division', focus: 'RICO / Wire Fraud', status: 'MAIN JUSTICE', priority: 'CRITICAL', division: 'Fraud Section' },
   { agency: 'DOJ Civil Rights Division', focus: 'Pattern or Practice', status: 'SECTION CHIEF', priority: 'CRITICAL', division: 'Special Litigation' },
-  { agency: 'FBI San Francisco', focus: 'Cyber / Wire Fraud', status: 'WALLINGFORD', priority: 'CRITICAL', division: 'Cyber Squad' },
+  { agency: 'FBI San Francisco', focus: 'Cyber / Wire Fraud', status: FED_AGENT_FBI_NAME, priority: 'CRITICAL', division: 'Cyber Squad' },
   { agency: 'HHS OCR', focus: 'Section 504', status: '25-621293', priority: 'CRITICAL', division: 'Regional Director' },
   { agency: 'VA OIG', focus: 'Benefits Fraud', status: 'ACTIVE', priority: 'CRITICAL', division: 'Criminal Investigations' },
   { agency: 'IRS Criminal Investigation', focus: '501(c)(3) Abuse', status: 'REFERRAL', priority: 'CRITICAL', division: 'Tax Division' },

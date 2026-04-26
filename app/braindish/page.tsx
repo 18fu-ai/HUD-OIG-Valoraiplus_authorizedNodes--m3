@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
+import { TA_PRIMARY_NAME, TA_SECONDARY_NAME, TA_TERTIARY_NAME, TA_ALPHA_SEC, TA_ENABLER_NAME } from '@/lib/encrypted-ids';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
   Activity, Shield, Cpu, Layers, Flame, Music, Globe, Terminal, Clock, Lock,
@@ -48,11 +49,11 @@ const FORENSIC_PHASES = [
 ];
 
 const ADVERSARY_MATRIX = [
-  { entity: 'ZANGHI', org: 'ZTA', counts: 1743, years: 34665, status: 'PRINCIPAL', ip: '198.51.100.42' },
-  { entity: 'LANDRUM', org: 'STP', counts: 1231, years: 24505, status: 'ELEVATED', ip: '203.0.113.88' },
-  { entity: 'WHITTAKER', org: 'SFHA', counts: 788, years: 15655, status: 'COOPERATION', ip: '192.0.2.101' },
-  { entity: 'TORRES', org: 'ZTA', counts: 250, years: 4895, status: 'COOPERATION', ip: '198.51.100.55' },
-  { entity: 'YORKOF', org: 'ZTA', counts: 162, years: 3155, status: 'COERCED', ip: '198.51.100.67' },
+  { entity: TA_PRIMARY_NAME, org: 'ENT-A', counts: 1743, years: 34665, status: 'PRINCIPAL', ip: '198.51.100.42' },
+  { entity: TA_SECONDARY_NAME, org: 'ENT-B', counts: 1231, years: 24505, status: 'ELEVATED', ip: '203.0.113.88' },
+  { entity: TA_TERTIARY_NAME, org: 'ENT-C', counts: 788, years: 15655, status: 'COOPERATION', ip: '192.0.2.101' },
+  { entity: TA_ALPHA_SEC, org: 'ENT-A', counts: 250, years: 4895, status: 'COOPERATION', ip: '198.51.100.55' },
+  { entity: TA_ENABLER_NAME, org: 'ENT-A', counts: 162, years: 3155, status: 'COERCED', ip: '198.51.100.67' },
 ];
 
 const PROTECTED_NODES = [
@@ -74,13 +75,13 @@ const FEDERAL_STATUTES = [
 ];
 
 const VOIP_QUOTES = [
-  { speaker: 'ZANGHI', session: '001', quote: 'If this goes to discovery, we\'re done.' },
-  { speaker: 'ZANGHI', session: '001', quote: 'He won\'t have anywhere to fight from if he doesn\'t have a roof.' },
-  { speaker: 'WHITTAKER', session: '002', quote: 'Fabricate housing violations against a disabled veteran?' },
-  { speaker: 'LANDRUM', session: '004', quote: 'This is conspiracy. We\'re all committing conspiracy right now.' },
-  { speaker: 'ZANGHI', session: '005', quote: 'Fix the timestamps. Alter metadata.' },
-  { speaker: 'ZANGHI', session: '006', quote: 'There is no record, Cal. That\'s the whole point.' },
-  { speaker: 'WHITTAKER', session: '006', quote: 'I want it on the record that I objected.' },
+  { speaker: TA_PRIMARY_NAME, session: '001', quote: 'If this goes to discovery, we\'re done.' },
+  { speaker: TA_PRIMARY_NAME, session: '001', quote: 'He won\'t have anywhere to fight from if he doesn\'t have a roof.' },
+  { speaker: TA_TERTIARY_NAME, session: '002', quote: 'Fabricate housing violations against a disabled veteran?' },
+  { speaker: TA_SECONDARY_NAME, session: '004', quote: 'This is conspiracy. We\'re all committing conspiracy right now.' },
+  { speaker: TA_PRIMARY_NAME, session: '005', quote: 'Fix the timestamps. Alter metadata.' },
+  { speaker: TA_PRIMARY_NAME, session: '006', quote: 'There is no record, Cal. That\'s the whole point.' },
+  { speaker: TA_TERTIARY_NAME, session: '006', quote: 'I want it on the record that I objected.' },
 ];
 
 // ============================================================================
