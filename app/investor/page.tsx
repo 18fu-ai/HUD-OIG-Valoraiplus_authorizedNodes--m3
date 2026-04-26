@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { CDSHeader } from '@/components/cds/header';
+import { TA_PRIMARY_ENTITY, TA_SECONDARY_ORG, TA_TERTIARY_ORG, SOVEREIGN_AUDITOR } from '@/lib/encrypted-ids';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 

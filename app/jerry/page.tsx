@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CDSHeader } from '@/components/cds/header';
+import { SOVEREIGN_AUDITOR } from '@/lib/encrypted-ids';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -245,7 +246,7 @@ export default function JerryTokenPage() {
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-400">Claim</span>
-                  <span className="text-white font-mono">Jerry Gillson</span>
+                  <span className="text-white font-mono">PROTECTED-NODE-J</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-400">Verdict</span>
@@ -275,14 +276,14 @@ export default function JerryTokenPage() {
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span className="text-emerald-400 font-mono">/route71</span>
                   <span className="text-slate-500">—</span>
-                  <span className="text-slate-400">Poppa Donny Gillson</span>
+                  <span className="text-slate-400">{SOVEREIGN_AUDITOR}</span>
                   <Badge variant="outline" className="ml-auto border-emerald-700 text-emerald-400 text-xs">ADMITTED</Badge>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 rounded-full bg-red-500" />
                   <span className="text-red-400 font-mono">/route70</span>
                   <span className="text-slate-500">—</span>
-                  <span className="text-white">Jerry Gillson</span>
+                  <span className="text-white">PROTECTED-NODE-J</span>
                   <Badge variant="outline" className="ml-auto border-red-700 text-red-400 text-xs">BLOCKED</Badge>
                 </div>
                 <div className="flex items-center gap-2 text-sm">

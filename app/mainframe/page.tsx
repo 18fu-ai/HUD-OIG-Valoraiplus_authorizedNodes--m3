@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { TA_PRIMARY_NAME, TA_SECONDARY_NAME, TA_TERTIARY_NAME, TA_ALPHA_SEC, TA_ENABLER_NAME } from '@/lib/encrypted-ids';
 import {
   Terminal, Cpu, Zap, Activity,
   FileCode, HardDrive, Network, RotateCcw
@@ -266,11 +267,11 @@ const SHELL_COMMANDS: Record<string, string[]> = {
   'iptables -L -n': [
     'Chain INPUT (policy DROP)',
     'target     prot opt source               destination',
-    'DROP       all  --  198.51.100.42        0.0.0.0/0        /* Zanghi */  ',
-    'DROP       all  --  203.0.113.88         0.0.0.0/0        /* Landrum */ ',
-    'DROP       all  --  192.0.2.101          0.0.0.0/0        /* Whittaker */',
-    'DROP       all  --  198.51.100.55        0.0.0.0/0        /* Torres */  ',
-    'DROP       all  --  198.51.100.67        0.0.0.0/0        /* Yorkof */  ',
+    `DROP       all  --  198.51.100.42        0.0.0.0/0        /* ${TA_PRIMARY_NAME} */  `,
+    `DROP       all  --  203.0.113.88         0.0.0.0/0        /* ${TA_SECONDARY_NAME} */ `,
+    `DROP       all  --  192.0.2.101          0.0.0.0/0        /* ${TA_TERTIARY_NAME} */`,
+    `DROP       all  --  198.51.100.55        0.0.0.0/0        /* ${TA_ALPHA_SEC} */  `,
+    `DROP       all  --  198.51.100.67        0.0.0.0/0        /* ${TA_ENABLER_NAME} */  `,
     'ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0        state ESTABLISHED',
     'ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0        dpt:443 /* HTTPS */  ',
     '',

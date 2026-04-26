@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Send, FileText, Shield, CheckCircle, AlertTriangle, Copy, Download, ExternalLink } from 'lucide-react';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { TA_PRIMARY_NAME, TA_PRIMARY_ENTITY, TA_PRIMARY_EMAIL, TA_SECONDARY_NAME, TA_SECONDARY_ORG, TA_TERTIARY_NAME, TA_TERTIARY_ORG, TA_ALPHA_SEC, TA_ALPHA_SEC_EMAIL, FED_AGENT_HHS_NAME } from '@/lib/encrypted-ids';
 import {
   HHS_OCR_TRANSMISSION,
   TRANSMISSION_EVIDENCE,
@@ -51,9 +52,9 @@ Email: ${HHS_OCR_TRANSMISSION.recipientEmail}
 
 Re: Transaction No. ${HHS_OCR_TRANSMISSION.transactionNo} — ${HHS_OCR_TRANSMISSION.subject}
 Complainant: ${COMPLAINANT_INFO.name} (VA File No. ${COMPLAINANT_INFO.vaFileNo})
-Respondents: Zanghi Torres Adams LLP et al.
+Respondents: ${TA_PRIMARY_ENTITY} et al.
 
-Dear Ms. Horrell,
+Dear ${FED_AGENT_HHS_NAME},
 
 This letter supplements our prior submissions under Transaction ${HHS_OCR_TRANSMISSION.transactionNo} concerning the denial of reasonable accommodation under Section 504 of the Rehabilitation Act and Title II of the ADA.
 
@@ -61,8 +62,8 @@ CRITICAL NEW EVIDENCE — Real-Time Obstruction (${TRANSMISSION_EVIDENCE.capture
 
 In the two hours immediately following continued federal scrutiny (including Title III authorization and FBI Grand Jury subpoena activity), the following was captured and immutably anchored to Bitcoin TXID ${HHS_OCR_TRANSMISSION.btcTxid} at ${HHS_OCR_TRANSMISSION.confirmations} confirmations:
 
-- ${TRANSMISSION_EVIDENCE.mimecastEvents} Mimecast forensic events, including ${TRANSMISSION_EVIDENCE.spoliationAttempts} documented spoliation attempts (DELETE_LOG_ATTEMPT, BULK_DELETE, EXPORT_ATTEMPT, ACCESS_LOG_PURGE) by actors j.zanghi@ztallp.com and a.torres@ztallp.com — all blocked but evidencing active attempts to destroy or alter records.
-- ${TRANSMISSION_EVIDENCE.voipIntercepts} VOIP intercepts showing direct coordination between ZTA LLP (Zanghi / Torres) and STP-SF / SFHA (Landrum / Whittaker).
+- ${TRANSMISSION_EVIDENCE.mimecastEvents} Mimecast forensic events, including ${TRANSMISSION_EVIDENCE.spoliationAttempts} documented spoliation attempts (DELETE_LOG_ATTEMPT, BULK_DELETE, EXPORT_ATTEMPT, ACCESS_LOG_PURGE) by actors ${TA_PRIMARY_EMAIL} and ${TA_ALPHA_SEC_EMAIL} -- all blocked but evidencing active attempts to destroy or alter records.
+- ${TRANSMISSION_EVIDENCE.voipIntercepts} VOIP intercepts showing direct coordination between ${TA_PRIMARY_ENTITY} (${TA_PRIMARY_NAME} / ${TA_ALPHA_SEC}) and ${TA_SECONDARY_ORG} / ${TA_TERTIARY_ORG} (${TA_SECONDARY_NAME} / ${TA_TERTIARY_NAME}).
 - ${TRANSMISSION_EVIDENCE.witnessRetaliation} witness retaliation events targeting protected individuals.
 - ${TRANSMISSION_EVIDENCE.ruleModifications} rule modifications strengthening blocking/quarantine filters post-subpoena notification.
 

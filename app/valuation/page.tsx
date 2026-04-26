@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { CDSHeader } from '@/components/cds/header';
+import { TA_PRIMARY_ENTITY, TA_SECONDARY_ORG, TA_TERTIARY_ORG, ENTITY_JPMC, ENTITY_SCHWAB } from '@/lib/encrypted-ids';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -60,7 +61,7 @@ interface SystemValuation {
 
 const FINANCIAL_ACCOUNTS: FinancialAccount[] = [
   {
-    institution: 'Charles Schwab',
+    institution: ENTITY_SCHWAB,
     accountRef: '6015-8185',
     type: 'settlement',
     amount: 10000000,
@@ -87,7 +88,7 @@ const FINANCIAL_ACCOUNTS: FinancialAccount[] = [
     corroboration: 'PENDING_CORROBORATION'
   },
   {
-    institution: 'JPMorgan Chase',
+    institution: ENTITY_JPMC,
     accountRef: 'Internal',
     type: 'trust',
     amount: 76294650.83,
@@ -99,7 +100,7 @@ const FINANCIAL_ACCOUNTS: FinancialAccount[] = [
 
 const RECOVERY_MATRIX: RecoveryTarget[] = [
   {
-    entity: 'Swords to Plowshares',
+    entity: TA_SECONDARY_ORG,
     category: 'institutional',
     exposure: 152589301.66,
     percentage: 30.0,
@@ -107,7 +108,7 @@ const RECOVERY_MATRIX: RecoveryTarget[] = [
     corroboration: 'PENDING_CORROBORATION'
   },
   {
-    entity: 'ZTA LLP',
+    entity: TA_PRIMARY_ENTITY,
     category: 'adversarial',
     exposure: 127157751.38,
     percentage: 25.0,
@@ -115,7 +116,7 @@ const RECOVERY_MATRIX: RecoveryTarget[] = [
     corroboration: 'PENDING_CORROBORATION'
   },
   {
-    entity: 'SFHA',
+    entity: TA_TERTIARY_ORG,
     category: 'institutional',
     exposure: 101726201.10,
     percentage: 20.0,
@@ -123,7 +124,7 @@ const RECOVERY_MATRIX: RecoveryTarget[] = [
     corroboration: 'PENDING_CORROBORATION'
   },
   {
-    entity: 'JPMorgan Chase',
+    entity: ENTITY_JPMC,
     category: 'financial',
     exposure: 76294650.83,
     percentage: 15.0,
@@ -131,7 +132,7 @@ const RECOVERY_MATRIX: RecoveryTarget[] = [
     corroboration: 'PENDING_CORROBORATION'
   },
   {
-    entity: 'Charles Schwab',
+    entity: ENTITY_SCHWAB,
     category: 'financial',
     exposure: 50863100.55,
     percentage: 10.0,
@@ -337,20 +338,20 @@ export default function ValuationPage() {
           </Card>
         </section>
 
-        {/* Charles Schwab Account Section */}
+        {/* Settlement Alpha Account Section */}
         <section>
           <Card className="bg-zinc-900 border-emerald-500/30">
             <CardHeader className="border-b border-zinc-800">
               <CardTitle className="font-mono text-lg flex items-center gap-2">
                 <Wallet className="w-5 h-5 text-emerald-500" />
-                CHARLES SCHWAB — SETTLEMENT ALPHA DESTINATION
+                {ENTITY_SCHWAB} -- SETTLEMENT ALPHA DESTINATION
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="space-y-1">
                   <p className="text-xs text-zinc-500 font-mono">INSTITUTION</p>
-                  <p className="text-lg font-bold text-white font-mono">Charles Schwab</p>
+                  <p className="text-lg font-bold text-white font-mono">{ENTITY_SCHWAB}</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs text-zinc-500 font-mono">ACCOUNT REFERENCE</p>

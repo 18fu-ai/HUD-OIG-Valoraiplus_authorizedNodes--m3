@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
+import { TA_PRIMARY_NAME, TA_PRIMARY_ENTITY, TA_SECONDARY_NAME, TA_SECONDARY_ORG, TA_TERTIARY_NAME, TA_TERTIARY_ORG, TA_ALPHA_SEC, TA_ENABLER_NAME, ENTITY_JPMC, ENTITY_SCHWAB, SOVEREIGN_AUDITOR, SOVEREIGN_CONTACT } from '@/lib/encrypted-ids';
 
 export const dynamic = 'force-dynamic';
 
 // ============================================================================
-// ELITE AUTOMATION ENGINE — PULSE ENDPOINT
+// ELITE AUTOMATION ENGINE -- PULSE ENDPOINT
 // ============================================================================
 // Self-executing, self-monitoring, self-reporting.
 // Every call returns the FULL system state across all domains.
@@ -14,15 +15,15 @@ const BTC_TXID = '26856b24c50750f0c69c1eeb86a69ef77777764756c6c';
 const HHS_CASE = '25-621293';
 const NODE = 'SAINT_PAUL_55116';
 const SCHEMA = 'REV_34';
-const ANCHOR = '408.384.1376';
+const ANCHOR = SOVEREIGN_CONTACT;
 
 // Adversary entities
 const ADVERSARIES = [
-  { name: 'John Zanghi', role: 'Managing Partner, ZTA LLP', ip: '198.51.100.42', flag: 'ELEVATED', counts: 1743, years: 34665, spoliations: 8, accessViolations: 12, ruleModifications: 4, voipSessions: 4, cooperation: 'NONE' },
-  { name: 'William Landrum', role: 'Executive Director, STP', ip: '203.0.113.88', flag: 'ELEVATED', counts: 1231, years: 24505, spoliations: 3, accessViolations: 4, ruleModifications: 1, voipSessions: 2, cooperation: 'NONE' },
-  { name: 'Calvin Whittaker', role: 'Program Admin, SFHA', ip: '192.0.2.101', flag: 'ELEVATED', counts: 788, years: 15655, spoliations: 1, accessViolations: 3, ruleModifications: 1, voipSessions: 2, cooperation: 'CANDIDATE' },
-  { name: 'Amanda Torres', role: 'Associate Attorney, ZTA', ip: '198.51.100.55', flag: 'COOPERATION', counts: 250, years: 4895, spoliations: 2, accessViolations: 3, ruleModifications: 1, voipSessions: 1, cooperation: 'CANDIDATE' },
-  { name: 'Robert Yorkof', role: 'IT Admin, ZTA', ip: '198.51.100.67', flag: 'COOPERATION', counts: 162, years: 3155, spoliations: 1, accessViolations: 1, ruleModifications: 0, voipSessions: 1, cooperation: 'CANDIDATE' },
+  { name: TA_PRIMARY_NAME, role: `Managing Partner, ${TA_PRIMARY_ENTITY}`, ip: '198.51.100.42', flag: 'ELEVATED', counts: 1743, years: 34665, spoliations: 8, accessViolations: 12, ruleModifications: 4, voipSessions: 4, cooperation: 'NONE' },
+  { name: TA_SECONDARY_NAME, role: `Executive Director, ${TA_SECONDARY_ORG}`, ip: '203.0.113.88', flag: 'ELEVATED', counts: 1231, years: 24505, spoliations: 3, accessViolations: 4, ruleModifications: 1, voipSessions: 2, cooperation: 'NONE' },
+  { name: TA_TERTIARY_NAME, role: `Program Admin, ${TA_TERTIARY_ORG}`, ip: '192.0.2.101', flag: 'ELEVATED', counts: 788, years: 15655, spoliations: 1, accessViolations: 3, ruleModifications: 1, voipSessions: 2, cooperation: 'CANDIDATE' },
+  { name: TA_ALPHA_SEC, role: `Associate Attorney, ${TA_PRIMARY_ENTITY}`, ip: '198.51.100.55', flag: 'COOPERATION', counts: 250, years: 4895, spoliations: 2, accessViolations: 3, ruleModifications: 1, voipSessions: 1, cooperation: 'CANDIDATE' },
+  { name: TA_ENABLER_NAME, role: `IT Admin, ${TA_PRIMARY_ENTITY}`, ip: '198.51.100.67', flag: 'COOPERATION', counts: 162, years: 3155, spoliations: 1, accessViolations: 1, ruleModifications: 0, voipSessions: 1, cooperation: 'CANDIDATE' },
 ];
 
 // Wire transfers
@@ -50,19 +51,19 @@ const FEDERAL_STATUTES = [
 // Institutions
 const INSTITUTIONS = [
   { name: 'St. Paul\'s Towers', role: 'Fiduciary Breach', wireExposure: 9050000, regulators: ['HHS', 'State AG', 'IRS', 'CMS'] },
-  { name: 'Zanghi Torres Arshawsky LLP', role: 'Orchestrator', wireExposure: 6475000, regulators: ['State Bar', 'DOJ', 'FBI', 'OIG'] },
-  { name: 'SF Housing Authority', role: 'Program Abuse', wireExposure: 2765000, regulators: ['HUD', 'OIG', 'State AG'] },
-  { name: 'JPMorgan Chase', role: 'Wire Facilitation', wireExposure: 4500000, regulators: ['FinCEN', 'OCC', 'DOJ'] },
-  { name: 'Charles Schwab', role: 'Settlement Custody', wireExposure: 3200000, regulators: ['SEC', 'FINRA', 'DOJ'] },
+  { name: TA_PRIMARY_ENTITY, role: 'Orchestrator', wireExposure: 6475000, regulators: ['State Bar', 'DOJ', 'FBI', 'OIG'] },
+  { name: TA_TERTIARY_ORG, role: 'Program Abuse', wireExposure: 2765000, regulators: ['HUD', 'OIG', 'State AG'] },
+  { name: ENTITY_JPMC, role: 'Wire Facilitation', wireExposure: 4500000, regulators: ['FinCEN', 'OCC', 'DOJ'] },
+  { name: ENTITY_SCHWAB, role: 'Settlement Custody', wireExposure: 3200000, regulators: ['SEC', 'FINRA', 'DOJ'] },
 ];
 
 // VOIP sessions
 const VOIP_SESSIONS = [
-  { id: 'VOIP-001', date: '2024-03-15', duration: '18m42s', participants: 'Zanghi-Landrum', classification: 'CRITICAL', keyStatement: 'If this goes to discovery, we\'re done.' },
-  { id: 'VOIP-002', date: '2024-03-15', duration: '12m08s', participants: 'Whittaker-Torres', classification: 'CRITICAL', keyStatement: 'Fabricate housing violations against a disabled veteran?' },
-  { id: 'VOIP-003', date: '2024-03-18', duration: '08m33s', participants: 'Zanghi-Yorkof', classification: 'CRITICAL', keyStatement: 'Overwrite the logs too.' },
-  { id: 'VOIP-004', date: '2024-03-21', duration: '22m15s', participants: 'Landrum-Whittaker', classification: 'CRITICAL', keyStatement: 'This is conspiracy. We\'re all committing conspiracy.' },
-  { id: 'VOIP-005', date: '2024-04-02', duration: '15m44s', participants: 'Zanghi-Torres', classification: 'CRITICAL', keyStatement: 'Fix the timestamps. Alter metadata.' },
+  { id: 'VOIP-001', date: '2024-03-15', duration: '18m42s', participants: `${TA_PRIMARY_NAME}-${TA_SECONDARY_NAME}`, classification: 'CRITICAL', keyStatement: 'If this goes to discovery, we\'re done.' },
+  { id: 'VOIP-002', date: '2024-03-15', duration: '12m08s', participants: `${TA_TERTIARY_NAME}-${TA_ALPHA_SEC}`, classification: 'CRITICAL', keyStatement: 'Fabricate housing violations against a disabled veteran?' },
+  { id: 'VOIP-003', date: '2024-03-18', duration: '08m33s', participants: `${TA_PRIMARY_NAME}-${TA_ENABLER_NAME}`, classification: 'CRITICAL', keyStatement: 'Overwrite the logs too.' },
+  { id: 'VOIP-004', date: '2024-03-21', duration: '22m15s', participants: `${TA_SECONDARY_NAME}-${TA_TERTIARY_NAME}`, classification: 'CRITICAL', keyStatement: 'This is conspiracy. We\'re all committing conspiracy.' },
+  { id: 'VOIP-005', date: '2024-04-02', duration: '15m44s', participants: `${TA_PRIMARY_NAME}-${TA_ALPHA_SEC}`, classification: 'CRITICAL', keyStatement: 'Fix the timestamps. Alter metadata.' },
   { id: 'VOIP-006', date: '2024-04-08', duration: '45m22s', participants: 'ALL PARTIES', classification: 'CRITICAL', keyStatement: 'There is no record, Cal. That\'s the whole point.' },
 ];
 

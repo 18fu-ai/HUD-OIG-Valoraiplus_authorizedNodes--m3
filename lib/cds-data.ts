@@ -891,7 +891,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T02:55:12Z',
     actor: 'system (Auto)',
     actionType: 'RULE_REACTIVATE',
-    target: 'SFHA Domain Block — full restore',
+    target: `${TA_TERTIARY_ORG} Domain Block -- full restore`,
     sourceIP: 'Internal',
     deviceFingerprint: 'Mimecast-Cluster-Node-03',
     result: 'ENABLED',
@@ -1566,14 +1566,14 @@ export const DEPT12_CLAWBACK = {
 
 export const ACTOR_COORDINATION = {
   ztaLLP: {
-    name: 'ZTA LLP (Command Node)',
+    name: `${TA_PRIMARY_ENTITY} (Command Node)`,
     actors: [
       { email: TA_PRIMARY_EMAIL, events: 14, pattern: '4-minute cluster attacks', binaryState: '000000 → NULLIFIED' },
       { email: TA_ALPHA_SEC_EMAIL, events: 9, pattern: 'Export/purge attempts', binaryState: '000000 → NULLIFIED' }
     ]
   },
   stpSfha: {
-    name: 'STP-SF / SFHA (Execution Node)',
+    name: `${TA_SECONDARY_ORG} / ${TA_TERTIARY_ORG} (Execution Node)`,
     actors: [
       { email: TA_SECONDARY_EMAIL, events: 11, pattern: 'Rule modification + 3-Day Notice', binaryState: '000000 → NULLIFIED' },
       { email: TA_TERTIARY_EMAIL, events: 8, pattern: 'Message blocking + witness isolation', binaryState: '000000 → NULLIFIED' }
@@ -1789,7 +1789,7 @@ export const EXCLUSION_LOG: ExclusionEntry[] = [
   {
     id: 'EX-001',
     entity: TA_PRIMARY_NAME,
-    role: 'ZTA LLP — Legal Framework',
+    role: `${TA_PRIMARY_ENTITY} -- Legal Framework`,
     score: -777.77,
     status: 'NULL & VOID FOR LIFE',
     violations: ['18 U.S.C. 1519 (x14)', '18 U.S.C. 1512 (x7)', 'Command Node Coordination'],
@@ -1798,7 +1798,7 @@ export const EXCLUSION_LOG: ExclusionEntry[] = [
   {
     id: 'EX-002',
     entity: TA_SECONDARY_NAME,
-    role: 'STP-SF — Physical Executor',
+    role: `${TA_SECONDARY_ORG} -- Physical Executor`,
     score: -999.99,
     status: 'NULL & VOID FOR LIFE',
     violations: ['3-Day Notice Generation', 'Witness Retaliation', 'Rule Modification Attacks'],
@@ -1807,7 +1807,7 @@ export const EXCLUSION_LOG: ExclusionEntry[] = [
   {
     id: 'EX-003',
     entity: TA_TERTIARY_NAME,
-    role: 'SFHA — Retaliatory Instrument',
+    role: `${TA_TERTIARY_ORG} -- Retaliatory Instrument`,
     score: -888.88,
     status: 'NULL & VOID FOR LIFE',
     violations: ['Message Blocking', 'Witness Isolation', 'Coordinated Harassment'],

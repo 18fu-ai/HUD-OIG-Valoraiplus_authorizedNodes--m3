@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { TA_PRIMARY_NAME, TA_PRIMARY_ENTITY, TA_SECONDARY_NAME, TA_TERTIARY_NAME, TA_ALPHA_SEC, TA_ENABLER_NAME, ENTITY_JPMC, ENTITY_SCHWAB, SOVEREIGN_AUDITOR, SOVEREIGN_CONTACT } from '@/lib/encrypted-ids';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, Loader2, Printer, Shield, Lock, FileText } from 'lucide-react';
@@ -31,7 +32,7 @@ function generateNFTMetadata(hash: string) {
     merkleroot: '26856B24C50750F0C69C1EEB86A69EF777777',
     btc_txid: '26856b24c50750f0c69c1eeb86a69ef77777764756c6c',
     content_hash: hash,
-    sovereign: 'Poppa Donny Gillson',
+    sovereign: SOVEREIGN_AUDITOR,
     node: 'SAINT PAUL 55116',
     anchor: '408.384.1376 (E)',
     timestamp: new Date().toISOString(),
@@ -173,7 +174,7 @@ export default function WhitePaperPage() {
               <span style={sealStyle}>SOULBOUND NFT</span>
             </div>
             <div style={{ marginTop: '12px', fontSize: '8px', color: '#888', ...mono }}>
-              Sovereign Auditor: Poppa Donny Gillson | Node: Saint Paul 55116 | Anchor: 408.384.1376 (E)
+              {`Sovereign Auditor: ${SOVEREIGN_AUDITOR} | Node: Saint Paul 55116 | Anchor: ${SOVEREIGN_CONTACT}`}
             </div>
           </div>
 
@@ -281,11 +282,11 @@ export default function WhitePaperPage() {
               <th style={headerCellStyle}>Scenario Years</th>
             </tr></thead>
             <tbody>
-              <tr><td style={cellStyle}>John Zanghi</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>198.51.100.42</td><td style={cellStyle}>1,743</td><td style={cellStyle}>34,665</td></tr>
-              <tr><td style={cellStyle}>William Landrum</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>203.0.113.88</td><td style={cellStyle}>1,231</td><td style={cellStyle}>24,505</td></tr>
-              <tr><td style={cellStyle}>Calvin Whittaker</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>192.0.2.101</td><td style={cellStyle}>788</td><td style={cellStyle}>15,655</td></tr>
-              <tr><td style={cellStyle}>Amanda Torres</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.55</td><td style={cellStyle}>250</td><td style={cellStyle}>4,895</td></tr>
-              <tr><td style={cellStyle}>Robert Yorkof</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.67</td><td style={cellStyle}>162</td><td style={cellStyle}>3,155</td></tr>
+                <tr><td style={cellStyle}>{TA_PRIMARY_NAME}</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>198.51.100.42</td><td style={cellStyle}>1,743</td><td style={cellStyle}>34,665</td></tr>
+                <tr><td style={cellStyle}>{TA_SECONDARY_NAME}</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>203.0.113.88</td><td style={cellStyle}>1,231</td><td style={cellStyle}>24,505</td></tr>
+                <tr><td style={cellStyle}>{TA_TERTIARY_NAME}</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>192.0.2.101</td><td style={cellStyle}>788</td><td style={cellStyle}>15,655</td></tr>
+                <tr><td style={cellStyle}>{TA_ALPHA_SEC}</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.55</td><td style={cellStyle}>250</td><td style={cellStyle}>4,895</td></tr>
+                <tr><td style={cellStyle}>{TA_ENABLER_NAME}</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.67</td><td style={cellStyle}>162</td><td style={cellStyle}>3,155</td></tr>
               <tr style={{ fontWeight: 700 }}><td style={cellStyle}>TOTAL</td><td style={cellStyle}></td><td style={cellStyle}></td><td style={cellStyle}>4,174</td><td style={cellStyle}>82,875</td></tr>
             </tbody>
           </table>
@@ -368,10 +369,10 @@ export default function WhitePaperPage() {
             </tr></thead>
             <tbody>
               <tr><td style={cellStyle}>{"St. Paul's Towers"}</td><td style={cellStyle}>Fiduciary Breach</td><td style={cellStyle}>$9,050,000</td><td style={cellStyle}>HHS, State AG</td></tr>
-              <tr><td style={cellStyle}>ZTA LLP</td><td style={cellStyle}>Orchestrator</td><td style={cellStyle}>$6,475,000</td><td style={cellStyle}>State Bar, DOJ</td></tr>
+                <tr><td style={cellStyle}>{TA_PRIMARY_ENTITY}</td><td style={cellStyle}>Orchestrator</td><td style={cellStyle}>$6,475,000</td><td style={cellStyle}>State Bar, DOJ</td></tr>
               <tr><td style={cellStyle}>SF Housing Authority</td><td style={cellStyle}>Program Abuse</td><td style={cellStyle}>$2,765,000</td><td style={cellStyle}>HUD, OIG</td></tr>
-              <tr><td style={cellStyle}>JPMorgan Chase</td><td style={cellStyle}>Wire Facilitation</td><td style={cellStyle}>$4,500,000</td><td style={cellStyle}>FinCEN, OCC</td></tr>
-              <tr><td style={cellStyle}>Charles Schwab</td><td style={cellStyle}>Settlement Custody</td><td style={cellStyle}>$3,200,000</td><td style={cellStyle}>SEC, FINRA</td></tr>
+                <tr><td style={cellStyle}>{ENTITY_JPMC}</td><td style={cellStyle}>Wire Facilitation</td><td style={cellStyle}>$4,500,000</td><td style={cellStyle}>FinCEN, OCC</td></tr>
+                <tr><td style={cellStyle}>{ENTITY_SCHWAB}</td><td style={cellStyle}>Settlement Custody</td><td style={cellStyle}>$3,200,000</td><td style={cellStyle}>SEC, FINRA</td></tr>
             </tbody>
           </table>
 
