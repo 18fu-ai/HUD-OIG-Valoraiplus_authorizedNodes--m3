@@ -4,15 +4,13 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import {
-  Terminal, Server, Database, Cpu, Lock, Shield, Zap, Activity,
-  FileCode, Layers, CheckCircle2, Binary, Eye, Hash, Key,
-  HardDrive, Monitor, Network, Play, Square, RotateCcw, Copy, Check
+  Terminal, Cpu, Zap, Activity,
+  FileCode, HardDrive, Network, RotateCcw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -504,12 +502,7 @@ export default function MainframePage() {
   return (
     <CDSErrorBoundary>
       <div className="min-h-screen bg-background">
-        <CDSHeader 
-          currentTime={currentTime}
-          truthCycle={truthCycle}
-          title="UNIX MAINFRAME"
-          subtitle="CDS Sovereign Operating System"
-        />
+        <CDSHeader />
         <main className="container mx-auto px-4 py-6 max-w-7xl">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
