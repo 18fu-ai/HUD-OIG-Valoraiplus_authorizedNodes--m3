@@ -41,6 +41,7 @@ const quickModules = [
   { href: '/intelligence', label: 'Intelligence', icon: FileSearch, color: 'text-red-500', desc: 'Full Intel' },
   { href: '/route66', label: 'Route 66', icon: Navigation, color: 'text-amber-400', desc: 'Mother Road' },
   { href: '/route71', label: 'Route 71', icon: Activity, color: 'text-orange-500', desc: 'Omega-Divine' },
+  { href: '/braindish', label: 'BrainDish++', icon: Cpu, color: 'text-fuchsia-500', desc: '50B Shards' },
   { href: '/protocol', label: 'Protocol', icon: Terminal, color: 'text-cyan-400', desc: 'Execution Layer' },
   { href: '/architecture', label: 'Architecture', icon: Layers, color: 'text-emerald-500', desc: 'Protocol Spec' },
   { href: '/stack', label: 'Stack', icon: CircleDot, color: 'text-rose-400', desc: 'Closed Loop' },
