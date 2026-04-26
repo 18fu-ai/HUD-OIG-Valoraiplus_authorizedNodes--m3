@@ -1,15 +1,14 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-  Activity, Globe, Eye,
-  RefreshCw, CheckCircle2, Shield,
-  BarChart3, Zap, Server, GitBranch, Link2,
-  AlertTriangle, Loader2
+import {
+  Activity, Globe, Eye, RefreshCw, CheckCircle2, Shield,
+  BarChart3, Zap, Server, GitBranch, Link2, AlertTriangle,
+  Loader2, Download, Lock, Radio, Gauge, FileWarning
 } from 'lucide-react';
 
 interface LiveReport {
@@ -17,16 +16,36 @@ interface LiveReport {
   timestamp: string;
   corroboration: string;
   schema: string;
+  apiHealth: {
+    latencyMs: number;
+    lastSuccess: string;
+    status: 'HEALTHY' | 'DEGRADED';
+    projectApi: boolean;
+    deploymentsApi: boolean;
+    domainsApi: boolean;
+  };
+  drift: { currentHash: string };
+  signals: Array<{
+    id: string;
+    source: string;
+    classification: string;
+    confidence: number;
+    timestamp: string;
+  }>;
+  healthDomains: {
+    deployment: string;
+    protocol: string;
+    evidence: string;
+  };
   project: {
     id: string;
     name: string;
     framework: string;
     nodeVersion: string;
     updatedAt: string | null;
-    analytics: {
-      enabled: boolean;
-      speedInsights: boolean;
-    };
+    analytics: { enabled: boolean; speedInsights: boolean };
+    classification: string;
+    provenance: string;
   };
   deployments: {
     total: number;
@@ -54,14 +73,14 @@ interface LiveReport {
         githubCommitRef: string | null;
       };
     }>;
+    classification: string;
+    provenance: string;
   };
   domains: {
     total: number;
-    list: Array<{
-      name: string;
-      verified: boolean;
-      configured: boolean;
-    }>;
+    list: Array<{ name: string; verified: boolean; configured: boolean }>;
+    classification: string;
+    provenance: string;
   };
   runtime: {
     routes: string[];
@@ -71,6 +90,14 @@ interface LiveReport {
     spoliationDefense: string;
     forensicBlocks: number;
     poppaGBlock: string;
+    classification: string;
+    provenance: string;
+  };
+  telemetryConfidence: {
+    apiReachable: number;
+    analyticsInferred: number;
+    runtimeInternal: number;
+    protocolInternal: number;
   };
 }
 
@@ -85,6 +112,44 @@ function formatTimeAgo(isoString: string): string {
   return `${Math.floor(hours / 24)}d ago`;
 }
 
+function ProvenanceBadge({ source }: { source: string }) {
+  return (
+    <Badge variant="outline" className="border-slate-600 text-slate-400 text-[10px] gap-1">
+      <Radio className="w-2.5 h-2.5" />
+      Source: {source}
+    </Badge>
+  );
+}
+
+function ClassificationBadge({ classification }: { classification: string }) {
+  const colors: Record<string, string> = {
+    INFRASTRUCTURE: 'border-blue-700 text-blue-400',
+    DEPLOYMENT: 'border-amber-700 text-amber-400',
+    RUNTIME: 'border-fuchsia-700 text-fuchsia-400',
+    ANALYTICS_STATUS: 'border-cyan-700 text-cyan-400',
+    PROTOCOL_METADATA: 'border-emerald-700 text-emerald-400',
+  };
+  return (
+    <Badge variant="outline" className={`${colors[classification] || 'border-slate-600 text-slate-400'} text-[10px]`}>
+      {classification}
+    </Badge>
+  );
+}
+
+function ConfidenceBar({ value, label }: { value: number; label: string }) {
+  const pct = Math.round(value * 100);
+  const color = pct >= 80 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-red-500';
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-slate-400 w-32 shrink-0">{label}</span>
+      <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+        <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
+      </div>
+      <span className="text-xs text-white font-mono w-10 text-right">{value.toFixed(1)}</span>
+    </div>
+  );
+}
+
 export default function TrafficDashboardPage() {
   const [mounted, setMounted] = useState(false);
   const [liveReport, setLiveReport] = useState<LiveReport | null>(null);
@@ -92,6 +157,9 @@ export default function TrafficDashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>('');
   const [refreshCount, setRefreshCount] = useState(0);
+  const [previousHash, setPreviousHash] = useState<string | null>(null);
+  const [driftDetected, setDriftDetected] = useState(false);
+  const snapshotRef = useRef<LiveReport | null>(null);
 
   const fetchLiveData = useCallback(async () => {
     setLoading(true);
@@ -102,8 +170,18 @@ export default function TrafficDashboardPage() {
         const data = await res.json();
         throw new Error(data.message || `API returned ${res.status}`);
       }
-      const data = await res.json();
+      const data: LiveReport = await res.json();
+
+      // Drift detection
+      if (previousHash && data.drift?.currentHash !== previousHash) {
+        setDriftDetected(true);
+      } else {
+        setDriftDetected(false);
+      }
+      setPreviousHash(data.drift?.currentHash || null);
+
       setLiveReport(data);
+      snapshotRef.current = data;
       setLastRefresh(new Date().toLocaleTimeString());
       setRefreshCount(prev => prev + 1);
     } catch (err) {
@@ -111,15 +189,33 @@ export default function TrafficDashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [previousHash]);
 
   useEffect(() => {
     setMounted(true);
     fetchLiveData();
-    // Auto-refresh every 30 seconds
     const interval = setInterval(fetchLiveData, 30000);
     return () => clearInterval(interval);
-  }, [fetchLiveData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const exportSnapshot = useCallback(() => {
+    if (!snapshotRef.current) return;
+    const snapshot = {
+      schema: 'REV_34',
+      exportedAt: new Date().toISOString(),
+      type: 'TELEMETRY_SNAPSHOT',
+      provenance: 'Deployment Telemetry Console',
+      data: snapshotRef.current,
+    };
+    const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `telemetry-snapshot-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, []);
 
   if (!mounted) {
     return (
@@ -138,7 +234,7 @@ export default function TrafficDashboardPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-emerald-400 font-mono">
       <CDSHeader />
-      
+
       <main className="container mx-auto px-4 py-6 max-w-7xl">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b-2 border-emerald-500">
@@ -172,16 +268,20 @@ export default function TrafficDashboardPage() {
                 </>
               )}
             </Badge>
+            {driftDetected && (
+              <Badge variant="outline" className="border-amber-500 text-amber-400 bg-amber-950/30 text-xs animate-pulse">
+                <FileWarning className="w-3 h-3 mr-1" />
+                DRIFT DETECTED
+              </Badge>
+            )}
             <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-              Refreshes: {refreshCount}
+              Syncs: {refreshCount}
             </Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={fetchLiveData}
-              disabled={loading}
-              className="border-emerald-700 text-emerald-400 hover:bg-emerald-950"
-            >
+            <Button variant="outline" size="sm" onClick={exportSnapshot} disabled={!liveReport} className="border-fuchsia-700 text-fuchsia-400 hover:bg-fuchsia-950">
+              <Download className="w-4 h-4 mr-1" />
+              Export Snapshot
+            </Button>
+            <Button variant="outline" size="sm" onClick={fetchLiveData} disabled={loading} className="border-emerald-700 text-emerald-400 hover:bg-emerald-950">
               {loading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <RefreshCw className="w-4 h-4 mr-1" />}
               Refresh
             </Button>
@@ -205,8 +305,52 @@ export default function TrafficDashboardPage() {
 
         {liveReport && (
           <>
-            {/* Project Overview */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {/* Three Health Domains (#6) */}
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4 text-center">
+                  <Server className="w-6 h-6 mx-auto mb-2 text-emerald-400" />
+                  <div className="text-xs text-emerald-600 uppercase tracking-wider mb-1">Deployment Health</div>
+                  <Badge variant="outline" className={`${liveReport.healthDomains.deployment === 'HEALTHY' ? 'border-emerald-500 text-emerald-400 bg-emerald-950/40' : 'border-amber-500 text-amber-400'}`}>
+                    {liveReport.healthDomains.deployment}
+                  </Badge>
+                </CardContent>
+              </Card>
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4 text-center">
+                  <Shield className="w-6 h-6 mx-auto mb-2 text-fuchsia-400" />
+                  <div className="text-xs text-emerald-600 uppercase tracking-wider mb-1">Protocol Health</div>
+                  <Badge variant="outline" className="border-fuchsia-500 text-fuchsia-400 bg-fuchsia-950/30">
+                    {liveReport.healthDomains.protocol}
+                  </Badge>
+                </CardContent>
+              </Card>
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4 text-center">
+                  <Eye className="w-6 h-6 mx-auto mb-2 text-cyan-400" />
+                  <div className="text-xs text-emerald-600 uppercase tracking-wider mb-1">Evidence Health</div>
+                  <Badge variant="outline" className="border-cyan-500 text-cyan-400 bg-cyan-950/30">
+                    {liveReport.healthDomains.evidence}
+                  </Badge>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* API Health + Drift (#4 + #8) */}
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Gauge className="w-5 h-5 text-emerald-500" />
+                    <Badge variant="outline" className={`text-xs ${liveReport.apiHealth.status === 'HEALTHY' ? 'border-emerald-500 text-emerald-400 bg-emerald-950/40' : 'border-amber-500 text-amber-400'}`}>
+                      {liveReport.apiHealth.status}
+                    </Badge>
+                  </div>
+                  <div className="text-lg font-black text-white">{liveReport.apiHealth.latencyMs}ms</div>
+                  <div className="text-xs text-emerald-600">API Latency</div>
+                </CardContent>
+              </Card>
+
               <Card className="border-emerald-800 bg-slate-900/50">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
@@ -249,17 +393,16 @@ export default function TrafficDashboardPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-emerald-800 bg-slate-900/50">
+              <Card className={`border-emerald-800 bg-slate-900/50 ${driftDetected ? 'ring-1 ring-amber-500' : ''}`}>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <Shield className="w-5 h-5 text-fuchsia-500" />
-                    <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
-                      <CheckCircle2 className="w-3 h-3 mr-1" />
-                      100%
+                    <Lock className="w-5 h-5 text-fuchsia-500" />
+                    <Badge variant="outline" className={`text-xs ${driftDetected ? 'border-amber-500 text-amber-400' : 'border-emerald-500 text-emerald-400 bg-emerald-950/40'}`}>
+                      {driftDetected ? 'CHANGED' : 'STABLE'}
                     </Badge>
                   </div>
-                  <div className="text-lg font-black text-white">Protocol</div>
-                  <div className="text-xs text-emerald-600">{liveReport.runtime.schema} | {liveReport.runtime.evidenceType}</div>
+                  <div className="text-lg font-black text-white font-mono text-sm">{liveReport.drift.currentHash}</div>
+                  <div className="text-xs text-emerald-600">Drift Hash</div>
                 </CardContent>
               </Card>
             </div>
@@ -268,13 +411,16 @@ export default function TrafficDashboardPage() {
               {/* Latest Deployment */}
               <Card className="border-emerald-800 bg-slate-900/50">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <GitBranch className="w-5 h-5 text-emerald-400" />
-                    Latest Deployment
-                  </CardTitle>
-                  <CardDescription className="text-emerald-600">
-                    Most recent production deployment
-                  </CardDescription>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <GitBranch className="w-5 h-5 text-emerald-400" />
+                      Latest Deployment
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      <ClassificationBadge classification={liveReport.deployments.classification} />
+                      <ProvenanceBadge source={liveReport.deployments.provenance} />
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   {latestDeploy ? (
@@ -311,10 +457,6 @@ export default function TrafficDashboardPage() {
                           {latestDeploy.meta.githubCommitMessage}
                         </div>
                       )}
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-emerald-600">URL</span>
-                        <span className="text-xs text-emerald-400 truncate max-w-48">{latestDeploy.url}</span>
-                      </div>
                     </div>
                   ) : (
                     <p className="text-sm text-emerald-600">No deployments found</p>
@@ -325,13 +467,16 @@ export default function TrafficDashboardPage() {
               {/* Domains */}
               <Card className="border-emerald-800 bg-slate-900/50">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Link2 className="w-5 h-5 text-emerald-400" />
-                    Active Domains
-                  </CardTitle>
-                  <CardDescription className="text-emerald-600">
-                    Connected endpoints and verification status
-                  </CardDescription>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Link2 className="w-5 h-5 text-emerald-400" />
+                      Active Domains
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      <ClassificationBadge classification={liveReport.domains.classification} />
+                      <ProvenanceBadge source={liveReport.domains.provenance} />
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
@@ -342,11 +487,9 @@ export default function TrafficDashboardPage() {
                             <Globe className="w-4 h-4 text-emerald-500" />
                             <span className="text-sm text-white">{domain.name}</span>
                           </div>
-                          <div className="flex gap-2">
-                            <Badge variant="outline" className={`text-xs ${domain.verified ? 'border-emerald-500 text-emerald-400' : 'border-amber-500 text-amber-400'}`}>
-                              {domain.verified ? 'Verified' : 'Pending'}
-                            </Badge>
-                          </div>
+                          <Badge variant="outline" className={`text-xs ${domain.verified ? 'border-emerald-500 text-emerald-400' : 'border-amber-500 text-amber-400'}`}>
+                            {domain.verified ? 'Verified' : 'Pending'}
+                          </Badge>
                         </div>
                       ))
                     ) : (
@@ -360,13 +503,18 @@ export default function TrafficDashboardPage() {
             {/* Recent Deployments */}
             <Card className="border-emerald-800 bg-slate-900/50 mb-6">
               <CardHeader className="pb-2">
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-emerald-400" />
-                  Recent Deployments
-                </CardTitle>
-                <CardDescription className="text-emerald-600">
-                  Last {liveReport.deployments.recent.length} deployments from Vercel API
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Activity className="w-5 h-5 text-emerald-400" />
+                      Recent Deployments
+                    </CardTitle>
+                    <CardDescription className="text-emerald-600">
+                      Last {liveReport.deployments.recent.length} deployments
+                    </CardDescription>
+                  </div>
+                  <ProvenanceBadge source={liveReport.deployments.provenance} />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
@@ -400,16 +548,24 @@ export default function TrafficDashboardPage() {
               </CardContent>
             </Card>
 
-            {/* Runtime Architecture Status */}
+            {/* Runtime Architecture + Route Integrity Matrix (#9) */}
             <Card className="border-emerald-800 bg-slate-900/50 mb-6">
               <CardHeader className="pb-2">
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-emerald-400" />
-                  Runtime Architecture Status
-                </CardTitle>
-                <CardDescription className="text-emerald-600">
-                  REV_34 Protocol Enforcement Matrix
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Shield className="w-5 h-5 text-emerald-400" />
+                      Runtime Architecture Status
+                    </CardTitle>
+                    <CardDescription className="text-emerald-600">
+                      REV_34 Protocol Enforcement Matrix
+                    </CardDescription>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ClassificationBadge classification={liveReport.runtime.classification} />
+                    <ProvenanceBadge source={liveReport.runtime.provenance} />
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
@@ -431,14 +587,30 @@ export default function TrafficDashboardPage() {
                   </div>
                 </div>
 
+                {/* Route Integrity Matrix (#9) */}
                 <div className="border-t border-emerald-900 pt-3">
-                  <div className="text-xs text-emerald-600 mb-2">Active Routes ({liveReport.runtime.routes.length})</div>
-                  <div className="flex flex-wrap gap-2">
-                    {liveReport.runtime.routes.map((route) => (
-                      <Badge key={route} variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-                        {route}
-                      </Badge>
-                    ))}
+                  <div className="text-xs text-emerald-600 mb-2">Route Integrity Matrix ({liveReport.runtime.routes.length} routes)</div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-emerald-900/50">
+                          <th className="text-left py-1.5 px-2 text-emerald-600">Route</th>
+                          <th className="text-left py-1.5 px-2 text-emerald-600">Status</th>
+                          <th className="text-left py-1.5 px-2 text-emerald-600">Last Sync</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {liveReport.runtime.routes.map((route) => (
+                          <tr key={route} className="border-b border-emerald-900/20 hover:bg-slate-800/30">
+                            <td className="py-1.5 px-2 text-emerald-400 font-mono">{route}</td>
+                            <td className="py-1.5 px-2">
+                              <Badge variant="outline" className="border-emerald-600 text-emerald-500 text-[10px]">ACTIVE</Badge>
+                            </td>
+                            <td className="py-1.5 px-2 text-slate-500">{liveReport.timestamp ? formatTimeAgo(liveReport.timestamp) : 'N/A'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
@@ -461,13 +633,74 @@ export default function TrafficDashboardPage() {
               </CardContent>
             </Card>
 
-            {/* Analytics Status */}
+            {/* Runtime Signals (#5) */}
             <Card className="border-emerald-800 bg-slate-900/50 mb-6">
               <CardHeader className="pb-2">
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-emerald-400" />
-                  Analytics Collection Status
+                  <Radio className="w-5 h-5 text-cyan-400" />
+                  Runtime Signals
                 </CardTitle>
+                <CardDescription className="text-emerald-600">
+                  Formalized diagnostic signals from external sources
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {liveReport.signals.map((sig) => (
+                    <div key={sig.id} className="flex items-center justify-between p-2 bg-slate-800/50 rounded">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-mono text-cyan-400">{sig.id}</span>
+                        <Badge variant="outline" className="border-slate-600 text-slate-400 text-[10px]">{sig.source}</Badge>
+                        <Badge variant="outline" className="border-cyan-700 text-cyan-400 text-[10px]">{sig.classification}</Badge>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-white">Confidence: {sig.confidence.toFixed(1)}</span>
+                        <div className={`w-2.5 h-2.5 rounded-full ${sig.confidence >= 1.0 ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Telemetry Confidence (#10) */}
+            <Card className="border-emerald-800 bg-slate-900/50 mb-6">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Gauge className="w-5 h-5 text-emerald-400" />
+                  Telemetry Confidence
+                </CardTitle>
+                <CardDescription className="text-emerald-600">
+                  Per-source confidence levels (not protocol confidence)
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <ConfidenceBar value={liveReport.telemetryConfidence.apiReachable} label="API Reachable" />
+                  <ConfidenceBar value={liveReport.telemetryConfidence.analyticsInferred} label="Analytics Inferred" />
+                  <ConfidenceBar value={liveReport.telemetryConfidence.runtimeInternal} label="Runtime Internal" />
+                  <ConfidenceBar value={liveReport.telemetryConfidence.protocolInternal} label="Protocol Internal" />
+                </div>
+                <div className="mt-3 p-2 bg-slate-800/50 rounded">
+                  <p className="text-[10px] text-slate-500">
+                    Telemetry confidence measures data source reliability. It is NOT protocol confidence.
+                    API Reachable = Vercel API responded successfully. Analytics Inferred = project settings indicate analytics enabled.
+                    Runtime/Protocol Internal = self-reported configuration (confidence 1.0 by definition).
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Analytics Status */}
+            <Card className="border-emerald-800 bg-slate-900/50 mb-6">
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Eye className="w-5 h-5 text-emerald-400" />
+                    Analytics Collection Status
+                  </CardTitle>
+                  <ProvenanceBadge source="Project Settings Metadata" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
@@ -492,9 +725,54 @@ export default function TrafficDashboardPage() {
                 </div>
                 <div className="mt-3 p-3 bg-emerald-950/30 border border-emerald-800 rounded">
                   <p className="text-xs text-emerald-400">
-                    Visitor traffic data is collected via @vercel/analytics and viewable in the Vercel Dashboard &gt; Analytics tab. 
-                    The Vercel API does not currently expose a public REST endpoint for reading analytics data. 
+                    Visitor traffic data is collected via @vercel/analytics and viewable in the Vercel Dashboard &gt; Analytics tab.
+                    The Vercel API does not currently expose a public REST endpoint for reading analytics data.
                     Real-time visitor counts are visible in the Vercel Dashboard.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Telemetry Trust Boundary (#2) -- THE STRONGEST MISSING PIECE */}
+            <Card className="border-2 border-amber-600 bg-amber-950/10 mb-6">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-amber-400 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5" />
+                  Telemetry Trust Boundary
+                </CardTitle>
+                <CardDescription className="text-amber-600">
+                  Explicit declaration of what this console proves and does not prove
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3 p-2 bg-slate-800/50 rounded">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span className="text-xs text-white">Infrastructure Metadata: <span className="text-emerald-400 font-bold">VERIFIED</span> (Vercel API authenticated)</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-2 bg-slate-800/50 rounded">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span className="text-xs text-white">Analytics Presence: <span className="text-emerald-400 font-bold">VERIFIED</span> (project config confirms enabled)</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-2 bg-slate-800/50 rounded">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-xs text-white">Visitor Count: <span className="text-amber-400 font-bold">NOT EXPOSED BY API</span> (viewable in Vercel Dashboard only)</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-2 bg-slate-800/50 rounded">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-xs text-white">Visitor Identity: <span className="text-amber-400 font-bold">UNKNOWN</span> (not collected or inferred)</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-2 bg-slate-800/50 rounded">
+                    <Lock className="w-4 h-4 text-fuchsia-400 shrink-0" />
+                    <span className="text-xs text-white">Protocol Integrity: <span className="text-fuchsia-400 font-bold">INTERNAL ONLY</span> (self-reported, not externally verified)</span>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 border border-amber-800 rounded bg-amber-950/20">
+                  <p className="text-[10px] text-amber-500 leading-relaxed">
+                    deployment telemetry =/= visitor intelligence =/= identity attribution =/= runtime protocol proof.
+                    This console displays authenticated infrastructure metadata from the Vercel API. It does not claim
+                    to provide visitor analytics, user identification, or external protocol verification. The trust boundary
+                    is explicitly bounded by what the Vercel REST API exposes.
                   </p>
                 </div>
               </CardContent>
