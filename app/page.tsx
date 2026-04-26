@@ -14,7 +14,7 @@ import {
   FileText, Lock, Shield, Clock, DollarSign, Mail, Brain, Radio, 
   Coins, Send, Flag, Rocket, RefreshCw, Zap, Ban, Activity, Server,
   MessageCircle, FileCode, MessageSquarePlus, Navigation, FileSearch, Terminal, Layers, CircleDot, Film, Eye,
-  Fingerprint, Scale, Cpu, TrendingUp
+  Fingerprint, Scale, Cpu, TrendingUp, Wallet
 } from 'lucide-react';
 
 // Quick access modules - ALL working routes
@@ -58,6 +58,7 @@ const quickModules = [
   { href: '/valuation', label: 'Valuation', icon: DollarSign, color: 'text-emerald-400', desc: 'Financial Report' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, color: 'text-emerald-500', desc: 'Truth Lifecycle' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, color: 'text-blue-400', desc: 'Sovereign Manifest' },
+  { href: '/treasury', label: 'Treasury', icon: Wallet, color: 'text-emerald-400', desc: 'NR Protocol' },
   { href: '/automation', label: 'Automation', icon: Cpu, color: 'text-emerald-400', desc: 'Elite Engine' },
   { href: '/whitepaper', label: 'White Paper', icon: FileText, color: 'text-primary', desc: 'NFT PDF' },
 ];
