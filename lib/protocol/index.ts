@@ -318,6 +318,50 @@ export {
   type CIDResult,
 } from './waterfall-firewall';
 
+// Deterministic Policy Engine (policy-engine-11579396039993102480)
+export {
+  POLICY_ENGINE_ID,
+  POLICY_ENGINE_VERSION,
+  POLICY_ENGINE_CLASSIFICATION,
+  POLICY_ENGINE_MERKLEROOT,
+  getPolicyEngineIdentity,
+  mapProtocolSignals,
+  evaluateSignals as policyEvaluateSignals,
+  evaluatePolicy,
+  enforceTrustBoundary,
+  detectPolicyDrift,
+  computePolicyHealthDomains,
+  buildNegativePolicyTests,
+  runNegativePolicyTests,
+  appendAuditEntry,
+  getAuditLedger,
+  clearAuditLedger,
+  generatePolicyEngineExport,
+  TRUST_BOUNDARY_RULES,
+  INTERPRETATION_BOUNDARY,
+  type PolicyClassification,
+  type PolicySeverity,
+  type PolicyDomain,
+  type PolicyClassificationResult,
+  type PolicySignal,
+  type SignalEvaluation,
+  type PolicyDecisionInput,
+  type PolicyDecision,
+  type TrustTier,
+  type TrustBoundaryRule,
+  type TrustBoundaryStatus,
+  type PolicyAuditEntry,
+  type PolicyAuditLedger,
+  type PolicyDriftType,
+  type PolicyDriftEvent,
+  type PolicyDriftReport,
+  type PolicyHealthDomain,
+  type NegativePolicyTest,
+  type PolicyEngineExport,
+  type InterpretationBoundary,
+  type PolicyEngineIdentity,
+} from './policyEngine';
+
 // ============================================================
 // PROTOCOL CONSTANTS
 // ============================================================
