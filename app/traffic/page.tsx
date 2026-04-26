@@ -1,56 +1,140 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   Activity, Globe, Users, Eye, TrendingUp, Clock, 
-  Monitor, Smartphone, Tablet, MapPin, ArrowUpRight,
-  RefreshCw, AlertTriangle, CheckCircle2, Settings,
-  BarChart3, PieChart, LineChart, Zap
+  Monitor, Smartphone, Tablet, MapPin,
+  RefreshCw, CheckCircle2, Shield,
+  BarChart3, Zap, Server, GitBranch, Link2,
+  AlertTriangle, Loader2
 } from 'lucide-react';
-import { getTrafficDataSync, type AnalyticsPayload, type AnalyticsMode } from '@/lib/analytics';
+
+interface LiveReport {
+  status: string;
+  timestamp: string;
+  corroboration: string;
+  schema: string;
+  project: {
+    id: string;
+    name: string;
+    framework: string;
+    nodeVersion: string;
+    updatedAt: string | null;
+    analytics: {
+      enabled: boolean;
+      speedInsights: boolean;
+    };
+  };
+  deployments: {
+    total: number;
+    latest: {
+      id: string;
+      url: string;
+      state: string;
+      created: string;
+      target: string;
+      meta: {
+        githubCommitSha: string | null;
+        githubCommitMessage: string | null;
+        githubCommitRef: string | null;
+      };
+    } | null;
+    recent: Array<{
+      id: string;
+      url: string;
+      state: string;
+      created: string;
+      target: string;
+      meta: {
+        githubCommitSha: string | null;
+        githubCommitMessage: string | null;
+        githubCommitRef: string | null;
+      };
+    }>;
+  };
+  domains: {
+    total: number;
+    list: Array<{
+      name: string;
+      verified: boolean;
+      configured: boolean;
+    }>;
+  };
+  runtime: {
+    routes: string[];
+    schema: string;
+    protocolConfidence: number;
+    evidenceType: string;
+    spoliationDefense: string;
+    forensicBlocks: number;
+    poppaGBlock: string;
+  };
+}
+
+function formatTimeAgo(isoString: string): string {
+  const diff = Date.now() - new Date(isoString).getTime();
+  const seconds = Math.floor(diff / 1000);
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return `${Math.floor(hours / 24)}d ago`;
+}
 
 export default function TrafficDashboardPage() {
   const [mounted, setMounted] = useState(false);
-  const [analyticsMode, setAnalyticsMode] = useState<AnalyticsMode>('SIMULATED');
-  const [trafficData, setTrafficData] = useState<AnalyticsPayload | null>(null);
+  const [liveReport, setLiveReport] = useState<LiveReport | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>('');
+  const [refreshCount, setRefreshCount] = useState(0);
+
+  const fetchLiveData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/traffic/live');
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || `API returned ${res.status}`);
+      }
+      const data = await res.json();
+      setLiveReport(data);
+      setLastRefresh(new Date().toLocaleTimeString());
+      setRefreshCount(prev => prev + 1);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch live data');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     setMounted(true);
-    const data = getTrafficDataSync();
-    setTrafficData(data);
-    setAnalyticsMode(data.mode);
-    setLastRefresh(new Date().toLocaleTimeString());
-  }, []);
-
-  const handleRefresh = () => {
-    const data = getTrafficDataSync();
-    setTrafficData(data);
-    setAnalyticsMode(data.mode);
-    setLastRefresh(new Date().toLocaleTimeString());
-  };
-
-  // Calculate totals from typed payload
-  const totalViews = trafficData?.summary.totalViews || 0;
-  const totalUnique = trafficData?.summary.uniqueVisitors || 0;
-  const avgBounce = trafficData?.summary.bounceRate || 0;
-  const maxHourlyViews = Math.max(...(trafficData?.hourly.map(h => h.views) || [1]));
-  const isLive = analyticsMode === 'VERCEL_API';
+    fetchLiveData();
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(fetchLiveData, 30000);
+    return () => clearInterval(interval);
+  }, [fetchLiveData]);
 
   if (!mounted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-emerald-500 font-mono">
         <div className="text-center">
           <Activity className="w-8 h-8 animate-pulse mx-auto mb-2" />
-          <div className="text-sm">Loading Traffic Analytics...</div>
+          <div className="text-sm">Loading Traffic Intelligence...</div>
         </div>
       </div>
     );
   }
+
+  const isLive = liveReport?.status === 'LIVE';
+  const latestDeploy = liveReport?.deployments?.latest;
 
   return (
     <div className="min-h-screen bg-slate-950 text-emerald-400 font-mono">
@@ -65,15 +149,15 @@ export default function TrafficDashboardPage() {
             </div>
             <div>
               <h1 className="text-2xl font-black text-white tracking-tight">
-                TRAFFIC ANALYTICS DASHBOARD
+                LIVE TRAFFIC INTELLIGENCE
               </h1>
               <p className="text-xs text-emerald-600 uppercase tracking-widest">
-                ValorAiPlus Site Performance — Last 24 Hours
+                ValorAiPlus Real-Time Systems Report | REV_34
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className={`${isLive ? 'border-emerald-500 text-emerald-400' : 'border-amber-500 text-amber-400'}`}>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Badge variant="outline" className={`${isLive ? 'border-emerald-500 text-emerald-400 bg-emerald-950/40' : 'border-amber-500 text-amber-400'}`}>
               {isLive ? (
                 <>
                   <span className="relative flex h-2 w-2 mr-2">
@@ -85,332 +169,344 @@ export default function TrafficDashboardPage() {
               ) : (
                 <>
                   <AlertTriangle className="w-3 h-3 mr-1" />
-                  SIMULATED DATA
+                  {error ? 'ERROR' : 'LOADING'}
                 </>
               )}
             </Badge>
-            <Badge variant="outline" className="border-slate-700 text-slate-400">
-              Mode: {analyticsMode}
+            <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+              Refreshes: {refreshCount}
             </Badge>
             <Button
               variant="outline"
               size="sm"
-              onClick={handleRefresh}
+              onClick={fetchLiveData}
+              disabled={loading}
               className="border-emerald-700 text-emerald-400 hover:bg-emerald-950"
             >
-              <RefreshCw className="w-4 h-4 mr-1" />
+              {loading ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <RefreshCw className="w-4 h-4 mr-1" />}
               Refresh
             </Button>
           </div>
         </div>
 
-        {/* API Configuration Notice */}
-        {!isLive && (
-          <Card className="border-amber-800 bg-amber-950/20 mb-6">
+        {/* Error State */}
+        {error && (
+          <Card className="border-red-800 bg-red-950/20 mb-6">
             <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <Settings className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
-                <div className="flex-1">
-                  <h3 className="font-bold text-amber-400 mb-2">Enable Live Analytics</h3>
-                  <p className="text-sm text-amber-300/80 mb-3">
-                    Currently showing simulated data. To enable real-time analytics:
-                  </p>
-                  <div className="bg-slate-900/50 rounded-lg p-3 mb-3">
-                    <p className="text-xs text-emerald-500 mb-2 font-bold">1. Create Vercel API Token:</p>
-                    <code className="text-xs text-emerald-400 block mb-3">
-                      Vercel Dashboard → Settings → Tokens → Create
-                    </code>
-                    <p className="text-xs text-emerald-500 mb-2 font-bold">2. Add Environment Variable:</p>
-                    <code className="text-xs text-emerald-400 block mb-3">
-                      VERCEL_API_TOKEN=your_token_here
-                    </code>
-                    <p className="text-xs text-emerald-500 mb-2 font-bold">3. Add Project ID:</p>
-                    <code className="text-xs text-emerald-400 block">
-                      VERCEL_PROJECT_ID=prj_xlBjEDNuqRjiWfZcv2iZ6NBFFMJL
-                    </code>
-                  </div>
-                  <p className="text-xs text-amber-300/60">
-                    Once configured, this dashboard will display real-time traffic from Vercel Analytics API.
-                  </p>
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
+                <div>
+                  <p className="text-red-400 font-bold">API Error</p>
+                  <p className="text-sm text-red-300/80">{error}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         )}
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <Eye className="w-5 h-5 text-emerald-500" />
-                <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-                  +12.4%
-                </Badge>
-              </div>
-              <div className="text-2xl font-black text-white">{totalViews.toLocaleString()}</div>
-              <div className="text-xs text-emerald-600">Total Page Views</div>
-            </CardContent>
-          </Card>
+        {liveReport && (
+          <>
+            {/* Project Overview */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Server className="w-5 h-5 text-emerald-500" />
+                    <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                      <CheckCircle2 className="w-3 h-3 mr-1" />
+                      LIVE
+                    </Badge>
+                  </div>
+                  <div className="text-lg font-black text-white">{liveReport.project.name}</div>
+                  <div className="text-xs text-emerald-600">{liveReport.project.framework} | {liveReport.project.nodeVersion}</div>
+                </CardContent>
+              </Card>
 
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <Users className="w-5 h-5 text-blue-500" />
-                <Badge variant="outline" className="border-blue-700 text-blue-500 text-xs">
-                  +8.7%
-                </Badge>
-              </div>
-              <div className="text-2xl font-black text-white">{totalUnique.toLocaleString()}</div>
-              <div className="text-xs text-emerald-600">Unique Visitors</div>
-            </CardContent>
-          </Card>
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Zap className="w-5 h-5 text-amber-500" />
+                    <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                      {liveReport.deployments.total}
+                    </Badge>
+                  </div>
+                  <div className="text-lg font-black text-white">Deployments</div>
+                  <div className="text-xs text-emerald-600">
+                    Latest: {latestDeploy?.created ? formatTimeAgo(latestDeploy.created) : 'N/A'}
+                  </div>
+                </CardContent>
+              </Card>
 
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <Clock className="w-5 h-5 text-purple-500" />
-                <Badge variant="outline" className="border-purple-700 text-purple-500 text-xs">
-                  +15.2%
-                </Badge>
-              </div>
-              <div className="text-2xl font-black text-white">3:24</div>
-              <div className="text-xs text-emerald-600">Avg. Session Duration</div>
-            </CardContent>
-          </Card>
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Globe className="w-5 h-5 text-blue-500" />
+                    <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                      {liveReport.domains.total}
+                    </Badge>
+                  </div>
+                  <div className="text-lg font-black text-white">Domains</div>
+                  <div className="text-xs text-emerald-600">Active endpoints</div>
+                </CardContent>
+              </Card>
 
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <TrendingUp className="w-5 h-5 text-amber-500" />
-                <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
-                  -3.2%
-                </Badge>
-              </div>
-              <div className="text-2xl font-black text-white">{avgBounce}%</div>
-              <div className="text-xs text-emerald-600">Bounce Rate</div>
-            </CardContent>
-          </Card>
-        </div>
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Shield className="w-5 h-5 text-fuchsia-500" />
+                    <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                      <CheckCircle2 className="w-3 h-3 mr-1" />
+                      100%
+                    </Badge>
+                  </div>
+                  <div className="text-lg font-black text-white">Protocol</div>
+                  <div className="text-xs text-emerald-600">{liveReport.runtime.schema} | {liveReport.runtime.evidenceType}</div>
+                </CardContent>
+              </Card>
+            </div>
 
-        {/* Hourly Traffic Chart */}
-        <Card className="border-emerald-800 bg-slate-900/50 mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-white flex items-center gap-2">
-              <LineChart className="w-5 h-5 text-emerald-400" />
-              Hourly Traffic (24h)
-            </CardTitle>
-            <CardDescription className="text-emerald-600">
-              Page views per hour — Last refresh: {lastRefresh}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-end gap-1 h-32">
-              {(trafficData?.hourly || []).map((h, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center">
-                  <div 
-                    className="w-full bg-emerald-500/80 rounded-t transition-all hover:bg-emerald-400"
-                    style={{ height: `${(h.views / maxHourlyViews) * 100}%`, minHeight: '4px' }}
-                    title={`${h.hour}: ${h.views} views`}
-                  />
-                  {i % 4 === 0 && (
-                    <span className="text-[8px] text-emerald-700 mt-1">{h.hour.slice(0, 2)}</span>
+            <div className="grid lg:grid-cols-2 gap-6 mb-6">
+              {/* Latest Deployment */}
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <GitBranch className="w-5 h-5 text-emerald-400" />
+                    Latest Deployment
+                  </CardTitle>
+                  <CardDescription className="text-emerald-600">
+                    Most recent production deployment
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {latestDeploy ? (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-emerald-600">State</span>
+                        <Badge variant="outline" className={`text-xs ${latestDeploy.state === 'READY' ? 'border-emerald-500 text-emerald-400 bg-emerald-950/40' : 'border-amber-500 text-amber-400'}`}>
+                          <CheckCircle2 className="w-3 h-3 mr-1" />
+                          {latestDeploy.state}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-emerald-600">Target</span>
+                        <span className="text-sm text-white">{latestDeploy.target || 'production'}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-emerald-600">Created</span>
+                        <span className="text-sm text-white">{latestDeploy.created ? formatTimeAgo(latestDeploy.created) : 'N/A'}</span>
+                      </div>
+                      {latestDeploy.meta.githubCommitRef && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-emerald-600">Branch</span>
+                          <span className="text-sm text-white">{latestDeploy.meta.githubCommitRef}</span>
+                        </div>
+                      )}
+                      {latestDeploy.meta.githubCommitSha && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-emerald-600">Commit</span>
+                          <span className="text-sm text-emerald-400 font-mono">{latestDeploy.meta.githubCommitSha.slice(0, 8)}</span>
+                        </div>
+                      )}
+                      {latestDeploy.meta.githubCommitMessage && (
+                        <div className="p-2 bg-slate-800/50 rounded text-xs text-slate-300 mt-2">
+                          {latestDeploy.meta.githubCommitMessage}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-emerald-600">URL</span>
+                        <span className="text-xs text-emerald-400 truncate max-w-48">{latestDeploy.url}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-emerald-600">No deployments found</p>
                   )}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                </CardContent>
+              </Card>
 
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          {/* Top Pages */}
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="w-5 h-5 text-emerald-400" />
-                Top Pages
-              </CardTitle>
-              <CardDescription className="text-emerald-600">
-                Most visited routes in the last 24 hours
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-80 overflow-y-auto">
-                {[...(trafficData?.routes || [])].sort((a, b) => b.views - a.views).slice(0, 10).map((route, i) => (
-                  <div key={route.route} className="flex items-center gap-3 p-2 rounded bg-slate-800/50 hover:bg-slate-800 transition-colors">
-                    <span className="text-xs text-emerald-600 w-6">{i + 1}.</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm text-white truncate">{route.route}</div>
-                      <div className="text-xs text-emerald-700 truncate">
-                        {route.corroboration === 'VERIFIED' ? <CheckCircle2 className="w-3 h-3 inline mr-1 text-emerald-500" /> : null}
-                        {route.corroboration}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-bold text-emerald-400">{route.views.toLocaleString()}</div>
-                      <div className="text-xs text-emerald-700">{route.uniqueVisitors} unique</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Geographic Distribution */}
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white flex items-center gap-2">
-                <Globe className="w-5 h-5 text-emerald-400" />
-                Geographic Distribution
-              </CardTitle>
-              <CardDescription className="text-emerald-600">
-                Visitor locations by country
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {(trafficData?.geo || []).map((geo) => (
-                  <div key={geo.country} className="space-y-1">
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-3 h-3 text-emerald-600" />
-                        <span className="text-white">{geo.country}</span>
-                      </div>
-                      <span className="text-emerald-400">{geo.visits.toLocaleString()} ({geo.percentage}%)</span>
-                    </div>
-                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-emerald-500 rounded-full transition-all"
-                        style={{ width: `${geo.percentage}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          {/* Device Breakdown */}
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white flex items-center gap-2">
-                <Monitor className="w-5 h-5 text-emerald-400" />
-                Device Breakdown
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(trafficData?.devices || []).map((device) => {
-                  const Icon = device.device === 'Desktop' ? Monitor : device.device === 'Mobile' ? Smartphone : Tablet;
-                  return (
-                    <div key={device.device} className="flex items-center gap-4">
-                      <div className="p-2 rounded bg-emerald-500/10 border border-emerald-500/30">
-                        <Icon className="w-5 h-5 text-emerald-400" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-white">{device.device}</span>
-                          <span className="text-emerald-400 font-bold">{device.percentage}%</span>
-                        </div>
-                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-emerald-500 rounded-full"
-                            style={{ width: `${device.percentage}%` }}
-                          />
-                        </div>
-                        <div className="text-xs text-emerald-700 mt-1">{device.sessions.toLocaleString()} sessions</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Traffic Sources */}
-          <Card className="border-emerald-800 bg-slate-900/50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-white flex items-center gap-2">
-                <ArrowUpRight className="w-5 h-5 text-emerald-400" />
-                Traffic Sources
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {(trafficData?.sources || []).map((ref) => (
-                  <div key={ref.source} className="flex items-center gap-3 p-2 rounded bg-slate-800/50">
-                    <div className="flex-1">
-                      <div className="text-sm text-white">{ref.source}</div>
-                      <div className="text-xs text-emerald-700">{ref.visits.toLocaleString()} visitors</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-emerald-400">{ref.percentage}%</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Route Performance Table */}
-        <Card className="border-emerald-800 bg-slate-900/50 mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-white flex items-center gap-2">
-              <PieChart className="w-5 h-5 text-emerald-400" />
-              Route Performance Details
-            </CardTitle>
-            <CardDescription className="text-emerald-600">
-              Detailed metrics for all monitored routes
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-emerald-800">
-                    <th className="text-left py-2 px-3 text-emerald-500">Route</th>
-                    <th className="text-right py-2 px-3 text-emerald-500">Views</th>
-                    <th className="text-right py-2 px-3 text-emerald-500">Unique</th>
-                    <th className="text-right py-2 px-3 text-emerald-500">Avg Time</th>
-                    <th className="text-right py-2 px-3 text-emerald-500">Bounce</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(trafficData?.routes || []).map((route) => {
-                    const avgTimeFormatted = `${Math.floor(route.avgSessionSeconds / 60)}:${(route.avgSessionSeconds % 60).toString().padStart(2, '0')}`;
-                    return (
-                      <tr key={route.route} className="border-b border-emerald-900/30 hover:bg-slate-800/50">
-                        <td className="py-2 px-3">
-                          <div className="text-white">{route.route}</div>
-                          <div className="text-xs text-emerald-700">
-                            {route.corroboration === 'VERIFIED' ? <CheckCircle2 className="w-3 h-3 inline mr-1 text-emerald-500" /> : <AlertTriangle className="w-3 h-3 inline mr-1 text-amber-500" />}
-                            {route.corroboration}
+              {/* Domains */}
+              <Card className="border-emerald-800 bg-slate-900/50">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Link2 className="w-5 h-5 text-emerald-400" />
+                    Active Domains
+                  </CardTitle>
+                  <CardDescription className="text-emerald-600">
+                    Connected endpoints and verification status
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {liveReport.domains.list.length > 0 ? (
+                      liveReport.domains.list.map((domain) => (
+                        <div key={domain.name} className="flex items-center justify-between p-2 rounded bg-slate-800/50">
+                          <div className="flex items-center gap-2">
+                            <Globe className="w-4 h-4 text-emerald-500" />
+                            <span className="text-sm text-white">{domain.name}</span>
                           </div>
-                        </td>
-                        <td className="text-right py-2 px-3 text-emerald-400 font-mono">{route.views.toLocaleString()}</td>
-                        <td className="text-right py-2 px-3 text-blue-400 font-mono">{route.uniqueVisitors.toLocaleString()}</td>
-                        <td className="text-right py-2 px-3 text-purple-400 font-mono">{avgTimeFormatted}</td>
-                        <td className="text-right py-2 px-3">
-                          <Badge variant="outline" className={`${route.bounceRate > 50 ? 'border-red-700 text-red-400' : route.bounceRate > 30 ? 'border-amber-700 text-amber-400' : 'border-emerald-700 text-emerald-400'}`}>
-                            {route.bounceRate}%
-                          </Badge>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          <div className="flex gap-2">
+                            <Badge variant="outline" className={`text-xs ${domain.verified ? 'border-emerald-500 text-emerald-400' : 'border-amber-500 text-amber-400'}`}>
+                              {domain.verified ? 'Verified' : 'Pending'}
+                            </Badge>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-emerald-600">No custom domains configured</p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Recent Deployments */}
+            <Card className="border-emerald-800 bg-slate-900/50 mb-6">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-emerald-400" />
+                  Recent Deployments
+                </CardTitle>
+                <CardDescription className="text-emerald-600">
+                  Last {liveReport.deployments.recent.length} deployments from Vercel API
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-emerald-800">
+                        <th className="text-left py-2 px-3 text-emerald-500">ID</th>
+                        <th className="text-left py-2 px-3 text-emerald-500">State</th>
+                        <th className="text-left py-2 px-3 text-emerald-500">Target</th>
+                        <th className="text-left py-2 px-3 text-emerald-500">Branch</th>
+                        <th className="text-left py-2 px-3 text-emerald-500">Created</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {liveReport.deployments.recent.map((d) => (
+                        <tr key={d.id} className="border-b border-emerald-900/30 hover:bg-slate-800/50">
+                          <td className="py-2 px-3 font-mono text-emerald-400 text-xs">{d.id?.slice(0, 10)}...</td>
+                          <td className="py-2 px-3">
+                            <Badge variant="outline" className={`text-xs ${d.state === 'READY' ? 'border-emerald-500 text-emerald-400' : 'border-amber-500 text-amber-400'}`}>
+                              {d.state}
+                            </Badge>
+                          </td>
+                          <td className="py-2 px-3 text-white">{d.target || 'preview'}</td>
+                          <td className="py-2 px-3 text-xs text-slate-400">{d.meta.githubCommitRef || 'N/A'}</td>
+                          <td className="py-2 px-3 text-xs text-slate-400">{d.created ? formatTimeAgo(d.created) : 'N/A'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Runtime Architecture Status */}
+            <Card className="border-emerald-800 bg-slate-900/50 mb-6">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-emerald-400" />
+                  Runtime Architecture Status
+                </CardTitle>
+                <CardDescription className="text-emerald-600">
+                  REV_34 Protocol Enforcement Matrix
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-emerald-600 mb-1">Schema</div>
+                    <div className="text-lg font-bold text-white">{liveReport.runtime.schema}</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-emerald-600 mb-1">Protocol Confidence</div>
+                    <div className="text-lg font-bold text-emerald-400">{liveReport.runtime.protocolConfidence}%</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-emerald-600 mb-1">Spoliation Defense</div>
+                    <div className="text-lg font-bold text-white">{liveReport.runtime.spoliationDefense}</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-emerald-600 mb-1">Forensic Blocks</div>
+                    <div className="text-lg font-bold text-fuchsia-400">{liveReport.runtime.forensicBlocks.toLocaleString()}</div>
+                  </div>
+                </div>
+
+                <div className="border-t border-emerald-900 pt-3">
+                  <div className="text-xs text-emerald-600 mb-2">Active Routes ({liveReport.runtime.routes.length})</div>
+                  <div className="flex flex-wrap gap-2">
+                    {liveReport.runtime.routes.map((route) => (
+                      <Badge key={route} variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                        {route}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="border-t border-emerald-900 pt-3 mt-3">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span className="text-xs text-white">Evidence Type: {liveReport.runtime.evidenceType}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span className="text-xs text-white">Poppa_G Block: {liveReport.runtime.poppaGBlock}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span className="text-xs text-white">Corroboration: {liveReport.corroboration}</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Analytics Status */}
+            <Card className="border-emerald-800 bg-slate-900/50 mb-6">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-emerald-400" />
+                  Analytics Collection Status
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded">
+                    <div className={`w-3 h-3 rounded-full ${liveReport.project.analytics.enabled ? 'bg-emerald-500' : 'bg-red-500'}`} />
+                    <div>
+                      <div className="text-sm text-white">Web Analytics</div>
+                      <div className="text-xs text-emerald-600">
+                        {liveReport.project.analytics.enabled ? 'Collecting visitor data' : 'Not configured'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded">
+                    <div className={`w-3 h-3 rounded-full ${liveReport.project.analytics.speedInsights ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <div>
+                      <div className="text-sm text-white">Speed Insights</div>
+                      <div className="text-xs text-emerald-600">
+                        {liveReport.project.analytics.speedInsights ? 'Monitoring performance' : 'Not configured'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 p-3 bg-emerald-950/30 border border-emerald-800 rounded">
+                  <p className="text-xs text-emerald-400">
+                    Visitor traffic data is collected via @vercel/analytics and viewable in the Vercel Dashboard &gt; Analytics tab. 
+                    The Vercel API does not currently expose a public REST endpoint for reading analytics data. 
+                    Real-time visitor counts are visible in the Vercel Dashboard.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        )}
 
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-4 border-t border-emerald-900">
-          <p>VALORAIPLUS TRAFFIC ANALYTICS | Mode: {analyticsMode} | Corroboration: {trafficData?.corroboration || 'PENDING'}</p>
-          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116</p>
+          <p>VALORAIPLUS LIVE TRAFFIC INTELLIGENCE | Corroboration: {liveReport?.corroboration || 'PENDING'} | Last Refresh: {lastRefresh}</p>
+          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116 | Auto-refresh: 30s</p>
         </div>
       </main>
     </div>
