@@ -57,6 +57,8 @@ const quickModules = [
   { href: '/valuation', label: 'Valuation', icon: DollarSign, color: 'text-emerald-400', desc: 'Financial Report' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, color: 'text-emerald-500', desc: 'Truth Lifecycle' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, color: 'text-blue-400', desc: 'Sovereign Manifest' },
+  { href: '/automation', label: 'Automation', icon: Cpu, color: 'text-emerald-400', desc: 'Elite Engine' },
+  { href: '/whitepaper', label: 'White Paper', icon: FileText, color: 'text-primary', desc: 'NFT PDF' },
 ];
 
 export default function DashboardPage() {
