@@ -5,11 +5,23 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
- * @title CSSS_NegativeCaveat_NFT
- * @notice Soulbound Reputation NFT with DAO-enforced exclusion
- * @dev Non-transferable reputation tokens for UHI eligibility
+ * @title VALORAIPLUS_CSSS_NegativeCaveat_SBT
+ * @author Poppa Donny Gillson & NEWT //e v2.1
+ * @notice Enforces non-transferable Identity by Computation.
+ * @dev Soulbound Reputation NFT with DAO-enforced exclusion
+ * LATCH STATUS:
+ * Schema: REV_34
+ * Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777
+ * Anchor: Saint Paul Node 55116
  */
 contract CSSS_NegativeCaveat is ERC721, Ownable {
+
+    // ===============================================================
+    // ERRORS (REV_34 Protocol)
+    // ===============================================================
+
+    error Soulbound_NoTransferAllowed();
+    error Protocol_DriftDetected();
     
     // ═══════════════════════════════════════════════════════
     // CONSTANTS
