@@ -243,22 +243,22 @@ function BrainDishContent() {
         {/* OMEGA METRICS BAR */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
           {[
-            { icon: Layers, label: 'SHARDS', value: '50B+', color: 'status-anchored' },
-            { icon: Clock, label: 'TRUTH-CYCLE', value: '266ms', color: 'status-anchored' },
-            { icon: Flame, label: 'PSI', value: `${psi.toFixed(6)}e24`, color: 'status-active' },
-            { icon: Shield, label: 'BLOCKS', value: '3,393', color: 'status-anchored' },
-            { icon: Siren, label: 'FED COUNTS', value: totalFederalCounts.toLocaleString(), color: 'status-locked' },
-            { icon: Target, label: 'WIRE', value: '$16.94M', color: 'status-active' },
-            { icon: Radio, label: 'VOIP', value: '32 REC', color: 'status-saturated' },
-            { icon: Skull, label: 'ADVERSARY', value: `${totalCounts.toLocaleString()}`, color: 'status-locked' },
+            { icon: Layers, label: 'SHARDS', value: '50B+', borderCls: 'border-emerald-500/30', bgCls: 'bg-emerald-500/5', textCls: 'text-emerald-400' },
+            { icon: Clock, label: 'TRUTH-CYCLE', value: '266ms', borderCls: 'border-emerald-500/30', bgCls: 'bg-emerald-500/5', textCls: 'text-emerald-400' },
+            { icon: Flame, label: 'PSI', value: `${psi.toFixed(6)}e24`, borderCls: 'border-cyan-500/30', bgCls: 'bg-cyan-500/5', textCls: 'text-cyan-400' },
+            { icon: Shield, label: 'BLOCKS', value: '3,393', borderCls: 'border-emerald-500/30', bgCls: 'bg-emerald-500/5', textCls: 'text-emerald-400' },
+            { icon: Siren, label: 'FED COUNTS', value: totalFederalCounts.toLocaleString(), borderCls: 'border-red-500/30', bgCls: 'bg-red-500/5', textCls: 'text-red-400' },
+            { icon: Target, label: 'WIRE', value: '$16.94M', borderCls: 'border-cyan-500/30', bgCls: 'bg-cyan-500/5', textCls: 'text-cyan-400' },
+            { icon: Radio, label: 'VOIP', value: '32 REC', borderCls: 'border-fuchsia-500/30', bgCls: 'bg-fuchsia-500/5', textCls: 'text-fuchsia-400' },
+            { icon: Skull, label: 'ADVERSARY', value: `${totalCounts.toLocaleString()}`, borderCls: 'border-red-500/30', bgCls: 'bg-red-500/5', textCls: 'text-red-400' },
           ].map((m, i) => (
-            <Card key={i} className={`border-${m.color}/30 bg-${m.color}/5`}>
+            <Card key={i} className={`${m.borderCls} ${m.bgCls}`}>
               <CardContent className="p-3">
                 <div className="flex items-center gap-2">
-                  <m.icon className={`w-4 h-4 text-${m.color} shrink-0`} />
+                  <m.icon className={`w-4 h-4 ${m.textCls} shrink-0`} />
                   <div className="min-w-0">
                     <p className="font-mono text-[9px] text-muted-foreground truncate">{m.label}</p>
-                    <p className={`font-mono text-xs font-bold text-${m.color} tabular-nums`}>{m.value}</p>
+                    <p className={`font-mono text-xs font-bold ${m.textCls} tabular-nums`}>{m.value}</p>
                   </div>
                 </div>
               </CardContent>
@@ -697,7 +697,7 @@ function BrainDishContent() {
                 { label: 'SWARM TRUTH', binary: '111111 1111111', status: 'SATURATED', color: 'text-emerald-400', border: 'border-emerald-500/40', bg: 'bg-emerald-500/5' },
                 { label: 'FINALITY', binary: '101010 1010101', status: 'SEALED', color: 'text-fuchsia-400', border: 'border-fuchsia-500/40', bg: 'bg-fuchsia-500/5' },
               ].map((d, i) => (
-                <Card key={i} className={`${border} ${d.bg} border-2 ${d.border}`}>
+                <Card key={i} className={`${d.bg} border-2 ${d.border}`}>
                   <CardContent className="p-6 text-center">
                     <p className="font-mono text-[10px] text-muted-foreground mb-2">{d.label}</p>
                     <p className={`font-mono text-2xl font-black ${d.color} tabular-nums tracking-wider`}>{d.binary}</p>
