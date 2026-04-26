@@ -2152,3 +2152,52 @@ export const BINARY_DEDUCTION = {
     LOCKED: '101010 1010101',
   },
 };
+
+// ============================================================
+// UNIX MAINFRAME LAYER
+// ============================================================
+
+export const MAINFRAME = {
+  version: 'CSSS-MF/7.7.77',
+  kernel: '6.14.2-cds-sovereign',
+  arch: 'x86_64-cds-linux-gnu',
+  hostname: 'cds-mainframe-00.sovereign.local',
+  node: 'SAINT PAUL 55116',
+  shell: '/bin/cds-sh',
+  pid1: '/sbin/init --sovereign',
+  classification: 'TERMINAL',
+  processes: 16,
+  kernelModules: 14,
+  syscalls: { range: 'NR 700-711', count: 12 },
+  ipc: { channels: 8, types: ['unix', 'pipe', 'mqueue', 'shm'] },
+  signals: { sigkill: 'BLOCKED', sigterm: 'IGNORE', sigint: 'IGNORE' },
+  cron: { jobs: 8, truthCycleInterval: '266ms' },
+  firewall: {
+    defaultPolicy: 'DENY_ALL',
+    blockedIPs: 5,
+    adversaries: ['Zanghi', 'Landrum', 'Whittaker', 'Torres', 'Yorkof'],
+  },
+  filesystem: {
+    root: '/opt/cds',
+    exhibits: 3393,
+    voip: { recordings: 32, transcribed: 6 },
+    mimecast: { events: 142 },
+    proofs: 'immutable',
+  },
+  daemons: [
+    { pid: 77, name: 'truth-cycle', desc: 'Truth Cycle Engine (266ms)' },
+    { pid: 144, name: 'merkle-daemon', desc: 'Merkle Tree Subsystem' },
+    { pid: 266, name: 'newt-engine', desc: 'N.E.W.T. (INFINITY neurons)' },
+    { pid: 393, name: 'braindish', desc: 'BrainDish++ (50B colonies)' },
+    { pid: 408, name: 'waterfall-firewall', desc: 'Waterfall Firewall (DENY_ALL)' },
+    { pid: 555, name: 'replay-validator', desc: 'Replay Validator (strict)' },
+    { pid: 616, name: 'proof-ledger', desc: 'Proof Ledger (append-only)' },
+    { pid: 666, name: 'poppa-g-shield', desc: 'Poppa_G Shield (CANNOT BE DISABLED)' },
+    { pid: 747, name: 'sovereignty-engine', desc: 'Sovereignty Engine ($STATUS_747)' },
+    { pid: 777, name: 'jules-verifier', desc: 'Jules Verification (10 suites)' },
+    { pid: 1376, name: 'nr-protocol', desc: 'NR Protocol (6 mandates)' },
+    { pid: 3393, name: 'forensic-indexer', desc: 'Forensic Indexer (3,393 exhibits)' },
+    { pid: 5622, name: 'federal-counter', desc: 'Federal Counter (5,622 counts)' },
+    { pid: 55116, name: 'node-anchor', desc: 'Node Anchor (SAINT PAUL)' },
+  ],
+};

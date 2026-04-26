@@ -55,6 +55,18 @@ export async function GET() {
         route81: '/route81 — Reserve Path',
       },
     },
+    mainframe: {
+      version: 'CSSS-MF/7.7.77',
+      kernel: '6.14.2-cds-sovereign',
+      arch: 'x86_64-cds-linux-gnu',
+      hostname: 'cds-mainframe-00.sovereign.local',
+      processes: 16,
+      kernelModules: 14,
+      syscalls: 12,
+      ipc: 8,
+      signals: { sigkill: 'BLOCKED', sigterm: 'IGNORE' },
+      classification: 'TERMINAL EXTINCTION LEVEL',
+    },
     _meta: {
       version: 'v1.0.0',
       uptime: process.uptime(),
