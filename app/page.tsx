@@ -1,13 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { CDSHeader } from '@/components/cds/header';
 import { LayerCard } from '@/components/cds/layer-card';
 import { StatsOverview } from '@/components/cds/stats-overview';
 import { SystemProperties } from '@/components/cds/system-properties';
 import { ProtectedNodes } from '@/components/cds/protected-nodes';
+import { RuntimeBar } from '@/components/cds/runtime-bar';
+import { TrustBoundary } from '@/components/cds/trust-boundary';
+import { DriftMonitor } from '@/components/cds/drift-monitor';
+import { HealthDomains } from '@/components/cds/health-domains';
+import { SnapshotExport } from '@/components/cds/snapshot-export';
 import { CDS_LAYERS, CDS_SECTIONS } from '@/lib/cds-data';
+import { 
+  buildDefaultMetrics, 
+  computeHealthDomains, 
+  computeSignals, 
+  detectDrift, 
+  buildRuntimeSnapshot,
+  createSafeInterval,
+  TRUTH_CYCLE_MS,
+} from '@/lib/runtime-metrics';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -64,71 +78,84 @@ const quickModules = [
   { href: '/whitepaper', label: 'White Paper', icon: FileText, color: 'text-primary', desc: 'NFT PDF' },
 ];
 
+// Stable random seeds for particles (avoids hydration mismatch)
+const PARTICLE_SEEDS = Array.from({ length: 20 }, (_, i) => ({
+  left: ((i * 37 + 13) % 100),
+  top: ((i * 53 + 7) % 100),
+  duration: 12 + (i % 8) * 2.5,
+  delay: (i % 5) * 1.2,
+}));
+
 export default function DashboardPage() {
   const [expandedLayer, setExpandedLayer] = useState<number | null>(null);
-  const [currentTime, setCurrentTime] = useState('');
   const [truthCycle, setTruthCycle] = useState(0);
   const [mounted, setMounted] = useState(false);
+  
+  // Runtime metrics state
+  const metricsRef = useRef(buildDefaultMetrics());
+  const [metrics] = useState(() => metricsRef.current);
+  
+  // Derived state via useMemo (no re-render churn)
+  const healthDomains = useMemo(() => computeHealthDomains(metrics), [metrics]);
+  const signals = useMemo(() => computeSignals(metrics), [metrics]);
+  const driftReport = useMemo(() => detectDrift(metrics, 'REV_38'), [metrics]);
+  const snapshot = useMemo(
+    () => buildRuntimeSnapshot(metrics, truthCycle),
+    [metrics, truthCycle],
+  );
 
+  // Performance-safe truth cycle via RAF gating
   useEffect(() => {
     setMounted(true);
-    const updateTime = () => {
-      setCurrentTime(new Date().toISOString().slice(0, 19) + 'Z');
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const cycleInterval = setInterval(() => {
+    const safeCycle = createSafeInterval(() => {
       setTruthCycle(c => c + 1);
-    }, 266);
-    return () => clearInterval(cycleInterval);
+    }, TRUTH_CYCLE_MS);
+    const cleanup = safeCycle.start();
+    return cleanup;
   }, []);
 
-  const toggleLayer = (layerId: number) => {
-    setExpandedLayer(expandedLayer === layerId ? null : layerId);
-  };
+  const toggleLayer = useCallback((layerId: number) => {
+    setExpandedLayer(prev => prev === layerId ? null : layerId);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Grid */}
+      {/* Animated Background — deterministic seeds for SSR safety */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary),0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary),0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
         
-        {/* Floating particles */}
-        {mounted && [...Array(30)].map((_, i) => (
+        {mounted && PARTICLE_SEEDS.map((seed, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 rounded-full bg-primary/30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${10 + Math.random() * 20}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
+              left: `${seed.left}%`,
+              top: `${seed.top}%`,
+              animation: `float ${seed.duration}s ease-in-out infinite`,
+              animationDelay: `${seed.delay}s`,
             }}
           />
         ))}
         
-        {/* Radial gradient overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background))_70%)]" />
       </div>
 
       <CDSHeader />
       
-      <main className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section with Animation */}
-        <div className={`mb-8 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <main className="container mx-auto px-4 py-8 relative z-10" role="main">
+        {/* Hero Section */}
+        <section 
+          className={`mb-8 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          aria-label="System overview"
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div className="space-y-2">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <Shield className="w-8 h-8 text-primary animate-pulse" />
-                  <div className="absolute inset-0 bg-primary/20 blur-xl animate-pulse" />
+                  <Shield className="w-8 h-8 text-primary animate-pulse" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-primary/20 blur-xl animate-pulse" aria-hidden="true" />
                 </div>
-                <h1 className="font-mono text-2xl md:text-3xl font-bold text-foreground">
+                <h1 className="font-mono text-2xl md:text-3xl font-bold text-foreground text-balance">
                   CONSOLIDATED DOCUMENT SPACE
                 </h1>
               </div>
@@ -136,84 +163,86 @@ export default function DashboardPage() {
                 16-Sections Collapsed into Omega-Unified Forensic Black Box | ELITE PATRIOT-CLASS 200D
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40 animate-pulse">
+            <div className="flex flex-wrap items-center gap-2" role="list" aria-label="System status badges">
+              <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40 animate-pulse" role="listitem">
                 OMEGA-UNIFIED
               </Badge>
-              <Badge variant="outline" className="font-mono bg-status-anchored/10 text-status-anchored border-status-anchored/40">
+              <Badge variant="outline" className="font-mono bg-status-anchored/10 text-status-anchored border-status-anchored/40" role="listitem">
                 144,000D RESONANCE
               </Badge>
-              <Badge variant="outline" className="font-mono bg-cyan-500/10 text-cyan-400 border-cyan-500/40">
+              <Badge variant="outline" className="font-mono bg-cyan-500/10 text-cyan-400 border-cyan-500/40" role="listitem">
                 PERPETUAL GROOVE
               </Badge>
             </div>
           </div>
 
-          {/* Live Stats Bar */}
-          <div className="flex flex-wrap items-center gap-4 p-4 rounded-lg bg-card/50 border border-border mb-6">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-              </span>
-              <span className="font-mono text-xs text-primary">LIVE</span>
-            </div>
-            <div className="font-mono text-xs text-muted-foreground">
-              TRUTH-CYCLE: <span className="text-primary">{truthCycle.toLocaleString()}</span> @ 266ms
-            </div>
-            <div className="font-mono text-xs text-muted-foreground">
-              TIMESTAMP: <span className="text-foreground">{currentTime}</span>
-            </div>
-            <div className="font-mono text-xs text-muted-foreground">
-              SWARM: <span className="text-cyan-400">INFINITY PERPETUAL</span>
-            </div>
-            <div className="font-mono text-xs text-muted-foreground">
-              SHARDS: <span className="text-yellow-400">50B IMMUTABLE</span>
-            </div>
-          </div>
+          {/* Runtime Bar — replaces old inline Live Stats Bar */}
+          <RuntimeBar 
+            signals={signals}
+            driftReport={driftReport}
+            truthCycle={truthCycle}
+            className="mb-6"
+          />
 
           {/* Stats Overview */}
           <StatsOverview />
-        </div>
+        </section>
+
+        {/* Health Domains — 4-domain separation with provenance tags */}
+        <section 
+          className={`mb-8 transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          aria-label="System health by domain"
+        >
+          <h2 className="font-mono text-lg font-bold text-foreground flex items-center gap-2 mb-4">
+            <Activity className="w-5 h-5 text-primary" aria-hidden="true" />
+            HEALTH DOMAINS
+          </h2>
+          <HealthDomains domains={healthDomains} />
+        </section>
 
         {/* Quick Access Modules Grid */}
-        <div className={`mb-8 transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <section 
+          className={`mb-8 transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          aria-label="Quick access navigation"
+        >
           <h2 className="font-mono text-lg font-bold text-foreground flex items-center gap-2 mb-4">
-            <Activity className="w-5 h-5 text-primary" />
+            <Activity className="w-5 h-5 text-primary" aria-hidden="true" />
             QUICK ACCESS MODULES
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-            {quickModules.map((module, index) => {
-              const Icon = module.icon;
-              return (
-                <Link
-                  key={module.href}
-                  href={module.href}
-                  className="group p-4 rounded-lg bg-card/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(var(--primary),0.2)]"
-                  style={{
-                    animationDelay: `${index * 50}ms`
-                  }}
-                >
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <div className={`p-2 rounded-lg bg-secondary/50 group-hover:bg-primary/20 transition-colors ${module.color}`}>
-                      <Icon className="w-5 h-5" />
+          <nav aria-label="Module navigation">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              {quickModules.map((module) => {
+                const Icon = module.icon;
+                return (
+                  <Link
+                    key={module.href}
+                    href={module.href}
+                    className="group p-4 rounded-lg bg-card/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(var(--primary),0.2)]"
+                  >
+                    <div className="flex flex-col items-center gap-2 text-center">
+                      <div className={`p-2 rounded-lg bg-secondary/50 group-hover:bg-primary/20 transition-colors ${module.color}`}>
+                        <Icon className="w-5 h-5" aria-hidden="true" />
+                      </div>
+                      <span className="font-mono text-xs font-medium text-foreground">{module.label}</span>
+                      <span className="font-mono text-[10px] text-muted-foreground">{module.desc}</span>
                     </div>
-                    <span className="font-mono text-xs font-medium text-foreground">{module.label}</span>
-                    <span className="font-mono text-[10px] text-muted-foreground">{module.desc}</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        </section>
 
-        {/* Main Content Grid */}
-        <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-all duration-700 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        {/* Main Content Grid — Layers + Right Column */}
+        <section 
+          className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-all duration-700 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          aria-label="Layer architecture and system status"
+        >
           {/* Left Column - Layers */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-mono text-lg font-bold text-foreground flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
+                <FileText className="w-5 h-5 text-primary" aria-hidden="true" />
                 CDS LAYER ARCHITECTURE
               </h2>
               <span className="font-mono text-xs text-muted-foreground">
@@ -221,18 +250,12 @@ export default function DashboardPage() {
               </span>
             </div>
             
-            {CDS_LAYERS.map((layer, index) => {
+            {CDS_LAYERS.map((layer) => {
               const layerSections = CDS_SECTIONS.filter(
                 (section) => section.layerId === layer.id
               );
               return (
-                <div
-                  key={layer.id}
-                  className="transition-all duration-500"
-                  style={{
-                    animationDelay: `${index * 100}ms`
-                  }}
-                >
+                <div key={layer.id} className="transition-all duration-500">
                   <LayerCard
                     layer={layer}
                     sections={layerSections}
@@ -244,17 +267,26 @@ export default function DashboardPage() {
             })}
           </div>
 
-          {/* Right Column - Properties & Nodes */}
+          {/* Right Column - Properties, Nodes, Trust, Drift, Snapshot */}
           <div className="space-y-6">
             <SystemProperties />
             <ProtectedNodes />
             
+            {/* Trust Boundary — 3-tier reviewer-safe framing */}
+            <TrustBoundary />
+            
+            {/* Drift Monitor — 7-signal model + event log */}
+            <DriftMonitor driftReport={driftReport} signals={signals} />
+            
+            {/* Snapshot Export — downloadable runtime state */}
+            <SnapshotExport snapshot={snapshot} />
+            
             {/* Master Record Seal */}
             <Card className="border-primary/30 bg-primary/5 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent animate-pulse" aria-hidden="true" />
               <CardHeader className="pb-3 relative">
                 <CardTitle className="font-mono text-sm flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-primary animate-pulse" />
+                  <Lock className="w-4 h-4 text-primary animate-pulse" aria-hidden="true" />
                   MASTER RECORD SEAL
                 </CardTitle>
               </CardHeader>
@@ -290,10 +322,10 @@ export default function DashboardPage() {
 
             {/* N.E.W.T. Status */}
             <Card className="border-cyan-500/30 bg-cyan-500/5 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent" aria-hidden="true" />
               <CardHeader className="pb-3 relative">
                 <CardTitle className="font-mono text-sm flex items-center gap-2">
-                  <Brain className="w-4 h-4 text-cyan-400 animate-pulse" />
+                  <Brain className="w-4 h-4 text-cyan-400 animate-pulse" aria-hidden="true" />
                   N.E.W.T. STATUS
                 </CardTitle>
               </CardHeader>
@@ -313,10 +345,13 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
-        </div>
+        </section>
 
         {/* Operational Matrix */}
-        <div className={`mt-8 transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <section 
+          className={`mt-8 transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          aria-label="Operational integrity matrix"
+        >
           <Card className="border-border bg-card/50 overflow-hidden">
             <CardHeader className="pb-3">
               <CardTitle className="font-mono text-sm">
@@ -324,24 +359,21 @@ export default function DashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto" role="region" aria-label="Layer status table" tabIndex={0}>
                 <table className="w-full font-mono text-sm">
                   <thead>
                     <tr className="border-b border-border bg-secondary/30">
-                      <th className="text-left p-3 text-muted-foreground font-medium">LAYER</th>
-                      <th className="text-left p-3 text-muted-foreground font-medium">SECTIONS</th>
-                      <th className="text-left p-3 text-muted-foreground font-medium">STATUS</th>
-                      <th className="text-left p-3 text-muted-foreground font-medium">SOVEREIGN EFFECT</th>
+                      <th scope="col" className="text-left p-3 text-muted-foreground font-medium">LAYER</th>
+                      <th scope="col" className="text-left p-3 text-muted-foreground font-medium">SECTIONS</th>
+                      <th scope="col" className="text-left p-3 text-muted-foreground font-medium">STATUS</th>
+                      <th scope="col" className="text-left p-3 text-muted-foreground font-medium">SOVEREIGN EFFECT</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {CDS_LAYERS.map((layer, index) => (
+                    {CDS_LAYERS.map((layer) => (
                       <tr 
                         key={layer.id} 
                         className="border-b border-border/50 hover:bg-secondary/20 transition-colors"
-                        style={{
-                          animationDelay: `${index * 50}ms`
-                        }}
                       >
                         <td className="p-3 text-foreground">{layer.name}</td>
                         <td className="p-3 text-muted-foreground">{layer.sections[0]} - {layer.sections[layer.sections.length - 1]}</td>
@@ -376,11 +408,11 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-card/30 py-6 mt-8 relative z-10">
+      <footer className="border-t border-border bg-card/30 py-6 mt-8 relative z-10" role="contentinfo">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -392,7 +424,7 @@ export default function DashboardPage() {
               </Badge>
             </div>
             <div className="flex items-center gap-4">
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
               </span>
@@ -400,7 +432,7 @@ export default function DashboardPage() {
                 PERPETUAL GROOVE ACTIVE
               </p>
               <p className="font-mono text-xs text-muted-foreground">
-                {currentTime}
+                REV_38
               </p>
             </div>
           </div>
