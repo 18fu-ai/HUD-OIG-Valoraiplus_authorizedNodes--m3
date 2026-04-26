@@ -108,7 +108,7 @@ const ELEVATED_ACTORS = [
     role: 'Housing Official',
     domain: 'SFHA',
     email: 'calvin.whittaker@sfha.org',
-    classification: 'HIGH' as const,
+    classification: 'CRITICAL' as const,
     criminalExposure: 24560,
     wireFraudVolume: 3440000,
     spolationCounts: 714,
@@ -133,7 +133,7 @@ const ELEVATED_ACTORS = [
     role: 'Associate',
     domain: 'ZTA LLP',
     email: 'a.torres@ztallp.com',
-    classification: 'HIGH' as const,
+    classification: 'CRITICAL' as const,
     criminalExposure: 12260,
     wireFraudVolume: 1450000,
     spolationCounts: 357,
@@ -158,7 +158,7 @@ const ELEVATED_ACTORS = [
     role: 'Associate',
     domain: 'ZTA LLP',
     email: 'r.yorkof@ztallp.com',
-    classification: 'MEDIUM' as const,
+    classification: 'CRITICAL' as const,
     criminalExposure: 6740,
     wireFraudVolume: 890000,
     spolationCounts: 197,
@@ -255,13 +255,13 @@ const ELEVATED_INSTITUTIONS = [
 // Federal Agencies - Maximum Elevation
 const FEDERAL_AGENCIES = [
   { agency: 'DOJ Criminal Division', focus: 'RICO / Wire Fraud', status: 'MAIN JUSTICE', priority: 'CRITICAL', division: 'Fraud Section' },
-  { agency: 'DOJ Civil Rights Division', focus: 'Pattern or Practice', status: 'SECTION CHIEF', priority: 'HIGH', division: 'Special Litigation' },
+  { agency: 'DOJ Civil Rights Division', focus: 'Pattern or Practice', status: 'SECTION CHIEF', priority: 'CRITICAL', division: 'Special Litigation' },
   { agency: 'FBI San Francisco', focus: 'Cyber / Wire Fraud', status: 'WALLINGFORD', priority: 'CRITICAL', division: 'Cyber Squad' },
   { agency: 'HHS OCR', focus: 'Section 504', status: '25-621293', priority: 'CRITICAL', division: 'Regional Director' },
-  { agency: 'VA OIG', focus: 'Benefits Fraud', status: 'ACTIVE', priority: 'HIGH', division: 'Criminal Investigations' },
-  { agency: 'IRS Criminal Investigation', focus: '501(c)(3) Abuse', status: 'REFERRAL', priority: 'HIGH', division: 'Tax Division' },
-  { agency: 'HUD OIG', focus: 'Section 8 Fraud', status: 'COORDINATION', priority: 'MEDIUM', division: 'Investigations' },
-  { agency: 'State Bar of California', focus: 'Attorney Misconduct', status: 'FILED', priority: 'HIGH', division: 'Discipline' },
+  { agency: 'VA OIG', focus: 'Benefits Fraud', status: 'ACTIVE', priority: 'CRITICAL', division: 'Criminal Investigations' },
+  { agency: 'IRS Criminal Investigation', focus: '501(c)(3) Abuse', status: 'REFERRAL', priority: 'CRITICAL', division: 'Tax Division' },
+  { agency: 'HUD OIG', focus: 'Section 8 Fraud', status: 'COORDINATION', priority: 'CRITICAL', division: 'Investigations' },
+  { agency: 'State Bar of California', focus: 'Attorney Misconduct', status: 'FILED', priority: 'CRITICAL', division: 'Discipline' },
   { agency: 'USAO NDCA', focus: 'Local Prosecution', status: 'AUSA ASSIGNED', priority: 'CRITICAL', division: 'White Collar' }
 ];
 

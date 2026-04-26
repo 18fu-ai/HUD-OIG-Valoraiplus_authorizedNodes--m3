@@ -59,10 +59,10 @@ const INSTITUTIONS = [
 // VOIP sessions
 const VOIP_SESSIONS = [
   { id: 'VOIP-001', date: '2024-03-15', duration: '18m42s', participants: 'Zanghi-Landrum', classification: 'CRITICAL', keyStatement: 'If this goes to discovery, we\'re done.' },
-  { id: 'VOIP-002', date: '2024-03-15', duration: '12m08s', participants: 'Whittaker-Torres', classification: 'HIGH', keyStatement: 'Fabricate housing violations against a disabled veteran?' },
-  { id: 'VOIP-003', date: '2024-03-18', duration: '08m33s', participants: 'Zanghi-Yorkof', classification: 'MEDIUM', keyStatement: 'Overwrite the logs too.' },
+  { id: 'VOIP-002', date: '2024-03-15', duration: '12m08s', participants: 'Whittaker-Torres', classification: 'CRITICAL', keyStatement: 'Fabricate housing violations against a disabled veteran?' },
+  { id: 'VOIP-003', date: '2024-03-18', duration: '08m33s', participants: 'Zanghi-Yorkof', classification: 'CRITICAL', keyStatement: 'Overwrite the logs too.' },
   { id: 'VOIP-004', date: '2024-03-21', duration: '22m15s', participants: 'Landrum-Whittaker', classification: 'CRITICAL', keyStatement: 'This is conspiracy. We\'re all committing conspiracy.' },
-  { id: 'VOIP-005', date: '2024-04-02', duration: '15m44s', participants: 'Zanghi-Torres', classification: 'HIGH', keyStatement: 'Fix the timestamps. Alter metadata.' },
+  { id: 'VOIP-005', date: '2024-04-02', duration: '15m44s', participants: 'Zanghi-Torres', classification: 'CRITICAL', keyStatement: 'Fix the timestamps. Alter metadata.' },
   { id: 'VOIP-006', date: '2024-04-08', duration: '45m22s', participants: 'ALL PARTIES', classification: 'CRITICAL', keyStatement: 'There is no record, Cal. That\'s the whole point.' },
 ];
 

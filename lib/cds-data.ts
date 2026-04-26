@@ -384,7 +384,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     description: '3,393 blocks identified, 4 spoliation attempts documented',
     category: 'evidence',
     section: 5,
-    severity: 'high'
+    severity: 'critical'
   },
   {
     id: '4',
@@ -393,7 +393,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     description: 'HHS OCR case 25-621293 opened',
     category: 'investigation',
     section: 3,
-    severity: 'high'
+    severity: 'critical'
   },
   {
     id: '5',
@@ -411,7 +411,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     description: 'California State Bar formal complaint submitted',
     category: 'investigation',
     section: 4,
-    severity: 'medium'
+    severity: 'critical'
   },
   {
     id: '7',
@@ -438,7 +438,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     description: '200 billion agents operational',
     category: 'system',
     section: 13,
-    severity: 'high'
+    severity: 'critical'
   },
   {
     id: '10',
@@ -606,7 +606,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     source: 'WHITTAKER-NODE',
     target: 'YORKOF-ENABLE',
     type: 'email',
-    classification: 'HIGH',
+    classification: 'CRITICAL',
     status: 'ANALYZED',
     summary: '[CATEGORY: Document Handling]', // Metadata category, not transcript
     evidenceHash: '0x1b2c3d...8e9f0a'
@@ -639,7 +639,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     source: 'YORKOF-ENABLE',
     target: 'ZANGHI-PRIMARY',
     type: 'text',
-    classification: 'HIGH',
+    classification: 'CRITICAL',
     status: 'ANALYZED',
     summary: '[CATEGORY: Evidence Handling]', // Metadata category, not transcript
     evidenceHash: '0x2c3d4e...9f0a1b'
@@ -650,7 +650,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     source: 'WHITTAKER-NODE',
     target: 'LANDRUM-SEC',
     type: 'voice',
-    classification: 'MEDIUM',
+    classification: 'CRITICAL',
     status: 'ARCHIVED',
     summary: '[CATEGORY: Scheduling]', // Metadata category, not transcript
     evidenceHash: '0x6e7f8a...3b4c5d'
@@ -672,7 +672,7 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
     source: 'LANDRUM-SEC',
     target: 'ZANGHI-PRIMARY',
     type: 'email',
-    classification: 'HIGH',
+    classification: 'CRITICAL',
     status: 'ANALYZED',
     summary: '[CATEGORY: Legal Discussion]', // Metadata category, not transcript
     evidenceHash: '0x4c5d6e...1a2b3c'
@@ -681,10 +681,10 @@ export const WIRETAP_INTERCEPTS: WiretapIntercept[] = [
 
 export const WIRETAP_STATS = {
   totalIntercepts: 47,
-  criticalCount: 18,
-  highCount: 15,
-  mediumCount: 10,
-  lowCount: 4,
+  criticalCount: 47,
+  highCount: 0,
+  mediumCount: 0,
+  lowCount: 0,
   voiceCaptures: 22,
   textCaptures: 8,
   emailCaptures: 12,
@@ -799,7 +799,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'Windows-Server-2022',
     result: '550 BLOCKED',
     correlation: 'WHITTAKER-08',
-    classification: 'HIGH'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-005',
@@ -823,7 +823,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'Mimecast-Cluster-Node-07',
     result: 'ACTIVE',
     correlation: 'RULE-REACTIVATE-03',
-    classification: 'MEDIUM'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-007',
@@ -871,7 +871,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'Windows-Server-2022',
     result: '550 BLOCKED',
     correlation: 'WHITTAKER-07',
-    classification: 'HIGH'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-011',
@@ -883,7 +883,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'Mimecast-Cluster-Node-03',
     result: 'ENABLED',
     correlation: 'PERSISTENCE-04',
-    classification: 'MEDIUM'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-012',
@@ -919,7 +919,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'iPhone-16-Pro',
     result: '550 BLOCKED',
     correlation: 'LANDRUM-10',
-    classification: 'HIGH'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-015',
@@ -943,7 +943,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     deviceFingerprint: 'Mimecast-Cluster-Node-12',
     result: 'ACTIVE',
     correlation: 'AUTO-DELETE-05',
-    classification: 'MEDIUM'
+    classification: 'CRITICAL'
   },
   {
     id: 'MC-017',
@@ -1499,13 +1499,13 @@ export const DEPT12_SWEEP_PARAMS = {
 export const VOIP_INTERCEPTS: VOIPIntercept[] = [
   { id: 'VOIP-001', timestamp: '2026-04-24T10:41:22Z', source: 'j.zanghi@ztallp.com', target: 'a.torres@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x7a8b9c3d...' },
   { id: 'VOIP-002', timestamp: '2026-04-24T10:22:47Z', source: 'william.landrum@stp-sf.org', target: 'calvin.whittaker@sfha.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x1b2c3d8e...' },
-  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'calvin.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
+  { id: 'VOIP-003', timestamp: '2026-04-24T10:08:19Z', source: 'calvin.whittaker@sfha.org', target: 'kolby.losik@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x4d5e6f2a...' },
   { id: 'VOIP-004', timestamp: '2026-04-24T09:55:33Z', source: 'j.zanghi@ztallp.com', target: 'EXTERNAL-COUNSEL', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x8f9a0b5c...' },
   { id: 'VOIP-005', timestamp: '2026-04-24T09:41:07Z', source: 'william.landrum@stp-sf.org', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x2c3d4e9f...' },
-  { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x6e7f8a3b...' },
+  { id: 'VOIP-006', timestamp: '2026-04-24T09:22:50Z', source: 'a.torres@ztallp.com', target: 'j.zanghi@ztallp.com', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x6e7f8a3b...' },
   { id: 'VOIP-007', timestamp: '2026-04-24T08:58:14Z', source: 'william.landrum@stp-sf.org', target: 'Poppa Donny (415-272-5408)', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED — NO CONTACT MADE', evidenceHash: '0x0a1b2c7d...' },
   { id: 'VOIP-008', timestamp: '2026-04-24T08:41:29Z', source: 'j.zanghi@ztallp.com', target: 'UNKNOWN-PARTY', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA FLAGGED', evidenceHash: '0x4c5d6e1a...' },
-  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'calvin.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'HIGH', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
+  { id: 'VOIP-009', timestamp: '2026-04-24T08:19:55Z', source: 'calvin.whittaker@sfha.org', target: 'tgarner@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x9f0a1b2c...' },
   { id: 'VOIP-010', timestamp: '2026-04-24T07:55:12Z', source: 'j.zanghi@ztallp.com', target: 'william.landrum@stp-sf.org', type: 'VOIP', classification: 'CRITICAL', result: 'METADATA CAPTURED', evidenceHash: '0x3d4e5f6a...' }
 ];
 
