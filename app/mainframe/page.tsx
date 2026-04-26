@@ -506,11 +506,11 @@ export default function MainframePage() {
         <main className="container mx-auto px-4 py-6 max-w-7xl">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <HomeBreadcrumb current="Unix Mainframe" />
+              <HomeBreadcrumb currentPage="Unix Mainframe" />
             </div>
             <div className="flex items-center gap-2">
               <HomeButton />
-              <ExportTools title="CDS Unix Mainframe" />
+              <ExportTools data={{ type: 'dashboard', title: 'CDS Unix Mainframe', timestamp: new Date().toISOString(), content: { version: MAINFRAME_VERSION, kernel: KERNEL_VERSION, arch: ARCH, hostname: HOSTNAME, processes: PROCESS_TABLE.length, modules: KERNEL_MODULES.length, syscalls: SYSCALLS.length, classification: 'TERMINAL EXTINCTION LEVEL' } }} />
             </div>
           </div>
 
