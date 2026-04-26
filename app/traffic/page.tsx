@@ -6,8 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
-  Activity, Globe, Users, Eye, TrendingUp, Clock, 
-  Monitor, Smartphone, Tablet, MapPin,
+  Activity, Globe, Eye,
   RefreshCw, CheckCircle2, Shield,
   BarChart3, Zap, Server, GitBranch, Link2,
   AlertTriangle, Loader2
@@ -127,7 +126,7 @@ export default function TrafficDashboardPage() {
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-emerald-500 font-mono">
         <div className="text-center">
           <Activity className="w-8 h-8 animate-pulse mx-auto mb-2" />
-          <div className="text-sm">Loading Traffic Intelligence...</div>
+          <div className="text-sm">Loading Deployment Telemetry...</div>
         </div>
       </div>
     );
@@ -149,10 +148,10 @@ export default function TrafficDashboardPage() {
             </div>
             <div>
               <h1 className="text-2xl font-black text-white tracking-tight">
-                LIVE TRAFFIC INTELLIGENCE
+                DEPLOYMENT TELEMETRY CONSOLE
               </h1>
               <p className="text-xs text-emerald-600 uppercase tracking-widest">
-                ValorAiPlus Real-Time Systems Report | REV_34
+                Vercel Infrastructure Metadata + REV_34 Runtime Status
               </p>
             </div>
           </div>
@@ -164,7 +163,7 @@ export default function TrafficDashboardPage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  LIVE DATA
+                  METADATA SYNC ACTIVE
                 </>
               ) : (
                 <>
@@ -455,7 +454,7 @@ export default function TrafficDashboardPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span className="text-xs text-white">Corroboration: {liveReport.corroboration}</span>
+                      <span className="text-xs text-white">Runtime Metadata Source: {liveReport.corroboration}</span>
                     </div>
                   </div>
                 </div>
@@ -477,7 +476,7 @@ export default function TrafficDashboardPage() {
                     <div>
                       <div className="text-sm text-white">Web Analytics</div>
                       <div className="text-xs text-emerald-600">
-                        {liveReport.project.analytics.enabled ? 'Collecting visitor data' : 'Not configured'}
+                        {liveReport.project.analytics.enabled ? 'Analytics source active (Vercel Dashboard)' : 'Not configured'}
                       </div>
                     </div>
                   </div>
@@ -505,7 +504,7 @@ export default function TrafficDashboardPage() {
 
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-4 border-t border-emerald-900">
-          <p>VALORAIPLUS LIVE TRAFFIC INTELLIGENCE | Corroboration: {liveReport?.corroboration || 'PENDING'} | Last Refresh: {lastRefresh}</p>
+          <p>VALORAIPLUS DEPLOYMENT TELEMETRY CONSOLE | Runtime Metadata Source: {liveReport?.corroboration || 'PENDING'} | Last Refresh: {lastRefresh}</p>
           <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116 | Auto-refresh: 30s</p>
         </div>
       </main>

@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 15;
 
 /**
- * Live Traffic Intelligence API
- * Pulls real deployment + project data from Vercel API
- * Combines with @vercel/analytics client-side collection
+ * Deployment Telemetry Console API
+ * Pulls infrastructure metadata from Vercel API
+ * Provides authenticated infrastructure visibility
  */
 export async function GET() {
   const token = process.env.VERCEL_API_TOKEN;
@@ -63,7 +63,7 @@ export async function GET() {
     const report = {
       status: 'LIVE',
       timestamp: now.toISOString(),
-      corroboration: 'VERIFIED',
+      corroboration: 'VERCEL_API_AUTHENTICATED',
       schema: 'REV_34',
 
       project: {
