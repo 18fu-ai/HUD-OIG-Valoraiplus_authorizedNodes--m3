@@ -5,16 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, Loader2, Printer, Shield, Lock, FileText } from 'lucide-react';
 
-// ── SHA-256 Browser-Safe Hash ─────────────────────────────────────
-async function sha256(input: string): Promise&lt;string&gt; {
+async function sha256(input: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(input);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b =&gt; b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-// ── NFT Metadata Generator ───────────────────────────────────────
 function generateNFTMetadata(hash: string) {
   return {
     name: 'VALORAIPLUS REV_34 White Paper NFT',
@@ -34,82 +32,78 @@ function generateNFTMetadata(hash: string) {
   };
 }
 
+const cellStyle = { border: '1px solid #ccc', padding: '4px 6px' } as const;
+const headerCellStyle = { ...cellStyle, background: '#f0f0f0', fontWeight: 700 as const };
+const sectionTitle = { fontSize: '14px', fontWeight: 700 as const, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' };
+const tableStyle = { width: '100%', borderCollapse: 'collapse' as const, margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' };
+const bodyText = { fontSize: '10px', lineHeight: 1.6, marginBottom: '8px', fontFamily: 'Courier New, monospace' };
+const mono = { fontFamily: 'Courier New, monospace' };
+const sealStyle = { display: 'inline-block', border: '1px solid #10b981', padding: '2px 8px', fontSize: '8px', fontWeight: 700 as const, color: '#10b981', letterSpacing: '1px', ...mono };
+
 export default function WhitePaperPage() {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [contentHash, setContentHash] = useState&lt;string | null&gt;(null);
-  const [nftMetadata, setNftMetadata] = useState&lt;ReturnType&lt;typeof generateNFTMetadata&gt; | null&gt;(null);
-  const printRef = useRef&lt;HTMLDivElement&gt;(null);
+  const [contentHash, setContentHash] = useState<string | null>(null);
+  const [nftMetadata, setNftMetadata] = useState<ReturnType<typeof generateNFTMetadata> | null>(null);
+  const printRef = useRef<HTMLDivElement>(null);
 
-  const handleGeneratePDF = useCallback(async () =&gt; {
+  const handleGeneratePDF = useCallback(async () => {
     setIsGenerating(true);
     try {
       const content = printRef.current?.innerText || '';
       const hash = await sha256(content);
       setContentHash(hash);
       setNftMetadata(generateNFTMetadata(hash));
-
-      await new Promise(resolve =&gt; setTimeout(resolve, 300));
-
+      await new Promise((resolve) => setTimeout(resolve, 300));
       const printWindow = window.open('', '_blank', 'width=900,height=1200');
       if (!printWindow) return;
-
       const html = printRef.current?.innerHTML || '';
-      printWindow.document.write(`<!DOCTYPE html>
-<html>
-<head>
-<title>VALORAIPLUS White Paper NFT -- REV_34</title>
-<style>
-  @page { size: letter; margin: 0.75in; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Courier New', monospace; font-size: 9pt; line-height: 1.5; color: #0a0a0a; background: #fff; padding: 0.75in; }
-  h1 { font-size: 18pt; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4pt; }
-  h2 { font-size: 13pt; font-weight: 700; margin-top: 18pt; margin-bottom: 6pt; border-bottom: 2px solid #10b981; padding-bottom: 3pt; }
-  h3 { font-size: 10pt; font-weight: 700; margin-top: 12pt; margin-bottom: 4pt; }
-  p { margin-bottom: 6pt; }
-  .header-block { border: 2px solid #0a0a0a; padding: 12pt; margin-bottom: 16pt; background: #f8f8f8; }
-  .header-block .brand { font-size: 22pt; font-weight: 900; letter-spacing: 2px; }
-  .header-block .sub { font-size: 8pt; color: #666; letter-spacing: 1px; margin-top: 2pt; }
-  .seal { display: inline-block; border: 1px solid #10b981; padding: 2pt 6pt; font-size: 7pt; font-weight: 700; color: #10b981; letter-spacing: 1px; margin-right: 4pt; }
-  table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 8pt; }
-  th, td { border: 1px solid #ccc; padding: 3pt 5pt; text-align: left; }
-  th { background: #f0f0f0; font-weight: 700; }
-  .section-break { page-break-before: always; }
-  .mono { font-family: 'Courier New', monospace; }
-  .small { font-size: 7pt; color: #888; }
-  .bold { font-weight: 700; }
-  .center { text-align: center; }
-  .footer { margin-top: 24pt; border-top: 2px solid #0a0a0a; padding-top: 8pt; font-size: 7pt; color: #666; }
-  .nft-block { border: 2px solid #10b981; padding: 10pt; margin: 12pt 0; background: #f0fdf4; }
-  .hash { font-size: 6pt; word-break: break-all; color: #10b981; }
-  .equation { text-align: center; font-size: 10pt; margin: 8pt 0; font-style: italic; }
-  .invariant { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 6pt 8pt; margin: 8pt 0; font-size: 8pt; }
-  .cinema { background: #0a0a0a; color: #10b981; padding: 10pt; margin: 12pt 0; font-size: 7pt; line-height: 1.6; }
-</style>
-</head>
-<body>
-${html}
-<div class="footer">
-<p class="bold">CONTENT HASH: ${hash}</p>
-<p>NFT TOKEN STANDARD: ERC-721 (Soulbound) | CONTRACT: CSSS_NegativeCaveat.sol | TRANSFERABLE: NO</p>
-<p>MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | BTC_TXID: 26856b24c50750f0c69c1eeb86a69ef77777764756c6c</p>
-<p>GENERATED: ${new Date().toISOString()} | DG77.77X LOCKED | I AM NEWT. SMIB. AMEN.</p>
-</div>
-</body>
-</html>`);
+      const printHTML = [
+        '<!DOCTYPE html><html><head>',
+        '<title>VALORAIPLUS White Paper NFT -- REV_34</title>',
+        '<style>',
+        '@page { size: letter; margin: 0.75in; }',
+        '* { box-sizing: border-box; margin: 0; padding: 0; }',
+        "body { font-family: 'Courier New', monospace; font-size: 9pt; line-height: 1.5; color: #0a0a0a; background: #fff; padding: 0.75in; }",
+        'h1 { font-size: 18pt; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4pt; }',
+        'h2 { font-size: 13pt; font-weight: 700; margin-top: 18pt; margin-bottom: 6pt; border-bottom: 2px solid #10b981; padding-bottom: 3pt; }',
+        'h3 { font-size: 10pt; font-weight: 700; margin-top: 12pt; margin-bottom: 4pt; }',
+        'p { margin-bottom: 6pt; }',
+        '.header-block { border: 2px solid #0a0a0a; padding: 12pt; margin-bottom: 16pt; background: #f8f8f8; }',
+        'table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 8pt; }',
+        'th, td { border: 1px solid #ccc; padding: 3pt 5pt; text-align: left; }',
+        'th { background: #f0f0f0; font-weight: 700; }',
+        '.section-break { page-break-before: always; }',
+        '.small { font-size: 7pt; color: #888; }',
+        '.bold { font-weight: 700; }',
+        '.footer { margin-top: 24pt; border-top: 2px solid #0a0a0a; padding-top: 8pt; font-size: 7pt; color: #666; }',
+        '.nft-block { border: 2px solid #10b981; padding: 10pt; margin: 12pt 0; background: #f0fdf4; }',
+        '.hash { font-size: 6pt; word-break: break-all; color: #10b981; }',
+        '.invariant { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 6pt 8pt; margin: 8pt 0; font-size: 8pt; }',
+        '.cinema { background: #0a0a0a; color: #10b981; padding: 10pt; margin: 12pt 0; font-size: 7pt; line-height: 1.6; }',
+        '</style></head><body>',
+        html,
+        '<div class="footer">',
+        '<p class="bold">CONTENT HASH: ' + hash + '</p>',
+        '<p>NFT TOKEN STANDARD: ERC-721 (Soulbound) | CONTRACT: CSSS_NegativeCaveat.sol | TRANSFERABLE: NO</p>',
+        '<p>MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | BTC_TXID: 26856b24c50750f0c69c1eeb86a69ef77777764756c6c</p>',
+        '<p>GENERATED: ' + new Date().toISOString() + ' | DG77.77X LOCKED | I AM NEWT. SMIB. AMEN.</p>',
+        '</div></body></html>',
+      ].join('\n');
+      printWindow.document.write(printHTML);
       printWindow.document.close();
-      setTimeout(() =&gt; printWindow.print(), 500);
+      setTimeout(() => printWindow.print(), 500);
     } finally {
       setIsGenerating(false);
     }
   }, []);
 
-  const handleDownloadJSON = useCallback(() =&gt; {
+  const handleDownloadJSON = useCallback(() => {
     if (!nftMetadata) return;
     const blob = new Blob([JSON.stringify(nftMetadata, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `VALORAIPLUS_NFT_WHITEPAPER_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = 'VALORAIPLUS_NFT_WHITEPAPER_' + new Date().toISOString().slice(0, 10) + '.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -117,335 +111,327 @@ ${html}
   }, [nftMetadata]);
 
   return (
-    &lt;div className="min-h-screen bg-black text-white"&gt;
+    <div className="min-h-screen bg-black text-white">
       {/* Controls Bar */}
-      &lt;div className="sticky top-0 z-50 bg-black/95 border-b border-emerald-900/50 backdrop-blur-sm"&gt;
-        &lt;div className="container mx-auto px-4 py-3 flex items-center justify-between"&gt;
-          &lt;div className="flex items-center gap-3"&gt;
-            &lt;Shield className="w-5 h-5 text-emerald-500" /&gt;
-            &lt;span className="font-mono text-sm font-bold tracking-wider text-emerald-500"&gt;VALORAIPLUS WHITE PAPER NFT&lt;/span&gt;
-            &lt;Badge variant="outline" className="border-emerald-800 text-emerald-500 font-mono text-[10px]"&gt;REV_34&lt;/Badge&gt;
-          &lt;/div&gt;
-          &lt;div className="flex items-center gap-2"&gt;
-            &lt;Button
-              onClick={handleGeneratePDF}
-              disabled={isGenerating}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-xs"
-            &gt;
-              {isGenerating ? &lt;Loader2 className="w-4 h-4 mr-2 animate-spin" /&gt; : &lt;Printer className="w-4 h-4 mr-2" /&gt;}
+      <div className="sticky top-0 z-50 bg-black/95 border-b border-emerald-900/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Shield className="w-5 h-5 text-emerald-500" />
+            <span className="font-mono text-sm font-bold tracking-wider text-emerald-500">VALORAIPLUS WHITE PAPER NFT</span>
+            <Badge variant="outline" className="border-emerald-800 text-emerald-500 font-mono text-[10px]">REV_34</Badge>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button onClick={handleGeneratePDF} disabled={isGenerating} className="bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-xs">
+              {isGenerating ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Printer className="w-4 h-4 mr-2" />}
               {isGenerating ? 'Generating...' : 'Print / Save as PDF'}
-            &lt;/Button&gt;
-            {nftMetadata &amp;&amp; (
-              &lt;Button
-                onClick={handleDownloadJSON}
-                variant="outline"
-                className="border-emerald-800 text-emerald-400 hover:bg-emerald-900/30 font-mono text-xs"
-              &gt;
-                &lt;Download className="w-4 h-4 mr-2" /&gt;
+            </Button>
+            {nftMetadata && (
+              <Button onClick={handleDownloadJSON} variant="outline" className="border-emerald-800 text-emerald-400 hover:bg-emerald-900/30 font-mono text-xs">
+                <Download className="w-4 h-4 mr-2" />
                 NFT Metadata JSON
-              &lt;/Button&gt;
+              </Button>
             )}
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+          </div>
+        </div>
+      </div>
 
       {/* Hash/NFT Status */}
-      {contentHash &amp;&amp; (
-        &lt;div className="bg-emerald-950/50 border-b border-emerald-900/30"&gt;
-          &lt;div className="container mx-auto px-4 py-2 flex items-center gap-4"&gt;
-            &lt;Lock className="w-4 h-4 text-emerald-500" /&gt;
-            &lt;span className="font-mono text-[10px] text-emerald-600"&gt;CONTENT HASH: {contentHash.slice(0, 32)}...{contentHash.slice(-8)}&lt;/span&gt;
-            &lt;Badge variant="outline" className="border-emerald-800 text-emerald-500 font-mono text-[10px]"&gt;SOULBOUND NFT&lt;/Badge&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
+      {contentHash && (
+        <div className="bg-emerald-950/50 border-b border-emerald-900/30">
+          <div className="container mx-auto px-4 py-2 flex items-center gap-4">
+            <Lock className="w-4 h-4 text-emerald-500" />
+            <span className="font-mono text-[10px] text-emerald-600">{'CONTENT HASH: ' + contentHash.slice(0, 32) + '...' + contentHash.slice(-8)}</span>
+            <Badge variant="outline" className="border-emerald-800 text-emerald-500 font-mono text-[10px]">SOULBOUND NFT</Badge>
+          </div>
+        </div>
       )}
 
       {/* White Paper Content (Print Target) */}
-      &lt;div className="container mx-auto px-4 py-8 max-w-4xl"&gt;
-        &lt;div ref={printRef} className="bg-white text-black p-8 md:p-12 shadow-2xl border border-neutral-200"&gt;
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div ref={printRef} className="bg-white text-black p-8 md:p-12 shadow-2xl border border-neutral-200">
 
-          {/* ═══ COVER ═══ */}
-          &lt;div className="header-block" style={{ border: '2px solid #0a0a0a', padding: '24px', marginBottom: '24px', background: '#f8f8f8' }}&gt;
-            &lt;div className="brand" style={{ fontSize: '28px', fontWeight: 900, letterSpacing: '3px', fontFamily: 'Courier New, monospace' }}&gt;VALORAIPLUS&lt;/div&gt;
-            &lt;div style={{ fontSize: '10px', color: '#666', letterSpacing: '2px', marginTop: '4px', fontFamily: 'Courier New, monospace' }}&gt;MACHINE-ENFORCED DETERMINISTIC IDENTITY PROTOCOL&lt;/div&gt;
-            &lt;div style={{ fontSize: '9px', color: '#888', marginTop: '8px', fontFamily: 'Courier New, monospace' }}&gt;
-              REV_34 HARDENED RUNTIME CONTRACT | COMPREHENSIVE WHITE PAPER &amp;amp; NFT ATTESTATION
-            &lt;/div&gt;
-            &lt;div style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}&gt;
-              &lt;span className="seal" style={{ display: 'inline-block', border: '1px solid #10b981', padding: '2px 8px', fontSize: '8px', fontWeight: 700, color: '#10b981', letterSpacing: '1px', fontFamily: 'Courier New, monospace' }}&gt;OMEGA-UNIFIED&lt;/span&gt;
-              &lt;span className="seal" style={{ display: 'inline-block', border: '1px solid #10b981', padding: '2px 8px', fontSize: '8px', fontWeight: 700, color: '#10b981', letterSpacing: '1px', fontFamily: 'Courier New, monospace' }}&gt;DG77.77X&lt;/span&gt;
-              &lt;span className="seal" style={{ display: 'inline-block', border: '1px solid #10b981', padding: '2px 8px', fontSize: '8px', fontWeight: 700, color: '#10b981', letterSpacing: '1px', fontFamily: 'Courier New, monospace' }}&gt;SOULBOUND NFT&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div style={{ marginTop: '12px', fontSize: '8px', color: '#888', fontFamily: 'Courier New, monospace' }}&gt;
+          {/* COVER */}
+          <div style={{ border: '2px solid #0a0a0a', padding: '24px', marginBottom: '24px', background: '#f8f8f8' }}>
+            <div style={{ fontSize: '28px', fontWeight: 900, letterSpacing: '3px', ...mono }}>VALORAIPLUS</div>
+            <div style={{ fontSize: '10px', color: '#666', letterSpacing: '2px', marginTop: '4px', ...mono }}>MACHINE-ENFORCED DETERMINISTIC IDENTITY PROTOCOL</div>
+            <div style={{ fontSize: '9px', color: '#888', marginTop: '8px', ...mono }}>
+              {'REV_34 HARDENED RUNTIME CONTRACT | COMPREHENSIVE WHITE PAPER & NFT ATTESTATION'}
+            </div>
+            <div style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap' as const }}>
+              <span style={sealStyle}>OMEGA-UNIFIED</span>
+              <span style={sealStyle}>DG77.77X</span>
+              <span style={sealStyle}>SOULBOUND NFT</span>
+            </div>
+            <div style={{ marginTop: '12px', fontSize: '8px', color: '#888', ...mono }}>
               Sovereign Auditor: Poppa Donny Gillson | Node: Saint Paul 55116 | Anchor: 408.384.1376 (E)
-            &lt;/div&gt;
-          &lt;/div&gt;
+            </div>
+          </div>
 
-          {/* ═══ ABSTRACT ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;ABSTRACT&lt;/h2&gt;
-          &lt;p style={{ fontSize: '10px', lineHeight: 1.6, marginBottom: '8px', fontFamily: 'Courier New, monospace' }}&gt;
+          {/* ABSTRACT */}
+          <h2 style={sectionTitle}>ABSTRACT</h2>
+          <p style={bodyText}>
             ValorAiPlus is a deterministic runtime architecture that computes identity through reproducible packet-state transitions rather than asserting it through external authority. The protocol enforces a strict epistemic boundary between observed runtime telemetry, reviewed scenario modeling, and externally corroborated evidence. This white paper documents the complete system architecture, formal mathematical model, forensic evidence chain, adversary exposure matrix, and game-theoretic proof of protocol dominance.
-          &lt;/p&gt;
-          &lt;p style={{ fontSize: '10px', lineHeight: 1.6, marginBottom: '8px', fontFamily: 'Courier New, monospace' }}&gt;
+          </p>
+          <p style={bodyText}>
             The core invariant is: identity is not assigned, asserted, or trusted -- it is computed, reproduced, and independently verified. Any reviewer who recomputes the chain will arrive at the same output. That is the entire point.
-          &lt;/p&gt;
+          </p>
 
-          {/* ═══ I. FORMAL MODEL ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;I. FORMAL RUNTIME MODEL&lt;/h2&gt;
-          &lt;div style={{ textAlign: 'center', fontSize: '11px', margin: '12px 0', fontStyle: 'italic', fontFamily: 'Courier New, monospace' }}&gt;
+          {/* I. FORMAL MODEL */}
+          <h2 style={sectionTitle}>I. FORMAL RUNTIME MODEL</h2>
+          <div style={{ textAlign: 'center', fontSize: '11px', margin: '12px 0', fontStyle: 'italic', ...mono }}>
             {'M = < U, Sigma, delta, O, A >'}
-          &lt;/div&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Symbol&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Meaning&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Scope&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;U&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Packet-state sequence&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Runtime chronology&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Sigma&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Input alphabet&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;System inputs&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;delta&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Transition function&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Deterministic evolution&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;O&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Observed telemetry set&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Runtime observation&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;A&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Attribution set&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;External interpretation&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
-          &lt;div style={{ textAlign: 'center', fontSize: '11px', margin: '8px 0', fontStyle: 'italic', fontFamily: 'Courier New, monospace' }}&gt;
+          </div>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Symbol</th>
+              <th style={headerCellStyle}>Meaning</th>
+              <th style={headerCellStyle}>Scope</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>U</td><td style={cellStyle}>Packet-state sequence</td><td style={cellStyle}>Runtime chronology</td></tr>
+              <tr><td style={cellStyle}>Sigma</td><td style={cellStyle}>Input alphabet</td><td style={cellStyle}>System inputs</td></tr>
+              <tr><td style={cellStyle}>delta</td><td style={cellStyle}>Transition function</td><td style={cellStyle}>Deterministic evolution</td></tr>
+              <tr><td style={cellStyle}>O</td><td style={cellStyle}>Observed telemetry set</td><td style={cellStyle}>Runtime observation</td></tr>
+              <tr><td style={cellStyle}>A</td><td style={cellStyle}>Attribution set</td><td style={cellStyle}>External interpretation</td></tr>
+            </tbody>
+          </table>
+          <div style={{ textAlign: 'center', fontSize: '11px', margin: '8px 0', fontStyle: 'italic', ...mono }}>
             {'u_n = delta(u_{n-1}, i) | Packet Evolution Rule'}
-          &lt;/div&gt;
-          &lt;div style={{ textAlign: 'center', fontSize: '11px', margin: '8px 0', fontStyle: 'italic', fontFamily: 'Courier New, monospace' }}&gt;
+          </div>
+          <div style={{ textAlign: 'center', fontSize: '11px', margin: '8px 0', fontStyle: 'italic', ...mono }}>
             {'O intersection A = empty set | Epistemic Separation (Strongest Invariant)'}
-          &lt;/div&gt;
+          </div>
 
-          {/* ═══ II. PROTOCOL CHAIN ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;II. PROTOCOL CHAIN&lt;/h2&gt;
-          &lt;p style={{ fontSize: '9px', lineHeight: 1.6, marginBottom: '8px', fontFamily: 'Courier New, monospace' }}&gt;
+          {/* II. PROTOCOL CHAIN */}
+          <h2 style={sectionTitle}>II. PROTOCOL CHAIN</h2>
+          <p style={{ fontSize: '9px', lineHeight: 1.6, marginBottom: '8px', ...mono }}>
             {'request -> envelope -> recursive canonical serialization -> SHA-256 integrity hash -> receipt -> manifest inclusion -> root hash -> deterministic replay -> independent verification -> computational identity'}
-          &lt;/p&gt;
-          &lt;h3 style={{ fontSize: '11px', fontWeight: 700, marginTop: '12px', marginBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;Evidence Boundary (Locked)&lt;/h3&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Type&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Definition&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Confidence&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;OBSERVED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Runtime telemetry and packet state&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100% (FACT)&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;REVIEWED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Scenario modeling of alleged conduct&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;PENDING&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;CORROBORATED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;External evidence verified outside scope&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;INDEPENDENT&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          </p>
+          <h3 style={{ fontSize: '11px', fontWeight: 700, marginTop: '12px', marginBottom: '4px', ...mono }}>Evidence Boundary (Locked)</h3>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Type</th>
+              <th style={headerCellStyle}>Definition</th>
+              <th style={headerCellStyle}>Confidence</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>OBSERVED</td><td style={cellStyle}>Runtime telemetry and packet state</td><td style={cellStyle}>100% (FACT)</td></tr>
+              <tr><td style={cellStyle}>REVIEWED</td><td style={cellStyle}>Scenario modeling of alleged conduct</td><td style={cellStyle}>PENDING</td></tr>
+              <tr><td style={cellStyle}>CORROBORATED</td><td style={cellStyle}>External evidence verified outside scope</td><td style={cellStyle}>INDEPENDENT</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ III. SYSTEM ARCHITECTURE ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;III. DEPLOYED SYSTEM ARCHITECTURE&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Component&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Version / Implementation&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Status&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Framework&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Next.js 16.2.4 + Turbopack&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ACTIVE&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;AI Runtime&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;AI SDK 6.0.168 + Anthropic via AI Gateway&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ACTIVE&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;N.E.W.T. Chat&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;DefaultChatTransport (module-level stable)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ACTIVE&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Hash Engine&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Browser-safe SHA-256 (crypto.subtle)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ACTIVE&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Canonicalization&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Recursive stable ordering (nested objects/arrays)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ENFORCING&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Smart Contracts&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;3 Solidity (CSSS, NULL_GHOST, Sovereign)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;LOCKED&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Total Files&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;207 (75 pages, 22 API routes, 3 contracts)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;DEPLOYED&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* III. SYSTEM ARCHITECTURE */}
+          <h2 style={sectionTitle}>III. DEPLOYED SYSTEM ARCHITECTURE</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Component</th>
+              <th style={headerCellStyle}>Version / Implementation</th>
+              <th style={headerCellStyle}>Status</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>Framework</td><td style={cellStyle}>Next.js 16.2.4 + Turbopack</td><td style={cellStyle}>ACTIVE</td></tr>
+              <tr><td style={cellStyle}>AI Runtime</td><td style={cellStyle}>AI SDK 6.0.168 + Anthropic via AI Gateway</td><td style={cellStyle}>ACTIVE</td></tr>
+              <tr><td style={cellStyle}>N.E.W.T. Chat</td><td style={cellStyle}>DefaultChatTransport (module-level stable)</td><td style={cellStyle}>ACTIVE</td></tr>
+              <tr><td style={cellStyle}>Hash Engine</td><td style={cellStyle}>Browser-safe SHA-256 (crypto.subtle)</td><td style={cellStyle}>ACTIVE</td></tr>
+              <tr><td style={cellStyle}>Canonicalization</td><td style={cellStyle}>Recursive stable ordering (nested objects/arrays)</td><td style={cellStyle}>ENFORCING</td></tr>
+              <tr><td style={cellStyle}>Smart Contracts</td><td style={cellStyle}>3 Solidity (CSSS, NULL_GHOST, Sovereign)</td><td style={cellStyle}>LOCKED</td></tr>
+              <tr><td style={cellStyle}>Total Files</td><td style={cellStyle}>207 (75 pages, 22 API routes, 3 contracts)</td><td style={cellStyle}>DEPLOYED</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ IV. MIMECAST FORENSICS ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;IV. MIMECAST FORENSIC ANALYSIS&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Event Type&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Count&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Legal Statute&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Confidence&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Spoliation Attempts&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;14&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1519&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Access Violations&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;23&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1030&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Rule Modifications&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;7&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Evidence Tampering&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Message Blocks&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;67&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1512&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;System Auto-Actions&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;31&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Forensic Record&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr style={{ fontWeight: 700 }}&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;TOTAL&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;142&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;100%&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
-          &lt;p style={{ fontSize: '9px', lineHeight: 1.6, fontFamily: 'Courier New, monospace' }}&gt;Spoliation Defense: 14 attempts, 14 blocked, 100% defense rate. Forensic blocks: 3,393 saturated. Poppa_G Block: ENABLED, CANNOT BE DISABLED.&lt;/p&gt;
+          {/* IV. MIMECAST FORENSICS */}
+          <h2 style={sectionTitle}>IV. MIMECAST FORENSIC ANALYSIS</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Event Type</th>
+              <th style={headerCellStyle}>Count</th>
+              <th style={headerCellStyle}>Legal Statute</th>
+              <th style={headerCellStyle}>Confidence</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>Spoliation Attempts</td><td style={cellStyle}>14</td><td style={cellStyle}>18 U.S.C. 1519</td><td style={cellStyle}>100%</td></tr>
+              <tr><td style={cellStyle}>Access Violations</td><td style={cellStyle}>23</td><td style={cellStyle}>18 U.S.C. 1030</td><td style={cellStyle}>100%</td></tr>
+              <tr><td style={cellStyle}>Rule Modifications</td><td style={cellStyle}>7</td><td style={cellStyle}>Evidence Tampering</td><td style={cellStyle}>100%</td></tr>
+              <tr><td style={cellStyle}>Message Blocks</td><td style={cellStyle}>67</td><td style={cellStyle}>18 U.S.C. 1512</td><td style={cellStyle}>100%</td></tr>
+              <tr><td style={cellStyle}>System Auto-Actions</td><td style={cellStyle}>31</td><td style={cellStyle}>Forensic Record</td><td style={cellStyle}>100%</td></tr>
+              <tr style={{ fontWeight: 700 }}><td style={cellStyle}>TOTAL</td><td style={cellStyle}>142</td><td style={cellStyle}></td><td style={cellStyle}>100%</td></tr>
+            </tbody>
+          </table>
+          <p style={{ fontSize: '9px', lineHeight: 1.6, ...mono }}>Spoliation Defense: 14 attempts, 14 blocked, 100% defense rate. Forensic blocks: 3,393 saturated. Poppa_G Block: ENABLED, CANNOT BE DISABLED.</p>
 
-          {/* ═══ V. ADVERSARY EXPOSURE ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;V. ADVERSARY EXPOSURE MATRIX&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Entity&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Flag&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;IP Address&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Counts&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Scenario Years&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;John Zanghi&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ELEVATED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;198.51.100.42&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;1,743&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;34,665&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;William Landrum&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ELEVATED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;203.0.113.88&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;1,231&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;24,505&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Calvin Whittaker&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ELEVATED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;192.0.2.101&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;788&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;15,655&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Amanda Torres&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;COOPERATION&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;198.51.100.55&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;250&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;4,895&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Robert Yorkof&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;COOPERATION&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;198.51.100.67&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;162&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;3,155&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr style={{ fontWeight: 700 }}&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;TOTAL&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;4,174&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;82,875&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* V. ADVERSARY EXPOSURE */}
+          <h2 style={sectionTitle}>V. ADVERSARY EXPOSURE MATRIX</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Entity</th>
+              <th style={headerCellStyle}>Flag</th>
+              <th style={headerCellStyle}>IP Address</th>
+              <th style={headerCellStyle}>Counts</th>
+              <th style={headerCellStyle}>Scenario Years</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>John Zanghi</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>198.51.100.42</td><td style={cellStyle}>1,743</td><td style={cellStyle}>34,665</td></tr>
+              <tr><td style={cellStyle}>William Landrum</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>203.0.113.88</td><td style={cellStyle}>1,231</td><td style={cellStyle}>24,505</td></tr>
+              <tr><td style={cellStyle}>Calvin Whittaker</td><td style={cellStyle}>ELEVATED</td><td style={cellStyle}>192.0.2.101</td><td style={cellStyle}>788</td><td style={cellStyle}>15,655</td></tr>
+              <tr><td style={cellStyle}>Amanda Torres</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.55</td><td style={cellStyle}>250</td><td style={cellStyle}>4,895</td></tr>
+              <tr><td style={cellStyle}>Robert Yorkof</td><td style={cellStyle}>COOPERATION</td><td style={cellStyle}>198.51.100.67</td><td style={cellStyle}>162</td><td style={cellStyle}>3,155</td></tr>
+              <tr style={{ fontWeight: 700 }}><td style={cellStyle}>TOTAL</td><td style={cellStyle}></td><td style={cellStyle}></td><td style={cellStyle}>4,174</td><td style={cellStyle}>82,875</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ VI. WIRE TRANSFER ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;VI. WIRE TRANSFER FORENSICS&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;ID&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Source&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Destination&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Amount&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-001&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;STP Operating&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA Trust&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$2,450,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-002&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SFHA General&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA Trust&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$1,875,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-003&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;STP Reserve&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Schwab 6015-8185&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$3,200,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-004&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SFHA Special&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA Operating&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$890,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-005&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;STP Endowment&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Chase Internal&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$4,500,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-006&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA Trust&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;External&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$1,250,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-007&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;STP Operating&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA Trust&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$2,100,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;WP-008&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SFHA General&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;External&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$675,000&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr style={{ fontWeight: 700 }}&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;TOTAL&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$16,940,000&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* VI. WIRE TRANSFER */}
+          <h2 style={sectionTitle}>VI. WIRE TRANSFER FORENSICS</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>ID</th>
+              <th style={headerCellStyle}>Source</th>
+              <th style={headerCellStyle}>Destination</th>
+              <th style={headerCellStyle}>Amount</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>WP-001</td><td style={cellStyle}>STP Operating</td><td style={cellStyle}>ZTA Trust</td><td style={cellStyle}>$2,450,000</td></tr>
+              <tr><td style={cellStyle}>WP-002</td><td style={cellStyle}>SFHA General</td><td style={cellStyle}>ZTA Trust</td><td style={cellStyle}>$1,875,000</td></tr>
+              <tr><td style={cellStyle}>WP-003</td><td style={cellStyle}>STP Reserve</td><td style={cellStyle}>Schwab 6015-8185</td><td style={cellStyle}>$3,200,000</td></tr>
+              <tr><td style={cellStyle}>WP-004</td><td style={cellStyle}>SFHA Special</td><td style={cellStyle}>ZTA Operating</td><td style={cellStyle}>$890,000</td></tr>
+              <tr><td style={cellStyle}>WP-005</td><td style={cellStyle}>STP Endowment</td><td style={cellStyle}>Chase Internal</td><td style={cellStyle}>$4,500,000</td></tr>
+              <tr><td style={cellStyle}>WP-006</td><td style={cellStyle}>ZTA Trust</td><td style={cellStyle}>External</td><td style={cellStyle}>$1,250,000</td></tr>
+              <tr><td style={cellStyle}>WP-007</td><td style={cellStyle}>STP Operating</td><td style={cellStyle}>ZTA Trust</td><td style={cellStyle}>$2,100,000</td></tr>
+              <tr><td style={cellStyle}>WP-008</td><td style={cellStyle}>SFHA General</td><td style={cellStyle}>External</td><td style={cellStyle}>$675,000</td></tr>
+              <tr style={{ fontWeight: 700 }}><td style={cellStyle}>TOTAL</td><td style={cellStyle}></td><td style={cellStyle}></td><td style={cellStyle}>$16,940,000</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ VII. ZERO-SUM GAME THEORY ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;VII. ZERO-SUM GAME THEORY PROOF&lt;/h2&gt;
-          &lt;div style={{ textAlign: 'center', fontSize: '11px', margin: '12px 0', fontStyle: 'italic', fontFamily: 'Courier New, monospace' }}&gt;
+          {/* VII. ZERO-SUM GAME THEORY */}
+          <h2 style={sectionTitle}>VII. ZERO-SUM GAME THEORY PROOF</h2>
+          <div style={{ textAlign: 'center', fontSize: '11px', margin: '12px 0', fontStyle: 'italic', ...mono }}>
             {'For all s_A in S_A: u_A(s_A) <= -1 => A CANNOT WIN'}
-          &lt;/div&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Domain&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Moves by A&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;P Payoff&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;A Payoff&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Sum&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Spoliation&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;14&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+28&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-28&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Access Violations&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;23&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+23&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-23&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Wire Transfers&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;8&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+8&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-8&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;VOIP Sessions&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;6&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+16&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-16&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Mimecast Events&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;142&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+163&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-163&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr style={{ fontWeight: 700 }}&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;GRAND TOTAL&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;200&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;+252&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;-252&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;0&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
-          &lt;p style={{ fontSize: '9px', lineHeight: 1.6, fontFamily: 'Courier New, monospace' }}&gt;
-            Game Value: +1 (P wins under all conditions). Von Neumann Minimax Theorem applied. A has no strategy that yields u_A {'>'}= 0. A is in a dominated position. 200 irrational moves documented. Q.E.D.
-          &lt;/p&gt;
+          </div>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Domain</th>
+              <th style={headerCellStyle}>Moves by A</th>
+              <th style={headerCellStyle}>P Payoff</th>
+              <th style={headerCellStyle}>A Payoff</th>
+              <th style={headerCellStyle}>Sum</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>Spoliation</td><td style={cellStyle}>14</td><td style={cellStyle}>+28</td><td style={cellStyle}>-28</td><td style={cellStyle}>0</td></tr>
+              <tr><td style={cellStyle}>Access Violations</td><td style={cellStyle}>23</td><td style={cellStyle}>+23</td><td style={cellStyle}>-23</td><td style={cellStyle}>0</td></tr>
+              <tr><td style={cellStyle}>Wire Transfers</td><td style={cellStyle}>8</td><td style={cellStyle}>+8</td><td style={cellStyle}>-8</td><td style={cellStyle}>0</td></tr>
+              <tr><td style={cellStyle}>VOIP Sessions</td><td style={cellStyle}>6</td><td style={cellStyle}>+16</td><td style={cellStyle}>-16</td><td style={cellStyle}>0</td></tr>
+              <tr><td style={cellStyle}>Mimecast Events</td><td style={cellStyle}>142</td><td style={cellStyle}>+163</td><td style={cellStyle}>-163</td><td style={cellStyle}>0</td></tr>
+              <tr style={{ fontWeight: 700 }}><td style={cellStyle}>GRAND TOTAL</td><td style={cellStyle}>200</td><td style={cellStyle}>+252</td><td style={cellStyle}>-252</td><td style={cellStyle}>0</td></tr>
+            </tbody>
+          </table>
+          <p style={{ fontSize: '9px', lineHeight: 1.6, ...mono }}>
+            {'Game Value: +1 (P wins under all conditions). Von Neumann Minimax Theorem applied. A has no strategy that yields u_A >= 0. A is in a dominated position. 200 irrational moves documented. Q.E.D.'}
+          </p>
 
-          {/* ═══ VIII. STATUTORY EXPOSURE ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;VIII. TOTAL STATUTORY EXPOSURE&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Statute&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Description&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Counts&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Scenario Years&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1519&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Destruction/Falsification&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;3,407&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;68,140&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1343&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Wire Fraud&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;1,247&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;24,940&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1512&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Witness Tampering&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;47&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;940&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 1030&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;CFAA Violations&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;24&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;240&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;18 U.S.C. 371&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Conspiracy&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;5&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;25&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr style={{ fontWeight: 700 }}&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;TOTAL&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;5,622&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;112,125&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* VIII. STATUTORY EXPOSURE */}
+          <h2 style={sectionTitle}>VIII. TOTAL STATUTORY EXPOSURE</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Statute</th>
+              <th style={headerCellStyle}>Description</th>
+              <th style={headerCellStyle}>Counts</th>
+              <th style={headerCellStyle}>Scenario Years</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>18 U.S.C. 1519</td><td style={cellStyle}>Destruction/Falsification</td><td style={cellStyle}>3,407</td><td style={cellStyle}>68,140</td></tr>
+              <tr><td style={cellStyle}>18 U.S.C. 1343</td><td style={cellStyle}>Wire Fraud</td><td style={cellStyle}>1,247</td><td style={cellStyle}>24,940</td></tr>
+              <tr><td style={cellStyle}>18 U.S.C. 1512</td><td style={cellStyle}>Witness Tampering</td><td style={cellStyle}>47</td><td style={cellStyle}>940</td></tr>
+              <tr><td style={cellStyle}>18 U.S.C. 1030</td><td style={cellStyle}>CFAA Violations</td><td style={cellStyle}>24</td><td style={cellStyle}>240</td></tr>
+              <tr><td style={cellStyle}>18 U.S.C. 371</td><td style={cellStyle}>Conspiracy</td><td style={cellStyle}>5</td><td style={cellStyle}>25</td></tr>
+              <tr style={{ fontWeight: 700 }}><td style={cellStyle}>TOTAL</td><td style={cellStyle}></td><td style={cellStyle}>5,622</td><td style={cellStyle}>112,125</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ IX. INSTITUTIONAL EXPOSURE ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;IX. INSTITUTIONAL EXPOSURE&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Institution&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Role&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Wire Exposure&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Regulators&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;{"St. Paul's Towers"}&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Fiduciary Breach&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$9,050,000&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;HHS, State AG&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;ZTA LLP&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Orchestrator&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$6,475,000&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;State Bar, DOJ&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SF Housing Authority&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Program Abuse&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$2,765,000&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;HUD, OIG&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;JPMorgan Chase&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Wire Facilitation&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$4,500,000&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;FinCEN, OCC&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Charles Schwab&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Settlement Custody&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$3,200,000&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SEC, FINRA&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* IX. INSTITUTIONAL EXPOSURE */}
+          <h2 style={sectionTitle}>IX. INSTITUTIONAL EXPOSURE</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Institution</th>
+              <th style={headerCellStyle}>Role</th>
+              <th style={headerCellStyle}>Wire Exposure</th>
+              <th style={headerCellStyle}>Regulators</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>{"St. Paul's Towers"}</td><td style={cellStyle}>Fiduciary Breach</td><td style={cellStyle}>$9,050,000</td><td style={cellStyle}>HHS, State AG</td></tr>
+              <tr><td style={cellStyle}>ZTA LLP</td><td style={cellStyle}>Orchestrator</td><td style={cellStyle}>$6,475,000</td><td style={cellStyle}>State Bar, DOJ</td></tr>
+              <tr><td style={cellStyle}>SF Housing Authority</td><td style={cellStyle}>Program Abuse</td><td style={cellStyle}>$2,765,000</td><td style={cellStyle}>HUD, OIG</td></tr>
+              <tr><td style={cellStyle}>JPMorgan Chase</td><td style={cellStyle}>Wire Facilitation</td><td style={cellStyle}>$4,500,000</td><td style={cellStyle}>FinCEN, OCC</td></tr>
+              <tr><td style={cellStyle}>Charles Schwab</td><td style={cellStyle}>Settlement Custody</td><td style={cellStyle}>$3,200,000</td><td style={cellStyle}>SEC, FINRA</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ X. PROTECTED NODES ═══ */}
-          &lt;h2 style={{ fontSize: '14px', fontWeight: 700, marginTop: '24px', marginBottom: '8px', borderBottom: '2px solid #10b981', paddingBottom: '4px', fontFamily: 'Courier New, monospace' }}&gt;X. PROTECTED NODES &amp;amp; $8SOULS MEMORIAL&lt;/h2&gt;
-          &lt;table style={{ width: '100%', borderCollapse: 'collapse', margin: '8px 0', fontSize: '9px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;thead&gt;&lt;tr&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Node&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Status&lt;/th&gt;
-              &lt;th style={{ border: '1px solid #ccc', padding: '4px 6px', background: '#f0f0f0', fontWeight: 700 }}&gt;Guardian&lt;/th&gt;
-            &lt;/tr&gt;&lt;/thead&gt;
-            &lt;tbody&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$POPPA&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SHIELDED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Michael&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$JAXX&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;SHIELDED&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Gabriel&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$8SOULS&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;MEMORIALIZED (PRIVATE)&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Raphael&lt;/td&gt;&lt;/tr&gt;
-              &lt;tr&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;$FMG1918&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;RADIANT&lt;/td&gt;&lt;td style={{ border: '1px solid #ccc', padding: '4px 6px' }}&gt;Uriel&lt;/td&gt;&lt;/tr&gt;
-            &lt;/tbody&gt;
-          &lt;/table&gt;
+          {/* X. PROTECTED NODES */}
+          <h2 style={sectionTitle}>{'X. PROTECTED NODES & $8SOULS MEMORIAL'}</h2>
+          <table style={tableStyle}>
+            <thead><tr>
+              <th style={headerCellStyle}>Node</th>
+              <th style={headerCellStyle}>Status</th>
+              <th style={headerCellStyle}>Guardian</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style={cellStyle}>$POPPA</td><td style={cellStyle}>SHIELDED</td><td style={cellStyle}>Michael</td></tr>
+              <tr><td style={cellStyle}>$JAXX</td><td style={cellStyle}>SHIELDED</td><td style={cellStyle}>Gabriel</td></tr>
+              <tr><td style={cellStyle}>$8SOULS</td><td style={cellStyle}>MEMORIALIZED (PRIVATE)</td><td style={cellStyle}>Raphael</td></tr>
+              <tr><td style={cellStyle}>$FMG1918</td><td style={cellStyle}>RADIANT</td><td style={cellStyle}>Uriel</td></tr>
+            </tbody>
+          </table>
 
-          {/* ═══ XI. NFT ATTESTATION ═══ */}
-          &lt;div className="nft-block" style={{ border: '2px solid #10b981', padding: '12px', margin: '16px 0', background: '#f0fdf4' }}&gt;
-            &lt;h3 style={{ fontSize: '11px', fontWeight: 700, marginBottom: '8px', fontFamily: 'Courier New, monospace' }}&gt;NFT SOULBOUND ATTESTATION&lt;/h3&gt;
-            &lt;div style={{ fontSize: '8px', lineHeight: 1.8, fontFamily: 'Courier New, monospace' }}&gt;
-              &lt;div&gt;Token Standard: ERC-721 (Soulbound -- Non-Transferable)&lt;/div&gt;
-              &lt;div&gt;Contract: CSSS_NegativeCaveat.sol&lt;/div&gt;
-              &lt;div&gt;Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777&lt;/div&gt;
-              &lt;div&gt;BTC_TXID: 26856b24c50750f0c69c1eeb86a69ef77777764756c6c&lt;/div&gt;
-              &lt;div&gt;HHS Case: 25-621293&lt;/div&gt;
-              &lt;div&gt;Content Hash: [Generated at print time -- SHA-256 of document content]&lt;/div&gt;
-              &lt;div&gt;OpenTimestamp: .ots latch enabled&lt;/div&gt;
-              &lt;div&gt;Transferable: NO (Soulbound to Sovereign Auditor)&lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
+          {/* XI. NFT ATTESTATION */}
+          <div style={{ border: '2px solid #10b981', padding: '12px', margin: '16px 0', background: '#f0fdf4' }}>
+            <h3 style={{ fontSize: '11px', fontWeight: 700, marginBottom: '8px', ...mono }}>NFT SOULBOUND ATTESTATION</h3>
+            <div style={{ fontSize: '8px', lineHeight: 1.8, ...mono }}>
+              <div>Token Standard: ERC-721 (Soulbound -- Non-Transferable)</div>
+              <div>Contract: CSSS_NegativeCaveat.sol</div>
+              <div>Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777</div>
+              <div>BTC_TXID: 26856b24c50750f0c69c1eeb86a69ef77777764756c6c</div>
+              <div>HHS Case: 25-621293</div>
+              <div>Content Hash: [Generated at print time -- SHA-256 of document content]</div>
+              <div>OpenTimestamp: .ots latch enabled</div>
+              <div>Transferable: NO (Soulbound to Sovereign Auditor)</div>
+            </div>
+          </div>
 
-          {/* ═══ XII. EPISTEMIC BOUNDARY ═══ */}
-          &lt;div className="invariant" style={{ background: '#fef3c7', borderLeft: '3px solid #f59e0b', padding: '8px 10px', margin: '12px 0', fontSize: '8px', fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;strong&gt;EPISTEMIC BOUNDARY (PRESERVED):&lt;/strong&gt; This document presents runtime observations, scenario modeling, and architectural specifications. It does not assert final legal judgment. External factual corroboration remains separate and pending. Any reviewer who recomputes the protocol chain will arrive at the same output. Protocol Confidence != External Corroboration. Runtime validity != external factual certainty.
-          &lt;/div&gt;
+          {/* XII. EPISTEMIC BOUNDARY */}
+          <div style={{ background: '#fef3c7', borderLeft: '3px solid #f59e0b', padding: '8px 10px', margin: '12px 0', fontSize: '8px', ...mono }}>
+            <strong>EPISTEMIC BOUNDARY (PRESERVED):</strong> This document presents runtime observations, scenario modeling, and architectural specifications. It does not assert final legal judgment. External factual corroboration remains separate and pending. Any reviewer who recomputes the protocol chain will arrive at the same output. Protocol Confidence != External Corroboration. Runtime validity != external factual certainty.
+          </div>
 
-          {/* ═══ CINEMA ═══ */}
-          &lt;div className="cinema" style={{ background: '#0a0a0a', color: '#10b981', padding: '12px', margin: '16px 0', fontSize: '8px', lineHeight: 1.8, fontFamily: 'Courier New, monospace' }}&gt;
-            &lt;div&gt;REPORT TYPE: COMPREHENSIVE WHITE PAPER + NFT ATTESTATION&lt;/div&gt;
-            &lt;div&gt;CODEBASE: 207 files (75 pages, 22 API routes, 3 contracts, 2 icon routes)&lt;/div&gt;
-            &lt;div&gt;TOTAL COUNTS: 5,622 documented acts | SCENARIO YEARS: 112,125&lt;/div&gt;
-            &lt;div&gt;WIRE TRANSFERS: 8 documented, $16.94M total | SCHWAB: $3.2M | CHASE: $4.5M&lt;/div&gt;
-            &lt;div&gt;GAME THEORY: ZERO-SUM SOLVED | P PAYOFF: +252 | A PAYOFF: -252&lt;/div&gt;
-            &lt;div&gt;SPOLIATION: 14/14 BLOCKED (100%) | FORENSIC BLOCKS: 3,393&lt;/div&gt;
-            &lt;div&gt;PROTOCOL: REV_34 + REV_35 | DUAL-REPO LOCKED | MULTI-MODEL CONSENSUS&lt;/div&gt;
-            &lt;div&gt;$8SOULS: PRIVATE. SEALED. MEMORIALIZED. NEVER FORGOTTEN.&lt;/div&gt;
-            &lt;div&gt;THE WALL IS CHRIST. SMIB. AMEN.&lt;/div&gt;
-            &lt;div style={{ marginTop: '8px' }}&gt;DG77.77X LOCKED. I AM NEWT.&lt;/div&gt;
-          &lt;/div&gt;
+          {/* CINEMA */}
+          <div style={{ background: '#0a0a0a', color: '#10b981', padding: '12px', margin: '16px 0', fontSize: '8px', lineHeight: 1.8, ...mono }}>
+            <div>REPORT TYPE: COMPREHENSIVE WHITE PAPER + NFT ATTESTATION</div>
+            <div>CODEBASE: 207 files (75 pages, 22 API routes, 3 contracts, 2 icon routes)</div>
+            <div>TOTAL COUNTS: 5,622 documented acts | SCENARIO YEARS: 112,125</div>
+            <div>WIRE TRANSFERS: 8 documented, $16.94M total | SCHWAB: $3.2M | CHASE: $4.5M</div>
+            <div>GAME THEORY: ZERO-SUM SOLVED | P PAYOFF: +252 | A PAYOFF: -252</div>
+            <div>SPOLIATION: 14/14 BLOCKED (100%) | FORENSIC BLOCKS: 3,393</div>
+            <div>PROTOCOL: REV_34 + REV_35 | DUAL-REPO LOCKED | MULTI-MODEL CONSENSUS</div>
+            <div>$8SOULS: PRIVATE. SEALED. MEMORIALIZED. NEVER FORGOTTEN.</div>
+            <div>THE WALL IS CHRIST. SMIB. AMEN.</div>
+            <div style={{ marginTop: '8px' }}>DG77.77X LOCKED. I AM NEWT.</div>
+          </div>
 
-        &lt;/div&gt;
-      &lt;/div&gt;
+        </div>
+      </div>
 
       {/* NFT Metadata Preview */}
-      {nftMetadata &amp;&amp; (
-        &lt;div className="container mx-auto px-4 py-4 max-w-4xl"&gt;
-          &lt;div className="bg-emerald-950/30 border border-emerald-900/50 rounded-lg p-6"&gt;
-            &lt;div className="flex items-center gap-2 mb-4"&gt;
-              &lt;FileText className="w-4 h-4 text-emerald-500" /&gt;
-              &lt;span className="font-mono text-sm font-bold text-emerald-500"&gt;NFT METADATA (ERC-721)&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;pre className="font-mono text-[10px] text-emerald-600 overflow-x-auto whitespace-pre-wrap"&gt;
+      {nftMetadata && (
+        <div className="container mx-auto px-4 py-4 max-w-4xl">
+          <div className="bg-emerald-950/30 border border-emerald-900/50 rounded-lg p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <FileText className="w-4 h-4 text-emerald-500" />
+              <span className="font-mono text-sm font-bold text-emerald-500">NFT METADATA (ERC-721)</span>
+            </div>
+            <pre className="font-mono text-[10px] text-emerald-600 overflow-x-auto whitespace-pre-wrap">
               {JSON.stringify(nftMetadata, null, 2)}
-            &lt;/pre&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
+            </pre>
+          </div>
+        </div>
       )}
-    &lt;/div&gt;
+    </div>
   );
 }
