@@ -289,9 +289,9 @@ Therefore, as of this transmission, the Saint Paul Node and the Diamond Perimete
     <tr><th>Entity</th><th>Primary Exposure</th><th>Status</th></tr>
     <tr><td>ZTA LLP</td><td>$127,157,751.38</td><td class="status-red">CRITICAL</td></tr>
     <tr><td>Swords to Plowshares</td><td>$152,589,301.66</td><td class="status-red">CRITICAL</td></tr>
-    <tr><td>SFHA</td><td>$101,726,201.10</td><td class="status-amber">HIGH</td></tr>
-    <tr><td>JPMorgan Chase</td><td>$76,294,650.83</td><td class="status-amber">MEDIUM</td></tr>
-    <tr><td>Charles Schwab</td><td>$50,863,100.55</td><td class="status-amber">MEDIUM</td></tr>
+    <tr><td>SFHA</td><td>$101,726,201.10</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>JPMorgan Chase</td><td>$76,294,650.83</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>Charles Schwab</td><td>$50,863,100.55</td><td class="status-red">CRITICAL</td></tr>
     <tr><td style="font-weight:bold;">TOTAL</td><td style="font-weight:bold;color:#fbbf24;">$508,631,005.52</td><td class="status-green">ENFORCING</td></tr>
   </table>
 

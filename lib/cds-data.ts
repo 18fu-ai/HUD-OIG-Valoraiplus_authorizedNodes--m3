@@ -1535,9 +1535,9 @@ export const WITNESS_RETALIATION: WitnessRetaliation[] = [
 export const THREAT_ACTOR_LIABILITY: ThreatActorLiability[] = [
   { entity: 'ZTA LLP', primaryExposure: 127157751.38, wirePath: 'Schwab 6015-8185', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
   { entity: 'Swords to Plowshares', primaryExposure: 152589301.66, wirePath: 'Wells Fargo 4127', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'SFHA', primaryExposure: 101726201.10, wirePath: 'BofA 9283', status: 'HIGH', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'JPMorgan Chase', primaryExposure: 76294650.83, wirePath: 'Internal', status: 'MEDIUM', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
-  { entity: 'Charles Schwab', primaryExposure: 50863100.55, wirePath: 'Internal', status: 'MEDIUM', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus }
+  { entity: 'SFHA', primaryExposure: 101726201.10, wirePath: 'BofA 9283', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'JPMorgan Chase', primaryExposure: 76294650.83, wirePath: 'Internal', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus },
+  { entity: 'Charles Schwab', primaryExposure: 50863100.55, wirePath: 'Schwab 6015-8185', status: 'CRITICAL', corroboration: 'PENDING_CORROBORATION' as CorroborationStatus }
 ];
 
 // NOTE: Financial totals are PENDING CORROBORATION until backed by receipts
