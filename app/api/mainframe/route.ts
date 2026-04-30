@@ -116,11 +116,11 @@ export async function GET() {
     firewall: {
       defaultPolicy: 'DENY_ALL',
       blockedIPs: [
-        '198.51.100.42 /* Zanghi */',
-        '203.0.113.88 /* Landrum */',
-        '192.0.2.101 /* Whittaker */',
-        '198.51.100.55 /* Torres */',
-        '198.51.100.67 /* Yorkof */',
+        '198.51.100.42 /* TA-PRIMARY */',
+        '203.0.113.88 /* TA-SECONDARY */',
+        '192.0.2.101 /* TA-TERTIARY */',
+        '198.51.100.55 /* TA-ALPHA */',
+        '198.51.100.67 /* TA-ENABLER */',
       ],
     },
     filesystem: {

@@ -74,7 +74,7 @@ function generateFullReport(sections: string[]): string {
   lines.push('Truth Cycle: 266ms');
   lines.push('Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777');
   lines.push('Anchor: SAINT PAUL 55116 — DEEP FORENSIC ROOT');
-  lines.push('Sovereign: POPPA DONNY GILLSON — VERIFIED');
+  lines.push('Sovereign: [SOVEREIGN_AUDITOR] -- VERIFIED');
   lines.push('');
 
   // Executive Summary
@@ -89,11 +89,11 @@ function generateFullReport(sections: string[]): string {
     lines.push('┌────────────────────────────┬──────────────────────┬──────────┐');
     lines.push('│ Entity                     │ Liability            │ Priority │');
     lines.push('├────────────────────────────┼──────────────────────┼──────────┤');
-    lines.push('│ Swords to Plowshares       │ $152,589,301.66      │ 1        │');
-    lines.push('│ ZTA LLP                    │ $127,157,751.38      │ 2        │');
-    lines.push('│ SFHA                       │ $101,726,201.10      │ 3        │');
-    lines.push('│ JPMorgan Chase             │ $76,294,650.83       │ 4        │');
-    lines.push('│ Charles Schwab             │ $50,863,100.55       │ 5        │');
+    lines.push('│ [TA-SECONDARY-ORG]         │ $152,589,301.66      │ 1        │');
+    lines.push('│ [TA-PRIMARY-ENTITY]        │ $127,157,751.38      │ 2        │');
+    lines.push('│ [TA-TERTIARY-ORG]          │ $101,726,201.10      │ 3        │');
+    lines.push('│ [ENTITY-JPMC]              │ $76,294,650.83       │ 4        │');
+    lines.push('│ [ENTITY-SCHWAB]            │ $50,863,100.55       │ 5        │');
     lines.push('└────────────────────────────┴──────────────────────┴──────────┘');
     lines.push('');
     lines.push('Protocol Status: ENFORCING');
@@ -348,11 +348,11 @@ function generateMarkdownReport(sections: string[]): string {
     lines.push('');
     lines.push('| Entity | Liability | Priority |');
     lines.push('|--------|-----------|----------|');
-    lines.push('| Swords to Plowshares | $152,589,301.66 | 1 |');
-    lines.push('| ZTA LLP | $127,157,751.38 | 2 |');
-    lines.push('| SFHA | $101,726,201.10 | 3 |');
-    lines.push('| JPMorgan Chase | $76,294,650.83 | 4 |');
-    lines.push('| Charles Schwab | $50,863,100.55 | 5 |');
+    lines.push('| [TA-SECONDARY-ORG] | $152,589,301.66 | 1 |');
+    lines.push('| [TA-PRIMARY-ENTITY] | $127,157,751.38 | 2 |');
+    lines.push('| [TA-TERTIARY-ORG] | $101,726,201.10 | 3 |');
+    lines.push('| [ENTITY-JPMC] | $76,294,650.83 | 4 |');
+    lines.push('| [ENTITY-SCHWAB] | $50,863,100.55 | 5 |');
     lines.push('');
   }
 

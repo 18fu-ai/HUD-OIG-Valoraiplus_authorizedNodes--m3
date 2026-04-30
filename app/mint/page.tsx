@@ -23,7 +23,7 @@ import {
  * 3. Type-Safe Route Boundaries
  * 
  * ANCHOR: SAINT PAUL NODE 55116
- * SOVEREIGN: POPPA DONNY GILLSON
+ * SOVEREIGN: [SOVEREIGN_AUDITOR]
  */
 
 /* --- TYPE SYSTEM HARDENING --- */

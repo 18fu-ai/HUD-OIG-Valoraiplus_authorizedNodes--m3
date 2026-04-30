@@ -339,7 +339,7 @@ export default function Dept12Page() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* ZTA LLP */}
+              {/* TA-PRIMARY-ENTITY */}
               <div className="bg-secondary/50 rounded-lg p-3">
                 <div className="font-mono text-sm font-bold text-foreground mb-2">{ACTOR_COORDINATION.ztaLLP.name}</div>
                 {ACTOR_COORDINATION.ztaLLP.actors.map((actor, idx) => (

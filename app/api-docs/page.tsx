@@ -12,7 +12,7 @@
  * 3. Clean separation of server config and client interactivity
  * 
  * ANCHOR: SAINT PAUL NODE 55116
- * SOVEREIGN: POPPA DONNY GILLSON
+ * SOVEREIGN: [SOVEREIGN_AUDITOR]
  */
 
 import APIDocsClient from './api-docs-client';

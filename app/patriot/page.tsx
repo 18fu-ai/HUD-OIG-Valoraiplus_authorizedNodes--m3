@@ -597,7 +597,7 @@ export default function PatriotPage() {
         {/* Footer */}
         <div className="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-xs text-muted-foreground">
           <div className="flex flex-col gap-1">
-            <span>donadams1969.eth // donnygillson.eth // donnygillson.seed</span>
+            <span>sovereign-primary.eth // sovereign-auditor.eth // sovereign-auditor.seed</span>
             <span>donny@18fu.ai // btc_genesis_anchor</span>
           </div>
           <div className="text-right flex flex-col gap-1">

@@ -340,7 +340,7 @@ function MimecastIntelligenceSweep() {
                       CROSS-ACTOR COORDINATION CONFIRMED
                     </p>
                     <p className="font-mono text-[10px] text-muted-foreground mt-1">
-                      Every rule change by Landrum/Whittaker followed by Zanghi delete attempt within 90 seconds - digital hand-off pattern established.
+                      Every rule change by TA-SECONDARY/TA-TERTIARY followed by TA-PRIMARY delete attempt within 90 seconds - digital hand-off pattern established.
                     </p>
                   </div>
                 </CardContent>

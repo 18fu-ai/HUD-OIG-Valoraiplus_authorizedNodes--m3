@@ -87,9 +87,9 @@ const GOVERNANCE_CHAIN: GovernanceStep[] = [
 ];
 
 const RECOVERY_SCENARIOS: RecoveryScenario[] = [
-  { entity: 'Swords to Plowshares', recoveryHypothesis: 152589301.66, status: 'TARGETED' },
-  { entity: 'ZTA LLP', recoveryHypothesis: 127157751.38, status: 'ACTIVE' },
-  { entity: 'SFHA', recoveryHypothesis: 101726201.10, status: 'FLAGGED' }
+  { entity: TA_SECONDARY_ORG, recoveryHypothesis: 152589301.66, status: 'TARGETED' },
+  { entity: TA_PRIMARY_ENTITY, recoveryHypothesis: 127157751.38, status: 'ACTIVE' },
+  { entity: TA_TERTIARY_ORG, recoveryHypothesis: 101726201.10, status: 'FLAGGED' }
 ];
 
 function formatCurrency(amount: number): string {
@@ -426,7 +426,7 @@ export default function InvestorManifestPage() {
           </p>
           <p className="text-white font-bold">MADE IN THE USA</p>
           <p className="text-xs text-zinc-500 font-mono mt-2">
-            SOVEREIGN AUDITOR: POPPA DONNY GILLSON
+            SOVEREIGN AUDITOR: {SOVEREIGN_AUDITOR}
           </p>
           <p className="text-xs text-zinc-600 font-mono mt-4">
             SAINT PAUL NODE 55116 // 408.384.1376 (E) // I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.

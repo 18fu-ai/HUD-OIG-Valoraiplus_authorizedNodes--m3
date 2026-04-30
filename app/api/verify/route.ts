@@ -5,6 +5,7 @@
  * POST /api/verify - Verify identity claim, emit RuntimeDecision + ReceiptV1
  * GET /api/verify - Get nonce or endpoint info
  */
+import { SOVEREIGN_AUDITOR } from '@/lib/encrypted-ids';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -71,7 +72,7 @@ function evaluateIdentityClaim(claim: string): RuntimeDecision {
   const timestamp = new Date().toISOString();
   
   // Sovereign identity check
-  if (claim === 'Poppa Donny Gillson' || claim.toLowerCase().includes('poppa donny')) {
+  if (claim === SOVEREIGN_AUDITOR || claim.toLowerCase().includes('sovereign')) {
     return {
       decision: 'ADMIT',
       route: '/route71',
@@ -281,7 +282,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       POST: {
         identity: {
           type: 'identity',
-          claim: 'Poppa Donny Gillson',
+          claim: '[SOVEREIGN_AUDITOR]',
         },
         signal: {
           type: 'signal',

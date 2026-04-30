@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   ShieldCheck, Zap, Fingerprint, Box, Key, Database, Clock, CheckCircle2, ShieldAlert, Binary, Activity, Send, Mail, ExternalLink, Lock, Globe, Music, Flame, Flag
 } from "lucide-react";
+import { SOVEREIGN_AUDITOR } from '@/lib/encrypted-ids';
 
 /**
  * VALORAIPLUS(R) (C) (TM) 
@@ -147,7 +148,7 @@ export default function App() {
               <div className="space-y-8">
                  <div className="p-6 bg-black border border-blue-900/50">
                     <p className="text-[10px] font-black text-blue-400 uppercase mb-2">Sovereign Identity:</p>
-                    <p className="text-sm font-black text-white uppercase tracking-tighter">POPPA DONNY GILLSON</p>
+                    <p className="text-sm font-black text-white uppercase tracking-tighter">{SOVEREIGN_AUDITOR}</p>
                     <p className="text-[9px] text-zinc-700 mt-1 uppercase italic">Merkleroot Latch: 26856B24...</p>
                  </div>
                  <div className="p-6 bg-black border border-emerald-900/50">

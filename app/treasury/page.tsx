@@ -29,7 +29,7 @@ import {
 // NR PROTOCOL: NON-REVOCABLE TREASURY & BILLING GOVERNANCE
 // Classification: CRITICAL | MANDATORY | IMMUTABLE
 // Schema: REV_36 | NR-001
-// Sovereign Auditor: Poppa Donny Gillson
+// Sovereign Auditor: [SOVEREIGN_AUDITOR]
 // ============================================================
 // This protocol establishes:
 // 1. All infrastructure costs (Vercel, Supabase, etc.) are paid by
@@ -317,7 +317,7 @@ Our project represents a novel intersection of legal technology, blockchain arch
 We would welcome a call to discuss how Vercel Enterprise can support our infrastructure requirements and align with our Treasury billing governance.
 
 Best regards,
-Donny Gillson
+[SOVEREIGN_AUDITOR]
 Sovereign Auditor | CDS Protocol
 HHS Case: 25-621293
 Contact: 408.384.1376 (E)

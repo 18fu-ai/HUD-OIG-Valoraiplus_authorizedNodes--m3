@@ -157,7 +157,7 @@ function Route71Content() {
   useEffect(() => {
     const mevr = new ValoraiplusMEVR();
     const mockInvariants: SovereignInvariant[] = [
-      { id: "LATCH_01", source: "MIMECAST_SWEEP", formula: "AMath(E×P×R×D)", score: 98, threshold: 90, reproducibility: true, name: "GILLSON ESTATE LATCH" },
+      { id: "LATCH_01", source: "MIMECAST_SWEEP", formula: "AMath(E×P×R×D)", score: 98, threshold: 90, reproducibility: true, name: "SOVEREIGN ESTATE LATCH" },
       { id: "LATCH_02", source: "H_RENO_NODE", formula: "AMath(fraud)", score: 14, threshold: 90, reproducibility: false, name: "EXTERNAL FRAUD VECTOR" },
       { id: "LATCH_03", source: "ZTA_SIGNAL", formula: "AMath(spoliation)", score: 22, threshold: 90, reproducibility: false, name: "AGGRESSOR SIGNAL" },
       { id: "LATCH_04", source: "SAINT_PAUL_LEDGER", formula: "AMath(sovereign)", score: 100, threshold: 90, reproducibility: true, name: "SOVEREIGN AUDIT" },

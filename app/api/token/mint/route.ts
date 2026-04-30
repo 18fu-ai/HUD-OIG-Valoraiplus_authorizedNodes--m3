@@ -30,12 +30,12 @@ const TOKEN_RULES: Record<string, { mintable: boolean; route: string; reason: st
   '$JERRY': {
     mintable: false,
     route: '/route70',
-    reason: 'IDENTITY_REJECTED: Jerry Gillson routed to /route70 by topology',
+    reason: 'IDENTITY_REJECTED: PROTECTED-NODE-J routed to /route70 by topology',
   },
   '$SGAU': {
     mintable: true,
     route: '/route71',
-    reason: 'SOVEREIGN_ADMITTED: Valid token under Poppa Donny Gillson sovereign',
+    reason: 'SOVEREIGN_ADMITTED: Valid token under [SOVEREIGN_AUDITOR] sovereign',
   },
   '$POPPA': {
     mintable: true,
