@@ -92,9 +92,8 @@ export default function DashboardPage() {
   const [truthCycle, setTruthCycle] = useState(0);
   const [mounted, setMounted] = useState(false);
   
-  // Runtime metrics state
-  const metricsRef = useRef(buildDefaultMetrics());
-  const [metrics] = useState(() => metricsRef.current);
+  // Runtime metrics state - refresh on each truth cycle to keep timestamps fresh
+  const metrics = useMemo(() => buildDefaultMetrics(), [truthCycle]);
   
   // Derived state via useMemo (no re-render churn)
   const healthDomains = useMemo(() => computeHealthDomains(metrics), [metrics]);

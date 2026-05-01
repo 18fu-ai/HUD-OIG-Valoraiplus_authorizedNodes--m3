@@ -40,9 +40,33 @@ export function RuntimeBar({ signals, driftReport, truthCycle, className }: Runt
     };
   }, []);
 
+  /**
+   * ABSOLUTE_9_ZERO_DRIFT Signal Calculation
+   * =========================================
+   * Signal dimensions are scored 0-1, but interpretation differs:
+   * - eventVelocity, mutationDensity, replayConfidence, sourceCompleteness, auditReadiness: 1.0 = good
+   * - actorEscalation, statementRisk: 0.0 = good (inverted - lower is better)
+   * 
+   * For 100% signal: positive signals at 1.0, negative signals at 0.0
+   */
   const signalAvg = useCallback(() => {
-    const vals = Object.values(signals);
-    return vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    // Positive signals (1.0 = optimal)
+    const positiveSignals = [
+      signals.eventVelocity,
+      signals.mutationDensity,
+      signals.replayConfidence,
+      signals.sourceCompleteness,
+      signals.auditReadiness,
+    ];
+    
+    // Negative signals (0.0 = optimal, invert for calculation)
+    const negativeSignals = [
+      1 - signals.actorEscalation,   // 0 escalation = 1.0 score
+      1 - signals.statementRisk,      // 0 risk = 1.0 score
+    ];
+    
+    const allSignals = [...positiveSignals, ...negativeSignals];
+    return allSignals.reduce((a, b) => a + b, 0) / allSignals.length;
   }, [signals]);
 
   if (!mounted) return null;
