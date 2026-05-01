@@ -84,7 +84,7 @@ function evaluateIdentityClaim(claim: string): RuntimeDecision {
   }
   
   // Blocked identity check
-  if (claim === 'Jerry Gillson' || claim.toLowerCase().includes('jerry')) {
+  if (claim === 'PROTECTED-NODE-J' || claim.toLowerCase().includes('node-j')) {
     return {
       decision: 'REJECT',
       route: '/route70',

@@ -206,7 +206,7 @@ export function evaluateIdentity(
   }
 
   // Explicit identity mismatch guard
-  if (input.entityId.toLowerCase().includes('jerry')) {
+  if (input.entityId.toLowerCase().includes('node-j')) {
     invariantState = 'BLOCKED';
     reasonCode = 'IDENTITY_MISMATCH';
   }
