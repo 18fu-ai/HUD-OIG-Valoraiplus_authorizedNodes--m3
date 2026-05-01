@@ -103,7 +103,7 @@ export const SYSTEM_AUDIT_REGISTRY: AuditRecord[] = [
   {
     id: 'mimecast-actors',
     component: 'Mimecast',
-    statement: 'Actor attribution: ZTA LLP, STP-SF/SFHA',
+    statement: 'Actor attribution: ENTITY-α LLP, ENTITY-β/ENTITY-γ',
     status: 'IMPLEMENTED',
     safety: 'PROVEN',
     sourceRef: 'lib/cds-data.ts:MIMECAST_ACTORS',

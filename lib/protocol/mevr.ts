@@ -27,12 +27,12 @@ export interface ProofLedgerArtifact {
   truthCycle: number;
 }
 
-// Nullified adversary hashes (H. RENO, B. SHERRY, ZTA, STP-SF)
+// Nullified adversary hashes (ACTOR-ρ, ACTOR-σ, ENTITY-α, ENTITY-β)
 const NULL_NODES: string[] = [
-  '0xbc3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b', // H. RENO
-  '0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b', // B. SHERRY
-  '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b', // ZTA LLP
-  '0x9f8e7d6c5b4a3928170615f4e3d2c1b0a9f8e7d6c5b4a39281706150f4e3d2c1', // STP-SF
+  '0xbc3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b', // ACTOR-ρ
+  '0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b', // ACTOR-σ
+  '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b', // ENTITY-α
+  '0x9f8e7d6c5b4a3928170615f4e3d2c1b0a9f8e7d6c5b4a39281706150f4e3d2c1', // ENTITY-β
 ];
 
 // ============================================================

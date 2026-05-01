@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -119,12 +120,7 @@ export function DriftMonitor({ driftReport, signals, className }: DriftMonitorPr
         )}
 
         {/* Last Check */}
-        <div className="flex items-center gap-1 pt-1">
-          <Clock className="w-3 h-3 text-muted-foreground" aria-hidden="true" />
-          <span className="font-mono text-[9px] text-muted-foreground">
-            Last check: {new Date(driftReport.lastCheck).toLocaleTimeString()}
-          </span>
-        </div>
+        <LastCheckDisplay lastCheck={driftReport.lastCheck} />
       </CardContent>
     </Card>
   );
@@ -140,6 +136,28 @@ function DriftEventRow({ event }: { event: DriftEvent }) {
         {driftTypeLabels[event.type] || event.type}
       </Badge>
       <span className="truncate">{event.message}</span>
+    </div>
+  );
+}
+
+/**
+ * LastCheckDisplay -- Client-only time display to prevent hydration mismatch.
+ * Uses suppressHydrationWarning and useEffect to ensure server/client consistency.
+ */
+function LastCheckDisplay({ lastCheck }: { lastCheck: string }) {
+  const [timeString, setTimeString] = useState<string>('--:--:--');
+
+  useEffect(() => {
+    // Only format time on client to avoid hydration mismatch
+    setTimeString(new Date(lastCheck).toLocaleTimeString());
+  }, [lastCheck]);
+
+  return (
+    <div className="flex items-center gap-1 pt-1">
+      <Clock className="w-3 h-3 text-muted-foreground" aria-hidden="true" />
+      <span className="font-mono text-[9px] text-muted-foreground" suppressHydrationWarning>
+        Last check: {timeString}
+      </span>
     </div>
   );
 }
