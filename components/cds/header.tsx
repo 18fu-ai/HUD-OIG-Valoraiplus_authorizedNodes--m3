@@ -10,7 +10,7 @@ import {
   Coins, Lock, Send, Home, Menu, X, Server, MessageCircle,
   Route, FileSearch, Terminal, Layers, CircleDot, Film, Wallet, 
   CheckCircle2, Circle, ArrowRight, Database, Play, RotateCcw, GitBranch, 
-  Eye, Cpu, Fingerprint, Vault, Download, BarChart3, Scale, TrendingUp, AlertTriangle
+  Eye, Cpu, Fingerprint, Vault, Download, BarChart3, Scale, TrendingUp, AlertTriangle, Globe
 } from 'lucide-react';
 
 // Protocol Lifecycle Routes - The Verification Pipeline
@@ -71,6 +71,7 @@ const navItems = [
   { href: '/valoraiplus', label: 'ValorAI+', icon: Shield, category: 'system' },
   { href: '/fort', label: 'Fort//e', icon: Shield, category: 'system' },
   { href: '/porthole', label: 'Porthole', icon: Activity, category: 'system' },
+  { href: '/nexus', label: 'Nexus', icon: Globe, category: 'system' },
   { href: '/valuation', label: 'Valuation', icon: DollarSign, category: 'legal' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, category: 'system' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, category: 'legal' },
