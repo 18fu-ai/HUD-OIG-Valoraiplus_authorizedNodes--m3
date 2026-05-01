@@ -69,6 +69,7 @@ const navItems = [
   { href: '/maturity', label: 'Maturity', icon: BarChart3, category: 'system' },
   { href: '/apex', label: 'Apex', icon: Scale, category: 'system' },
   { href: '/valoraiplus', label: 'ValorAI+', icon: Shield, category: 'system' },
+  { href: '/omega-zero', label: 'Omega-Zero', icon: Zap, category: 'system' },
   { href: '/fort', label: 'Fort//e', icon: Shield, category: 'system' },
   { href: '/porthole', label: 'Porthole', icon: Activity, category: 'system' },
   { href: '/nexus', label: 'Nexus', icon: Globe, category: 'system' },
