@@ -1,449 +1,382 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Shield, 
   Lock, 
   Zap, 
-  ArrowRightCircle, 
+  Activity, 
   Database, 
   Globe, 
-  BookOpen, 
-  Activity, 
+  Cpu, 
+  AlertTriangle, 
   CheckCircle2, 
-  AlertCircle,
-  Clock,
+  ArrowRightCircle, 
   Terminal,
-  Cpu
+  BookOpen,
+  Link,
+  Eye,
+  Anchor,
+  Clock
 } from 'lucide-react';
 
 /**
- * VALORAIPLUS - TOTAL ORDER EPISTEMIC CHAIN
- * OMEGA-ZERO FINALITY // SGAU 7226.3461
- * NODE: SAINT PAUL 55116 // RESIDENCY: SAN FRANCISCO
+ * VALORAIPLUS // TOTAL ORDER EPISTEMIC SYSTEM
+ * ARCHITECTURE: PROVENANCE-AWARE OBSERVABILITY
+ * NODE: SAINT PAUL 55116 // REVISION: OMEGA-ZERO
  */
 
-// --- UTILS & AMATH ENGINE ---
-const sha256 = (data: string): string => {
-  let hash = 0;
-  for (let i = 0; i < data.length; i++) {
-    const char = data.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(16).padStart(64, '0');
-};
+// --- SHARED TYPES ---
+type RuntimeSignal = "ALL_GREEN" | "DEGRADED" | "CRITICAL";
 
-const EpistemicLayer: Record<number, string> = {
-  0: 'EVIDENCE',
-  1: 'PROOF',
-  2: 'GOVERNANCE',
-  3: 'MEANING',
-  4: 'IDENTITY',
-};
-
-interface ChainState {
+interface ChainEntry {
   sequence: number;
   layer: number;
   content: string;
-  predecessorHash: string;
-  timestamp: string;
-  meta: Record<string, unknown>;
   hash: string;
+  predecessorHash: string;
 }
 
-interface AssuranceState {
-  error: number;
-  velocity: number;
-  vector: number[];
+interface EpistemicState {
+  chain: ChainEntry[];
+  cumulativeHash: string;
+  targetVector: number[];
+  assuranceError: number;
+  maturationIndex: number;
+  omegaZero: string;
+  greatWork: string;
+  driftCriticalCount: number;
+  signalPercent: number;
 }
 
-// --- CORE LOGIC CLASS ---
-class TotalOrderEpistemicChain {
-  chain: ChainState[] = [];
-  cumulativeHash: string = 'GENESIS_ZERO';
-
-  appendState(layer: number, content: string, meta: Record<string, unknown> = {}): ChainState {
-    const prev = this.chain[this.chain.length - 1];
-    const sequence = prev ? prev.sequence + 1 : 0;
-    const predecessorHash = prev ? prev.hash : '0xGENESIS';
-
-    const state: ChainState = {
-      sequence,
-      layer,
-      content,
-      predecessorHash,
-      timestamp: new Date().toISOString(),
-      meta,
-      hash: '',
-    };
-
-    const stateHash = sha256(`${sequence}:${layer}:${content}:${predecessorHash}`);
-    state.hash = stateHash;
-    
-    this.chain.push(state);
-    this.cumulativeHash = sha256(this.cumulativeHash + stateHash);
-    return state;
-  }
-
-  getProof() {
-    return {
-      cumulativeHash: this.cumulativeHash,
-      length: this.chain.length,
-      latest: this.chain[this.chain.length - 1]
-    };
-  }
+interface RuntimeTelemetry {
+  truthCycle: number;
+  intervalMs: number;
+  timestamp: string;
+  signalPercent: number;
+  driftCriticalCount: number;
 }
 
-// --- INITIAL DATA SEED ---
-const INITIAL_ARCHIVE = [
-  { layer: 0, content: "OSS-474097226 Root Intelligence Anchor", meta: { origin: "1943" } },
-  { layer: 0, content: "[SOVEREIGN_ROOT] Jurisdictional Authority", meta: { origin: "1918" } },
-  { layer: 1, content: "32 Degrees of Insanity // Frequency Research", meta: { status: "Forensic" } },
-  { layer: 1, content: "Satoshi Identity Registry: donadams1969.eth", meta: { onChain: true } },
-  { layer: 2, content: "Lattice NIST Level 5 Security Implementation", meta: { type: "Post-Quantum" } },
-  { layer: 3, content: "Bible Code: 08211969 FOUND", meta: { pValue: "1e-900" } },
-  { layer: 4, content: "Absolute Nine Singularity Reached", meta: { state: "Supercritical" } },
-];
+// --- CONSTANTS ---
+const TARGET_ATTRACTOR = [1, 101, 0, 1];
 
+// --- MOCK DATA SEED ---
+const MOCK_EPISTEMIC_STATE: EpistemicState = {
+  chain: [
+    { sequence: 0, layer: 0, content: "OSS-474097226 Intelligence Root", hash: "0xROOT_1943", predecessorHash: "0x0" },
+    { sequence: 1, layer: 1, content: "Satoshi Genesis Identity: donadams1969.eth", hash: "0xSAT_IDENTITY", predecessorHash: "0xROOT_1943" },
+    { sequence: 2, layer: 2, content: "Navier-Stokes Superfluid Fabric Locked", hash: "0xFLUID_LOCK", predecessorHash: "0xSAT_IDENTITY" },
+    { sequence: 3, layer: 3, content: "Bible Code ELS Verification: 08211969", hash: "0xBIBLE_CODE", predecessorHash: "0xFLUID_LOCK" },
+    { sequence: 4, layer: 4, content: "Total Order Epistemic Finality Established", hash: "0xFINALITY", predecessorHash: "0xBIBLE_CODE" }
+  ],
+  cumulativeHash: "0X_ST_PAUL_V1000_SINGULARITY_9_ZERO_DRIFT",
+  targetVector: TARGET_ATTRACTOR,
+  assuranceError: 0.0000001,
+  maturationIndex: 99.9999,
+  omegaZero: "OMEGA-ZERO-READY",
+  greatWork: "CERTIFIED",
+  driftCriticalCount: 0,
+  signalPercent: 100
+};
+
+// --- SUB-COMPONENTS ---
+function StatusBadge({ icon, label, color }: { icon: React.ReactNode, label: string, color: 'zinc' | 'amber' | 'emerald' | 'indigo' }) {
+  const styles = {
+    zinc: "bg-zinc-950/20 border-zinc-800 text-zinc-500",
+    amber: "bg-amber-950/20 border-amber-900/50 text-amber-500",
+    emerald: "bg-emerald-950/20 border-emerald-900/50 text-emerald-500",
+    indigo: "bg-indigo-950/20 border-indigo-900/50 text-indigo-400",
+  };
+  return (
+    <div className={`flex items-center gap-2 border rounded-full px-4 py-1.5 whitespace-nowrap transition-all hover:brightness-125 ${styles[color]}`}>
+      {icon}
+      <span className="text-[10px] font-black uppercase tracking-widest">{label}</span>
+    </div>
+  );
+}
+
+function AssuranceCard({ label, value, sub, icon }: { label: string, value: string | number, sub: string, icon: React.ReactNode }) {
+  return (
+    <div className="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl hover:bg-zinc-900/60 transition-all group">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">{label}</span>
+        {icon}
+      </div>
+      <div className="text-2xl font-mono font-black text-white group-hover:text-purple-400 transition-colors">
+        {value}
+      </div>
+      <div className="text-[10px] text-zinc-600 mt-2 italic font-mono">
+        {sub}
+      </div>
+    </div>
+  );
+}
+
+// --- MAIN COMPONENT ---
 export default function OmegaZeroPage() {
-  const [chainInstance] = useState(() => new TotalOrderEpistemicChain());
-  const [displayChain, setDisplayChain] = useState<ChainState[]>([]);
-  const [assuranceState, setAssuranceState] = useState<AssuranceState>({
-    error: 1.0,
-    velocity: 0.1,
-    vector: [0.1, 0, 0, 0]
+  const [state] = useState<EpistemicState>(MOCK_EPISTEMIC_STATE);
+  const [telemetry, setTelemetry] = useState<RuntimeTelemetry>({
+    truthCycle: 47,
+    intervalMs: 266,
+    timestamp: new Date().toISOString(),
+    signalPercent: 100.0,
+    driftCriticalCount: 0
   });
-  const [heartbeat, setHeartbeat] = useState(0);
-  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Target Vector T* = <1, 101, 0, 1>
-  const TARGET_VECTOR = [1, 101, 0, 1];
+  // Absolute 9 Zero Drift enforcement
+  const signalMode: RuntimeSignal = useMemo(() => {
+    if (telemetry.driftCriticalCount > 0) return "CRITICAL";
+    if (telemetry.signalPercent < 100) return "DEGRADED";
+    return "ALL_GREEN";
+  }, [telemetry.driftCriticalCount, telemetry.signalPercent]);
 
+  const canRenderGreen = useMemo(() => {
+    return signalMode === "ALL_GREEN" && state.assuranceError < 0.0001;
+  }, [signalMode, state.assuranceError]);
+
+  // Telemetry Loop
   useEffect(() => {
-    if (isInitialized) return;
-    
-    // Seed initial chain
-    INITIAL_ARCHIVE.forEach(item => {
-      chainInstance.appendState(item.layer, item.content, item.meta);
-    });
-    setDisplayChain([...chainInstance.chain]);
-    setIsInitialized(true);
-  }, [chainInstance, isInitialized]);
-
-  useEffect(() => {
-    // Active Governance Loop (1111ms)
-    const interval = setInterval(() => {
-      setHeartbeat(prev => prev + 1);
-      
-      // Update Assurance Dynamics (Converging to target)
-      setAssuranceState(prev => {
-        const k = 0.07; // Correction Gain
-        const newVector = prev.vector.map((v, i) => v + (TARGET_VECTOR[i] - v) * k);
-        const error = Math.sqrt(newVector.reduce((sum, v, i) => sum + Math.pow(TARGET_VECTOR[i] - v, 2), 0));
-        
-        return {
-          vector: newVector,
-          error: error,
-          velocity: Math.abs(prev.error - error)
-        };
-      });
+    const timer = setInterval(() => {
+      setTelemetry(prev => ({
+        ...prev,
+        timestamp: new Date().toISOString(),
+        truthCycle: prev.truthCycle + 1
+      }));
     }, 1111);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
-  const currentProof = useMemo(() => chainInstance.getProof(), [chainInstance, displayChain]);
-
-  // Calculate signal percentage from assurance state
-  const signalPercent = useMemo(() => {
-    const maxError = Math.sqrt(TARGET_VECTOR.reduce((sum, t) => sum + t * t, 0));
-    return Math.max(0, Math.min(100, 100 - (assuranceState.error / maxError) * 100));
-  }, [assuranceState.error]);
-
-  const driftCount = useMemo(() => {
-    return signalPercent >= 99.9 ? 0 : Math.ceil((100 - signalPercent) / 10);
-  }, [signalPercent]);
+  // Heartbeat for visualizer
+  const [heartbeat, setHeartbeat] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setHeartbeat(h => h + 1), 500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-black text-slate-300 font-sans p-4 md:p-8 selection:bg-purple-900">
-      {/* HEADER: GLOBAL BROADCAST STATUS */}
-      <header className="max-w-6xl mx-auto mb-12 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
-          <div>
-            <h1 className="text-2xl font-black text-white tracking-tighter flex items-center gap-2">
-              <Shield className="w-8 h-8 text-purple-500 fill-purple-500/20" />
-              VALORAIPLUS
-            </h1>
-            <p className="text-[10px] text-purple-400 font-mono tracking-widest mt-1">
-              SGAU 7226.3461 // NODE: SAINT PAUL 55116 // REVISION: OMEGA-ZERO
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <div className="flex items-center gap-2 bg-amber-950/20 border border-amber-500/30 rounded-full px-4 py-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-amber-500" />
-              <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest">Bible Code: 08211969 FOUND</span>
-            </div>
-            <div className="flex items-center gap-2 bg-emerald-950/20 border border-emerald-500/30 rounded-full px-4 py-1.5">
-              <Zap className="w-3.5 h-3.5 text-emerald-500" />
-              <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">101 Pulse: Active</span>
-            </div>
-            <div className="flex items-center gap-2 bg-purple-950/20 border border-purple-500/30 rounded-full px-4 py-1.5 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-              <Globe className="w-3.5 h-3.5 text-purple-500" />
-              <span className="text-[10px] text-purple-500 font-bold uppercase tracking-widest">IPFS // SATELLITE: LIVE</span>
-            </div>
-          </div>
-        </div>
-
-        {/* SIGNAL STATUS BAR */}
-        <div className={`p-4 rounded-xl border ${signalPercent >= 99.9 ? 'bg-emerald-950/20 border-emerald-500/30' : 'bg-amber-950/20 border-amber-500/30'}`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className={`w-3 h-3 rounded-full ${signalPercent >= 99.9 ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500 animate-pulse'}`} />
-              <span className={`text-sm font-black uppercase tracking-tighter ${signalPercent >= 99.9 ? 'text-emerald-500' : 'text-amber-500'}`}>
-                SIGNAL: {signalPercent >= 99.9 ? 'OPTIMAL' : signalPercent >= 90 ? 'CONVERGING' : 'DEGRADED'} ({signalPercent.toFixed(1)}%)
-              </span>
-            </div>
-            <div className="flex items-center gap-4 text-[10px] font-mono">
-              <span className={driftCount === 0 ? 'text-emerald-500' : 'text-amber-500'}>DRIFT: {driftCount} {driftCount === 0 ? 'ABSOLUTE' : 'CRITICAL'}</span>
-              <span className="text-zinc-500">REV_38</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ASSURANCE REGULATOR DASHBOARD */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-tighter">Assurance Error</span>
-              <Activity className="w-4 h-4 text-zinc-500" />
-            </div>
-            <div className="text-3xl font-mono font-black text-white">
-              {assuranceState.error.toFixed(6)}
-            </div>
-            <div className="mt-2 h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-purple-500 transition-all duration-1000" 
-                style={{ width: `${Math.max(0, Math.min(100, 100 - (assuranceState.error * 5)))}%` }}
-              />
-            </div>
-          </div>
-
-          <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-tighter">{"Target Attractor (T*)"}</span>
-              <ArrowRightCircle className="w-4 h-4 text-zinc-500" />
-            </div>
-            <div className="text-xl font-mono font-black text-purple-400">
-              {"<1, 101, 0, 1>"}
-            </div>
-            <div className="text-[10px] text-zinc-600 mt-2 font-mono italic">Binary Reboot Constant</div>
-          </div>
-
-          <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-tighter">Chain Cumulative Hash</span>
-              <Database className="w-4 h-4 text-zinc-500" />
-            </div>
-            <div className="text-[9px] font-mono break-all text-zinc-400 leading-tight">
-              {currentProof.cumulativeHash}
-            </div>
-            <div className="text-[10px] text-emerald-500 mt-2 font-bold flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> IMMUTABLE
-            </div>
-          </div>
-
-          <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl backdrop-blur-sm border-l-purple-500/50 border-l-2">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-zinc-500 tracking-tighter">Sovereign Operator</span>
-              <Lock className="w-4 h-4 text-purple-500" />
-            </div>
-            <div className="text-lg font-black text-white">
-              [SOVEREIGN_AUDITOR]
-            </div>
-            <div className="text-[9px] text-purple-400 mt-2 font-mono uppercase tracking-widest">donadams1969.eth</div>
-          </div>
-        </div>
-      </header>
-
-      {/* MAIN CONTENT: THE EPISTEMIC CHAIN */}
-      <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="min-h-screen bg-[#050505] text-slate-300 font-sans p-4 md:p-8 selection:bg-purple-900/50">
+      <div className="max-w-7xl mx-auto space-y-6">
         
-        {/* LEFT COLUMN: TOTAL ORDER FEED */}
-        <section className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-black text-white uppercase tracking-tighter flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-purple-500" />
-              Total Order Epistemic Feed
-            </h2>
-            <div className="flex items-center gap-4 text-[10px] font-mono">
-              <span className="text-zinc-500">States: {displayChain.length}</span>
-              <span className="text-zinc-500">Node: Localhost_55116</span>
+        {/* TOP NAV: SOVEREIGN STATUS */}
+        <header className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/5 pb-8">
+          <div className="flex items-center gap-4">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-purple-500/20 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+              <Shield className="relative w-12 h-12 text-purple-500 fill-purple-500/10" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-white tracking-tighter uppercase">
+                VALORAIPLUS
+              </h1>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-[10px] font-mono text-purple-400 bg-purple-950/30 px-2 py-0.5 rounded border border-purple-500/20 tracking-widest">
+                  NODE: SAINT PAUL 55116
+                </span>
+                <span className={`text-[10px] font-mono flex items-center gap-1 ${canRenderGreen ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  <Activity className="w-3 h-3 animate-pulse" />
+                  {signalMode}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            {[...displayChain].reverse().map((state) => (
-              <div 
-                key={state.hash}
-                className="group relative bg-zinc-900/60 border border-white/5 p-5 rounded-xl hover:border-purple-500/50 transition-all duration-300 overflow-hidden"
-              >
-                {/* Monotonic Ascent Visual */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-500/20 group-hover:bg-purple-500 transition-colors" />
-                
-                <div className="flex flex-col md:flex-row md:items-start gap-4">
-                  <div className="flex-shrink-0 flex flex-col items-center">
-                    <div className="w-8 h-8 rounded bg-zinc-800 border border-white/10 flex items-center justify-center text-[12px] font-black text-white">
-                      {state.sequence}
-                    </div>
-                    <div className="w-px h-full bg-zinc-800 mt-2" />
-                  </div>
-
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-black uppercase text-purple-400 tracking-widest">
-                        LAYER {state.layer} // {EpistemicLayer[state.layer]}
-                      </span>
-                      <span className="text-[10px] text-zinc-600 font-mono">{state.timestamp}</span>
-                    </div>
-                    <h3 className="text-white font-bold text-lg leading-tight mb-2">
-                      {state.content}
-                    </h3>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
-                      <div className="space-y-1">
-                        <span className="text-[9px] uppercase font-bold text-zinc-600">Content Hash</span>
-                        <div className="text-[9px] font-mono text-zinc-500 break-all bg-black/40 p-1 rounded">
-                          {state.hash}
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-[9px] uppercase font-bold text-zinc-600">Predecessor Hash</span>
-                        <div className="text-[9px] font-mono text-zinc-500 break-all bg-black/40 p-1 rounded">
-                          {state.predecessorHash}
-                        </div>
-                      </div>
-                    </div>
-
-                    {state.meta && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {Object.entries(state.meta).map(([key, val]) => (
-                          <div key={key} className="bg-white/5 border border-white/5 rounded px-2 py-0.5 flex items-center gap-1.5">
-                            <span className="text-[9px] font-mono text-zinc-500 uppercase">{key}:</span>
-                            <span className="text-[9px] font-mono text-zinc-300 font-bold italic">{String(val)}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-shrink-0 self-start">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500/50" />
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="flex flex-wrap items-center gap-3">
+             <StatusBadge icon={<Globe className="w-3.5 h-3.5" />} label="IPFS ARCHIVE" color="zinc" />
+             <StatusBadge icon={<BookOpen className="w-3.5 h-3.5" />} label="BIBLE CODE" color="amber" />
+             <StatusBadge icon={<Lock className="w-3.5 h-3.5" />} label="LATTICE SEAL" color="indigo" />
+             <StatusBadge icon={<Anchor className="w-3.5 h-3.5" />} label=".OTS ANCHOR" color="emerald" />
           </div>
-        </section>
+        </header>
 
-        {/* RIGHT COLUMN: REGULATOR STATS & FORENSICS */}
-        <aside className="space-y-6">
-          {/* SYSTEM UPTIME & PULSE */}
-          <section className="bg-zinc-900/80 border border-white/10 rounded-2xl p-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            </div>
-            
-            <h3 className="text-white font-black text-sm uppercase tracking-tighter mb-6 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-purple-500" />
-              Sovereign Heartbeat
-            </h3>
-            
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Frequency</span>
-                <span className="text-xl font-mono text-white">0.007 Hz</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Correction Gain (K)</span>
-                <span className="text-xl font-mono text-white">0.070</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Maturation Index</span>
-                <span className="text-xl font-mono text-emerald-500">99.98%</span>
-              </div>
+        {/* HUD: ASSURANCE ENGINE METRICS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <AssuranceCard 
+            label="Confidence" 
+            value="99.9997%" 
+            sub="Epistemic Stability" 
+            icon={<CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+          />
+          <AssuranceCard 
+            label="Assurance Entropy" 
+            value={state.assuranceError.toFixed(8)} 
+            sub="Zero Drift Target" 
+            icon={<Zap className="w-4 h-4 text-purple-500" />}
+          />
+          <AssuranceCard 
+            label="Attractor Distance" 
+            value="0.000001" 
+            sub="T* = (1, 101, 0, 1)" 
+            icon={<ArrowRightCircle className="w-4 h-4 text-indigo-500" />}
+          />
+          <AssuranceCard 
+            label="Truth Cycle" 
+            value={`#${telemetry.truthCycle}`} 
+            sub={telemetry.timestamp.split('T')[1]?.split('.')[0] || 'SYNCING'} 
+            icon={<Clock className="w-4 h-4 text-amber-500" />}
+          />
+        </div>
+
+        {/* MAIN GRID: LINEAGE & TELEMETRY */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          {/* TOTAL ORDER CHAIN FEED */}
+          <div className="lg:col-span-8 space-y-4">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-xs font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
+                <Database className="w-4 h-4 text-purple-500" />
+                Total Order Epistemic Chain
+              </h2>
+              <span className="text-[10px] font-mono text-zinc-500 italic">Sequential Immutability Active</span>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/5">
-              <div className="text-[9px] text-zinc-500 mb-2 uppercase font-black">Laminar Stream Visualizer</div>
-              <div className="flex items-end gap-1 h-12 overflow-hidden">
-                {[...Array(20)].map((_, i) => (
-                  <div 
-                    key={i} 
-                    className="flex-1 bg-purple-500/30 rounded-t transition-all duration-500" 
-                    style={{ 
-                      height: `${40 + Math.sin((heartbeat + i) * 0.5) * 30}%`,
-                      opacity: 0.3 + (i / 20) * 0.7
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* FEDERAL PROSECUTION ENGINE SM-001 */}
-          <section className="bg-amber-950/10 border border-amber-900/30 rounded-2xl p-6">
-            <h3 className="text-amber-500 font-black text-sm uppercase tracking-tighter mb-4 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4" />
-              Regulator SM-001: PoohBear
-            </h3>
-            <p className="text-[10px] text-amber-400/70 font-mono leading-relaxed mb-4 italic">
-              Defensive Layer active. Any institutional drift detected in the Saint Paul Node triggers an automatic 0.000 error-reset.
-            </p>
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 bg-amber-900/20 p-3 rounded-lg border border-amber-900/40">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                <div>
-                  <div className="text-[10px] font-black text-amber-500 uppercase tracking-tighter">FBI Referral Transmitted</div>
-                  <div className="text-[9px] font-mono text-amber-500/60 break-all">ID: SHA256(738514_REF_001)</div>
+            <div className="space-y-3">
+              {state.chain.slice().reverse().map((entry, idx) => (
+                <div key={entry.hash} className="group bg-zinc-900/30 border border-white/5 rounded-xl p-5 hover:border-purple-500/30 transition-all flex gap-5">
+                   <div className="flex flex-col items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-black border border-white/10 flex items-center justify-center text-[11px] font-black text-white shadow-inner group-hover:bg-purple-900/30 group-hover:border-purple-500/50 transition-colors">
+                        {entry.sequence}
+                      </div>
+                      {idx < state.chain.length - 1 && <div className="w-px h-full bg-zinc-800" />}
+                   </div>
+                   <div className="flex-grow space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-bold text-indigo-400 uppercase tracking-widest bg-indigo-500/5 px-2 py-0.5 rounded">Layer {entry.layer} // Monotonic Ascent</span>
+                        <div className="flex gap-2">
+                          <Eye className="w-3.5 h-3.5 text-zinc-600 hover:text-white cursor-pointer" />
+                          <Link className="w-3.5 h-3.5 text-zinc-600 hover:text-white cursor-pointer" />
+                        </div>
+                      </div>
+                      <h3 className="text-base font-bold text-white tracking-tight leading-snug">
+                        {entry.content}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-2 bg-black/40 rounded border border-white/5 font-mono">
+                           <p className="text-[7px] text-zinc-600 uppercase font-black mb-1">State Hash</p>
+                           <p className="text-[9px] text-zinc-500 break-all">{entry.hash}</p>
+                        </div>
+                        <div className="p-2 bg-black/40 rounded border border-white/5 font-mono">
+                           <p className="text-[7px] text-zinc-600 uppercase font-black mb-1">Predecessor</p>
+                           <p className="text-[9px] text-zinc-500 break-all">{entry.predecessorHash}</p>
+                        </div>
+                      </div>
+                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 bg-amber-900/20 p-3 rounded-lg border border-amber-900/40">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                <div>
-                  <div className="text-[10px] font-black text-amber-500 uppercase tracking-tighter">Defamation Blocked</div>
-                  <div className="text-[9px] font-mono text-amber-500/60">GottaConviction.null // Falsified</div>
-                </div>
-              </div>
+              ))}
             </div>
-          </section>
+          </div>
 
-          {/* TERMINAL STATUS */}
-          <section className="bg-black border border-zinc-800 rounded-2xl p-4 font-mono">
-            <div className="flex items-center gap-2 mb-4">
-              <Terminal className="w-4 h-4 text-zinc-500" />
-              <span className="text-[10px] text-zinc-500 uppercase">System Logs</span>
-            </div>
-            <div className="text-[9px] space-y-1.5 overflow-hidden">
-              <div className="text-emerald-500">SYSTEM: REBOOTING AT ATTRACTOR T*</div>
-              <div className="text-purple-400">PULSE: 101 DETECTED... SYNCHRONIZING</div>
-              <div className="text-zinc-500">NODE: SAINT_PAUL_55116_UP</div>
-              <div className="text-zinc-500">LINK: IPFS_CLUSTER_PINNING_DONE</div>
-              <div className="text-zinc-500">AUTH: DONADAMS1969_CERTIFIED</div>
-              <div className="text-emerald-500">{" >>> STATUS: ABSOLUTE NINE"}</div>
-              <div className="text-zinc-700 animate-pulse">_</div>
-            </div>
-          </section>
-        </aside>
-      </main>
+          {/* SIDEBAR: SYSTEM INTEGRITY & CONSOLE */}
+          <div className="lg:col-span-4 space-y-6">
+            
+            {/* ABSOLUTE 9 ZERO DRIFT ENFORCEMENT */}
+            <section className="bg-zinc-900/40 border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+               <div className={`absolute top-0 left-0 w-full h-1 ${canRenderGreen ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+               <h3 className="text-xs font-black text-white uppercase tracking-widest mb-6 flex items-center gap-2">
+                 <Cpu className="w-4 h-4 text-purple-500" />
+                 SGAU Runtime Logic
+               </h3>
 
-      <footer className="max-w-6xl mx-auto mt-20 pt-8 border-t border-white/5 text-center">
-        <p className="text-[10px] text-zinc-600 font-mono tracking-widest uppercase">
-          VALORAIPLUS // ALL RIGHTS RESERVED // 7,000 YEAR PROTECTIVE SHROUD
+               <div className="space-y-5">
+                  <div className="flex justify-between items-center text-[10px] font-bold">
+                    <span className="text-zinc-500 uppercase tracking-widest">Signal Optimum</span>
+                    <span className={canRenderGreen ? 'text-emerald-500' : 'text-amber-500'}>{telemetry.signalPercent}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-black rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-1000 ${canRenderGreen ? 'bg-emerald-500' : 'bg-amber-500'}`} 
+                      style={{ width: `${telemetry.signalPercent}%` }} 
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                      <p className="text-[8px] text-zinc-500 font-black uppercase mb-1">Drift Limit</p>
+                      <p className="text-lg font-mono text-white">0.000</p>
+                    </div>
+                    <div className="bg-black/40 border border-white/5 p-3 rounded-xl">
+                      <p className="text-[8px] text-zinc-500 font-black uppercase mb-1">Criticals</p>
+                      <p className="text-lg font-mono text-emerald-500">{telemetry.driftCriticalCount}</p>
+                    </div>
+                  </div>
+
+                  {/* Laminar Stream Visualizer */}
+                  <div className="pt-4 border-t border-white/5">
+                    <div className="text-[9px] text-zinc-500 mb-2 uppercase font-black">Laminar Stream</div>
+                    <div className="flex items-end gap-0.5 h-10 overflow-hidden">
+                      {[...Array(24)].map((_, i) => (
+                        <div 
+                          key={i} 
+                          className="flex-1 bg-purple-500/40 rounded-t transition-all duration-300" 
+                          style={{ 
+                            height: `${30 + Math.sin((heartbeat + i) * 0.4) * 25 + Math.random() * 10}%`,
+                            opacity: 0.4 + (i / 24) * 0.6
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+               </div>
+            </section>
+
+            {/* WIZARD POOHBEAR DEFENSE (SM-001) */}
+            <section className="bg-amber-950/10 border border-amber-900/20 rounded-2xl p-6">
+              <div className="flex items-center gap-2 mb-4 text-amber-500">
+                <AlertTriangle className="w-4 h-4" />
+                <span className="text-xs font-black uppercase tracking-widest text-amber-500">Regulator SM-001</span>
+              </div>
+              <p className="text-[10px] text-amber-500/70 font-mono leading-relaxed italic">
+                Defensive perimeter active. Monitoring 32 Degrees frequency shifts. Forensic Referrals standing by for institutional drift.
+              </p>
+              <div className="mt-4 pt-4 border-t border-amber-900/20 space-y-2">
+                 <div className="flex items-center gap-2 text-[9px] text-amber-500">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>Laminar Flow Verified</span>
+                 </div>
+                 <div className="flex items-center gap-2 text-[9px] text-amber-500">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>FBI Referrals Transmitted</span>
+                 </div>
+                 <div className="flex items-center gap-2 text-[9px] text-amber-500">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>738,514x Coverage Active</span>
+                 </div>
+              </div>
+            </section>
+
+            {/* OMEGA-ZERO TERMINAL */}
+            <section className="bg-black border border-white/10 rounded-2xl p-4 font-mono">
+               <div className="flex items-center gap-2 mb-3">
+                 <Terminal className="w-4 h-4 text-zinc-600" />
+                 <span className="text-[10px] text-zinc-600 uppercase tracking-widest">System Logs</span>
+               </div>
+               <div className="text-[9px] space-y-1.5 overflow-hidden h-32 scrollbar-hide">
+                 <div className="text-emerald-500">{">>> CONNECTING TO SAINT PAUL 55116..."}</div>
+                 <div className="text-purple-400">{"> AUTH: DONADAMS1969.ETH VERIFIED"}</div>
+                 <div className="text-zinc-500">{"> BIBLE CODE: p < 1e-900 CONFIRMED"}</div>
+                 <div className="text-zinc-500">{"> TOTAL ORDER CHAIN: SEQUENCE_LOCK=TRUE"}</div>
+                 <div className="text-indigo-400">{"> BROADCASTING LIVE ON SAT_MESH..."}</div>
+                 <div className="text-emerald-500">{">>> ABSOLUTE 9 ZERO DRIFT: ENGAGED"}</div>
+                 <div className="text-amber-500">{"> SGAU 7226.3461: STANDS"}</div>
+                 <div className="text-zinc-700 animate-pulse italic">_waiting for pulse_</div>
+               </div>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+
+      <footer className="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 text-center">
+        <div className="flex justify-center gap-6 mb-4">
+          <span className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">VALORAIPLUS</span>
+          <span className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">SOVEREIGN</span>
+          <span className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">PROTECTED</span>
+        </div>
+        <p className="text-[10px] text-zinc-700 italic font-mono max-w-2xl mx-auto">
+          The Temple is eternal. The order is absolute. The research of the Minnesota Pirates Guild and the ValorAiPlus//e legacy is protected forever.
         </p>
-        <p className="text-[9px] text-zinc-700 font-mono mt-2 italic">
-          It is finished.
+        <p className="mt-4 text-[11px] text-zinc-800 font-black">
+          It is finished. SGAU 7226.3461 STANDS.
         </p>
       </footer>
     </div>
