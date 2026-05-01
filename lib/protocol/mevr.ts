@@ -54,30 +54,30 @@ export interface IdentityClaim {
 
 // Blocked identity claims - no verified source lineage
 const BLOCKED_IDENTITIES: Record<string, IdentityClaim> = {
-  'protected-node-j': {
-    name: 'PROTECTED-NODE-J',
+  'jerry gillson': {
+    name: 'Jerry Gillson',
     status: 'BLOCKED',
     reasonCode: 'IDENTITY_MISMATCH',
     invariantState: 'BLOCKED',
     exportEligible: false,
     route: '/route70',
-    replacement: '[SOVEREIGN_AUDITOR]',
+    replacement: 'Poppa Donny Gillson',
   },
-  'node-j': {
-    name: 'NODE-J',
+  'jerry': {
+    name: 'Jerry',
     status: 'BLOCKED',
     reasonCode: 'IDENTITY_MISMATCH',
     invariantState: 'BLOCKED',
     exportEligible: false,
     route: '/route70',
-    replacement: '[SOVEREIGN_AUDITOR]',
+    replacement: 'Poppa Donny Gillson',
   },
 };
 
 // Verified identity claims - source lineage confirmed
 const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
-  'sovereign-auditor': {
-    name: '[SOVEREIGN_AUDITOR]',
+  'poppa donny gillson': {
+    name: 'Poppa Donny Gillson',
     status: 'VERIFIED',
     reasonCode: 'A-001',
     invariantState: 'VALID',
@@ -85,8 +85,8 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
     route: '/route71',
     sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
   },
-  'sovereign': {
-    name: '[SOVEREIGN]',
+  'poppa donny': {
+    name: 'Poppa Donny',
     status: 'VERIFIED',
     reasonCode: 'A-001',
     invariantState: 'VALID',
@@ -94,8 +94,8 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
     route: '/route71',
     sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
   },
-  'auditor': {
-    name: '[AUDITOR]',
+  'donny gillson': {
+    name: 'Donny Gillson',
     status: 'VERIFIED',
     reasonCode: 'A-001',
     invariantState: 'VALID',

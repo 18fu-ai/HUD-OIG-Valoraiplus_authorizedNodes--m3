@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 /**
  * @title VALORAIPLUS Sovereign Presentation Latch
- * @author [SOVEREIGN_AUDITOR] SGAU // N.E.W.T. //e v2.1
+ * @author Donny Gillson SGAU // N.E.W.T. //e v2.1
  * @notice 100% Legal Forensic Exhibit - Administrative Documentation Only.
  * * * ARCHITECTURE: Signed State Transition Engine
  * * CLASSIFICATION: Federal-Admissible Signed State Engine

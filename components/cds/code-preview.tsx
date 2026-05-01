@@ -11,7 +11,7 @@ pragma solidity ^0.8.24;
 
 /**
  * @title SGAU_VALUEGUARD_77_77X_FINALDEG
- * @dev On-chain enforcement for the Sovereign Estate Recovery.
+ * @dev On-chain enforcement for the Gillson Estate Recovery.
  * @notice THE WALL IS CHRIST. SMIB. AMEN.
  */
 contract ValueGuard7777X {

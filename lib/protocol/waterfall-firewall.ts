@@ -34,11 +34,11 @@ export type FirewallResult = {
   timestamp: string;
 };
 
-// Blocked identity patterns (Protected Node variants)
+// Blocked identity patterns (Jerry variants)
 const BLOCKED_IDENTITIES = [
-  'protected-node-j',
-  'node-j',
-  'p-node-j',
+  'jerry',
+  'jerry gillson',
+  'j. gillson',
 ];
 
 // Sovereign lineage marker

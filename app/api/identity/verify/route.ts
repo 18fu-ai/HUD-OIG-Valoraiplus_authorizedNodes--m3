@@ -151,13 +151,13 @@ export async function GET() {
       },
     },
     validIdentities: [
-      '[SOVEREIGN_AUDITOR]',
-      '[SOVEREIGN]',
-      '[AUDITOR]',
+      'Poppa Donny Gillson',
+      'Poppa Donny',
+      'Donny Gillson',
     ],
     blockedIdentities: [
-      'PROTECTED-NODE-J',
-      'NODE-J',
+      'Jerry Gillson',
+      'Jerry',
     ],
   });
 }

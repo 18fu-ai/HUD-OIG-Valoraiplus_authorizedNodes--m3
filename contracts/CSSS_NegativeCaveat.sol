@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title VALORAIPLUS_CSSS_NegativeCaveat_SBT
- * @author [SOVEREIGN_AUDITOR] & NEWT //e v2.1
+ * @author Poppa Donny Gillson & NEWT //e v2.1
  * @notice Enforces non-transferable Identity by Computation.
  * @dev Soulbound Reputation NFT with DAO-enforced exclusion
  * LATCH STATUS:

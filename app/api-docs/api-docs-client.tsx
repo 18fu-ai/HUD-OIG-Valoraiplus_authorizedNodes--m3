@@ -31,7 +31,7 @@ import {
  * 3. Enforce S-Class branding and sovereign metadata
  * 
  * ANCHOR: SAINT PAUL NODE 55116 // 408.384.1376 (E)
- * SOVEREIGN: [SOVEREIGN_AUDITOR]
+ * SOVEREIGN: POPPA DONNY GILLSON
  */
 
 // Inline UI Components for self-contained deployment
@@ -100,7 +100,7 @@ const API_ENDPOINTS: APICategory[] = [
           { name: 'actor', type: 'string', desc: 'Filter by actor email' },
           { name: 'limit', type: 'number', desc: 'Number of events' },
         ],
-        example: '/api/mimecast?actor=ta-primary&limit=10',
+        example: '/api/mimecast?actor=zanghi&limit=10',
       },
     ],
   },
@@ -113,7 +113,7 @@ const API_ENDPOINTS: APICategory[] = [
         path: '/api/identity/verify',
         description: 'Identity claim verification with Receipt v1',
         body: { name: 'string', source: 'string (optional)' },
-        example: '{ "name": "[SOVEREIGN_AUDITOR]" }',
+        example: '{ "name": "Poppa Donny Gillson" }',
       },
       {
         method: 'POST',
