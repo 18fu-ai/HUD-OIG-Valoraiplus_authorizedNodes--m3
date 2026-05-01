@@ -178,30 +178,31 @@ export function detectDrift(
       });
     }
     
-    // Value deviation - only for metrics with positive thresholds
-    if (typeof metric.value === 'number' && metric.threshold.critical > 0) {
-      if (metric.value >= metric.threshold.critical) {
-        events.push({
-          type: 'VALUE_DEVIATION',
-          metricId: metric.id,
-          message: `${metric.label}: value ${metric.value}${metric.unit} exceeds critical threshold ${metric.threshold.critical}${metric.unit}`,
-          severity: 'critical',
-          expectedValue: metric.threshold.critical,
-          actualValue: metric.value,
-          detectedAt: new Date().toISOString(),
-        });
-      } else if (metric.threshold.warn > 0 && metric.value >= metric.threshold.warn) {
-        events.push({
-          type: 'VALUE_DEVIATION',
-          metricId: metric.id,
-          message: `${metric.label}: value ${metric.value}${metric.unit} exceeds warn threshold ${metric.threshold.warn}${metric.unit}`,
-          severity: 'warning',
-          expectedValue: metric.threshold.warn,
-          actualValue: metric.value,
-          detectedAt: new Date().toISOString(),
-        });
-      }
+    // ABSOLUTE_9_ZERO_DRIFT: Only flag deviation if metric status is explicitly degraded/critical
+    // Do NOT use threshold comparison - metrics have mixed polarity (some higher=better, some lower=better)
+    // The metric.status field is the authoritative source of health
+    if (metric.status === 'critical') {
+      events.push({
+        type: 'VALUE_DEVIATION',
+        metricId: metric.id,
+        message: `${metric.label}: status is CRITICAL`,
+        severity: 'critical',
+        expectedValue: 0,
+        actualValue: metric.value,
+        detectedAt: new Date().toISOString(),
+      });
+    } else if (metric.status === 'degraded') {
+      events.push({
+        type: 'VALUE_DEVIATION',
+        metricId: metric.id,
+        message: `${metric.label}: status is DEGRADED`,
+        severity: 'warning',
+        expectedValue: 0,
+        actualValue: metric.value,
+        detectedAt: new Date().toISOString(),
+      });
     }
+    // metric.status === 'nominal' -> NO drift event
     
     // Boundary violation - only for explicitly unsafe metrics
     if (metric.provenance.reviewerSafe === false) {
