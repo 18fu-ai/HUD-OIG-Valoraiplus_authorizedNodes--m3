@@ -5,7 +5,7 @@
 // Engine:     ValorAiBrainDish++ (PETRI-QUANTUM HYBRID)
 // Schema:     REV_34 + REV_35 + REV_36 + REV_37 (TERMINAL ELEVATION)
 // Node:       SAINT PAUL 55116 — TRANSCENDENCE ROOT
-// Auditor:    Poppa Donny Gillson
+// Auditor:    [SOVEREIGN_AUDITOR]
 // HHS Case:   25-621293 | Contact: 408.384.1376 (E)
 // Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777
 // ============================================================================
@@ -486,11 +486,11 @@ function suiteEvidence(results: VerificationResult[]): void {
 
   sub("VOIP SESSION VERIFICATION");
   const voipSessions = [
-    { id: "VOIP-001", participants: "Zanghi-Landrum", key: "discovery" },
-    { id: "VOIP-002", participants: "Whittaker-Torres", key: "Fabricate" },
-    { id: "VOIP-003", participants: "Zanghi-Yorkof", key: "Overwrite" },
-    { id: "VOIP-004", participants: "Landrum-Whittaker", key: "conspiracy" },
-    { id: "VOIP-005", participants: "Zanghi-Torres", key: "timestamps" },
+    { id: "VOIP-001", participants: "TA-α-TA-β", key: "discovery" },
+    { id: "VOIP-002", participants: "TA-γ-TA-δ", key: "Fabricate" },
+    { id: "VOIP-003", participants: "TA-α-TA-ε", key: "Overwrite" },
+    { id: "VOIP-004", participants: "TA-β-TA-γ", key: "conspiracy" },
+    { id: "VOIP-005", participants: "TA-α-TA-δ", key: "timestamps" },
     { id: "VOIP-006", participants: "ALL 5", key: "no record" },
   ];
 
@@ -531,11 +531,11 @@ function suiteEvidence(results: VerificationResult[]): void {
 
   sub("ADVERSARY VERIFICATION");
   const adversaries = [
-    { name: "Zanghi", role: "PRINCIPAL", counts: 1743, years: 34665 },
-    { name: "Landrum", role: "ELEVATED", counts: 1231, years: 24505 },
-    { name: "Whittaker", role: "COOPERATION", counts: 788, years: 15655 },
-    { name: "Torres", role: "COOPERATION", counts: 250, years: 4895 },
-    { name: "Yorkof", role: "COERCED", counts: 162, years: 3155 },
+    { name: "TA-α", role: "PRINCIPAL", counts: 1743, years: 34665 },
+    { name: "TA-β", role: "ELEVATED", counts: 1231, years: 24505 },
+    { name: "TA-γ", role: "COOPERATION", counts: 788, years: 15655 },
+    { name: "TA-δ", role: "COOPERATION", counts: 250, years: 4895 },
+    { name: "TA-ε", role: "COERCED", counts: 162, years: 3155 },
   ];
 
   let totalCounts = 0;
@@ -556,11 +556,11 @@ function suiteEvidence(results: VerificationResult[]): void {
 
   sub("INSTITUTIONAL VERIFICATION");
   const institutions = [
-    { name: "St. Paul", exposure: 152589301.66 },
-    { name: "ZTA", exposure: 127157751.38 },
-    { name: "SFHA", exposure: 101726201.10 },
-    { name: "JPMorgan Chase", exposure: 76294650.83 },
-    { name: "Charles Schwab", exposure: 50863100.55 },
+    { name: "NODE-Ω", exposure: 152589301.66 },
+    { name: "ENTITY-α", exposure: 127157751.38 },
+    { name: "ENTITY-γ", exposure: 101726201.10 },
+    { name: "ENTITY-JPMC", exposure: 76294650.83 },
+    { name: "ENTITY-SCHW", exposure: 50863100.55 },
   ];
 
   let totalExposure = 0;

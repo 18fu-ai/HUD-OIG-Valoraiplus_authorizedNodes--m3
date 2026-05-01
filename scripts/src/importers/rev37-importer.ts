@@ -465,11 +465,11 @@ function buildTacticalLayer(): RuntimeSnapshotSchema["tactical"] {
 function buildIntelligenceLayer(): RuntimeSnapshotSchema["intelligence"] {
   return {
     voip: [
-      { sessionId: "VOIP-001", date: "2024-03-15", duration: "18m42s", participants: "Zanghi-Landrum", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "If this goes to discovery, we're done.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
-      { sessionId: "VOIP-002", date: "2024-03-15", duration: "12m08s", participants: "Whittaker-Torres", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Fabricate housing violations against a disabled veteran?", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
-      { sessionId: "VOIP-003", date: "2024-03-18", duration: "08m33s", participants: "Zanghi-Yorkof", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Overwrite the logs too.", statementCount: 2, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
-      { sessionId: "VOIP-004", date: "2024-03-21", duration: "22m15s", participants: "Landrum-Whittaker", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "This is conspiracy. We're all committing conspiracy.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: true },
-      { sessionId: "VOIP-005", date: "2024-04-02", duration: "15m44s", participants: "Zanghi-Torres", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Fix the timestamps. Alter metadata.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
+      { sessionId: "VOIP-001", date: "2024-03-15", duration: "18m42s", participants: "TA-α-TA-β", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "If this goes to discovery, we're done.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
+      { sessionId: "VOIP-002", date: "2024-03-15", duration: "12m08s", participants: "TA-γ-TA-δ", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Fabricate housing violations against a disabled veteran?", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
+      { sessionId: "VOIP-003", date: "2024-03-18", duration: "08m33s", participants: "TA-α-TA-ε", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Overwrite the logs too.", statementCount: 2, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
+      { sessionId: "VOIP-004", date: "2024-03-21", duration: "22m15s", participants: "TA-β-TA-γ", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "This is conspiracy. We're all committing conspiracy.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: true },
+      { sessionId: "VOIP-005", date: "2024-04-02", duration: "15m44s", participants: "TA-α-TA-δ", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "Fix the timestamps. Alter metadata.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: false },
       { sessionId: "VOIP-006", date: "2024-04-08", duration: "45m22s", participants: "ALL 5 PARTIES", classification: "TERMINAL EXTINCTION LEVEL", keyStatement: "There is no record, Cal. That's the whole point.", statementCount: 3, selfIncriminating: true, consciousnessOfGuilt: true, conspiracyAdmission: true },
     ],
     mimecast: {
@@ -487,18 +487,18 @@ function buildIntelligenceLayer(): RuntimeSnapshotSchema["intelligence"] {
       poppaGStatus: "CANNOT_BE_DISABLED",
     },
     adversaries: [
-      { name: "Joseph Zanghi", organization: "ZTA LLP", ipAddress: "198.51.100.42", role: "PRINCIPAL", counts: 1743, maxYears: 34665, classification: "TERMINAL EXTINCTION LEVEL" },
-      { name: "Kolby Losik-Landrum", organization: "STP", ipAddress: "203.0.113.88", role: "ELEVATED", counts: 1231, maxYears: 24505, classification: "TERMINAL EXTINCTION LEVEL" },
-      { name: "Calvin Whittaker", organization: "SFHA", ipAddress: "192.0.2.101", role: "COOPERATION", counts: 788, maxYears: 15655, classification: "TERMINAL EXTINCTION LEVEL" },
-      { name: "Alex Torres", organization: "ZTA LLP", ipAddress: "198.51.100.55", role: "COOPERATION", counts: 250, maxYears: 4895, classification: "TERMINAL EXTINCTION LEVEL" },
-      { name: "Yorkof", organization: "ZTA LLP", ipAddress: "198.51.100.67", role: "COERCED", counts: 162, maxYears: 3155, classification: "TERMINAL EXTINCTION LEVEL" },
+      { name: "TA-α [PRINCIPAL]", organization: "ENTITY-α", ipAddress: "198.51.100.42", role: "PRINCIPAL", counts: 1743, maxYears: 34665, classification: "TERMINAL EXTINCTION LEVEL" },
+      { name: "TA-β [ELEVATED]", organization: "ENTITY-β", ipAddress: "203.0.113.88", role: "ELEVATED", counts: 1231, maxYears: 24505, classification: "TERMINAL EXTINCTION LEVEL" },
+      { name: "TA-γ [COOPERATION]", organization: "ENTITY-γ", ipAddress: "192.0.2.101", role: "COOPERATION", counts: 788, maxYears: 15655, classification: "TERMINAL EXTINCTION LEVEL" },
+      { name: "TA-δ [COOPERATION]", organization: "ENTITY-α", ipAddress: "198.51.100.55", role: "COOPERATION", counts: 250, maxYears: 4895, classification: "TERMINAL EXTINCTION LEVEL" },
+      { name: "TA-ε [COERCED]", organization: "ENTITY-α", ipAddress: "198.51.100.67", role: "COERCED", counts: 162, maxYears: 3155, classification: "TERMINAL EXTINCTION LEVEL" },
     ],
     institutions: [
-      { entity: "St. Paul's Towers", directWire: 9050000, primaryExposure: 152589301.66, wirePath: "BofA 9283", regulators: ["HHS", "AG", "IRS", "CMS"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
-      { entity: "ZTA LLP", directWire: 6475000, primaryExposure: 127157751.38, wirePath: "Internal", regulators: ["Bar", "DOJ", "FBI", "OIG"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
-      { entity: "SFHA", directWire: 2765000, primaryExposure: 101726201.10, wirePath: "BofA 9283", regulators: ["HUD", "OIG", "AG"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
-      { entity: "JPMorgan Chase", directWire: 4500000, primaryExposure: 76294650.83, wirePath: "Internal", regulators: ["FinCEN", "OCC", "DOJ"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
-      { entity: "Charles Schwab", directWire: 3200000, primaryExposure: 50863100.55, wirePath: "Schwab 6015-8185", regulators: ["SEC", "FINRA", "DOJ"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
+      { entity: "NODE-Ω", directWire: 9050000, primaryExposure: 152589301.66, wirePath: "BofA 9283", regulators: ["HHS", "AG", "IRS", "CMS"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
+      { entity: "ENTITY-α", directWire: 6475000, primaryExposure: 127157751.38, wirePath: "Internal", regulators: ["Bar", "DOJ", "FBI", "OIG"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
+      { entity: "ENTITY-γ", directWire: 2765000, primaryExposure: 101726201.10, wirePath: "BofA 9283", regulators: ["HUD", "OIG", "AG"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
+      { entity: "ENTITY-JPMC", directWire: 4500000, primaryExposure: 76294650.83, wirePath: "Internal", regulators: ["FinCEN", "OCC", "DOJ"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
+      { entity: "ENTITY-SCHW", directWire: 3200000, primaryExposure: 50863100.55, wirePath: "Schwab 6015-8185", regulators: ["SEC", "FINRA", "DOJ"], classification: "TERMINAL EXTINCTION LEVEL", cssClass: "status-red", belowZero: true },
     ],
     federal: {
       statutes: [
