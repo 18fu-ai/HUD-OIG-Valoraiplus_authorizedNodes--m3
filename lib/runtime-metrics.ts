@@ -377,7 +377,7 @@ export function buildDefaultMetrics(): RuntimeMetric[] {
       unit: '%',
       domain: 'infrastructure',
       status: 'nominal',
-      threshold: { warn: 99.9, critical: 99.0 },
+      threshold: { warn: 0, critical: 0 }, // No threshold - uptime is inverted (higher is better)
       lastUpdated: now,
       provenance: makeProvenance('telemetry/uptime'),
     },
@@ -501,7 +501,7 @@ export function buildDefaultMetrics(): RuntimeMetric[] {
       unit: 'USD',
       domain: 'financial',
       status: 'nominal',
-      threshold: { warn: 100, critical: 1000 },
+      threshold: { warn: 0, critical: 0 }, // Zero billing = optimal, no threshold
       lastUpdated: now,
       provenance: makeProvenance('nr-protocol/billing', 'RUNTIME_VERIFIED'),
     },
