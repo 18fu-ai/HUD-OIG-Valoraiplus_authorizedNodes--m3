@@ -72,12 +72,15 @@ export function RuntimeBar({ signals, driftReport, truthCycle, className }: Runt
   if (!mounted) return null;
 
   const avg = signalAvg();
-  const signalStatus = avg >= 0.85 ? 'NOMINAL' : avg >= 0.6 ? 'DEGRADED' : 'CRITICAL';
-  const signalColor = avg >= 0.85 
-    ? 'text-status-anchored' 
-    : avg >= 0.6 
-      ? 'text-status-active' 
-      : 'text-status-locked';
+  // ABSOLUTE_9_ZERO_DRIFT: NOMINAL only at 100%, OPTIMUM only at perfect score
+  const signalStatus = avg >= 0.9999 ? 'OPTIMUM' : avg >= 0.95 ? 'NOMINAL' : avg >= 0.8 ? 'DEGRADED' : 'CRITICAL';
+  const signalColor = avg >= 0.9999 
+    ? 'text-emerald-400' 
+    : avg >= 0.95 
+      ? 'text-status-anchored' 
+      : avg >= 0.8 
+        ? 'text-status-active' 
+        : 'text-status-locked';
 
   return (
     <div 

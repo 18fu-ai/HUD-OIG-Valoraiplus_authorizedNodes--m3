@@ -32,14 +32,17 @@ const driftTypeLabels: Record<string, string> = {
  * Shows both the drift event log and the 7-dimension signal radar.
  */
 export function DriftMonitor({ driftReport, signals, className }: DriftMonitorProps) {
+  // For display, invert negative signals so 0 (optimal) shows as 100%
+  // actorEscalation: 0 = good (no threats), so display as 1 - value
+  // statementRisk: 0 = good (no risk), so display as 1 - value
   const signalEntries = [
-    { key: 'eventVelocity', label: 'Event Velocity', value: signals.eventVelocity },
-    { key: 'actorEscalation', label: 'Actor Escalation', value: signals.actorEscalation },
-    { key: 'mutationDensity', label: 'Mutation Density', value: signals.mutationDensity },
-    { key: 'replayConfidence', label: 'Replay Confidence', value: signals.replayConfidence },
-    { key: 'sourceCompleteness', label: 'Source Completeness', value: signals.sourceCompleteness },
-    { key: 'statementRisk', label: 'Statement Risk', value: signals.statementRisk },
-    { key: 'auditReadiness', label: 'Audit Readiness', value: signals.auditReadiness },
+    { key: 'eventVelocity', label: 'Event Velocity', value: signals.eventVelocity, inverted: false },
+    { key: 'actorEscalation', label: 'Threat Contained', value: 1 - signals.actorEscalation, inverted: true },
+    { key: 'mutationDensity', label: 'Mutation Density', value: signals.mutationDensity, inverted: false },
+    { key: 'replayConfidence', label: 'Replay Confidence', value: signals.replayConfidence, inverted: false },
+    { key: 'sourceCompleteness', label: 'Source Complete', value: signals.sourceCompleteness, inverted: false },
+    { key: 'statementRisk', label: 'Statements Verified', value: 1 - signals.statementRisk, inverted: true },
+    { key: 'auditReadiness', label: 'Audit Readiness', value: signals.auditReadiness, inverted: false },
   ];
 
   return (
@@ -68,7 +71,8 @@ export function DriftMonitor({ driftReport, signals, className }: DriftMonitorPr
         <div className="space-y-2" role="list" aria-label="Protocol signal strengths">
           {signalEntries.map(({ key, label, value }) => {
             const pct = Math.round(value * 100);
-            const barColor = pct >= 85 ? 'bg-status-anchored' : pct >= 60 ? 'bg-status-active' : 'bg-status-locked';
+            // ABSOLUTE_9_ZERO_DRIFT: Green at 100%, yellow 80-99%, red below 80%
+            const barColor = pct >= 100 ? 'bg-emerald-500' : pct >= 95 ? 'bg-status-anchored' : pct >= 80 ? 'bg-status-active' : 'bg-status-locked';
             
             return (
               <div key={key} className="flex items-center gap-3" role="listitem">
