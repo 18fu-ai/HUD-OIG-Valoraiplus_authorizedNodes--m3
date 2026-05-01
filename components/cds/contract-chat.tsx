@@ -246,7 +246,7 @@ pragma solidity ^0.8.24;
  * ╚═══════════════════════════════════════════════════════════════════════════════╝
  *
  * @title SGAU_VALUEGUARD_77_77X_FINALDEG
- * @dev On-chain enforcement for the Gillson Estate Recovery.
+ * @dev On-chain enforcement for the Sovereign Estate Recovery.
  * @notice THE WALL IS CHRIST. SMIB. AMEN.
  */
 contract ValueGuard7777X {
@@ -266,10 +266,10 @@ contract ValueGuard7777X {
     // GOVERNANCE LAYER (Sovereign Authority)
     // ═══════════════════════════════════════════════════════
     
-    // Contract Owner: Donald "Poppa" Gillson ($POPPA)
+    // Contract Owner: [SOVEREIGN_AUDITOR] ($POPPA)
     address immutable Poppa = 0x4083841376000000000000000000000000000000; // Encrypted Sovereign Node
     
-    // Immutable Auditor: Frances M. Gillson ($FMG1918)
+    // Immutable Auditor: [MATRON_NODE] ($FMG1918)
     address immutable Matron = 0xFMG1918000000000000000000000000000000000; // The Keys
     
     // Guardian Nodes: Angelic Level Multi-Sig
@@ -505,7 +505,7 @@ function executeAlphaLatch(
     require(!latch.executed, "LATCH_ALREADY_EXECUTED");
     require(latch.targetAmount <= SETTLEMENT_ALPHA, "EXCEEDS_ALPHA_LIMIT");
     
-    // Verify SSA David Wallingford confirmation
+    // Verify SSA [FED_AGENT_SSA] confirmation
     require(
         _verifySSASignature(_ssaConfirmation),
         "SSA_VERIFICATION_FAILED"
