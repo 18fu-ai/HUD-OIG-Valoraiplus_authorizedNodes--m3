@@ -1,36 +1,34 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { 
-  TRUTH_CYCLE_MS,
-  createSafeInterval,
-  type ProtocolSignals,
-  type DriftReport,
-} from '@/lib/runtime-metrics';
+import { TRUTH_CYCLE_MS, createSafeInterval } from '@/lib/runtime-metrics';
+import { useAuthority } from '@/hooks/use-authority';
 
 interface RuntimeBarProps {
-  signals: ProtocolSignals;
-  driftReport: DriftReport;
-  truthCycle: number;
   className?: string;
 }
 
 /**
- * RuntimeBar — Performance-safe live telemetry strip.
- * Uses requestAnimationFrame-gated timing for the truth cycle counter,
- * preventing unnecessary re-renders when tab is backgrounded.
- * Displays: LIVE indicator, truth cycle, timestamp, signal summary, drift status.
+ * RuntimeBar — Backend Authority-Driven Telemetry Strip
+ * ======================================================
+ * CRITICAL: Dashboard reads greenAllowed and runtimeSignal from backend authority.
+ * Dashboard MUST NOT recompute greenAllowed locally.
+ * 
+ * Core Lock:
+ *   greenAllowed = ancestryComplete && zeroDrift && optimumSignal && assuranceClean && maturationComplete
  */
-export function RuntimeBar({ signals, driftReport, truthCycle, className }: RuntimeBarProps) {
+export function RuntimeBar({ className }: RuntimeBarProps) {
   const [currentTime, setCurrentTime] = useState('');
   const [mounted, setMounted] = useState(false);
   const intervalRef = useRef<(() => void) | null>(null);
+  
+  // BACKEND AUTHORITY - Single source of truth
+  const { authority, isLoading } = useAuthority(1000);
 
   useEffect(() => {
     setMounted(true);
-    // Performance-safe 1s clock using RAF gating
     const safeTimer = createSafeInterval(() => {
       setCurrentTime(new Date().toISOString().slice(0, 19) + 'Z');
     }, 1000);
@@ -40,47 +38,19 @@ export function RuntimeBar({ signals, driftReport, truthCycle, className }: Runt
     };
   }, []);
 
-  /**
-   * ABSOLUTE_9_ZERO_DRIFT Signal Calculation
-   * =========================================
-   * Signal dimensions are scored 0-1, but interpretation differs:
-   * - eventVelocity, mutationDensity, replayConfidence, sourceCompleteness, auditReadiness: 1.0 = good
-   * - actorEscalation, statementRisk: 0.0 = good (inverted - lower is better)
-   * 
-   * For 100% signal: positive signals at 1.0, negative signals at 0.0
-   */
-  const signalAvg = useCallback(() => {
-    // Positive signals (1.0 = optimal)
-    const positiveSignals = [
-      signals.eventVelocity,
-      signals.mutationDensity,
-      signals.replayConfidence,
-      signals.sourceCompleteness,
-      signals.auditReadiness,
-    ];
-    
-    // Negative signals (0.0 = optimal, invert for calculation)
-    const negativeSignals = [
-      1 - signals.actorEscalation,   // 0 escalation = 1.0 score
-      1 - signals.statementRisk,      // 0 risk = 1.0 score
-    ];
-    
-    const allSignals = [...positiveSignals, ...negativeSignals];
-    return allSignals.reduce((a, b) => a + b, 0) / allSignals.length;
-  }, [signals]);
-
   if (!mounted) return null;
 
-  const avg = signalAvg();
-  // ABSOLUTE_9_ZERO_DRIFT: NOMINAL only at 100%, OPTIMUM only at perfect score
-  const signalStatus = avg >= 0.9999 ? 'OPTIMUM' : avg >= 0.95 ? 'NOMINAL' : avg >= 0.8 ? 'DEGRADED' : 'CRITICAL';
-  const signalColor = avg >= 0.9999 
-    ? 'text-emerald-400' 
-    : avg >= 0.95 
-      ? 'text-status-anchored' 
-      : avg >= 0.8 
-        ? 'text-status-active' 
-        : 'text-status-locked';
+  // READ FROM BACKEND AUTHORITY - DO NOT RECOMPUTE LOCALLY
+  const { greenAllowed, runtimeSignal, signalPercent, driftCriticalCount, truthCycle, protocolRev } = authority;
+
+  // Signal color derived from backend runtimeSignal
+  const signalColor = 
+    runtimeSignal === 'OPTIMUM' ? 'text-emerald-400' :
+    runtimeSignal === 'NOMINAL' ? 'text-status-anchored' :
+    runtimeSignal === 'DEGRADED' ? 'text-status-active' : 'text-status-locked';
+
+  // Drift status derived from backend
+  const driftClear = driftCriticalCount === 0 && greenAllowed;
 
   return (
     <div 
@@ -95,17 +65,28 @@ export function RuntimeBar({ signals, driftReport, truthCycle, className }: Runt
       {/* Live Indicator */}
       <div className="flex items-center gap-2">
         <span className="relative flex h-2 w-2" aria-hidden="true">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+          <span className={cn(
+            "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
+            greenAllowed ? "bg-emerald-500" : "bg-primary"
+          )} />
+          <span className={cn(
+            "relative inline-flex rounded-full h-2 w-2",
+            greenAllowed ? "bg-emerald-500" : "bg-primary"
+          )} />
         </span>
-        <span className="font-mono text-xs text-primary">LIVE</span>
+        <span className={cn(
+          "font-mono text-xs",
+          greenAllowed ? "text-emerald-400" : "text-primary"
+        )}>
+          {isLoading ? 'SYNC' : 'LIVE'}
+        </span>
       </div>
 
       {/* Truth Cycle */}
       <div className="font-mono text-xs text-muted-foreground">
         <span className="sr-only">Truth cycle count:</span>
         TRUTH-CYCLE:{' '}
-        <span className="text-primary" aria-label={`${truthCycle} cycles at ${TRUTH_CYCLE_MS}ms`}>
+        <span className={greenAllowed ? "text-emerald-400" : "text-primary"} aria-label={`${truthCycle} cycles at ${TRUTH_CYCLE_MS}ms`}>
           {truthCycle.toLocaleString()}
         </span>{' '}
         @ {TRUTH_CYCLE_MS}ms
@@ -117,29 +98,41 @@ export function RuntimeBar({ signals, driftReport, truthCycle, className }: Runt
         TIMESTAMP: <span className="text-foreground">{currentTime}</span>
       </div>
 
-      {/* Signal Summary */}
+      {/* Signal Summary - FROM BACKEND AUTHORITY */}
       <div className="font-mono text-xs text-muted-foreground">
         SIGNAL:{' '}
         <span className={signalColor}>
-          {signalStatus} ({(avg * 100).toFixed(1)}%)
+          {runtimeSignal} ({signalPercent.toFixed(1)}%)
         </span>
       </div>
 
-      {/* Drift Status */}
+      {/* Drift Status - FROM BACKEND AUTHORITY */}
       <div className="font-mono text-xs text-muted-foreground">
         DRIFT:{' '}
-        {driftReport.systemHealthy ? (
-          <span className="text-status-anchored">CLEAR</span>
+        {driftClear ? (
+          <span className="text-emerald-400">0 ABSOLUTE</span>
         ) : (
           <Badge variant="outline" className="font-mono text-[10px] bg-status-locked/20 text-status-locked border-status-locked/40">
-            {driftReport.criticalDrifts} CRITICAL
+            {driftCriticalCount} CRITICAL
           </Badge>
         )}
       </div>
 
+      {/* Green Allowed Status */}
+      {greenAllowed && (
+        <Badge variant="outline" className="font-mono text-[10px] bg-emerald-500/20 text-emerald-400 border-emerald-500/40">
+          GREEN_RENDER_ALLOWED
+        </Badge>
+      )}
+
       {/* Schema Rev */}
-      <Badge variant="outline" className="font-mono text-[10px] bg-primary/10 text-primary border-primary/40">
-        REV_38
+      <Badge variant="outline" className={cn(
+        "font-mono text-[10px]",
+        greenAllowed 
+          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/40"
+          : "bg-primary/10 text-primary border-primary/40"
+      )}>
+        {protocolRev}
       </Badge>
     </div>
   );

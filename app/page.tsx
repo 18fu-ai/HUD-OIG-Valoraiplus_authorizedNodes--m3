@@ -176,13 +176,8 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Runtime Bar — replaces old inline Live Stats Bar */}
-          <RuntimeBar 
-            signals={signals}
-            driftReport={driftReport}
-            truthCycle={truthCycle}
-            className="mb-6"
-          />
+          {/* Runtime Bar — Backend Authority Driven */}
+          <RuntimeBar className="mb-6" />
 
           {/* Stats Overview */}
           <StatsOverview />
