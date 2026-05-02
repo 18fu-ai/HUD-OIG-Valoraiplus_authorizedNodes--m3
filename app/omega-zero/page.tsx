@@ -63,7 +63,7 @@ interface RuntimeTelemetry {
 
 // --- CONSTANTS ---
 const TARGET_ATTRACTOR = [1, 101, 0, 1];
-const APP_ID = typeof (window as any).__app_id !== 'undefined' ? (window as any).__app_id : 'valor-ai-plus-epistemic';
+const APP_ID = 'valor-ai-plus-epistemic';
 
 // --- MOCK DATA SEED ---
 const MOCK_EPISTEMIC_STATE: EpistemicState = {
