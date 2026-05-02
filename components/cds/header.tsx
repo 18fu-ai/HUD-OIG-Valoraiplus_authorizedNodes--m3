@@ -74,6 +74,7 @@ const navItems = [
   { href: '/porthole', label: 'Porthole', icon: Activity, category: 'system' },
   { href: '/porthole-hud', label: 'Port.Hole HUD', icon: Activity, category: 'system' },
   { href: '/nexus', label: 'Nexus', icon: Globe, category: 'system' },
+  { href: '/forensic-feed', label: 'Forensic Feed', icon: Activity, category: 'system' },
   { href: '/intelligence-report', label: 'Intel Report', icon: Brain, category: 'legal' },
   { href: '/narrative-report', label: 'Full Narrative', icon: FileText, category: 'legal' },
   { href: '/valuation', label: 'Valuation', icon: DollarSign, category: 'legal' },
