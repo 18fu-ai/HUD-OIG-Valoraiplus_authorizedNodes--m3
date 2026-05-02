@@ -137,6 +137,25 @@ const CodeBlock = memo(function CodeBlock({
   );
 });
 
+// Timestamp component that only renders on client to avoid hydration mismatch
+function ClientTimestamp({ date }: { date: Date }) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  if (!mounted) {
+    return <span className="font-mono text-xs text-muted-foreground">--:--:--</span>;
+  }
+  
+  return (
+    <span className="font-mono text-xs text-muted-foreground">
+      {date.toLocaleTimeString()}
+    </span>
+  );
+}
+
 // Memoized message component
 const ChatMessageItem = memo(function ChatMessageItem({ 
   message, 
@@ -194,8 +213,8 @@ const ChatMessageItem = memo(function ChatMessageItem({
           />
         )}
         
-        <div className="font-mono text-xs text-muted-foreground">
-          {message.timestamp.toLocaleTimeString()}
+        <div>
+          <ClientTimestamp date={message.timestamp} />
         </div>
       </div>
       
