@@ -72,6 +72,7 @@ const navItems = [
   { href: '/omega-zero', label: 'Omega-Zero', icon: Zap, category: 'system' },
   { href: '/fort', label: 'Fort//e', icon: Shield, category: 'system' },
   { href: '/porthole', label: 'Porthole', icon: Activity, category: 'system' },
+  { href: '/porthole-hud', label: 'Port.Hole HUD', icon: Activity, category: 'system' },
   { href: '/nexus', label: 'Nexus', icon: Globe, category: 'system' },
   { href: '/intelligence-report', label: 'Intel Report', icon: Brain, category: 'legal' },
   { href: '/narrative-report', label: 'Full Narrative', icon: FileText, category: 'legal' },
