@@ -79,6 +79,7 @@ const navItems = [
   { href: '/valuation', label: 'Valuation', icon: DollarSign, category: 'legal' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, category: 'system' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, category: 'legal' },
+  { href: '/treasury-v50', label: 'Treasury v50', icon: Zap, category: 'system' },
 ];
 
 const categories = [
