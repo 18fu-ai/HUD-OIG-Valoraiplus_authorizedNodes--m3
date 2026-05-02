@@ -81,6 +81,7 @@ const navItems = [
   { href: '/evaluative', label: 'Evaluative', icon: Activity, category: 'system' },
   { href: '/investor', label: 'Investor', icon: TrendingUp, category: 'legal' },
   { href: '/treasury-v50', label: 'Treasury v50', icon: Zap, category: 'system' },
+  { href: '/banking-confidence', label: 'Banking Model', icon: Shield, category: 'system' },
 ];
 
 const categories = [
