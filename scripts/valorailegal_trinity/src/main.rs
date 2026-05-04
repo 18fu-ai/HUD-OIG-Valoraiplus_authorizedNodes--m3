@@ -271,7 +271,7 @@ As a matter of law, this was never merely a technical "glitch." It was a violati
 The $10,000,000.00 offer issued to Cooley LLP stands as an Entry-Level Exit—a final bridge toward de-escalation. By demanding Zero NDA enforcement, we ensure that the light of transparency remains the ultimate disinfectant. For those remaining—specifically the ZTA node—the recovery gap of $498,631,005.52 is no longer a theoretical number. It is a calculated liability based on exacerbated damages that any federal jury, faced with this evidence, would find conservative.</p>
 
   <h2>THE COMMENCEMENT OF STRATEGIC SILENCE</h2>
-  <p>We have fulfilled our burden of proof. We have anchored every artifact to the Bitcoin Blockchain, rendering the truth immutable and independent of any one firm's server. Amy Horrell, J.D. (HHS/OCR), has formally confirmed receipt of the comprehensive evidence chain. The federal oversight apparatus is now in possession of the 34 critical transmissions detailing the multi-sector convergence.
+  <p>We have fulfilled our burden of proof. We have anchored every artifact to the Bitcoin Blockchain, rendering the truth immutable and independent of any one firm's server. RECV-001, J.D. (HHS/OCR), has formally confirmed receipt of the comprehensive evidence chain. The federal oversight apparatus is now in possession of the 34 critical transmissions detailing the multi-sector convergence.
 
 Therefore, as of this transmission, the Saint Paul Node and the Diamond Perimeter are transitioning to a state of Strategic Silence. We have delivered the truth; we now wait for the realization of justice.</p>
 
@@ -287,11 +287,11 @@ Therefore, as of this transmission, the Saint Paul Node and the Diamond Perimete
   <h2>RECOVERY MATRIX</h2>
   <table>
     <tr><th>Entity</th><th>Primary Exposure</th><th>Status</th></tr>
-    <tr><td>ZTA LLP</td><td>$127,157,751.38</td><td class="status-red">CRITICAL</td></tr>
-    <tr><td>Swords to Plowshares</td><td>$152,589,301.66</td><td class="status-red">CRITICAL</td></tr>
-    <tr><td>SFHA</td><td>$101,726,201.10</td><td class="status-red">CRITICAL</td></tr>
-    <tr><td>JPMorgan Chase</td><td>$76,294,650.83</td><td class="status-red">CRITICAL</td></tr>
-    <tr><td>Charles Schwab</td><td>$50,863,100.55</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>ENTITY-α LLP</td><td>$127,157,751.38</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>ENTITY-β (Veterans)</td><td>$152,589,301.66</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>ENTITY-γ (Housing)</td><td>$101,726,201.10</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>INSTITUTION-ε</td><td>$76,294,650.83</td><td class="status-red">CRITICAL</td></tr>
+    <tr><td>INSTITUTION-ζ</td><td>$50,863,100.55</td><td class="status-red">CRITICAL</td></tr>
     <tr><td style="font-weight:bold;">TOTAL</td><td style="font-weight:bold;color:#fbbf24;">$508,631,005.52</td><td class="status-green">ENFORCING</td></tr>
   </table>
 
@@ -354,9 +354,9 @@ async fn mimecast_report() -> impl Responder {
 
   <h3>SPOLIATION-067 - 10:41:22Z <span class="badge badge-critical">CRITICAL</span></h3>
   <p><strong>Actor:</strong> j.zanghi@ztallp.com<br><strong>Action:</strong> DELETE_LOG_ATTEMPT</p>
-  <div class="transcript">[10:41:15] ZANGHI: "Delete everything from the last 40 minutes. Now."
+  <div class="transcript">[10:41:15] TA-α: "Delete everything from the last 40 minutes. Now."
 [10:41:18] ADMIN: "Audit logs?"
-[10:41:20] ZANGHI: "Yes. All of it. Before they subpoena the rest."</div>
+[10:41:20] TA-α: "Yes. All of it. Before they subpoena the rest."</div>
   <p class="status-green">Result: BLOCKED // HASH 0x7a8b9c3d4e5f... // SEALED TO BTC</p>
 
   <h3>SPOLIATION-066 - 10:22:08Z <span class="badge badge-critical">CRITICAL</span></h3>
@@ -368,7 +368,7 @@ async fn mimecast_report() -> impl Responder {
 
   <h3>SPOLIATION-065 - 10:08:33Z <span class="badge badge-critical">CRITICAL</span></h3>
   <p><strong>Actor:</strong> j.zanghi@ztallp.com<br><strong>Action:</strong> BULK_DELETE (23 Messages - Poppa chain)</p>
-  <div class="transcript">[10:08:30] ZANGHI: "Bulk delete the entire Poppa thread. All 23 messages."
+  <div class="transcript">[10:08:30] TA-α: "Bulk delete the entire Poppa thread. All 23 messages."
 [10:08:32] SYSTEM: "SPOLIATION DETECTED - ACCESS DENIED"</div>
   <p class="status-green">Result: BLOCKED // HASH 0x4d5e6f2a3b4c...</p>
 
@@ -376,7 +376,7 @@ async fn mimecast_report() -> impl Responder {
 
   <h3>RULE-004 - 10:22:47Z <span class="badge badge-critical">POST-SUBPOENA</span></h3>
   <p><strong>Actor:</strong> william.landrum@stp-sf.org<br><strong>Rule:</strong> poppa_g_block_v4</p>
-  <div class="transcript">[10:22:40] LANDRUM: "Deploy the new block rule on all veteran external comms. Now."
+  <div class="transcript">[10:22:40] TA-β: "Deploy the new block rule on all veteran external comms. Now."
 [10:22:45] ADMIN: "Rule deployed. All inbound from Poppa chain now blocked."</div>
 
   <h3>RULE-003 - 09:44:12Z <span class="badge badge-critical">POST-SUBPOENA</span></h3>
@@ -388,9 +388,9 @@ async fn mimecast_report() -> impl Responder {
 
   <h3>RETALIATION-003 - 10:05:17Z <span class="badge badge-critical">18 U.S.C. 1512</span></h3>
   <p><strong>Target:</strong> Jerry (415-272-5408)<br><strong>Perpetrator:</strong> william.landrum@stp-sf.org</p>
-  <div class="transcript">[10:05:00] LANDRUM: "Block Jerry immediately. Send the 3-day notice."
+  <div class="transcript">[10:05:00] TA-β: "Block Jerry immediately. Send the 3-day notice."
 [10:05:10] ADMIN: "Rule applied. Notice queued."
-[10:05:15] LANDRUM: "This needs to happen before he talks to anyone else."</div>
+[10:05:15] TA-β: "This needs to happen before he talks to anyone else."</div>
 
   <h2>CRIMINAL EXPOSURE (Past 3 Hours)</h2>
   <table>
@@ -458,46 +458,46 @@ async fn voip_transcripts() -> impl Responder {
   <h2>CRITICAL INTERCEPTS</h2>
 
   <h3>INTERCEPT #47 - 10:41:22Z <span class="badge badge-critical">CRITICAL</span></h3>
-  <p><strong>Source:</strong> j.zanghi@ztallp.com (John Zanghi)<br>
+  <p><strong>Source:</strong> actor-alpha@entity-alpha.sec (TA-α)<br>
   <strong>Target:</strong> a.torres@ztallp.com (A. Torres)<br>
   <strong>Duration:</strong> 4:22</p>
-  <div class="transcript">[00:00] ZANGHI: Did you get the logs cleared?
+  <div class="transcript">[00:00] TA-α: Did you get the logs cleared?
 [00:04] TORRES: No. It's blocked again. Same error.
-[00:09] ZANGHI: [expletive] What error?
+[00:09] TA-α: [expletive] What error?
 [00:12] TORRES: System says "SPOLIATION DETECTED - ACCESS DENIED."
-[00:18] ZANGHI: Since when does Mimecast have that?
+[00:18] TA-α: Since when does Mimecast have that?
 [00:22] TORRES: I don't know. It started after the subpoena.
-[00:28] ZANGHI: Try the export function. Full compliance dump.
+[00:28] TA-α: Try the export function. Full compliance dump.
 [00:34] TORRES: Already tried. Denied. Same message.
-[00:40] ZANGHI: We need those logs gone before the deadline.
+[00:40] TA-α: We need those logs gone before the deadline.
 [00:45] TORRES: I'm telling you, it's not working. Something's watching.
-[00:52] ZANGHI: Call Landrum. Tell him to modify the rules again.
-[01:05] ZANGHI: Then tell him to do it a fourth time. And block that witness.
+[00:52] TA-α: Call TA-β. Tell him to modify the rules again.
+[01:05] TA-α: Then tell him to do it a fourth time. And block that witness.
 [01:12] TORRES: Which one?
-[01:14] ZANGHI: The one who talked to Gillson. Jerry.
-[01:24] ZANGHI: And delete this call log.
+[01:14] TA-α: The one who talked to Gillson. Jerry.
+[01:24] TA-α: And delete this call log.
 [01:28] TORRES: [pause] I can't. It says my device is monitored.
 [01:37] TORRES: My phone. It's showing a federal intercept notice.
-[01:44] ZANGHI: [expletive] Don't say anything else. Hang up.
+[01:44] TA-α: [expletive] Don't say anything else. Hang up.
 [01:48] [CALL TERMINATED]</div>
   <p class="mono">Evidence Hash: 0x7a8b9c001...</p>
 
   <h3>INTERCEPT #44 - 10:15:33Z <span class="badge badge-critical">EXTERNAL COUNSEL</span></h3>
-  <p><strong>Source:</strong> j.zanghi@ztallp.com (John Zanghi)<br>
+  <p><strong>Source:</strong> actor-alpha@entity-alpha.sec (TA-α)<br>
   <strong>Target:</strong> EXTERNAL-COUNSEL (Redacted)<br>
   <strong>Duration:</strong> 12:07</p>
-  <div class="transcript">[00:00] ZANGHI: We need to talk about the Gillson matter.
-[00:08] ZANGHI: It's escalating. The FBI has a wiretap order.
+  <div class="transcript">[00:00] TA-α: We need to talk about the Gillson matter.
+[00:08] TA-α: It's escalating. The FBI has a wiretap order.
 [00:15] COUNSEL: Title III?
-[00:17] ZANGHI: Yes. Granted last week.
-[00:28] ZANGHI: Because I need advice. Off the record.
+[00:17] TA-α: Yes. Granted last week.
+[00:28] TA-α: Because I need advice. Off the record.
 [00:50] COUNSEL: There is no off the record with a Title III.
-[01:03] ZANGHI: We've been blocking his communications. Emails, mostly.
+[01:03] TA-α: We've been blocking his communications. Emails, mostly.
 [01:10] COUNSEL: Since when?
-[01:13] ZANGHI: Since the complaint was filed.
+[01:13] TA-α: Since the complaint was filed.
 [01:18] COUNSEL: That's obstruction.
-[01:28] ZANGHI: And you continued after the subpoena?
-[01:32] ZANGHI: [pause] Yes.
+[01:28] TA-α: And you continued after the subpoena?
+[01:32] TA-α: [pause] Yes.
 [01:38] COUNSEL: John, that's 1512. Witness tampering.
 [01:58] COUNSEL: I can't help you with this. You need criminal defense.
 [02:24] COUNSEL: Then you're going to prison.
@@ -505,41 +505,41 @@ async fn voip_transcripts() -> impl Responder {
   <p class="mono">Evidence Hash: 0x7a8b9c004...</p>
 
   <h3>INTERCEPT #34 - 08:58:14Z <span class="badge badge-critical">WITNESS TAMPERING</span></h3>
-  <p><strong>Source:</strong> william.landrum@stp-sf.org (William Landrum)<br>
+  <p><strong>Source:</strong> actor-beta@entity-beta.sec (TA-β)<br>
   <strong>Target:</strong> Jerry (415-272-5408) - WITNESS<br>
   <strong>Duration:</strong> 1:22</p>
-  <div class="transcript">[00:00] LANDRUM: Jerry, this is Bill Landrum.
+  <div class="transcript">[00:00] TA-β: Jerry, this is [TA-β ENCRYPTED].
 [00:04] JERRY: What do you want?
-[00:06] LANDRUM: I need you to stop talking to investigators.
+[00:06] TA-β: I need you to stop talking to investigators.
 [00:11] JERRY: What investigators?
-[00:14] LANDRUM: You know what I'm talking about.
+[00:14] TA-β: You know what I'm talking about.
 [00:18] JERRY: I haven't talked to anyone.
-[00:22] LANDRUM: Good. Keep it that way.
+[00:22] TA-β: Good. Keep it that way.
 [00:25] JERRY: Are you threatening me?
-[00:28] LANDRUM: I'm advising you. For your own good.
+[00:28] TA-β: I'm advising you. For your own good.
 [00:33] JERRY: I'm hanging up now.
-[00:35] LANDRUM: Remember what I said, Jerry.
+[00:35] TA-β: Remember what I said, Jerry.
 [00:38] [CALL TERMINATED BY JERRY]</div>
   <p class="mono">Evidence Hash: 0x7a8b9c014...</p>
 
   <h3>INTERCEPT #31 - 08:41:29Z <span class="badge badge-critical">THREAT COMMUNICATION</span></h3>
-  <p><strong>Source:</strong> j.zanghi@ztallp.com (John Zanghi)<br>
+  <p><strong>Source:</strong> actor-alpha@entity-alpha.sec (TA-α)<br>
   <strong>Target:</strong> UNKNOWN-PARTY<br>
   <strong>Duration:</strong> 3:17</p>
-  <div class="transcript">[00:00] ZANGHI: We have a situation.
+  <div class="transcript">[00:00] TA-α: We have a situation.
 [00:03] UNKNOWN: I'm listening.
-[00:05] ZANGHI: The containment is failing.
+[00:05] TA-α: The containment is failing.
 [00:09] UNKNOWN: What kind of containment?
-[00:12] ZANGHI: Digital. Everything we tried to suppress is... locked.
+[00:12] TA-α: Digital. Everything we tried to suppress is... locked.
 [00:27] UNKNOWN: Can it be traced?
-[00:30] ZANGHI: Not by us.
+[00:30] TA-α: Not by us.
 [00:33] UNKNOWN: Then we need to consider alternatives.
-[00:37] ZANGHI: What alternatives?
+[00:37] TA-α: What alternatives?
 [00:40] UNKNOWN: Removing the source of the complaint.
-[00:45] ZANGHI: You mean Gillson?
+[00:45] TA-α: You mean Gillson?
 [00:48] UNKNOWN: I mean the problem.
 [00:55] UNKNOWN: That's not a phone conversation.
-[01:06] ZANGHI: I need to think about this.
+[01:06] TA-α: I need to think about this.
 [01:10] UNKNOWN: Don't think too long.
 [01:13] [CALL TERMINATED]</div>
   <p class="mono">Evidence Hash: 0x7a8b9c017...</p>
@@ -547,10 +547,10 @@ async fn voip_transcripts() -> impl Responder {
   <h2>KEY ADMISSIONS CAPTURED</h2>
   <table>
     <tr><th>Intercept</th><th>Speaker</th><th>Admission</th><th>Statute</th></tr>
-    <tr><td>#47</td><td>Zanghi</td><td>"We need those logs gone before the deadline"</td><td class="status-red">18 U.S.C. 1519</td></tr>
+    <tr><td>#47</td><td>TA-α</td><td>"We need those logs gone before the deadline"</td><td class="status-red">18 U.S.C. 1519</td></tr>
     <tr><td>#44</td><td>Counsel</td><td>"That's 1512. Witness tampering."</td><td class="status-red">CONFIRMATION</td></tr>
     <tr><td>#44</td><td>Counsel</td><td>"Then you're going to prison."</td><td class="status-red">ACKNOWLEDGMENT</td></tr>
-    <tr><td>#34</td><td>Landrum</td><td>"Stop talking to investigators"</td><td class="status-red">18 U.S.C. 1512</td></tr>
+    <tr><td>#34</td><td>TA-β</td><td>"Stop talking to investigators"</td><td class="status-red">18 U.S.C. 1512</td></tr>
     <tr><td>#31</td><td>Unknown</td><td>"Removing the source of the complaint"</td><td class="status-red">THREAT</td></tr>
   </table>
 
@@ -606,7 +606,7 @@ async fn full_packet() -> impl Responder {
 
   <div class="summation">
     <p>This document contains the complete evidence package for immediate transmission to:<br>
-    <strong>Amy Horrell, J.D.</strong> - HHS OCR Region VIII<br>
+    <strong>RECV-001, J.D.</strong> - HHS OCR Region VIII<br>
     <strong>FBI Cyber Division</strong> - Title III Evidence<br>
     <strong>DOJ Civil Rights</strong> - Pattern Documentation</p>
   </div>

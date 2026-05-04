@@ -3,20 +3,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 
-// Sovereign Parchment Palette
+// Sovereign Parchment Palette - ENCRYPTED ACTOR REGISTRY
 const ACTORS = [
-  { id: "M. Starn", institution: "CSU Counsel", classification: "Weaponized Litigation", breach: "Maria Starn Project Default", severity: "critical" },
-  { id: "V. Reyes", institution: "Swords to Plowshares", classification: "VR&E Sabotage", breach: "Chapter 31 / Shipmate Duty", severity: "critical" },
-  { id: "A. Horrell", institution: "HHS/OCR", classification: "Oversight Erasure", breach: "Case 25-621293 Blockade", severity: "elevated" },
-  { id: "J. Moglia", institution: "VA Healthcare", classification: "Medical Abandonment", breach: "Denial of Critical Care", severity: "critical" },
-  { id: "T. Higgins", institution: "DRC", classification: "Hostile Neutrality", breach: "Audit Resistance", severity: "elevated" },
+  { id: "INST-001", institution: "Academic Counsel", classification: "Weaponized Litigation", breach: "Project Default", severity: "critical" },
+  { id: "INST-002", institution: "Veterans Services", classification: "VR&E Sabotage", breach: "Chapter 31 / Shipmate Duty", severity: "critical" },
+  { id: "INST-003", institution: "HHS/OCR", classification: "Oversight Erasure", breach: "Case 25-621293 Blockade", severity: "elevated" },
+  { id: "INST-004", institution: "VA Healthcare", classification: "Medical Abandonment", breach: "Denial of Critical Care", severity: "critical" },
+  { id: "INST-005", institution: "DRC", classification: "Hostile Neutrality", breach: "Audit Resistance", severity: "elevated" },
 ] as const;
 
 const ERASURE_NODES = [
   { id: "NODE-01", title: "Identity Erasure", description: "Lockout of 2019-period evidence nodes via ursuadams@gmail.com and pen-name nullification.", highlight: false },
   { id: "NODE-02", title: "Technical Muzzle", description: "Timestamped 550 SMTP Siege targeting the N.E.W.T. ADA Assistive Prosthetic.", highlight: false },
   { id: "NODE-03", title: "VR&E Sabotage", description: "Targeted destruction of Chapter 31 vocational paths by Swords to Plowshares (STP).", highlight: true },
-  { id: "NODE-04", title: "Legal Default", description: "Weaponized litigation (Maria Starn Project) collapsing under discovery avoidance.", highlight: false },
+  { id: "NODE-04", title: "Legal Default", description: "Weaponized litigation (INST-001 Project) collapsing under discovery avoidance.", highlight: false },
 ] as const;
 
 type TabId = 'summary' | 'matrix' | 'forensics' | 'forecast';
@@ -241,7 +241,7 @@ export default function Dept12BriefingPage() {
             <Card className="bg-white p-8 rounded-xl border border-gray-200">
               <h2 className="text-2xl font-bold mb-4 text-gray-900 uppercase tracking-tight border-l-4 border-cyan-500 pl-4">Accountability Matrix</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                This section identifies the specific institutional actors and their forensic posture. We highlight the critical correction regarding <strong>Vincent Reyes (STP)</strong>, identifying his role not as a peripheral academic node, but as a primary agent of Chapter 31 VR&E sabotage. His failure to protect a naval shipmate constitutes a terminal breach of duty within the Swords to Plowshares ecosystem. All actors here have been notified of their 10-year liability trajectory.
+                This section identifies the specific institutional actors and their forensic posture. We highlight the critical correction regarding <strong>INST-002 (Veterans Services)</strong>, identifying this actor&apos;s role not as a peripheral academic node, but as a primary agent of Chapter 31 VR&E sabotage. The failure to protect a naval shipmate constitutes a terminal breach of duty within the veterans services ecosystem. All actors here have been notified of their 10-year liability trajectory.
               </p>
               <div className="overflow-hidden rounded-lg border border-gray-200">
                 <table className="w-full text-left border-collapse">
@@ -273,18 +273,18 @@ export default function Dept12BriefingPage() {
               </div>
             </Card>
 
-            {/* Reyes Anomaly */}
+            {/* INST-002 Anomaly */}
             <Card className="bg-orange-50 border border-orange-200 p-8 rounded-xl">
-              <h3 className="text-orange-800 font-black uppercase tracking-widest mb-4">Specific Breach: The Reyes Anomaly</h3>
+              <h3 className="text-orange-800 font-black uppercase tracking-widest mb-4">Specific Breach: The INST-002 Anomaly</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <p className="text-sm text-orange-900 font-medium leading-relaxed">
-                    <strong>Actor:</strong> Vincent Reyes (Swords to Plowshares)<br />
+                    <strong>Actor:</strong> INST-002 (Veterans Services)<br />
                     <strong>Duty:</strong> Vocational Rehabilitation Case Management (Chapter 31)<br />
                     <strong>Status:</strong> Active Saboteur / Breach of Naval Shipmate Loyalty
                   </p>
                   <p className="text-xs text-orange-800 leading-relaxed">
-                    Reyes was responsible for academic and vocational placement. Instead of providing the required protection and reasonable accommodations for a fellow Naval Veteran, he utilized his position to &quot;silo&quot; the Complainant into a system of clinical neglect. This is a deliberate failure of Chapter 31 VR&E statutory requirements.
+                    INST-002 was responsible for academic and vocational placement. Instead of providing the required protection and reasonable accommodations for a fellow Naval Veteran, this actor utilized position to &quot;silo&quot; the Complainant into a system of clinical neglect. This is a deliberate failure of Chapter 31 VR&E statutory requirements.
                   </p>
                 </div>
                 <div className="bg-white p-4 rounded border border-orange-300">

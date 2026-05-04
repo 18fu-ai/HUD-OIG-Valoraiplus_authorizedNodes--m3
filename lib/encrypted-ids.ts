@@ -91,13 +91,35 @@ export const WIRE_ALPHA = 'ACCT-\u2588\u2588\u2588\u2588-\u03B1';
 export const WIRE_BRAVO = 'ACCT-\u2588\u2588\u2588\u2588-\u03B2';
 export const WIRE_CHARLIE = 'ACCT-\u2588\u2588\u2588\u2588-\u03B3';
 
+// --- INSTITUTIONAL ACTORS (Encrypted) ---
+
+/** VR&E Services Actor */
+export const INST_VRE = 'INST-001';
+export const INST_VRE_ORG = 'Veterans Services';
+
+/** Housing Authority Actor */
+export const INST_HOUSING = 'INST-002';
+export const INST_HOUSING_ORG = 'Housing Authority';
+
+/** Healthcare Actor */
+export const INST_HEALTHCARE = 'INST-003';
+export const INST_HEALTHCARE_ORG = 'Healthcare System';
+
+/** Legal Services Actor */
+export const INST_LEGAL = 'INST-004';
+export const INST_LEGAL_ORG = 'Legal Services';
+
+/** Academic Institution Actor */
+export const INST_ACADEMIC = 'INST-005';
+export const INST_ACADEMIC_ORG = 'Academic Institution';
+
 // --- HELPER: Decode map (for internal audit only, never rendered) ---
 
 export const ENCRYPTED_ID_VERSION = '1.0.0';
 export const ENCRYPTED_ID_CLASSIFICATION = 'PII-SHIELDED // OMEGA-UNIFIED';
 
 /** Total encrypted identifiers in this module */
-export const ENCRYPTED_ID_COUNT = 42;
+export const ENCRYPTED_ID_COUNT = 52;
 
 // --- LOOKUP TABLES (for programmatic replacement) ---
 

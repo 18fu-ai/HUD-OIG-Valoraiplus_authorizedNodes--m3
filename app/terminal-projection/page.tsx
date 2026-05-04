@@ -29,33 +29,35 @@ const PATH_B_TIMELINE = [
   { year: '2032-2035', title: 'Total Institutional Insolvency', description: '$177.77M USD liability becomes lien on all future assets. DAO executes total decertification of Silo Nodes.' },
 ];
 
+// ENCRYPTED ACTOR CODES - No real names exposed publicly
 const NAMED_ACTORS = [
-  'Starn', 'Reyes', 'Moglia', 'Zanghi', 'Trimble', 'Whitaker', 
-  'Warrington', 'Doyle', 'Wallingford', 'Fletcher', 'Smith', 'Kaplan'
+  'TA-α', 'TA-β', 'TA-γ', 'TA-δ', 'TA-ε', 'INST-001', 
+  'INST-002', 'INST-003', 'INST-004', 'INST-005', 'INST-006', 'INST-007'
 ];
 
+// ENCRYPTED RECIPIENT CODES - No real names exposed publicly
 const RECIPIENTS = [
-  { name: 'Amy Horrell', org: 'HHS/OCR' },
-  { name: 'Sherene Vann', org: 'OS/OCR' },
-  { name: 'Thuy Nguyen', org: 'California Civil Rights' },
+  { name: 'RECV-001', org: 'HHS/OCR' },
+  { name: 'RECV-002', org: 'OS/OCR' },
+  { name: 'RECV-003', org: 'California Civil Rights' },
   { name: 'VA OIG', org: 'Veterans Affairs' },
-  { name: 'Michael Anfang', org: 'OGC' },
-  { name: 'Vincent Reyes', org: 'CSUMB' },
-  { name: 'CSU Chancellor\'s Office', org: 'CSU' },
-  { name: 'Board of Swords-to-Plowshares', org: 'STP' },
-  { name: 'B. Lyon', org: 'Adler University' },
-  { name: 'Todd Higgins', org: 'DRC' },
-  { name: 'Eric Harris', org: 'DRC' },
-  { name: 'J. Zanghi', org: 'ZTA Law' },
-  { name: 'Joan E. Trimble', org: 'Legal' },
-  { name: 'Joseph Moglia', org: 'VA' },
-  { name: 'Calvin Whitaker', org: 'VA' },
-  { name: 'Andrew Warrington', org: 'VA' },
-  { name: 'Tim Doyle', org: 'Solara' },
-  { name: 'David Wallingford', org: 'NPS' },
-  { name: 'Bob Fletcher', org: 'Ramsey County' },
-  { name: 'Robert A. Smith', org: 'Legal' },
-  { name: 'Debby Kaplan', org: 'HSA' },
+  { name: 'RECV-004', org: 'OGC' },
+  { name: 'RECV-005', org: 'Academic Institution' },
+  { name: 'Chancellor Office', org: 'CSU' },
+  { name: 'Board of Directors', org: 'Veterans Services' },
+  { name: 'RECV-006', org: 'Academic Institution' },
+  { name: 'RECV-007', org: 'DRC' },
+  { name: 'RECV-008', org: 'DRC' },
+  { name: 'RECV-009', org: 'Legal' },
+  { name: 'RECV-010', org: 'Legal' },
+  { name: 'RECV-011', org: 'VA' },
+  { name: 'RECV-012', org: 'VA' },
+  { name: 'RECV-013', org: 'VA' },
+  { name: 'RECV-014', org: 'Healthcare' },
+  { name: 'RECV-015', org: 'NPS' },
+  { name: 'RECV-016', org: 'County' },
+  { name: 'RECV-017', org: 'Legal' },
+  { name: 'RECV-018', org: 'HSA' },
 ];
 
 export default function TerminalProjectionPage() {

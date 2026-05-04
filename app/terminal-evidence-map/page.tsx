@@ -37,27 +37,28 @@ const STATE_AGENCIES = [
   { agency: "SF District Attorney", status: "ACTIVE", role: "Local Prosecution" },
 ];
 
+// ENCRYPTED THREAT ACTORS - No real names exposed publicly
 const THREAT_ACTORS = [
   { 
-    actor: "John Zanghi, Esq.", 
+    actor: "TA-α [ENCRYPTED]", 
     role: "Primary Aggressor", 
     exposure: "18 U.S.C. 241, 1512, 1519; CA State Bar Disbarment",
     classification: "TA-α PRINCIPAL"
   },
   { 
-    actor: "William Landrum", 
+    actor: "TA-β [ENCRYPTED]", 
     role: "Harassment Executor", 
     exposure: "Elder Abuse (CA PC 368); Witness Tampering (18 U.S.C. 1512)",
     classification: "TA-β ELEVATED"
   },
   { 
-    actor: "Calvin Whittaker", 
+    actor: "TA-γ [ENCRYPTED]", 
     role: "Housing Deprivation", 
     exposure: "False Claims Act (31 U.S.C. 3729); Conspiracy",
     classification: "TA-γ COOPERATION"
   },
   { 
-    actor: "Drew Yorkof", 
+    actor: "TA-δ [ENCRYPTED]", 
     role: "Institutional Enabler", 
     exposure: "Mandated Reporter Failure (CA W&I 15630)",
     classification: "TA-δ COERCED"
