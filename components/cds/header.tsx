@@ -86,6 +86,7 @@ const navItems = [
   { href: '/terminal-projection', label: 'Terminal Projection', icon: Zap, category: 'system' },
   { href: '/terminal-evidence-map', label: 'Evidence Map', icon: Shield, category: 'legal' },
   { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
+  { href: '/terminal-hud', label: 'Terminal HUD', icon: Zap, category: 'system' },
 ];
 
 const categories = [
