@@ -83,6 +83,8 @@ const navItems = [
   { href: '/treasury-v50', label: 'Treasury v50', icon: Zap, category: 'system' },
   { href: '/banking-confidence', label: 'Banking Model', icon: Shield, category: 'system' },
   { href: '/velocity-doctrine', label: 'Velocity Doctrine', icon: Shield, category: 'legal' },
+  { href: '/terminal-projection', label: 'Terminal Projection', icon: Zap, category: 'system' },
+  { href: '/terminal-evidence-map', label: 'Evidence Map', icon: Shield, category: 'legal' },
 ];
 
 const categories = [
