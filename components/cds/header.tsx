@@ -85,6 +85,7 @@ const navItems = [
   { href: '/velocity-doctrine', label: 'Velocity Doctrine', icon: Shield, category: 'legal' },
   { href: '/terminal-projection', label: 'Terminal Projection', icon: Zap, category: 'system' },
   { href: '/terminal-evidence-map', label: 'Evidence Map', icon: Shield, category: 'legal' },
+  { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
 ];
 
 const categories = [
