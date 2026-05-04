@@ -88,6 +88,7 @@ const navItems = [
   { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
   { href: '/terminal-hud', label: 'Terminal HUD', icon: Zap, category: 'system' },
   { href: '/forensic-architecture', label: 'Forensic Architecture', icon: Shield, category: 'legal' },
+  { href: '/token-registry', label: '50-Token Registry', icon: Database, category: 'system' },
 ];
 
 const categories = [
