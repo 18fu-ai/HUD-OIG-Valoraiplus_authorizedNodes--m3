@@ -19,7 +19,7 @@ import {
   Wallet, Landmark, Building2, DollarSign, Database, Infinity, Briefcase,
   BookOpen, Cpu, Fingerprint, GitBranch,
   Film, Compass, Globe, MonitorPlay,
-  ChevronDown, Send
+  ChevronDown, Send, Binary
 } from 'lucide-react';
 
 // Complete Quick Links Registry
@@ -44,6 +44,7 @@ const QUICK_LINKS = {
       { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
       { name: 'OMEGA-9B', href: '/omega-9b', icon: Cpu, description: 'Millennium Kernel' },
       { name: 'OMEGA LAUNCH', href: '/omega-launch', icon: Zap, description: 'TX Verification' },
+      { name: 'LOGIC GATE', href: '/logic-gate', icon: Binary, description: 'Sovereign Doctrine' },
       { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
     ]
   },
