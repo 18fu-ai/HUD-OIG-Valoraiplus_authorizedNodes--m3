@@ -84,6 +84,7 @@ const QUICK_LINKS = {
     items: [
       { name: 'TREASURY V50', href: '/treasury-v50', icon: Landmark, description: 'v50 System' },
       { name: 'TREASURY', href: '/treasury', icon: Wallet, description: 'Assets' },
+      { name: 'TEST DEPOSIT', href: '/test-deposit', icon: Send, description: 'Wire Simulation' },
       { name: 'BANKING', href: '/banking-confidence', icon: Building2, description: 'Analysis' },
       { name: 'VALUATION', href: '/valuation', icon: TrendingUp, description: '$1.12Q IP' },
       { name: 'TOKEN REG', href: '/token-registry', icon: Database, description: '56 Tokens' },

@@ -20,7 +20,11 @@ export const PRIMARY_CONNECTED_ACCOUNT = {
   accountHolder: "DON GILLSON",
   accountType: "SchwabOne® Account",
   designation: "DESIGNATED BENE PLAN/TOD",
+  // SECURITY: Full account number - NEVER expose on front-facing displays
   accountNumber: "6015-8185",
+  // SECURITY: Masked account number - USE THIS for all public/front-facing displays
+  accountNumberMasked: "••••-8185",
+  accountNumberLastFour: "8185",
   address: {
     street: "18493 MAIN BLVD",
     city: "LOS GATOS",

@@ -64,18 +64,40 @@ export const CONNECTED_BROKERAGE_ACCOUNT = {
 
 export function ConnectedBrokerageAccount({ 
   compact = false,
-  showHoldings = true 
+  showHoldings = true,
+  showFullAccount = false // SECURITY: Never show full account number on front-facing displays
 }: { 
   compact?: boolean;
   showHoldings?: boolean;
+  showFullAccount?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const account = CONNECTED_BROKERAGE_ACCOUNT;
 
+  // SECURITY: Mask account number - only show last 4 digits
+  const getMaskedAccountNumber = () => {
+    if (showFullAccount && revealed) {
+      return account.accountNumber;
+    }
+    // Extract last 4 characters and mask the rest
+    const lastFour = account.accountNumber.slice(-4);
+    return `••••-${lastFour}`;
+  };
+
   const copyAccountNumber = () => {
-    navigator.clipboard.writeText(account.accountNumber);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    // Only copy if authorized (showFullAccount enabled)
+    if (showFullAccount) {
+      navigator.clipboard.writeText(account.accountNumber);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const toggleReveal = () => {
+    if (showFullAccount) {
+      setRevealed(!revealed);
+    }
   };
 
   if (compact) {
@@ -92,8 +114,11 @@ export function ConnectedBrokerageAccount({
             </div>
           </div>
           <div className="text-right">
-            <p className="text-[10px] text-zinc-500">Account</p>
-            <p className="text-sm font-mono text-emerald-400">{account.accountNumber}</p>
+            <div className="flex items-center gap-1">
+              <Lock className="w-3 h-3 text-zinc-500" />
+              <p className="text-[10px] text-zinc-500">Account (Encrypted)</p>
+            </div>
+            <p className="text-sm font-mono text-emerald-400">{getMaskedAccountNumber()}</p>
           </div>
         </div>
         <div className="mt-3 pt-3 border-t border-emerald-500/20 flex items-center justify-between">
@@ -144,20 +169,40 @@ export function ConnectedBrokerageAccount({
           </div>
           
           <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700/50">
-            <p className="text-[10px] font-bold text-zinc-500 tracking-widest mb-2">ACCOUNT NUMBER</p>
-            <div className="flex items-center gap-2">
-              <p className="text-sm font-mono font-bold text-emerald-400">{account.accountNumber}</p>
-              <button 
-                onClick={copyAccountNumber}
-                className="p-1 rounded hover:bg-zinc-700/50 transition-colors"
-              >
-                {copied ? (
-                  <Check className="w-3 h-3 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3 h-3 text-zinc-500" />
-                )}
-              </button>
+            <div className="flex items-center gap-1 mb-2">
+              <Lock className="w-3 h-3 text-zinc-500" />
+              <p className="text-[10px] font-bold text-zinc-500 tracking-widest">ACCOUNT NUMBER (ENCRYPTED)</p>
             </div>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-mono font-bold text-emerald-400">{getMaskedAccountNumber()}</p>
+              {showFullAccount && (
+                <>
+                  <button 
+                    onClick={toggleReveal}
+                    className="p-1 rounded hover:bg-zinc-700/50 transition-colors"
+                    title={revealed ? "Hide account number" : "Reveal account number"}
+                  >
+                    {revealed ? (
+                      <Lock className="w-3 h-3 text-amber-500" />
+                    ) : (
+                      <Shield className="w-3 h-3 text-zinc-500" />
+                    )}
+                  </button>
+                  <button 
+                    onClick={copyAccountNumber}
+                    className="p-1 rounded hover:bg-zinc-700/50 transition-colors"
+                    title="Copy account number"
+                  >
+                    {copied ? (
+                      <Check className="w-3 h-3 text-emerald-500" />
+                    ) : (
+                      <Copy className="w-3 h-3 text-zinc-500" />
+                    )}
+                  </button>
+                </>
+              )}
+            </div>
+            <p className="text-[10px] text-zinc-600 mt-1">Last 4 digits only for security</p>
           </div>
           
           <div className="bg-zinc-800/50 rounded-xl p-4 border border-zinc-700/50">
