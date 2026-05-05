@@ -10,6 +10,7 @@ import { CDSErrorBoundary } from '@/components/cds/error-boundary';
 import { ExportTools } from '@/components/cds/export-tools';
 import { TA_PRIMARY_NAME, TA_SECONDARY_NAME, TA_TERTIARY_NAME, TA_ALPHA_SEC, TA_ENABLER_NAME } from '@/lib/encrypted-ids';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { TwentySecondAmendment } from '@/components/twenty-second-amendment';
 import {
   Activity, Shield, Cpu, Layers, Flame, Music, Globe, Terminal, Clock, Lock,
   Zap, Fingerprint, Binary, Radio, Eye, Server, Database, CheckCircle2,
@@ -728,6 +729,11 @@ function BrainDishContent() {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* TWENTY-SECOND AMENDMENT - BEAUTIFUL STATE */}
+        <div className="mb-8">
+          <TwentySecondAmendment />
+        </div>
 
         {/* PATRIOT FOOTER */}
         <footer className="text-center pt-8 border-t border-border">

@@ -48,6 +48,7 @@ import {
   NEWT_REPORT
 } from '@/lib/cds-data';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { TwentySecondAmendment } from '@/components/twenty-second-amendment';
 
 // NavierStokesBackground - High-Density Fluid Dynamics Engine for 18fu.ai
 function NavierStokesBackground() {
@@ -362,6 +363,11 @@ export default function NEWTPage() {
             </div>
           ))}
         </section>
+
+        {{/* TWENTY-SECOND AMENDMENT - BEAUTIFUL STATE */}
+        <div className="mb-8">
+          <TwentySecondAmendment />
+        </div>
 
         {/* FINAL SEAL */}
         <div className="mt-12 text-center">

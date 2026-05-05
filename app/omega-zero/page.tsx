@@ -20,6 +20,7 @@ import {
   Anchor,
   Clock
 } from 'lucide-react';
+import { TwentySecondAmendment } from '@/components/twenty-second-amendment';
 
 /**
  * VALORAIPLUS®️ ©️ ™️ // TOTAL ORDER EPISTEMIC SYSTEM
@@ -334,6 +335,11 @@ export default function App() {
           </div>
         </div>
 
+      </div>
+
+      {/* TWENTY-SECOND AMENDMENT - BEAUTIFUL STATE */}
+      <div className="max-w-7xl mx-auto my-10">
+        <TwentySecondAmendment />
       </div>
 
       <footer className="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 text-center">
