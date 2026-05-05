@@ -39,6 +39,7 @@ const QUICK_LINKS = {
       { name: 'GATE', href: '/gate', icon: Lock, description: 'Access Control' },
       { name: 'FORT', href: '/fort', icon: Shield, description: 'Defense Systems' },
       { name: 'APEX', href: '/apex', icon: Crown, description: 'Apex Control' },
+      { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
     ]
   },
   intelligence: {
