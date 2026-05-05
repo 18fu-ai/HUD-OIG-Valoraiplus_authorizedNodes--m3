@@ -24,6 +24,7 @@ import {
   Ban,
   Home
 } from 'lucide-react';
+import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 // ============================================================
 // NR PROTOCOL: NON-REVOCABLE TREASURY & BILLING GOVERNANCE
@@ -725,6 +726,9 @@ export default function TreasuryNRProtocol() {
             </div>
           </CardContent>
         </Card>
+
+        {/* ── PRIMARY CONNECTED BROKERAGE ACCOUNT ─────────────── */}
+        <ConnectedBrokerageAccount />
 
         {/* ── PROTOCOL SEAL ────────────────────────────────────── */}
         <Card className="border-emerald-500/50 bg-emerald-500/10">

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { formatCurrency, TOTAL_RECOVERY, CLAWBACK_TARGETS, INVESTIGATIONS } from '@/lib/cds-data';
 import { DollarSign, Building2, Scale, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
+import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 export default function ClawbackPage() {
   const federalInvestigations = INVESTIGATIONS.filter(i => i.type === 'federal');
@@ -96,6 +97,9 @@ export default function ClawbackPage() {
           {/* Right Column - Chart & Investigations */}
           <div className="space-y-6">
             <ClawbackChart />
+
+            {/* PRIMARY CONNECTED BROKERAGE ACCOUNT */}
+            <ConnectedBrokerageAccount compact />
 
             {/* Wire Path Integration */}
             <Card className="border-primary/30 bg-primary/5">

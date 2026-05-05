@@ -11,6 +11,37 @@ import {
   WIRE_ALPHA, WIRE_BRAVO, WIRE_CHARLIE,
 } from './encrypted-ids';
 
+// ============================================================
+// PRIMARY CONNECTED BROKERAGE ACCOUNT
+// This is the SOLE authorized account for all fund transfers
+// ============================================================
+export const PRIMARY_CONNECTED_ACCOUNT = {
+  institution: "Charles Schwab & Co., Inc.",
+  accountHolder: "DON GILLSON",
+  accountType: "SchwabOne® Account",
+  designation: "DESIGNATED BENE PLAN/TOD",
+  accountNumber: "6015-8185",
+  address: {
+    street: "18493 MAIN BLVD",
+    city: "LOS GATOS",
+    state: "CA",
+    zip: "95033-8392"
+  },
+  statementPeriod: "April 1-30, 2026",
+  currentValue: 5.53,
+  cashBalance: 2.69,
+  sipcProtected: true,
+  verified: true,
+  status: "ACTIVE" as const,
+  customerService: "1-800-435-4000",
+  // Wire path designation
+  wirePathDesignation: "SETTLEMENT ALPHA LATCH",
+  // Total litigation exposure to be recovered to this account
+  litigationExposure: 11487631005.52,
+  // Sovereign IP lien
+  sovereignIPLien: "1.12Q",
+};
+
 // CDS Master Record Data Types and Constants
 // ============================================================
 // DATA SOURCE CLASSIFICATION — DUAL-BOUNDARY INVARIANT

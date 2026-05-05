@@ -10,6 +10,7 @@ import {
   Fingerprint, BarChart3, Wallet, Server, Activity, Users,
   Building2, Landmark, FileSearch, Radio, Cpu, Brain
 } from 'lucide-react';
+import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 /**
  * VALORAIPLUS COMPREHENSIVE INTELLIGENCE REPORT
@@ -1076,6 +1077,19 @@ export default function IntelligenceReportPage() {
                   </div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* PRIMARY CONNECTED BROKERAGE ACCOUNT */}
+          <Card className="bg-zinc-900 border-emerald-500/30">
+            <CardHeader className="border-b border-zinc-800">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Landmark className="w-4 h-4 text-emerald-400" />
+                PRIMARY TRANSFER DESTINATION
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <ConnectedBrokerageAccount showHoldings={false} />
             </CardContent>
           </Card>
 

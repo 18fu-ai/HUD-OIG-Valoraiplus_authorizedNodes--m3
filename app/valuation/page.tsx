@@ -24,6 +24,7 @@ import {
   Clock,
   Home
 } from 'lucide-react';
+import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 // ============================================================
 // VALUATION DATA - DUAL-BOUNDARY CLASSIFICATION
@@ -584,6 +585,15 @@ export default function ValuationPage() {
               </ul>
             </CardContent>
           </Card>
+        </section>
+
+        {/* PRIMARY CONNECTED BROKERAGE ACCOUNT */}
+        <section>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1 h-6 bg-emerald-500"></span>
+            <h2 className="text-lg font-bold text-emerald-400 font-mono">PRIMARY TRANSFER DESTINATION</h2>
+          </div>
+          <ConnectedBrokerageAccount />
         </section>
 
         {/* Footer Seal */}

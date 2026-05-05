@@ -21,6 +21,7 @@ import {
   ArrowRight,
   Home
 } from 'lucide-react';
+import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 // ============================================================
 // SOVEREIGN INVESTOR MANIFEST
@@ -417,6 +418,18 @@ export default function InvestorManifestPage() {
               </div>
             </CardContent>
           </Card>
+        </section>
+
+        {/* 7. PRIMARY CONNECTED BROKERAGE ACCOUNT */}
+        <section>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1 h-6 bg-fuchsia-500"></span>
+            <h2 className="text-xl font-bold text-fuchsia-400 font-mono">7. PRIMARY CONNECTED ACCOUNT</h2>
+          </div>
+          <p className="text-zinc-400 text-sm mb-4">
+            All fund transfers, settlements, and financial recoveries must be directed to this account:
+          </p>
+          <ConnectedBrokerageAccount />
         </section>
 
         {/* FINALITY SEAL */}
