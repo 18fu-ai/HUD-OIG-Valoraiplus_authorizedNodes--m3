@@ -34,6 +34,7 @@ const QUICK_LINKS = {
       { name: 'PORTHOLE HUD', href: '/porthole-hud', icon: MonitorPlay, description: 'Real-Time HUD' },
       { name: 'PORTHOLE', href: '/porthole', icon: Eye, description: 'Sovereign Portal' },
       { name: 'MAINFRAME', href: '/mainframe', icon: Server, description: '14D Core' },
+      { name: 'PROD HUB', href: '/production-hub', icon: Server, description: 'Production Node' },
       { name: 'TERMINAL HUD', href: '/terminal-hud', icon: Terminal, description: 'Command Terminal' },
       { name: 'NEXUS', href: '/nexus', icon: Network, description: 'Neural Hub' },
       { name: 'GATE', href: '/gate', icon: Lock, description: 'Access Control' },
