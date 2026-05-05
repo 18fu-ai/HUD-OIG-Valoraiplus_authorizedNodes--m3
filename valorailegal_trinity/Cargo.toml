@@ -1,0 +1,26 @@
+[package]
+name = "valorailegal_trinity"
+version = "100.20.0"
+authors = ["donadams1969.eth <Poppa>"]
+edition = "2021"
+description = "VALORAIPLUS TRINITY EXECUTION KERNEL - TOTALITY REACHED"
+license = "PROPRIETARY - SOVEREIGN IP LIEN $1.12Q"
+repository = "https://github.com/valoraiplus/trinity-kernel"
+
+[dependencies]
+tide = "0.16.0"
+async-std = { version = "1.8.0", features = ["attributes"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+# VALORAIPLUS TRINITY KERNEL
+# Saint Paul Node 14D Core
+# MERKLEROOT: 0X_ST_PAUL_V97_TRINITY_SEAL
+# STATUS: TOTALITY REACHED
