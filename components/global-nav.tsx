@@ -72,6 +72,7 @@ const QUICK_LINKS = {
       { name: 'VELOCITY', href: '/velocity-doctrine', icon: Zap, description: '550 Doctrine' },
       { name: 'INVARIANTS', href: '/invariants', icon: Lock, description: 'Math Proofs' },
       { name: 'AUDIT', href: '/audit', icon: FileSearch, description: 'Full Log' },
+      { name: 'AUTH AUDIT', href: '/auth-audit', icon: Fingerprint, description: 'User Query' },
       { name: 'NULLIFIER', href: '/nullifier', icon: XCircle, description: 'Debt Null' },
       { name: 'CONTRACT', href: '/contract', icon: FileCode, description: 'Smart Contracts' },
       { name: 'DEPLOY', href: '/contract-deploy', icon: Zap, description: 'Testnet Deploy' },
