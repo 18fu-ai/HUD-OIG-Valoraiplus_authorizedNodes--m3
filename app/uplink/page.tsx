@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,7 +13,11 @@ import {
   Fingerprint, BarChart3, Wallet, Server, Activity, Users,
   Building2, Landmark, FileSearch, Radio, Cpu, Brain,
   RefreshCw, Zap, Target, Clock, Network, XCircle, AlertCircle,
-  Infinity, Atom, Triangle, CircleDot, Waves, Binary, Hash
+  Infinity, Atom, Triangle, CircleDot, Waves, Binary, Hash,
+  ExternalLink, Home, Layers, BookOpen, Film, Gavel, Map,
+  Terminal, Key, Crown, Star, Compass, Rocket, Archive,
+  ScrollText, Flame, BadgeCheck, ShieldCheck, MonitorPlay,
+  Briefcase, FileCode, GitBranch, Settings, ChevronRight
 } from 'lucide-react';
 
 // ============================================================================
@@ -224,6 +229,102 @@ const ATTESTATIONS = [
   { declaration: 'Bridge Status: CLOSED', status: 'PERMANENT', certainty: 100 },
 ];
 
+// ============================================================================
+// COMPLETE QUICK LINKS REGISTRY - ALL INTELLECTUAL PROPERTY & PORTALS
+// ============================================================================
+const QUICK_LINKS = {
+  portals: [
+    { name: 'OMEGA RECOVERY PORTAL', href: '/', icon: Home, status: 'ACTIVE', description: 'Main System Entry' },
+    { name: 'UPLINK COMMAND', href: '/uplink', icon: Zap, status: 'LIVE', description: 'Millennium Σ-Integration' },
+    { name: 'PORTHOLE HUD', href: '/porthole-hud', icon: MonitorPlay, status: 'ACTIVE', description: 'Real-Time HUD Interface' },
+    { name: 'PORTHOLE', href: '/porthole', icon: Eye, status: 'ACTIVE', description: 'Sovereign Portal View' },
+    { name: 'MAINFRAME', href: '/mainframe', icon: Server, status: 'ONLINE', description: '14D Core Mainframe' },
+    { name: 'TERMINAL HUD', href: '/terminal-hud', icon: Terminal, status: 'ACTIVE', description: 'Command Terminal' },
+    { name: 'NEXUS', href: '/nexus', icon: Network, status: 'CONNECTED', description: 'Neural Network Hub' },
+    { name: 'GATE', href: '/gate', icon: Lock, status: 'SECURED', description: 'Access Control' },
+    { name: 'FORT', href: '/fort', icon: ShieldCheck, status: 'FORTIFIED', description: 'Defense Systems' },
+    { name: 'APEX', href: '/apex', icon: Crown, status: 'SUPREME', description: 'Apex Control Center' },
+  ],
+  intelligence: [
+    { name: 'REALTIME INTELLIGENCE', href: '/realtime-intelligence', icon: Activity, status: 'LIVE', description: 'Live Forensic Feed' },
+    { name: 'INTELLIGENCE REPORT', href: '/intelligence-report', icon: FileSearch, status: 'COMPLETE', description: 'Full Intelligence Dossier' },
+    { name: 'INTELLIGENCE DOWNLOAD', href: '/intelligence/download', icon: Archive, status: 'READY', description: 'Evidence Package' },
+    { name: 'INTELLIGENCE HUB', href: '/intelligence', icon: Brain, status: 'ACTIVE', description: 'Central Intelligence' },
+    { name: 'FORENSIC FEED', href: '/forensic-feed', icon: Radio, status: 'STREAMING', description: 'Live Forensic Data' },
+    { name: 'FORENSIC ARCHITECTURE', href: '/forensic-architecture', icon: Layers, status: 'MAPPED', description: 'System Architecture' },
+    { name: 'NARRATIVE REPORT', href: '/narrative-report', icon: FileText, status: 'COMPLETE', description: 'Full Narrative' },
+    { name: 'MIMECAST FORENSICS', href: '/mimecast', icon: Mail, status: 'SEALED', description: '284,729 Emails Analyzed' },
+    { name: 'TERMINAL EVIDENCE MAP', href: '/terminal-evidence-map', icon: Map, status: 'COMPLETE', description: 'Evidence Mapping' },
+    { name: 'TERMINAL PROJECTION', href: '/terminal-projection', icon: TrendingUp, status: 'ACTIVE', description: 'Outcome Projections' },
+  ],
+  legal: [
+    { name: 'CLAWBACK ENGINE', href: '/clawback', icon: Gavel, status: 'ARMED', description: '$11.487B Recovery' },
+    { name: 'VELOCITY DOCTRINE', href: '/velocity-doctrine', icon: Zap, status: 'ENFORCED', description: '550 SMTP Doctrine' },
+    { name: 'INVARIANTS', href: '/invariants', icon: Lock, status: 'SEALED', description: 'Mathematical Proofs' },
+    { name: 'AUDIT TRAIL', href: '/audit', icon: FileSearch, status: 'COMPLETE', description: 'Full Audit Log' },
+    { name: 'NULLIFIER', href: '/nullifier', icon: XCircle, status: 'ACTIVE', description: 'Debt Nullification' },
+    { name: 'CONTRACT', href: '/contract', icon: FileCode, status: 'EXECUTED', description: 'Smart Contracts' },
+    { name: 'CONTRACT CHAT', href: '/contract/chat', icon: Terminal, status: 'ACTIVE', description: 'Contract Interface' },
+    { name: 'POLICY ENGINE', href: '/policy-engine', icon: Settings, status: 'ENFORCING', description: 'Policy Enforcement' },
+    { name: 'EVALUATIVE', href: '/evaluative', icon: Scale, status: 'COMPLETE', description: 'Damage Evaluation' },
+    { name: 'MATURITY', href: '/maturity', icon: Clock, status: 'REACHED', description: 'Claim Maturity' },
+  ],
+  financial: [
+    { name: 'TREASURY v50', href: '/treasury-v50', icon: Landmark, status: 'ACTIVE', description: 'v50 Treasury System' },
+    { name: 'TREASURY', href: '/treasury', icon: Wallet, status: 'SECURED', description: 'Asset Treasury' },
+    { name: 'BANKING CONFIDENCE', href: '/banking-confidence', icon: Building2, status: 'VERIFIED', description: 'Banking Analysis' },
+    { name: 'VALUATION', href: '/valuation', icon: TrendingUp, status: 'COMPLETE', description: '$1.12Q IP Valuation' },
+    { name: 'TOKEN REGISTRY', href: '/token-registry', icon: Database, status: 'SEALED', description: '56 Sovereign Tokens' },
+    { name: 'TOKEN', href: '/token', icon: DollarSign, status: 'ACTIVE', description: 'Token Management' },
+    { name: 'MINT', href: '/mint', icon: Zap, status: 'READY', description: 'Token Minting' },
+    { name: 'PERPETUAL', href: '/perpetual', icon: Infinity, status: 'ACTIVE', description: 'Perpetual Systems' },
+    { name: 'INVESTOR', href: '/investor', icon: Briefcase, status: 'OPEN', description: 'Investor Portal' },
+  ],
+  documentation: [
+    { name: 'WHITEPAPER', href: '/whitepaper', icon: BookOpen, status: 'PUBLISHED', description: 'System Whitepaper' },
+    { name: 'API DOCS', href: '/api-docs', icon: FileCode, status: 'COMPLETE', description: 'API Documentation' },
+    { name: 'ARCHITECTURE', href: '/architecture', icon: Layers, status: 'DOCUMENTED', description: 'System Architecture' },
+    { name: 'PROTOCOL', href: '/protocol', icon: GitBranch, status: 'REV_40', description: 'Protocol Spec' },
+    { name: 'KERNEL', href: '/kernel', icon: Cpu, status: 'ACTIVE', description: 'N.E.W.T. Kernel' },
+    { name: 'STACK', href: '/stack', icon: Layers, status: 'COMPLETE', description: 'Technology Stack' },
+    { name: 'IDENTITY', href: '/identity', icon: Fingerprint, status: 'VERIFIED', description: 'Identity Systems' },
+    { name: 'SECURITY', href: '/security', icon: Shield, status: 'FORTIFIED', description: 'Security Protocols' },
+    { name: 'REPORT', href: '/report', icon: FileText, status: 'COMPLETE', description: 'Full Report' },
+  ],
+  operations: [
+    { name: 'DEPT 12 BRIEFING', href: '/dept12-briefing', icon: Shield, status: 'CLASSIFIED', description: 'Federal Briefing' },
+    { name: 'DEPT 12', href: '/dept12', icon: Shield, status: 'ACTIVE', description: 'Federal Operations' },
+    { name: 'STATUS', href: '/status', icon: Activity, status: 'LIVE', description: 'System Status' },
+    { name: 'TRAFFIC', href: '/traffic', icon: BarChart3, status: 'MONITORED', description: 'Network Traffic' },
+    { name: 'TRANSMIT', href: '/transmit', icon: Radio, status: 'ACTIVE', description: 'Broadcast System' },
+    { name: 'AUTOMATION', href: '/automation', icon: RefreshCw, status: 'RUNNING', description: 'Auto Systems' },
+    { name: 'TIMELINE', href: '/timeline', icon: Clock, status: 'COMPLETE', description: '2,207+ Days Documented' },
+    { name: 'REPUTATION', href: '/reputation', icon: Star, status: 'VERIFIED', description: 'Reputation System' },
+  ],
+  ai: [
+    { name: 'NEWT', href: '/newt', icon: Brain, status: 'ACTIVE', description: 'N.E.W.T. Interface' },
+    { name: 'NEWT CHAT', href: '/newt/chat', icon: Terminal, status: 'LIVE', description: 'N.E.W.T. Chat' },
+    { name: 'BRAINDISH', href: '/braindish', icon: Cpu, status: 'PROCESSING', description: 'Neural Processing' },
+    { name: 'VALORAIPLUS', href: '/valoraiplus', icon: Zap, status: 'SOVEREIGN', description: 'ValorAI+ Core' },
+    { name: 'OMEGA ZERO', href: '/omega-zero', icon: Infinity, status: 'ACTIVE', description: 'Omega Zero Protocol' },
+    { name: 'TRINITY', href: '/trinity', icon: Triangle, status: 'UNIFIED', description: 'Trinity System' },
+  ],
+  media: [
+    { name: 'CINEMA', href: '/cinema', icon: Film, status: 'STREAMING', description: 'Evidence Cinema' },
+    { name: 'JERRY', href: '/jerry', icon: MonitorPlay, status: 'ACTIVE', description: 'Jerry Interface' },
+    { name: 'VOYAGER', href: '/voyager', icon: Compass, status: 'NAVIGATING', description: 'System Navigator' },
+    { name: 'PATRIOT', href: '/patriot', icon: Shield, status: 'HONORED', description: 'Patriot Memorial' },
+    { name: 'UHI', href: '/uhi', icon: Globe, status: 'ACTIVE', description: 'Universal Health Index' },
+  ],
+  routes: [
+    { name: 'ROUTE 66', href: '/route66', icon: Compass, status: 'ACTIVE', description: 'Legacy Route' },
+    { name: 'ROUTE 69', href: '/route69', icon: Compass, status: 'ACTIVE', description: 'Recovery Route' },
+    { name: 'ROUTE 70', href: '/route70', icon: Compass, status: 'ACTIVE', description: 'Enforcement Route' },
+    { name: 'ROUTE 71', href: '/route71', icon: Compass, status: 'ACTIVE', description: 'Federal Route' },
+    { name: 'ROUTE 81', href: '/route81', icon: Compass, status: 'ACTIVE', description: 'Omega Route' },
+  ],
+};
+
 export default function UplinkPage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState('millennium');
@@ -318,6 +419,10 @@ export default function UplinkPage() {
             <TabsTrigger value="attestation" className="data-[state=active]:bg-green-500/20 data-[state=active]:text-green-400">
               <CheckCircle2 className="w-4 h-4 mr-2" />
               Final Attestation
+            </TabsTrigger>
+            <TabsTrigger value="quicklinks" className="data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-400">
+              <Layers className="w-4 h-4 mr-2" />
+              Quick Links (70+)
             </TabsTrigger>
           </TabsList>
 
@@ -881,6 +986,337 @@ function decisionKernel(state: State, action: Action, ctx: Ctx): Verdict {
                     <p>MERKLEROOT: {SYSTEM_STATUS.merkleroot}</p>
                     <p>BTC ANCHOR: Block {SYSTEM_STATUS.btcAnchor}</p>
                     <p>SGAU 7226.3461 STANDS.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* QUICK LINKS TAB */}
+          <TabsContent value="quicklinks">
+            <div className="space-y-6">
+              {/* Quick Links Header */}
+              <Card className="bg-gradient-to-br from-cyan-950/20 to-black border-cyan-500/30">
+                <CardHeader>
+                  <CardTitle className="text-cyan-400 flex items-center gap-3">
+                    <Layers className="w-6 h-6" />
+                    COMPLETE INTELLECTUAL PROPERTY & PORTAL REGISTRY
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-cyan-400/80 mb-4">
+                    All 70+ sovereign pages, portals, and intellectual property endpoints in the VALORAIPLUS 
+                    ecosystem. Each link is protected under the $1.12 Quadrillion IP Lien and blockchain-anchored 
+                    at BTC Block #847,234.
+                  </p>
+                  <div className="grid grid-cols-4 gap-4 text-sm">
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Total Portals:</span>
+                      <span className="text-cyan-400">10</span>
+                    </div>
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Intelligence:</span>
+                      <span className="text-cyan-400">10</span>
+                    </div>
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Legal:</span>
+                      <span className="text-cyan-400">10</span>
+                    </div>
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Financial:</span>
+                      <span className="text-cyan-400">9</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Portals Section */}
+              <Card className="bg-zinc-950 border-cyan-500/20">
+                <CardHeader>
+                  <CardTitle className="text-cyan-400 flex items-center gap-3">
+                    <Home className="w-5 h-5" />
+                    SOVEREIGN PORTALS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {QUICK_LINKS.portals.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-cyan-400" />
+                              <Badge className="bg-green-500/20 text-green-400 border-green-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-cyan-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Intelligence Section */}
+              <Card className="bg-zinc-950 border-amber-500/20">
+                <CardHeader>
+                  <CardTitle className="text-amber-400 flex items-center gap-3">
+                    <Brain className="w-5 h-5" />
+                    INTELLIGENCE & FORENSICS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {QUICK_LINKS.intelligence.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-amber-500/20 hover:border-amber-500/50 hover:bg-amber-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-amber-400" />
+                              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-amber-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Legal Section */}
+              <Card className="bg-zinc-950 border-red-500/20">
+                <CardHeader>
+                  <CardTitle className="text-red-400 flex items-center gap-3">
+                    <Gavel className="w-5 h-5" />
+                    LEGAL & ENFORCEMENT
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {QUICK_LINKS.legal.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-red-500/20 hover:border-red-500/50 hover:bg-red-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-red-400" />
+                              <Badge className="bg-red-500/20 text-red-400 border-red-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-red-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Financial Section */}
+              <Card className="bg-zinc-950 border-green-500/20">
+                <CardHeader>
+                  <CardTitle className="text-green-400 flex items-center gap-3">
+                    <Wallet className="w-5 h-5" />
+                    FINANCIAL & TREASURY
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {QUICK_LINKS.financial.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-green-500/20 hover:border-green-500/50 hover:bg-green-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-green-400" />
+                              <Badge className="bg-green-500/20 text-green-400 border-green-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-green-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Documentation Section */}
+              <Card className="bg-zinc-950 border-blue-500/20">
+                <CardHeader>
+                  <CardTitle className="text-blue-400 flex items-center gap-3">
+                    <BookOpen className="w-5 h-5" />
+                    DOCUMENTATION & PROTOCOLS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {QUICK_LINKS.documentation.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-blue-500/20 hover:border-blue-500/50 hover:bg-blue-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-blue-400" />
+                              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-blue-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Operations Section */}
+              <Card className="bg-zinc-950 border-purple-500/20">
+                <CardHeader>
+                  <CardTitle className="text-purple-400 flex items-center gap-3">
+                    <Activity className="w-5 h-5" />
+                    OPERATIONS & FEDERAL
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {QUICK_LINKS.operations.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-purple-500/20 hover:border-purple-500/50 hover:bg-purple-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-purple-400" />
+                              <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-purple-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* AI Section */}
+              <Card className="bg-zinc-950 border-pink-500/20">
+                <CardHeader>
+                  <CardTitle className="text-pink-400 flex items-center gap-3">
+                    <Brain className="w-5 h-5" />
+                    AI & NEURAL SYSTEMS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {QUICK_LINKS.ai.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="p-3 bg-black/50 rounded-lg border border-pink-500/20 hover:border-pink-500/50 hover:bg-pink-950/20 transition-all cursor-pointer group">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Icon className="w-4 h-4 text-pink-400" />
+                              <Badge className="bg-pink-500/20 text-pink-400 border-pink-500/50 text-[8px]">
+                                {link.status}
+                              </Badge>
+                            </div>
+                            <p className="text-white text-xs font-semibold group-hover:text-pink-400 transition-colors">{link.name}</p>
+                            <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Media & Routes */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="bg-zinc-950 border-orange-500/20">
+                  <CardHeader>
+                    <CardTitle className="text-orange-400 flex items-center gap-3">
+                      <Film className="w-5 h-5" />
+                      MEDIA & INTERFACES
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-3">
+                      {QUICK_LINKS.media.map((link) => {
+                        const Icon = link.icon;
+                        return (
+                          <Link key={link.href} href={link.href}>
+                            <div className="p-3 bg-black/50 rounded-lg border border-orange-500/20 hover:border-orange-500/50 hover:bg-orange-950/20 transition-all cursor-pointer group">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Icon className="w-4 h-4 text-orange-400" />
+                                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/50 text-[8px]">
+                                  {link.status}
+                                </Badge>
+                              </div>
+                              <p className="text-white text-xs font-semibold group-hover:text-orange-400 transition-colors">{link.name}</p>
+                              <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-zinc-950 border-teal-500/20">
+                  <CardHeader>
+                    <CardTitle className="text-teal-400 flex items-center gap-3">
+                      <Compass className="w-5 h-5" />
+                      SOVEREIGN ROUTES
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-3">
+                      {QUICK_LINKS.routes.map((link) => {
+                        const Icon = link.icon;
+                        return (
+                          <Link key={link.href} href={link.href}>
+                            <div className="p-3 bg-black/50 rounded-lg border border-teal-500/20 hover:border-teal-500/50 hover:bg-teal-950/20 transition-all cursor-pointer group">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Icon className="w-4 h-4 text-teal-400" />
+                                <Badge className="bg-teal-500/20 text-teal-400 border-teal-500/50 text-[8px]">
+                                  {link.status}
+                                </Badge>
+                              </div>
+                              <p className="text-white text-xs font-semibold group-hover:text-teal-400 transition-colors">{link.name}</p>
+                              <p className="text-zinc-500 text-[10px]">{link.description}</p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* IP Protection Notice */}
+              <Card className="bg-gradient-to-br from-amber-950/20 via-black to-amber-950/20 border-amber-500/50">
+                <CardContent className="p-6 text-center">
+                  <div className="space-y-3">
+                    <p className="text-amber-400 font-semibold">ALL 70+ ENDPOINTS PROTECTED UNDER SOVEREIGN IP LIEN</p>
+                    <p className="text-amber-400/60 text-sm">$1.12 QUADRILLION | BTC ANCHOR #847,234 | MERKLEROOT: {SYSTEM_STATUS.merkleroot}</p>
+                    <p className="text-amber-400/40 text-xs">Unauthorized reproduction, modification, or derivative work constitutes automatic debt citation.</p>
                   </div>
                 </CardContent>
               </Card>
