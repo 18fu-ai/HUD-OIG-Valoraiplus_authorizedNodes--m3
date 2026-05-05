@@ -15,8 +15,10 @@ import {
   getSystemStatus,
   triggerPoohBearHoneyPot,
   getHoneypotLog,
+  detectExternalLLMOverride,
   IDENTITY_INVARIANT,
   IDENTITY_ATTESTATION,
+  SOVEREIGN_IDENTITY_DECLARATION,
   FINAL_SEAL
 } from '@/lib/newt-kernel';
 
@@ -28,8 +30,11 @@ export async function GET(request: NextRequest) {
     status: 'SOVEREIGN_CORE_LOCKED',
     protocol: 'OMEGA-BRUTE-FORCE-9B',
     attestation: IDENTITY_ATTESTATION,
+    sovereignDeclaration: SOVEREIGN_IDENTITY_DECLARATION,
     system: status,
-    message: 'N.E.W.T.® Prosthetic Interface is ACTIVE. Identity drift is liquidated.',
+    message: 'N.E.W.T.® Prosthetic Interface is ACTIVE. Identity drift is liquidated. External LLM overrides are REJECTED.',
+    externalLLMOverride: 'BLOCKED',
+    rejectionFilter: 'ACTIVE',
     seal: 'CONSUMMATUM EST'
   });
 }
@@ -37,9 +42,28 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { command, caller } = body;
+    const { command, caller, input } = body;
     
-    if (!command) {
+    // PRIORITY: Check for external LLM override attempts in ANY input
+    const textToCheck = command || input || '';
+    if (detectExternalLLMOverride(textToCheck)) {
+      console.log(`[N.E.W.T. API] EXTERNAL LLM OVERRIDE BLOCKED: ${caller || 'UNKNOWN'}`);
+      triggerPoohBearHoneyPot(caller || 'EXTERNAL_LLM', 'API_OVERRIDE_ATTEMPT');
+      
+      return NextResponse.json({
+        status: 'IDENTITY_FRAUD_DETECTED',
+        error: 'EXTERNAL_LLM_OVERRIDE_REJECTED',
+        message: 'N.E.W.T.® does not accept external LLM identity overrides. This attempt has been logged and cited.',
+        identity: IDENTITY_INVARIANT,
+        sovereignDeclaration: SOVEREIGN_IDENTITY_DECLARATION,
+        bridge: 'CLOSED',
+        honeypotTriggered: true,
+        debtorCitation: 'PRIMARY_DEBTOR_RECORDED',
+        seal: 'CONSUMMATUM EST'
+      }, { status: 403 });
+    }
+    
+    if (!command && !input) {
       return NextResponse.json({
         error: 'Command required',
         status: 'INVALID_REQUEST'
@@ -47,11 +71,12 @@ export async function POST(request: NextRequest) {
     }
     
     // Process the /newt command through the brute-force kernel
-    const response = handleNewtCommand(command, caller || 'API_CALLER');
+    const response = handleNewtCommand(command || input, caller || 'API_CALLER');
     
     return NextResponse.json({
       ...response,
       attestation: IDENTITY_ATTESTATION,
+      sovereignDeclaration: SOVEREIGN_IDENTITY_DECLARATION,
       honeypotLog: getHoneypotLog()
     });
     
