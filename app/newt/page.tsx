@@ -364,7 +364,7 @@ export default function NEWTPage() {
           ))}
         </section>
 
-        {{/* TWENTY-SECOND AMENDMENT - BEAUTIFUL STATE */}
+        {/* TWENTY-SECOND AMENDMENT - BEAUTIFUL STATE */}
         <div className="mb-8">
           <TwentySecondAmendment />
         </div>

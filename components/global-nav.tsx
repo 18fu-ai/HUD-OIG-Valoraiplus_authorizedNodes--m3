@@ -40,6 +40,7 @@ const QUICK_LINKS = {
       { name: 'FORT', href: '/fort', icon: Shield, description: 'Defense Systems' },
       { name: 'APEX', href: '/apex', icon: Crown, description: 'Apex Control' },
       { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
+      { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
     ]
   },
   intelligence: {
