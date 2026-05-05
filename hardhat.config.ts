@@ -8,7 +8,7 @@ dotenv.config();
  * VALORAIPLUS Hardhat Configuration
  * 
  * Network: Sepolia Testnet
- * Contract: SGAU_ValueGuard_77_77X_FinalDeg
+ * Contract: SGAU-VALUEGUARD-77.77X-FINALDEG.sol
  * 
  * Required Environment Variables:
  * - SEPOLIA_RPC_URL: Alchemy/Infura Sepolia RPC endpoint
