@@ -131,6 +131,7 @@ const QUICK_LINKS = {
       { name: 'VALORAI+', href: '/valoraiplus', icon: Zap, description: 'Sovereign AI' },
       { name: 'OMEGA ZERO', href: '/omega-zero', icon: Infinity, description: 'Protocol' },
       { name: 'TRINITY', href: '/trinity', icon: Shield, description: 'Unified' },
+      { name: '5151', href: '/5151', icon: Network, description: 'Port Unison' },
     ]
   },
   media: {
