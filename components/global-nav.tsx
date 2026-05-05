@@ -43,6 +43,7 @@ const QUICK_LINKS = {
       { name: 'APEX', href: '/apex', icon: Crown, description: 'Apex Control' },
       { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
       { name: 'OMEGA-9B', href: '/omega-9b', icon: Cpu, description: 'Millennium Kernel' },
+      { name: 'OMEGA LAUNCH', href: '/omega-launch', icon: Zap, description: 'TX Verification' },
       { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
     ]
   },
