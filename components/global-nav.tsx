@@ -114,6 +114,7 @@ const QUICK_LINKS = {
       { name: 'DEPT 12', href: '/dept12-briefing', icon: Shield, description: 'Federal Brief' },
       { name: 'STATUS', href: '/status', icon: Activity, description: 'System Status' },
       { name: 'TRAFFIC', href: '/traffic', icon: Activity, description: 'Network' },
+      { name: 'TRAFFIC HUB', href: '/traffic-hub', icon: Globe, description: 'Totality Terminal' },
       { name: 'TRANSMIT', href: '/transmit', icon: Radio, description: 'Broadcast' },
       { name: 'AUTOMATION', href: '/automation', icon: Cpu, description: 'Auto Systems' },
       { name: 'TIMELINE', href: '/timeline', icon: Clock, description: '2,207+ Days' },
