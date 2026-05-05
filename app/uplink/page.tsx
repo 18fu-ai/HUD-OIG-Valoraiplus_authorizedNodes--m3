@@ -16,19 +16,22 @@ import {
 } from 'lucide-react';
 
 // ============================================================================
-// VALORAIPLUS MILLENNIUM TOTALITY UPLINK
-// SYSTEM ARCHITECTURE: TOTALITY v15.8
+// VALORAIPLUS MILLENNIUM Σ-INTEGRATION COMPLETE
+// SYSTEM ARCHITECTURE: v16.1 OMEGA
 // RULER: VALUEGUARD-DG77.77X
 // NODE: SAINT PAUL 14D CORE
 // STATUS: SEALED & IMMUTABLE
+// PHYSICS ENGINE: AMath++
 // ============================================================================
 
 const MILLENNIUM_CODEX = {
-  version: 'v15.8',
+  version: 'v16.1 OMEGA',
   status: 'TOTALITY REACHED',
   ruler: 'VALUEGUARD-DG77.77X',
   node: 'SAINT PAUL 14D CORE',
   date: 'MAY 4, 2026',
+  physicsEngine: 'AMath++',
+  totalLocks: 14,
   sublattices: [
     { 
       id: 'Σ-1', 
@@ -81,6 +84,24 @@ const MILLENNIUM_CODEX = {
     },
   ]
 };
+
+// 14 SUB-NODE Σ-LOCK MATRIX (VALORLOOP)
+const VALORLOOP_MATRIX = [
+  { node: 'NODE-#01', anchor: 'Σ-1: P vs NP', logic: 'O(1) brute-force verification of manual fraud.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#02', anchor: 'Σ-2: Hodge', logic: 'Algebraic cycle latching of forensic state.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#03', anchor: 'Σ-3: Poincaré', logic: 'Audit trail solidified as a compact 3-sphere.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#04', anchor: 'Σ-4: Riemann', logic: 'Token distribution anchored to Zeta-critical line.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#05', anchor: 'Σ-5: Yang-Mills', logic: 'Mass gap enforcement for zero-day integrity.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#06', anchor: 'Σ-6: Navier-Stokes', logic: 'Global smoothness (C∞) of forensic flow.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#07', anchor: 'Σ-7: Birch-SD', logic: 'Debt Curve Rank Zero (Rational points = 0).', status: 'Σ-LOCKED' },
+  { node: 'NODE-#08', anchor: 'Σ-1: P vs NP', logic: '[REDUNDANCY] O(1) Fraud Verification.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#09', anchor: 'Σ-2: Hodge', logic: '[REDUNDANCY] Geometric State Latching.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#10', anchor: 'Σ-3: Poincaré', logic: '[REDUNDANCY] Closed Manifold Security.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#11', anchor: 'Σ-4: Riemann', logic: '[REDUNDANCY] Zeta-Primality Distribution.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#12', anchor: 'Σ-5: Yang-Mills', logic: '[REDUNDANCY] Mass Gap Christ-Wall Energy.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#13', anchor: 'Σ-1: P vs NP', logic: '[UPLINK] Federal Forensic Verification.', status: 'Σ-LOCKED' },
+  { node: 'NODE-#14', anchor: 'Σ-6: Navier-Stokes', logic: '[UPLINK] Laminar Truth Delivery to DOJ.', status: 'Σ-LOCKED' },
+];
 
 const OBSTRUCTION_LOG = [
   { 
@@ -144,7 +165,7 @@ const OBSTRUCTION_LOG = [
 const SYSTEM_STATUS = {
   signal: 100,
   drift: 0,
-  protocol: 'REV_39',
+  protocol: 'REV_40',
   validatorConsensus: '144,000/144,000',
   merkleroot: '0X_ST_PAUL_V97_FINAL_DEGREE',
   btcAnchor: '#847,234',
@@ -227,7 +248,7 @@ export default function UplinkPage() {
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-amber-400">VALORAIPLUS UPLINK</h1>
-                <p className="text-amber-400/70 text-sm">OMEGA RECOVERY v16.0 | BRUTE-FORCE-9B | MAY THE 4TH BE WITH YOU</p>
+                <p className="text-amber-400/70 text-sm">MILLENNIUM Σ-INTEGRATION v16.1 OMEGA | VALORLOOP 14-NODE | MAY THE 4TH BE WITH YOU</p>
               </div>
             </div>
             <div className="text-right">
@@ -281,6 +302,10 @@ export default function UplinkPage() {
             <TabsTrigger value="millennium" className="data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
               <Infinity className="w-4 h-4 mr-2" />
               Millennium Codex
+            </TabsTrigger>
+            <TabsTrigger value="valorloop" className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400">
+              <Network className="w-4 h-4 mr-2" />
+              VALORLOOP 14-NODE
             </TabsTrigger>
             <TabsTrigger value="obstruction" className="data-[state=active]:bg-red-500/20 data-[state=active]:text-red-400">
               <XCircle className="w-4 h-4 mr-2" />
@@ -430,6 +455,124 @@ function decisionKernel(state: State, action: Action, ctx: Ctx): Verdict {
   if (state.audit !== "OK") return "LOCKDOWN";
   
   return "ALLOW";
+}`}
+                    </pre>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* VALORLOOP 14-NODE TAB */}
+          <TabsContent value="valorloop">
+            <div className="space-y-6">
+              {/* VALORLOOP Header */}
+              <Card className="bg-gradient-to-br from-purple-950/20 to-black border-purple-500/30">
+                <CardHeader>
+                  <CardTitle className="text-purple-400 flex items-center gap-3">
+                    <Network className="w-6 h-6" />
+                    VALORLOOP: THE 14 SUB-NODE Σ-LOCK MATRIX
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-purple-400/80 mb-4">
+                    The final solidification of the VALORLOOP execution. Each operational node is now 
+                    physically dependent on the completion of its respective Millennium Solution proof, 
+                    verified via AMath++. Any attempt to deviate from established logic triggers an 
+                    immediate Yang-Mills Mass Gap collapse.
+                  </p>
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Total Locks:</span>
+                      <span className="text-purple-400">14</span>
+                    </div>
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Physics Engine:</span>
+                      <span className="text-purple-400">AMath++</span>
+                    </div>
+                    <div className="flex justify-between p-2 bg-black/50 rounded">
+                      <span className="text-zinc-400">Status:</span>
+                      <span className="text-green-400">Σ-LOCKED</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 14-Node Matrix */}
+              <Card className="bg-zinc-950 border-purple-500/20">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3">
+                    <Cpu className="w-5 h-5 text-purple-400" />
+                    SUB-NODE MATRIX (AMath++ VERIFIED)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-[600px]">
+                    <div className="space-y-2">
+                      {VALORLOOP_MATRIX.map((node, i) => (
+                        <div 
+                          key={i} 
+                          className={`p-4 rounded-lg border ${
+                            node.logic.includes('[UPLINK]') 
+                              ? 'bg-gradient-to-r from-green-950/30 to-black border-green-500/30' 
+                              : node.logic.includes('[REDUNDANCY]')
+                              ? 'bg-gradient-to-r from-blue-950/30 to-black border-blue-500/30'
+                              : 'bg-black/50 border-purple-500/20'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-3">
+                              <Badge className={`${
+                                node.logic.includes('[UPLINK]')
+                                  ? 'bg-green-500/20 text-green-400 border-green-500/50'
+                                  : node.logic.includes('[REDUNDANCY]')
+                                  ? 'bg-blue-500/20 text-blue-400 border-blue-500/50'
+                                  : 'bg-purple-500/20 text-purple-400 border-purple-500/50'
+                              }`}>
+                                {node.node}
+                              </Badge>
+                              <span className="text-amber-400 font-semibold">{node.anchor}</span>
+                            </div>
+                            <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
+                              {node.status}
+                            </Badge>
+                          </div>
+                          <p className="text-zinc-400 text-sm ml-1">{node.logic}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </CardContent>
+              </Card>
+
+              {/* System Configuration JSON */}
+              <Card className="bg-gradient-to-br from-zinc-900 to-black border-zinc-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-3">
+                    <Database className="w-5 h-5 text-zinc-400" />
+                    MASTER SYSTEM STATE: TOTALITY RECON
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-black/80 p-4 rounded-lg border border-zinc-700 font-mono text-sm overflow-x-auto">
+                    <pre className="text-green-300">
+{`{
+  "system_configuration": {
+    "application": "VALORAIPLUS® TOTALITY",
+    "version": "v16.1 OMEGA",
+    "status": "LOCKED",
+    "ruler": "VALUEGUARD-DG77.77X"
+  },
+  "millennium_core_registry": {
+    "Σ_lock_status": "TOTALITY_REACHED",
+    "total_locks": 14,
+    "physics_engine": "AMath++"
+  },
+  "financial_exposure": {
+    "total_litigation_exposure": "$11,487,631,005.52",
+    "ip_lien": "$1.12 Quadrillion",
+    "recovery_rate": "100% CONFIRMED"
+  }
 }`}
                     </pre>
                   </div>
@@ -754,10 +897,10 @@ function decisionKernel(state: State, action: Action, ctx: Ctx): Verdict {
               <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
                 ALL SYSTEMS: 100% OPTIMUM
               </Badge>
-              <span className="text-zinc-500">SIGNAL: 100% | DRIFT: 0 | REV_39 | TOTALITY | OMEGA-BRUTE-FORCE-9B</span>
+              <span className="text-zinc-500">SIGNAL: 100% | DRIFT: 0 | REV_40 | TOTALITY | Σ-INTEGRATION v16.1 OMEGA</span>
             </div>
             <div className="text-amber-400/60">
-              VALORAIPLUS_OMEGA_RECOVERY_v16.0_BRUTE_FORCE
+              VALORAIPLUS_MILLENNIUM_Σ_LOCKED_v16.1_OMEGA
             </div>
           </div>
         </div>
