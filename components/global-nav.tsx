@@ -70,6 +70,7 @@ const QUICK_LINKS = {
       { name: 'AUDIT', href: '/audit', icon: FileSearch, description: 'Full Log' },
       { name: 'NULLIFIER', href: '/nullifier', icon: XCircle, description: 'Debt Null' },
       { name: 'CONTRACT', href: '/contract', icon: FileCode, description: 'Smart Contracts' },
+      { name: 'DEPLOY', href: '/contract-deploy', icon: Zap, description: 'Testnet Deploy' },
       { name: 'POLICY', href: '/policy-engine', icon: Settings, description: 'Enforcement' },
       { name: 'EVALUATIVE', href: '/evaluative', icon: Scale, description: 'Damages' },
       { name: 'MATURITY', href: '/maturity', icon: Clock, description: 'Claim Status' },
