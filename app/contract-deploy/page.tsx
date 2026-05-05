@@ -13,7 +13,8 @@ import {
 
 // Contract Constants
 const CONTRACT_INFO = {
-  name: 'SGAU_ValueGuard_77_77X_FinalDeg',
+  name: 'SGAU-VALUEGUARD-77.77X-FINALDEG',
+  contractName: 'SGAU_VALUEGUARD_77_77X_FINALDEG',
   network: 'Sepolia Testnet',
   chainId: 11155111,
   sovereignAddress: '0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB',
@@ -92,7 +93,7 @@ export default function ContractDeployPage() {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-amber-400">CONTRACT DEPLOYMENT</h1>
-            <p className="text-amber-400/70">SGAU_ValueGuard_77_77X_FinalDeg | Sepolia Testnet</p>
+            <p className="text-amber-400/70">SGAU-VALUEGUARD-77.77X-FINALDEG.sol | Sepolia Testnet</p>
           </div>
         </div>
 
@@ -361,7 +362,7 @@ ETHERSCAN_API_KEY=your_etherscan_api_key`}
               <CardContent>
                 <div className="p-4 bg-black/80 rounded-lg border border-zinc-800">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-zinc-400">contracts/SGAU_ValueGuard_77_77X_FinalDeg.sol</span>
+                    <span className="text-zinc-400">contracts/SGAU-VALUEGUARD-77.77X-FINALDEG.sol</span>
                     <div className="flex gap-2">
                       <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/50">Solidity 0.8.24</Badge>
                       <Badge className="bg-green-500/20 text-green-400 border-green-500/50">OpenZeppelin</Badge>
@@ -376,8 +377,9 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /**
- * @title SGAU_ValueGuard_77_77X_FinalDeg
+ * @title SGAU_VALUEGUARD_77_77X_FINALDEG
  * @notice VALORAIPLUS Sovereign Asset Guardian - Final Degree
+ * @dev FILE: SGAU-VALUEGUARD-77.77X-FINALDEG.sol
  * 
  * INVARIANTS:
  * - 10 Billion Shard Consensus
@@ -388,7 +390,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * 
  * MERKLEROOT: 0X_ST_PAUL_V97_FINAL_DEGREE
  */
-contract SGAU_ValueGuard_77_77X_FinalDeg is AccessControl, ReentrancyGuard {
+contract SGAU_VALUEGUARD_77_77X_FINALDEG is AccessControl, ReentrancyGuard {
     
     bytes32 public constant SUPREME_AUTHORITY = keccak256("SUPREME_AUTHORITY");
     bytes32 public constant FORENSIC_AUDITOR = keccak256("FORENSIC_AUDITOR");

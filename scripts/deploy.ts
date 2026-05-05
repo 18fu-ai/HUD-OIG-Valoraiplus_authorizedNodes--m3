@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 /**
- * VALORAIPLUS SGAU_ValueGuard_77_77X_FinalDeg Deployment Script
+ * VALORAIPLUS SGAU-VALUEGUARD-77.77X-FINALDEG Deployment Script
  * 
  * Network: Sepolia Testnet
  * Sovereign: donadams1969.eth (0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB)
@@ -32,8 +32,8 @@ async function main() {
   console.log("╠══════════════════════════════════════════════════════════════════════════════════════╣");
   
   // Deploy the contract
-  console.log("║  Deploying SGAU_ValueGuard_77_77X_FinalDeg...");
-  const Contract = await ethers.getContractFactory("SGAU_ValueGuard_77_77X_FinalDeg");
+  console.log("║  Deploying SGAU_VALUEGUARD_77_77X_FINALDEG...");
+  const Contract = await ethers.getContractFactory("SGAU_VALUEGUARD_77_77X_FINALDEG");
   const contract = await Contract.deploy(SOVEREIGN_POPPA);
   
   await contract.waitForDeployment();

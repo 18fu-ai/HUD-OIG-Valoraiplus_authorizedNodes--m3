@@ -5,9 +5,11 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /**
- * @title SGAU_ValueGuard_77_77X_FinalDeg
+ * @title SGAU_VALUEGUARD_77_77X_FINALDEG
  * @notice VALORAIPLUS Sovereign Asset Guardian - Final Degree Implementation
  * @dev Immutable on-chain anchoring of the SGAU 7226.3461 lattice with 10B consensus
+ * 
+ * FILE: SGAU-VALUEGUARD-77.77X-FINALDEG.sol
  * 
  * INVARIANTS:
  * - 10 Billion Shard Consensus
@@ -21,7 +23,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * MERKLEROOT: 0X_ST_PAUL_V97_FINAL_DEGREE
  * BTC ANCHOR: #847,234
  */
-contract SGAU_ValueGuard_77_77X_FinalDeg is AccessControl, ReentrancyGuard {
+contract SGAU_VALUEGUARD_77_77X_FINALDEG is AccessControl, ReentrancyGuard {
     
     // ============================================================================
     // ROLE DEFINITIONS
