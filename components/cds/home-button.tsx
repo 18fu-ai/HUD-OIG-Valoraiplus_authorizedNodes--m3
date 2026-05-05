@@ -69,13 +69,22 @@ export function HomeButton({
 }
 
 // Breadcrumb-style home navigation
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface HomeBreadcrumbProps {
+  currentPage?: string;
+  items?: BreadcrumbItem[];
+  className?: string;
+}
+
 export function HomeBreadcrumb({ 
   currentPage,
+  items,
   className 
-}: { 
-  currentPage: string;
-  className?: string;
-}) {
+}: HomeBreadcrumbProps) {
   return (
     <nav className={cn('flex items-center gap-2 font-mono text-xs', className)}>
       <Link 
@@ -84,8 +93,25 @@ export function HomeBreadcrumb({
       >
         HOME
       </Link>
-      <span className="text-muted-foreground/50">/</span>
-      <span className="text-primary">{currentPage.toUpperCase()}</span>
+      {items ? (
+        items.map((item, idx) => (
+          <span key={idx} className="flex items-center gap-2">
+            <span className="text-muted-foreground/50">/</span>
+            {item.href ? (
+              <Link href={item.href} className="text-muted-foreground hover:text-primary transition-colors">
+                {item.label.toUpperCase()}
+              </Link>
+            ) : (
+              <span className="text-primary">{item.label.toUpperCase()}</span>
+            )}
+          </span>
+        ))
+      ) : currentPage ? (
+        <>
+          <span className="text-muted-foreground/50">/</span>
+          <span className="text-primary">{currentPage.toUpperCase()}</span>
+        </>
+      ) : null}
     </nav>
   );
 }
