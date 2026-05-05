@@ -40,6 +40,7 @@ const QUICK_LINKS = {
       { name: 'FORT', href: '/fort', icon: Shield, description: 'Defense Systems' },
       { name: 'APEX', href: '/apex', icon: Crown, description: 'Apex Control' },
       { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
+      { name: 'OMEGA-9B', href: '/omega-9b', icon: Cpu, description: 'Millennium Kernel' },
       { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
     ]
   },
@@ -82,6 +83,7 @@ const QUICK_LINKS = {
     icon: Wallet,
     color: 'text-green-400',
     items: [
+      { name: 'ACCOUNT 8185', href: '/account-8185', icon: Landmark, description: 'Primary Schwab' },
       { name: 'TREASURY V50', href: '/treasury-v50', icon: Landmark, description: 'v50 System' },
       { name: 'TREASURY', href: '/treasury', icon: Wallet, description: 'Assets' },
       { name: 'DIRECT TRANSFER', href: '/test-deposit', icon: Send, description: 'Fund Transfer' },
