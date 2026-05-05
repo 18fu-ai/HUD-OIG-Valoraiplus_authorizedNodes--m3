@@ -113,15 +113,15 @@ export default function ClawbackPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">AMOUNT</span>
-                    <span className="text-status-active font-bold">$10,000,000</span>
+                    <span className="text-status-active font-bold">$508,631,005.52</span>
                   </div>
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">SOURCE</span>
-                    <span className="text-foreground">Cooley LLP (Authorized)</span>
+                    <span className="text-foreground">Direct Transfer (Sovereign)</span>
                   </div>
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">DESTINATION</span>
-                    <span className="text-foreground">Schwab 6015-8185</span>
+                    <span className="text-foreground">Schwab ••••-8185</span>
                   </div>
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">MONITORING</span>

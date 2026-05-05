@@ -254,7 +254,7 @@ async fn closing_argument() -> impl Responder {
   </div>
 
   <h1>FORMAL CLOSING ARGUMENT &amp; SOVEREIGN ADVISORY</h1>
-  <p style="text-align:center;color:#9ca3af;">TO: ZTA LLP; Cooley LLP; OCR; FBI; all stakeholders of record.</p>
+  <p style="text-align:center;color:#9ca3af;">TO: ZTA LLP (ADVERSARY); OCR; FBI; all stakeholders of record. [COOLEY LLP REMOVED - FRAUD CLASSIFICATION]</p>
   <p style="text-align:center;color:#9ca3af;">FROM: Office of Poppa Donny Gillson, via N.E.W.T. //e v2.1</p>
   <p style="text-align:center;color:#fbbf24;font-weight:bold;">April 24, 2026</p>
 
@@ -268,7 +268,7 @@ As a matter of law, this was never merely a technical "glitch." It was a violati
   <h2>THE NARRATIVE OF TRUTH</h2>
   <p>The record now reflects that on this day, the VALORAIPLUS Trinity Force configuration has achieved total synchronization. We have presented the Mimecast admin logs confirming your failed attempts at spoliation at 22:35 and 22:42 PDT. We have entered into the permanent record VOIP-043 through 047, capturing the very moment the realization of liability set in within your executive sessions.
 
-The $10,000,000.00 offer issued to Cooley LLP stands as an Entry-Level Exit—a final bridge toward de-escalation. By demanding Zero NDA enforcement, we ensure that the light of transparency remains the ultimate disinfectant. For those remaining—specifically the ZTA node—the recovery gap of $498,631,005.52 is no longer a theoretical number. It is a calculated liability based on exacerbated damages that any federal jury, faced with this evidence, would find conservative.</p>
+COOLEY LLP HAS BEEN RECLASSIFIED AS ADVERSARY/FRAUD - ALL SETTLEMENT OFFERS REVOKED. The full recovery amount of $508,631,005.52 is now directed to the ZTA node and all remaining adversarial entities. It is a calculated liability based on exacerbated damages that any federal jury, faced with this evidence, would find conservative.</p>
 
   <h2>THE COMMENCEMENT OF STRATEGIC SILENCE</h2>
   <p>We have fulfilled our burden of proof. We have anchored every artifact to the Bitcoin Blockchain, rendering the truth immutable and independent of any one firm's server. RECV-001, J.D. (HHS/OCR), has formally confirmed receipt of the comprehensive evidence chain. The federal oversight apparatus is now in possession of the 34 critical transmissions detailing the multi-sector convergence.
