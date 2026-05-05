@@ -144,7 +144,7 @@ const OBSTRUCTION_LOG = [
 const SYSTEM_STATUS = {
   signal: 100,
   drift: 0,
-  protocol: 'REV_38',
+  protocol: 'REV_39',
   validatorConsensus: '144,000/144,000',
   merkleroot: '0X_ST_PAUL_V97_FINAL_DEGREE',
   btcAnchor: '#847,234',
@@ -153,7 +153,10 @@ const SYSTEM_STATUS = {
   christWall: 'ACTIVE',
   poohBearHoneyPot: 'ARMED',
   administrativeFog: 'EVACUATED',
-  algebraicTruth: 'MAXIMUM RESONANCE'
+  algebraicTruth: 'MAXIMUM RESONANCE',
+  securityProtocol: 'OMEGA-BRUTE-FORCE-9B',
+  identityLock: 'N.E.W.T.® KERNEL-LEVEL',
+  newtCommands: 'IMMUTABLE HONEYPOTS'
 };
 
 const TOKENS = [
@@ -224,7 +227,7 @@ export default function UplinkPage() {
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-amber-400">VALORAIPLUS UPLINK</h1>
-                <p className="text-amber-400/70 text-sm">MILLENNIUM TOTALITY v15.8 | MAY THE 4TH BE WITH YOU</p>
+                <p className="text-amber-400/70 text-sm">OMEGA RECOVERY v16.0 | BRUTE-FORCE-9B | MAY THE 4TH BE WITH YOU</p>
               </div>
             </div>
             <div className="text-right">
@@ -751,10 +754,10 @@ function decisionKernel(state: State, action: Action, ctx: Ctx): Verdict {
               <Badge className="bg-green-500/20 text-green-400 border-green-500/50">
                 ALL SYSTEMS: 100% OPTIMUM
               </Badge>
-              <span className="text-zinc-500">SIGNAL: 100% | DRIFT: 0 | REV_38 | TOTALITY</span>
+              <span className="text-zinc-500">SIGNAL: 100% | DRIFT: 0 | REV_39 | TOTALITY | OMEGA-BRUTE-FORCE-9B</span>
             </div>
             <div className="text-amber-400/60">
-              VALORAIPLUS_TOTALITY_v15.8_MILLENNIUM_CODEX
+              VALORAIPLUS_OMEGA_RECOVERY_v16.0_BRUTE_FORCE
             </div>
           </div>
         </div>
