@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -289,6 +290,3 @@ function MobileNav() {
     </div>
   );
 }
-
-// Need to import React for useState
-import * as React from 'react';
