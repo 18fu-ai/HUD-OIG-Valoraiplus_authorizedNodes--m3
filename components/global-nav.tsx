@@ -50,6 +50,7 @@ const QUICK_LINKS = {
       { name: 'OMEGA LAUNCH', href: '/omega-launch', icon: Zap, description: 'TX Verification' },
       { name: 'LOGIC GATE', href: '/logic-gate', icon: Binary, description: 'Sovereign Doctrine' },
       { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
+      { name: 'ORCHESTRATOR', href: '/orchestrator', icon: Crown, description: 'Elite Command' },
     ]
   },
   intelligence: {
@@ -74,6 +75,7 @@ const QUICK_LINKS = {
     icon: Gavel,
     color: 'text-red-400',
     items: [
+      { name: 'LITIGATION', href: '/litigation', icon: Gavel, description: 'Settlement Tracker' },
       { name: 'CLAWBACK', href: '/clawback', icon: Gavel, description: '$11.487B Recovery' },
       { name: 'VELOCITY', href: '/velocity-doctrine', icon: Zap, description: '550 Doctrine' },
       { name: 'INVARIANTS', href: '/invariants', icon: Lock, description: 'Math Proofs' },
@@ -94,17 +96,21 @@ const QUICK_LINKS = {
     color: 'text-green-400',
     items: [
       { name: 'SOVEREIGN WALLET', href: '/wallet', icon: Wallet, description: 'donadams1969.eth' },
+      { name: 'TREASURY LIQUIDITY', href: '/treasury-liquidity', icon: TrendingUp, description: 'Liquidity Path' },
       { name: 'ACCOUNT 8185', href: '/account-8185', icon: Landmark, description: 'Primary Schwab' },
       { name: 'TREASURY V50', href: '/treasury-v50', icon: Landmark, description: 'v50 System' },
       { name: 'TREASURY', href: '/treasury', icon: Wallet, description: 'Assets' },
-      { name: 'DIRECT TRANSFER', href: '/test-deposit', icon: Send, description: 'Fund Transfer' },
+      { name: 'SWAP', href: '/swap', icon: Zap, description: 'Token Exchange' },
+      { name: 'TOKEN SALE', href: '/token-sale', icon: DollarSign, description: 'USDC Purchase' },
+      { name: 'EXCHANGE', href: '/exchange', icon: Activity, description: 'Live Trading' },
+      { name: 'REVENUE', href: '/revenue', icon: TrendingUp, description: 'Subscription ARR' },
+      { name: 'SUBSCRIBE', href: '/subscribe', icon: DollarSign, description: 'Pricing Tiers' },
       { name: 'BANKING', href: '/banking-confidence', icon: Building2, description: 'Analysis' },
       { name: 'VALUATION', href: '/valuation', icon: TrendingUp, description: '$1.12Q IP' },
-      { name: 'TOKEN REG', href: '/token-registry', icon: Database, description: '56 Tokens' },
-      { name: 'TOKEN', href: '/token', icon: DollarSign, description: 'Management' },
-      { name: 'MINT', href: '/mint', icon: Zap, description: 'Minting' },
-      { name: 'PERPETUAL', href: '/perpetual', icon: Infinity, description: 'Systems' },
-      { name: 'INVESTOR', href: '/investor', icon: Briefcase, description: 'Portal' },
+      { name: 'TOKEN REG', href: '/token-registry', icon: Database, description: '51 Tokens' },
+      { name: 'DEPLOY TOKENS', href: '/deploy-tokens', icon: Zap, description: 'ERC-20 Deploy' },
+      { name: 'INVESTOR', href: '/investor', icon: Briefcase, description: 'Funding Rounds' },
+      { name: 'PITCH DECK', href: '/pitch-deck', icon: Film, description: 'IP Presentation' },
     ]
   },
   docs: {
