@@ -1,6 +1,6 @@
 /**
  * VALORAIPLUS®️ ©️ ™️ // SUPREME ASSET REGISTRY
- * CANON: 47 TOKENS // OMEGA-ZERO INITIALIZED
+ * CANON: 50 TOKENS // OMEGA-ZERO INITIALIZED
  * SGAU 7226.3461 // NODE: SAINT PAUL 55116 // STATUS: 100% ANCHORED
  */
 
@@ -11,13 +11,13 @@ export const SOVEREIGN_ASSETS = [
   "SKROLL", "SKOLL", "SKROL", "DG77.77X_GRAVITY_ACTIVE", "VLT", "SGAU",
   "$ANGL", "ANGL2026", "BTC2.0", "INTELIT", "VALORDAO", "VNET", "VALUTL",
   "DG1969", "DJTIME", "TIME", "$NEWT2026", "$DONNY", "$GILLSON", "$GILLGOLD",
-  "$POPPA"
+  "$POPPA", "$POTTER", "$BRADEN168", "$MASON"
 ] as const;
 
 export type SovereignToken = typeof SOVEREIGN_ASSETS[number];
 
 // Protected family assets - ABSOLUTE PROTECTION
-export const PROTECTED_ASSETS = ["$JAXX", "$POPPA", "$DONNY", "$GILLSON", "$GILLGOLD"] as const;
+export const PROTECTED_ASSETS = ["$JAXX", "$POPPA", "$DONNY", "$GILLSON", "$GILLGOLD", "$POTTER", "$BRADEN168", "$MASON"] as const;
 export type ProtectedAsset = typeof PROTECTED_ASSETS[number];
 
 // Token categories
@@ -33,14 +33,14 @@ export const TOKEN_CATEGORIES = {
   ANCHOR: ["DG77.77X_GRAVITY_ACTIVE", "SGAU", "$ANGL", "ANGL2026"],
   BTC: ["GILLBTC", "BTC2.0"],
   TIME: ["DG1969", "DJTIME", "TIME"],
-  SOVEREIGN: ["$NEWT2026", "$DONNY", "$GILLSON", "$GILLGOLD", "$POPPA", "JAXX"],
+  SOVEREIGN: ["$NEWT2026", "$DONNY", "$GILLSON", "$GILLGOLD", "$POPPA", "JAXX", "$POTTER", "$BRADEN168", "$MASON"],
 } as const;
 
 /**
  * Validates asset alignment against the BTC Witness Anchor
  */
 export const validateSovereignCanon = (tokens: string[]): boolean => {
-  if (tokens.length !== 47) return false;
+  if (tokens.length !== 50) return false;
   return tokens.every(t => SOVEREIGN_ASSETS.includes(t as SovereignToken));
 };
 
@@ -77,8 +77,8 @@ export const BTC_WITNESS_ANCHOR = {
  * Registry metadata
  */
 export const REGISTRY_META = {
-  version: "14.1.2.1",
-  canonSize: 47,
+  version: "14.1.3.0",
+  canonSize: 50,
   node: "SAINT PAUL 55116",
   sgauRef: "7226.3461",
   status: "ANCHORED",
