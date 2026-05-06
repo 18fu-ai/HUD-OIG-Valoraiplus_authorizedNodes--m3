@@ -6,7 +6,7 @@ import Link from "next/link"
 
 /**
  * VALORAIPLUS TOKEN SALE // USDC Payment Gateway
- * 50-Token Canon Direct Purchase
+ * 51-Token Canon Direct Purchase
  * SGAU 7226.3461 // NODE: SAINT PAUL 55116
  */
 
@@ -57,7 +57,8 @@ const SALE_TIERS = [
 const PURCHASABLE_TOKENS = [
   { symbol: "VCORE", name: "Valor Core", category: "CORE", available: "1,000,000,000" },
   { symbol: "VAI", name: "Valor AI", category: "CORE", available: "1,000,000,000" },
-  { symbol: "VALOR", name: "Valor", category: "VALOR", available: "1,000,000,000" },
+  { symbol: "$VALORAIPLUS", name: "ValorAI Plus", category: "VALOR", available: "1,000,000,000" },
+  { symbol: "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED", name: "ValorAI Plus DAO 2035", category: "VALOR", available: "1,000,000,000" },
   { symbol: "SGAU", name: "SGAU Token", category: "ANCHOR", available: "1,000,000,000" },
   { symbol: "VGOV", name: "Valor Governance", category: "CORE", available: "1,000,000,000" },
   { symbol: "VDAO", name: "Valor DAO", category: "GOVERNANCE", available: "1,000,000,000" },
@@ -161,7 +162,7 @@ export default function TokenSalePage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-black mb-4">VALORAIPLUS TOKEN SALE</h1>
           <p className="text-zinc-400 max-w-2xl mx-auto">
-            Purchase tokens from the 50-Token Canon using USDC. Early supporters receive bonus allocations.
+            Purchase tokens from the 51-Token Canon using USDC. Early supporters receive bonus allocations.
           </p>
         </div>
         
@@ -410,13 +411,13 @@ export default function TokenSalePage() {
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-6 border border-emerald-900/50 bg-emerald-950/20 text-center">
             <p className="text-xs text-emerald-700">TOTAL SUPPLY</p>
-            <p className="text-3xl font-black text-white">50B</p>
-            <p className="text-xs text-zinc-500">50 Tokens x 1B each</p>
+            <p className="text-3xl font-black text-white">51B</p>
+            <p className="text-xs text-zinc-500">51 Tokens x 1B each</p>
           </div>
           <div className="p-6 border border-emerald-900/50 bg-emerald-950/20 text-center">
             <p className="text-xs text-emerald-700">FOR SALE</p>
-            <p className="text-3xl font-black text-emerald-400">41B</p>
-            <p className="text-xs text-zinc-500">41 Non-protected tokens</p>
+            <p className="text-3xl font-black text-emerald-400">42B</p>
+            <p className="text-xs text-zinc-500">42 Non-protected tokens</p>
           </div>
           <div className="p-6 border border-emerald-900/50 bg-emerald-950/20 text-center">
             <p className="text-xs text-emerald-700">PROTECTED</p>

@@ -45,7 +45,8 @@ const TOKENS = [
   { symbol: "BRAIN+", name: "Brain Plus", category: "BRAIN", balance: "1,000,000,000" },
   { symbol: "EDUTAIN", name: "Edutain", category: "BRAIN", balance: "1,000,000,000" },
   { symbol: "MATH+", name: "Math Plus", category: "BRAIN", balance: "1,000,000,000" },
-  { symbol: "VALOR", name: "Valor", category: "VALOR", balance: "1,000,000,000" },
+  { symbol: "$VALORAIPLUS", name: "ValorAI Plus", category: "VALOR", balance: "1,000,000,000" },
+  { symbol: "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED", name: "ValorAI Plus DAO 2035", category: "VALOR", balance: "1,000,000,000" },
   { symbol: "VACN", name: "Valor ACN", category: "VALOR", balance: "1,000,000,000" },
   { symbol: "JAXX", name: "Jaxx", category: "SOVEREIGN", balance: "1,000,000,000", protected: true },
   { symbol: "VDAO", name: "Valor DAO", category: "GOVERNANCE", balance: "1,000,000,000" },
@@ -131,7 +132,7 @@ export default function SwapPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="text-xl font-black text-emerald-400">VALORAIPLUS</Link>
-            <span className="text-xs text-emerald-700">SWAP // 50-TOKEN CANON</span>
+            <span className="text-xs text-emerald-700">SWAP // 51-TOKEN CANON</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-xs text-right">
@@ -361,8 +362,8 @@ export default function SwapPage() {
         <div className="mt-6 grid grid-cols-2 gap-4">
           <div className="p-4 border border-emerald-900/50 bg-emerald-950/20">
             <p className="text-xs text-emerald-700">TOTAL TOKENS</p>
-            <p className="text-2xl font-black text-white">50</p>
-            <p className="text-[10px] text-zinc-500">50-Token Canon</p>
+            <p className="text-2xl font-black text-white">51</p>
+            <p className="text-[10px] text-zinc-500">51-Token Canon</p>
           </div>
           <div className="p-4 border border-emerald-900/50 bg-emerald-950/20">
             <p className="text-xs text-emerald-700">PROTECTED</p>
@@ -389,7 +390,7 @@ export default function SwapPage() {
               <p className="font-bold text-yellow-500">Liquidity Required</p>
               <p className="text-sm text-zinc-400 mt-1">
                 To enable swaps, liquidity pools must be created on Uniswap or other DEXs. 
-                This requires seeding pools with both VALOR tokens and base assets (ETH/USDC).
+                This requires seeding pools with both VALORAIPLUS tokens and base assets (ETH/USDC).
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <a

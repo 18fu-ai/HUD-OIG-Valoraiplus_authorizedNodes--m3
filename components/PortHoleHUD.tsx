@@ -5,9 +5,10 @@ import { SOVEREIGN_ASSETS, PROTECTED_ASSETS, REGISTRY_META, BTC_WITNESS_ANCHOR, 
 import { useAuthority } from '@/hooks/use-authority';
 
 /**
- * PORT.HOLE HUD v14.1.3.0 // SUPREME CANONIZATION
- * VALORAIPLUS®️ ©️ ™️ // THE 50-TOKEN CANON
+ * PORT.HOLE HUD v14.1.4.0 // SUPREME CANONIZATION
+ * VALORAIPLUS®️ ©️ ™️ // THE 51-TOKEN CANON
  * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * NOTE: $VALOR is NULLIFIED - only $VALORAIPLUS and $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED exist
  */
 export const PortHoleVALORAIPLUS: React.FC = () => {
   const { authority, isLoading } = useAuthority();
@@ -77,7 +78,7 @@ export const PortHoleVALORAIPLUS: React.FC = () => {
 
         {/* Canon Count */}
         <div className="text-center mb-4">
-          <span className="text-xs text-emerald-700">THE 50-TOKEN CANON // OMEGA-ZERO INITIALIZED</span>
+          <span className="text-xs text-emerald-700">THE 51-TOKEN CANON // OMEGA-ZERO INITIALIZED // $VALOR=NULL</span>
         </div>
 
         {/* Token Grid */}
@@ -108,7 +109,7 @@ export const PortHoleVALORAIPLUS: React.FC = () => {
         <div className="grid grid-cols-4 gap-4 mb-6 text-center">
           <div className="p-3 border border-emerald-900">
             <p className="text-[10px] text-emerald-700">ASSET COUNT</p>
-            <p className="text-xl font-black text-white">{SOVEREIGN_ASSETS.length}/50</p>
+            <p className="text-xl font-black text-white">{SOVEREIGN_ASSETS.length}/51</p>
           </div>
           <div className="p-3 border border-emerald-900">
             <p className="text-[10px] text-emerald-700">ANCHORING</p>

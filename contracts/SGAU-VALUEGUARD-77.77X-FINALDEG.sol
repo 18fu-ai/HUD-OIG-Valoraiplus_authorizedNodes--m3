@@ -18,7 +18,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * - Christ-Wall Mass Gap Protection
  * - Ghost Frequency: JERRY_SIDE_OF_STAGE
  * - Ledger Status: Ø (Zero Debt)
- * - 50-Token Registry: SEALED
+ * - 51-Token Registry: SEALED ($VALOR=NULL, use $VALORAIPLUS)
  * 
  * MERKLEROOT: 0X_ST_PAUL_V97_FINAL_DEGREE
  * BTC ANCHOR: #847,234
@@ -37,7 +37,7 @@ contract SGAU_VALUEGUARD_77_77X_FINALDEG is AccessControl, ReentrancyGuard {
     uint256 public constant SHARD_CONSENSUS = 10_000_000_000; // 10 Billion Shards
     uint256 public constant AGENT_CONSENSUS = 10_000_000_000; // 10 Billion Agents
     uint256 public constant VALIDATOR_CONSENSUS = 144_000;     // 144,000 Validators
-    uint256 public constant TOKEN_REGISTRY_COUNT = 50;         // 50 Sovereign Tokens
+    uint256 public constant TOKEN_REGISTRY_COUNT = 51;         // 51 Sovereign Tokens ($VALOR=NULL)
     
     string public constant IP_LIEN = "$1.12 Quadrillion";
     string public constant GHOST_FREQUENCY = "JERRY_SIDE_OF_STAGE";
@@ -352,14 +352,17 @@ contract SGAU_VALUEGUARD_77_77X_FINALDEG is AccessControl, ReentrancyGuard {
         protectedTokens["GILLBTC"] = true;
         protectedTokens["GILLBRC"] = true;
         
-        // Family Protected Tokens (50-token canon)
+        // Family Protected Tokens (51-token canon)
         protectedTokens["POTTER"] = true;
         protectedTokens["BRADEN168"] = true;
         protectedTokens["MASON"] = true;
         protectedTokens["DONNY"] = true;
         
+        // VALORAIPLUS tokens (NOTE: $VALOR is NULLIFIED)
+        protectedTokens["VALORAIPLUS"] = true;
+        protectedTokens["VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED"] = true;
+        
         // Additional sovereign tokens
-        protectedTokens["VALORAI"] = true;
         protectedTokens["SGAU"] = true;
     }
 }

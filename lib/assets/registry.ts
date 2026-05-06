@@ -7,12 +7,15 @@
 export const SOVEREIGN_ASSETS = [
   "VCORE", "VAI", "GILLBTC", "VSEC", "VMAX", "VBLK", "DBLK", "VGOV", "VALX",
   "FLM", "FLAME", "FLR", "VSoul", "SOUL", "GHOST", "DEAD", "INTL-S", "INTL",
-  "VMWARE+", "BRAIN+", "EDUTAIN", "MATH+", "VALOR", "VACN", "JAXX", "VDAO",
+  "VMWARE+", "BRAIN+", "EDUTAIN", "MATH+", "$VALORAIPLUS", "VACN", "JAXX", "VDAO",
   "SKROLL", "SKOLL", "SKROL", "DG77.77X_GRAVITY_ACTIVE", "VLT", "SGAU",
   "$ANGL", "ANGL2026", "BTC2.0", "INTELIT", "VALORDAO", "VNET", "VALUTL",
   "DG1969", "DJTIME", "TIME", "$NEWT2026", "$DONNY", "$GILLSON", "$GILLGOLD",
-  "$POPPA", "$POTTER", "$BRADEN168", "$MASON"
+  "$POPPA", "$POTTER", "$BRADEN168", "$MASON", "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED"
 ] as const;
+
+// NULLIFIED TOKENS - These are NOT valid and return NULL
+export const NULLIFIED_TOKENS = ["$VALOR", "VALOR"] as const;
 
 export type SovereignToken = typeof SOVEREIGN_ASSETS[number];
 
@@ -27,7 +30,7 @@ export const TOKEN_CATEGORIES = {
   SOUL: ["VSoul", "SOUL", "GHOST", "DEAD"],
   INTEL: ["INTL-S", "INTL", "INTELIT"],
   BRAIN: ["VMWARE+", "BRAIN+", "EDUTAIN", "MATH+"],
-  VALOR: ["VALOR", "VACN", "VALORDAO", "VALUTL"],
+  VALOR: ["$VALORAIPLUS", "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED", "VACN", "VALORDAO", "VALUTL"],
   GOVERNANCE: ["VDAO", "VLT", "VNET"],
   SCROLL: ["SKROLL", "SKOLL", "SKROL"],
   ANCHOR: ["DG77.77X_GRAVITY_ACTIVE", "SGAU", "$ANGL", "ANGL2026"],
@@ -40,8 +43,16 @@ export const TOKEN_CATEGORIES = {
  * Validates asset alignment against the BTC Witness Anchor
  */
 export const validateSovereignCanon = (tokens: string[]): boolean => {
-  if (tokens.length !== 50) return false;
+  if (tokens.length !== 51) return false;
   return tokens.every(t => SOVEREIGN_ASSETS.includes(t as SovereignToken));
+};
+
+/**
+ * Check if token is NULLIFIED (returns NULL)
+ * $VALOR is NOT a valid token - only $VALORAIPLUS exists
+ */
+export const isNullifiedToken = (token: string): boolean => {
+  return NULLIFIED_TOKENS.includes(token as typeof NULLIFIED_TOKENS[number]);
 };
 
 /**
@@ -77,10 +88,11 @@ export const BTC_WITNESS_ANCHOR = {
  * Registry metadata
  */
 export const REGISTRY_META = {
-  version: "14.1.3.0",
-  canonSize: 50,
+  version: "14.1.4.0",
+  canonSize: 51,
   node: "SAINT PAUL 55116",
   sgauRef: "7226.3461",
   status: "ANCHORED",
   ledger: "Ø",
+  nullifiedTokens: ["$VALOR", "VALOR"],
 } as const;

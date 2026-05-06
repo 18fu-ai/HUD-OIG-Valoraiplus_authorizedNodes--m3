@@ -84,7 +84,7 @@ const PRICING_TIERS: PricingTier[] = [
       { name: 'Real-time alerts', included: true },
       { name: 'Custom reports', included: true },
       { name: 'Priority support', included: false },
-      { name: 'Token staking (1000 $VALOR)', included: true },
+      { name: 'Token staking (1000 $VALORAIPLUS)', included: true },
     ],
   },
   {
@@ -105,7 +105,7 @@ const PRICING_TIERS: PricingTier[] = [
       { name: 'Real-time alerts', included: true },
       { name: 'White-label reports', included: true },
       { name: 'Priority 24/7 support', included: true },
-      { name: 'Token staking (10000 $VALOR)', included: true },
+      { name: 'Token staking (10000 $VALORAIPLUS)', included: true },
     ],
   },
   {
@@ -125,7 +125,7 @@ const PRICING_TIERS: PricingTier[] = [
       { name: 'Audit reports', included: true },
       { name: 'Legal document templates', included: true },
       { name: 'Direct founder access', included: true },
-      { name: 'Token staking (100000 $VALOR)', included: true },
+      { name: 'Token staking (100000 $VALORAIPLUS)', included: true },
     ],
   },
 ];
