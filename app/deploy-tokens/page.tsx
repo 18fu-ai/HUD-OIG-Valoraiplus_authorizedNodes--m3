@@ -13,9 +13,10 @@ import {
   Copy,
   ExternalLink,
   Shield,
-  Home,
-  Loader2
+  Home
 } from "lucide-react";
+import { WalletData } from "@/components/WalletData";
+import { OmnibusData } from "@/components/OmnibusData";
 
 /**
  * VALORAIPLUS® ERC-20 TOKEN DEPLOYMENT PAGE
@@ -324,6 +325,12 @@ export default function DeployTokensPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Sovereign Treasury (Live Balances) */}
+        <WalletData />
+
+        {/* Omnibus Data (Recovery & Forensics) */}
+        <OmnibusData />
 
         {/* External Links */}
         <Card className="border-cyan-900/50 bg-cyan-500/5">
