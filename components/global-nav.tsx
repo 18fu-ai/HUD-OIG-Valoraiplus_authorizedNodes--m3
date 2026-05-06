@@ -51,6 +51,7 @@ const QUICK_LINKS = {
       { name: 'LOGIC GATE', href: '/logic-gate', icon: Binary, description: 'Sovereign Doctrine' },
       { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
       { name: 'ORCHESTRATOR', href: '/orchestrator', icon: Crown, description: 'Elite Command' },
+      { name: 'LIQUIDM', href: '/liquidm', icon: Activity, description: 'Liquidity Mesh v0' },
     ]
   },
   intelligence: {

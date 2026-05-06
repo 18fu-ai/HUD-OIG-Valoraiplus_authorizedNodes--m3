@@ -5,6 +5,7 @@ import { ExternalLink, Home, Wallet, Gavel, Activity, Briefcase, Zap, TrendingUp
 
 const FOOTER_LINKS = [
   { name: 'Home', href: '/', icon: Home },
+  { name: 'LiquidM', href: '/liquidm', icon: Activity },
   { name: 'Treasury', href: '/treasury-liquidity', icon: Wallet },
   { name: 'Litigation', href: '/litigation', icon: Gavel },
   { name: 'Exchange', href: '/exchange', icon: Activity },

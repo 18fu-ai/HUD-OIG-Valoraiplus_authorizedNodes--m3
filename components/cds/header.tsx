@@ -99,6 +99,7 @@ const navItems = [
   { href: '/deploy-tokens', label: 'Deploy Tokens', icon: Zap, category: 'system' },
   { href: '/pitch-deck', label: 'Pitch Deck', icon: FileText, category: 'legal' },
   { href: '/orchestrator', label: 'Orchestrator', icon: Shield, category: 'system' },
+  { href: '/liquidm', label: 'LiquidM v0', icon: Activity, category: 'core' },
 ];
 
 const categories = [
