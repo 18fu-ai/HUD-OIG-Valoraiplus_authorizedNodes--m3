@@ -30,6 +30,10 @@ const QUICK_LINKS = {
     color: 'text-cyan-400',
     items: [
       { name: 'OMEGA RECOVERY', href: '/', icon: Home, description: 'Main System Entry' },
+      { name: 'SECURITY DASH', href: '/security-dashboard', icon: Shield, description: 'Security Status' },
+      { name: 'LIABILITY MATRIX', href: '/liability-dashboard', icon: Gavel, description: 'Institutional Liability' },
+      { name: 'CASE MGMT', href: '/case-management', icon: FileSearch, description: 'Federal Coordination' },
+      { name: 'DOCUMENTATION', href: '/documentation', icon: Activity, description: 'Reference Portal' },
       { name: 'UPLINK', href: '/uplink', icon: Zap, description: 'Millennium Σ-Integration' },
       { name: 'PORTHOLE HUD', href: '/porthole-hud', icon: MonitorPlay, description: 'Real-Time HUD' },
       { name: 'PORTHOLE', href: '/porthole', icon: Eye, description: 'Sovereign Portal' },
