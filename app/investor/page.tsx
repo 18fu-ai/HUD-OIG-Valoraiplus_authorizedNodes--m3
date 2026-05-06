@@ -19,8 +19,14 @@ import {
   Building2,
   Cpu,
   ArrowRight,
-  Home
+  Home,
+  ExternalLink,
+  Target,
+  Users,
+  Coins
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
 
 // ============================================================
@@ -53,6 +59,59 @@ interface BusinessOutcome {
   outcome: string;
   icon: React.ReactNode;
 }
+
+// Funding rounds
+interface FundingRound {
+  id: string;
+  name: string;
+  status: 'closed' | 'active' | 'upcoming';
+  target: number;
+  raised: number;
+  valuation: number;
+  equity: string;
+  minInvestment: number;
+  investors: number;
+  closeDate: string;
+}
+
+const FUNDING_ROUNDS: FundingRound[] = [
+  {
+    id: "pre-seed",
+    name: "Pre-Seed",
+    status: "closed",
+    target: 250000,
+    raised: 250000,
+    valuation: 2500000,
+    equity: "10%",
+    minInvestment: 10000,
+    investors: 5,
+    closeDate: "2024-06-01",
+  },
+  {
+    id: "seed",
+    name: "Seed Round",
+    status: "active",
+    target: 2000000,
+    raised: 485000,
+    valuation: 15000000,
+    equity: "15%",
+    minInvestment: 25000,
+    investors: 12,
+    closeDate: "2025-09-01",
+  },
+  {
+    id: "series-a",
+    name: "Series A",
+    status: "upcoming",
+    target: 10000000,
+    raised: 0,
+    valuation: 50000000,
+    equity: "20%",
+    minInvestment: 100000,
+    investors: 0,
+    closeDate: "2026-Q2",
+  },
+];
 
 const VALUATION_TIERS: ValuationTier[] = [
   {
@@ -123,10 +182,18 @@ function getStatusColor(status: string): string {
 
 export default function InvestorManifestPage() {
   const [mounted, setMounted] = useState(false);
+  const [selectedRound, setSelectedRound] = useState(FUNDING_ROUNDS[1]); // Seed round
+  const [investmentAmount, setInvestmentAmount] = useState("");
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const activeRound = FUNDING_ROUNDS.find(r => r.status === 'active');
+  const progressPercentage = activeRound ? (activeRound.raised / activeRound.target) * 100 : 0;
+  const equityForInvestment = investmentAmount 
+    ? (parseFloat(investmentAmount) / selectedRound.valuation) * 100 
+    : 0;
 
   const totalVerified = useMemo(() => 
     VALUATION_TIERS
@@ -180,6 +247,143 @@ export default function InvestorManifestPage() {
             <p>ANCHOR: SAINT PAUL NODE 55116</p>
           </div>
         </header>
+
+        {/* ACTIVE FUNDING ROUND */}
+        {activeRound && (
+          <section>
+            <Card className="bg-slate-900 border-2 border-emerald-500/50">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-emerald-400">
+                    <Target className="w-5 h-5" />
+                    ACTIVE: {activeRound.name}
+                  </CardTitle>
+                  <Badge className="bg-emerald-500/20 text-emerald-400 animate-pulse">
+                    OPEN FOR INVESTMENT
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div>
+                    <p className="text-xs text-zinc-500">TARGET</p>
+                    <p className="text-xl font-bold text-white">{formatCurrency(activeRound.target)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">RAISED</p>
+                    <p className="text-xl font-bold text-emerald-400">{formatCurrency(activeRound.raised)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">VALUATION</p>
+                    <p className="text-xl font-bold text-cyan-400">{formatCurrency(activeRound.valuation)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-zinc-500">INVESTORS</p>
+                    <p className="text-xl font-bold text-amber-400">{activeRound.investors}</p>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div>
+                  <div className="flex justify-between text-xs mb-2">
+                    <span className="text-zinc-500">Progress</span>
+                    <span className="text-emerald-400">{progressPercentage.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full bg-zinc-800 rounded-full h-4">
+                    <div 
+                      className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-4 rounded-full transition-all"
+                      style={{ width: `${progressPercentage}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Investment Calculator */}
+                <div className="p-4 bg-zinc-800/50 rounded-lg">
+                  <p className="text-sm font-bold text-white mb-3">INVESTMENT CALCULATOR</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                    <div>
+                      <label className="text-xs text-zinc-500">Investment Amount (USD)</label>
+                      <Input
+                        type="number"
+                        placeholder={`Min: ${formatCurrency(activeRound.minInvestment)}`}
+                        value={investmentAmount}
+                        onChange={(e) => setInvestmentAmount(e.target.value)}
+                        className="bg-zinc-900 border-zinc-700"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs text-zinc-500">Equity Received</p>
+                      <p className="text-2xl font-black text-cyan-400">{equityForInvestment.toFixed(4)}%</p>
+                    </div>
+                    <Button className="bg-emerald-600 hover:bg-emerald-700">
+                      REQUEST INVESTMENT DOCS
+                    </Button>
+                  </div>
+                </div>
+
+                {/* External Links */}
+                <div className="flex gap-2">
+                  <a href="https://www.18fu.cash" target="_blank" rel="noopener noreferrer" className="flex-1">
+                    <Button variant="outline" className="w-full border-cyan-700 text-cyan-400">
+                      18fu.cash <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                  <a href="https://valorbank-rfvbdnaa.manus.space/" target="_blank" rel="noopener noreferrer" className="flex-1">
+                    <Button variant="outline" className="w-full border-cyan-700 text-cyan-400">
+                      ValorBank <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
+
+        {/* ALL FUNDING ROUNDS */}
+        <section>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1 h-6 bg-fuchsia-500"></span>
+            <h2 className="text-xl font-bold text-fuchsia-400 font-mono">FUNDING ROUNDS</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {FUNDING_ROUNDS.map((round) => (
+              <button
+                key={round.id}
+                onClick={() => setSelectedRound(round)}
+                className={`p-4 rounded-lg border text-left transition-all ${
+                  selectedRound.id === round.id
+                    ? 'border-cyan-500 bg-cyan-500/10'
+                    : 'border-zinc-700 hover:border-zinc-500 bg-slate-900/50'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-bold text-white">{round.name}</p>
+                  <Badge className={`text-[10px] ${
+                    round.status === 'closed' ? 'bg-zinc-700 text-zinc-400' :
+                    round.status === 'active' ? 'bg-emerald-500/20 text-emerald-400' :
+                    'bg-amber-500/20 text-amber-400'
+                  }`}>
+                    {round.status.toUpperCase()}
+                  </Badge>
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Target</span>
+                    <span className="text-white">{formatCurrency(round.target)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Valuation</span>
+                    <span className="text-cyan-400">{formatCurrency(round.valuation)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Min Investment</span>
+                    <span className="text-white">{formatCurrency(round.minInvestment)}</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
 
         {/* S-CLASS CORE LATCHED */}
         <section className="flex justify-center">
