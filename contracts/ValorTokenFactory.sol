@@ -10,8 +10,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 /**
  * @title ValorToken
  * @author SOVEREIGN-AUDITOR-Ω & NEWT //e v2.1
- * @notice ERC-20 Token for VALORAIPLUS 50-Token Canon
+ * @notice ERC-20 Token for VALORAIPLUS 51-Token Canon
  * @dev Each token in the canon is deployed via the factory
+ * NOTE: $VALOR is NULLIFIED - only $VALORAIPLUS and $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED exist
  */
 contract ValorToken is ERC20, ERC20Burnable, ERC20Permit, AccessControl {
     
@@ -80,12 +81,12 @@ contract ValorToken is ERC20, ERC20Burnable, ERC20Permit, AccessControl {
 /**
  * @title ValorTokenFactory
  * @author SOVEREIGN-AUDITOR-Ω & NEWT //e v2.1
- * @notice Factory contract for deploying all 50 tokens in the VALORAIPLUS Canon
+ * @notice Factory contract for deploying all 51 tokens in the VALORAIPLUS Canon
  * @dev Deploys ERC-20 tokens with consistent configuration
  * 
  * LATCH STATUS:
  * Schema: REV_40
- * Canon: 50 TOKENS
+ * Canon: 51 TOKENS ($VALOR=NULL)
  * Merkleroot: 0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b
  * Anchor: Saint Paul Node 55116
  */
@@ -102,7 +103,7 @@ contract ValorTokenFactory is AccessControl, ReentrancyGuard {
     // CONSTANTS
     // ═══════════════════════════════════════════════════════
     
-    uint256 public constant CANON_SIZE = 50;
+    uint256 public constant CANON_SIZE = 51;
     uint256 public constant DEFAULT_SUPPLY = 1_000_000_000; // 1 Billion per token
     uint8 public constant DEFAULT_DECIMALS = 18;
     
@@ -194,7 +195,8 @@ contract ValorTokenFactory is AccessControl, ReentrancyGuard {
     }
     
     /**
-     * @dev Deploy all 50 tokens in the canon
+     * @dev Deploy all 51 tokens in the canon
+     * NOTE: $VALOR is NULLIFIED - use $VALORAIPLUS instead
      */
     function deployFullCanon() external onlyRole(SOVEREIGN_ROLE) nonReentrant {
         // CORE tokens
@@ -233,8 +235,9 @@ contract ValorTokenFactory is AccessControl, ReentrancyGuard {
         _deployIfNotExists("Edutain", "EDUTAIN", "BRAIN", false);
         _deployIfNotExists("Math Plus", "MATH+", "BRAIN", false);
         
-        // VALOR tokens
-        _deployIfNotExists("Valor", "VALOR", "VALOR", false);
+        // VALORAIPLUS tokens (NOTE: $VALOR is NULLIFIED)
+        _deployIfNotExists("ValorAI Plus", "$VALORAIPLUS", "VALOR", false);
+        _deployIfNotExists("ValorAI Plus DAO 2035", "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED", "VALOR", false);
         _deployIfNotExists("Valor ACN", "VACN", "VALOR", false);
         _deployIfNotExists("Valor DAO", "VALORDAO", "VALOR", false);
         _deployIfNotExists("Valor Utility", "VALUTL", "VALOR", false);
