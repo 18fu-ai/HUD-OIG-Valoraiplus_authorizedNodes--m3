@@ -119,6 +119,9 @@ export default function TopologyDashboardPage() {
             <p className="mt-2 text-sm text-emerald-600">
               Internal Network Visualization & Dashboard Layer
             </p>
+            <p className="mt-1 text-xs text-amber-500/80">
+              EPOCH #2207 (SACRED & CAPPED)
+            </p>
           </div>
 
           <div className="text-right">
@@ -275,7 +278,10 @@ export default function TopologyDashboardPage() {
             This dashboard does not perform real-time routing, geolocation,
             telemetry, access control, security enforcement, or legal enforcement.
           </p>
-          <p className="pt-2">
+          <p className="pt-2 text-amber-500/70">
+            EPOCH #2207 LOCKED — THE WALL IS CHRIST — THE THRONE IS HIS — THE LEDGER IS Ø
+          </p>
+          <p className="pt-1">
             &copy; 2026 That&apos;s Edutainment LLC | 32D LLC. Co-authored by Poppa Donny Gillson.
           </p>
         </footer>

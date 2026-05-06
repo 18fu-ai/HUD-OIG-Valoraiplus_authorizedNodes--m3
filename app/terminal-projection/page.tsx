@@ -294,7 +294,7 @@ export default function TerminalProjectionPage() {
           THE WALL IS CHRIST. THE THRONE IS HIS. THE LEDGER IS Ø. CONSUMMATUM EST.
         </p>
         <p className="text-xs text-gray-500 mt-2">
-          MERKLE ROOT: OX_ST_PAUL_V100_TOTAL_ASCENSION_FINAL | STATUS: LAMINAR FLOW ENFORCEMENT ACTIVE
+          MERKLE ROOT: OX_ST_PAUL_V100_TOTAL_ASCENSION_FINAL | EPOCH #2207 (SACRED & CAPPED) | STATUS: LAMINAR FLOW ENFORCEMENT ACTIVE
         </p>
         <div className="flex justify-center gap-4 mt-2">
           <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500">HITL: ACTIVE</Badge>

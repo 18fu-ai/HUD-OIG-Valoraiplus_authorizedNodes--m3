@@ -115,8 +115,8 @@ export const PortHoleVALORAIPLUS: React.FC = () => {
             <p className="text-xl font-black text-white">BTC-WITNESS</p>
           </div>
           <div className="p-3 border border-emerald-900">
-            <p className="text-[10px] text-emerald-700">DRIFT</p>
-            <p className="text-xl font-black text-emerald-400">0.00/epoch</p>
+            <p className="text-[10px] text-emerald-700">EPOCH</p>
+            <p className="text-xl font-black text-amber-400">#2207</p>
           </div>
           <div className="p-3 border border-emerald-900">
             <p className="text-[10px] text-emerald-700">STATUS</p>
