@@ -93,6 +93,7 @@ const QUICK_LINKS = {
     icon: Wallet,
     color: 'text-green-400',
     items: [
+      { name: 'SOVEREIGN WALLET', href: '/wallet', icon: Wallet, description: 'donadams1969.eth' },
       { name: 'ACCOUNT 8185', href: '/account-8185', icon: Landmark, description: 'Primary Schwab' },
       { name: 'TREASURY V50', href: '/treasury-v50', icon: Landmark, description: 'v50 System' },
       { name: 'TREASURY', href: '/treasury', icon: Wallet, description: 'Assets' },

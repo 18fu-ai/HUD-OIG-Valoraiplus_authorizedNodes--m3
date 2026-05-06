@@ -6,6 +6,7 @@ import { VerificationStatus } from '@/components/dashboard/verification-status';
 import { NodeStatus } from '@/components/dashboard/node-status';
 import { BeneficiaryTokens } from '@/components/dashboard/beneficiary-tokens';
 import { GovernancePanel } from '@/components/dashboard/governance-panel';
+import { SovereignWalletCard } from '@/components/wallet/sovereign-wallet-card';
 
 export default function SecurityDashboardPage() {
   return (
@@ -46,6 +47,7 @@ export default function SecurityDashboardPage() {
 
           {/* Right Column */}
           <div className="space-y-6">
+            <SovereignWalletCard />
             <NodeStatus />
             <GovernancePanel />
           </div>

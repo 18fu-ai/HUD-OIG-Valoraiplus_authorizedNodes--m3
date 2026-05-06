@@ -5,6 +5,7 @@ import { TargetMatrix } from '@/components/liability/target-matrix';
 import { LiabilityBreakdown } from '@/components/liability/liability-breakdown';
 import { AuditTrail } from '@/components/liability/audit-trail';
 import { FederalSync } from '@/components/liability/federal-sync';
+import { SovereignWalletCard } from '@/components/wallet/sovereign-wallet-card';
 
 export default function LiabilityDashboardPage() {
   return (
@@ -40,9 +41,10 @@ export default function LiabilityDashboardPage() {
         </div>
 
         {/* Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <AuditTrail />
           <FederalSync />
+          <SovereignWalletCard />
         </div>
       </div>
     </div>
