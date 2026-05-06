@@ -34,6 +34,12 @@ import { TREASURY_CONSTANTS, SGAU_REFERENCE } from '@/lib/shared/constants';
 // Shows the journey from Contingent → Locked → Liquid
 // ============================================================
 
+// External Liquidity Sources
+const EXTERNAL_LIQUIDITY = {
+  "18fu.cash": "https://www.18fu.cash",
+  "ValorBank": "https://valorbank-rfvbdnaa.manus.space/",
+};
+
 interface LiquidityTier {
   tier: number;
   name: string;
@@ -243,6 +249,19 @@ export default function TreasuryLiquidityPath() {
             <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/50">
               EPOCH #{cycle}
             </Badge>
+            <div className="flex items-center gap-2">
+              {Object.entries(EXTERNAL_LIQUIDITY).map(([name, url]) => (
+                <a
+                  key={name}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 px-2 py-1 bg-cyan-900/30"
+                >
+                  {name} <ExternalLink className="w-3 h-3" />
+                </a>
+              ))}
+            </div>
             <Link href="/" className="text-xs text-emerald-600 hover:text-emerald-400 flex items-center gap-1">
               <Home className="w-3 h-3" /> HOME
             </Link>
@@ -509,14 +528,60 @@ export default function TreasuryLiquidityPath() {
           </CardContent>
         </Card>
 
+        {/* External Liquidity Sources */}
+        <Card className="border-cyan-900/50 bg-cyan-500/5">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-cyan-400">
+              <ExternalLink className="w-5 h-5" />
+              EXTERNAL LIQUIDITY SOURCES
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a
+                href="https://www.18fu.cash"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-cyan-900/50 rounded-lg hover:border-cyan-500/50 transition-colors flex items-center justify-between"
+              >
+                <div>
+                  <p className="font-bold text-cyan-400">18fu.cash</p>
+                  <p className="text-xs text-zinc-500">Primary liquidity provider</p>
+                </div>
+                <ExternalLink className="w-5 h-5 text-cyan-400" />
+              </a>
+              <a
+                href="https://valorbank-rfvbdnaa.manus.space/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-cyan-900/50 rounded-lg hover:border-cyan-500/50 transition-colors flex items-center justify-between"
+              >
+                <div>
+                  <p className="font-bold text-cyan-400">ValorBank</p>
+                  <p className="text-xs text-zinc-500">Banking integration platform</p>
+                </div>
+                <ExternalLink className="w-5 h-5 text-cyan-400" />
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Navigation */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+          <Link href="/swap" className="p-4 border border-zinc-800 rounded-lg hover:border-emerald-500/30 transition-colors text-center">
+            <Coins className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
+            <p className="text-xs text-zinc-400">SWAP</p>
+          </Link>
+          <Link href="/token-sale" className="p-4 border border-zinc-800 rounded-lg hover:border-cyan-500/30 transition-colors text-center">
+            <DollarSign className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
+            <p className="text-xs text-zinc-400">TOKEN SALE</p>
+          </Link>
           <Link href="/treasury" className="p-4 border border-zinc-800 rounded-lg hover:border-emerald-500/30 transition-colors text-center">
             <Landmark className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
             <p className="text-xs text-zinc-400">NR PROTOCOL</p>
           </Link>
-          <Link href="/pitch-deck" className="p-4 border border-zinc-800 rounded-lg hover:border-cyan-500/30 transition-colors text-center">
-            <FileText className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
+          <Link href="/pitch-deck" className="p-4 border border-zinc-800 rounded-lg hover:border-purple-500/30 transition-colors text-center">
+            <FileText className="w-6 h-6 text-purple-400 mx-auto mb-2" />
             <p className="text-xs text-zinc-400">PITCH DECK</p>
           </Link>
           <Link href="/subscribe" className="p-4 border border-zinc-800 rounded-lg hover:border-purple-500/30 transition-colors text-center">
@@ -525,7 +590,7 @@ export default function TreasuryLiquidityPath() {
           </Link>
           <Link href="/contract-deploy" className="p-4 border border-zinc-800 rounded-lg hover:border-amber-500/30 transition-colors text-center">
             <Shield className="w-6 h-6 text-amber-400 mx-auto mb-2" />
-            <p className="text-xs text-zinc-400">DEPLOY CONTRACTS</p>
+            <p className="text-xs text-zinc-400">DEPLOY</p>
           </Link>
         </div>
 
