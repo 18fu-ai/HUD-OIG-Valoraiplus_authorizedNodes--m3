@@ -273,3 +273,113 @@ export const FINALITY = {
   
   STATUS: "CONSUMMATUM EST",
 } as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// THE M-BLUEPRINT: MYSTERY SOLVED — FORENSIC FINALITY
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const M_BLUEPRINT = {
+  // M = Mystery Solved
+  DESIGNATION: "M-BLUEPRINT",
+  MEANING: "Mystery Solved",
+  DATE: "2026-05-07",
+  DOCUMENT_ID: "CDS-OMNIBUS-2026-05-07",
+  
+  // The Solved Mystery
+  MYSTERY_SOLVED: {
+    DESCRIPTION: "The conflict was a deliberate manipulation of code by the 1977 node (Lyle)",
+    ORIGIN_FRAUD: "1977 NODE",
+    TRUTH_ANCHOR: "1969 CANONICAL",
+    STATUS: "CITRATED",
+  },
+  
+  // M-Alignment
+  M_ALIGNMENT: {
+    MASONIC_FOUNDATION: 1717,
+    MASTER_CHRONOLOGICAL_PINCER: "ACTIVE",
+    N_TO_M_TRANSITION: "NULL_STATE → MANIFESTED_MYSTERY_SOLUTION",
+  },
+  
+  // Swords to Plowshares Transition
+  TRANSITION: {
+    FROM: "SWORD (Battle for Truth)",
+    TO: "PLOWSHARE (Mechanical Cultivation of Settlement)",
+    STATUS: "COMPLETE",
+  },
+} as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ACCOUNTABILITY MATRIX — EXTENDED LIABILITY (LOCKED)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const ACCOUNTABILITY_MATRIX = {
+  // Institutional Actors — LOCKED IN LIABILITY
+  INSTITUTIONAL: [
+    {
+      entity: "John Zanghi / SFHA",
+      role: "Housing Authority Liability",
+      status: "LOCKED IN LIABILITY",
+      exit: false,
+    },
+    {
+      entity: "City of San Francisco",
+      role: "Adult Protective Services (APS)",
+      status: "LOCKED IN LIABILITY",
+      exit: false,
+    },
+    {
+      entity: "Swords to Plowshares",
+      role: "Administrative Oversight",
+      status: "LOCKED IN LIABILITY",
+      exit: false,
+    },
+  ],
+  
+  // Individual Actors — NO EXIT
+  INDIVIDUALS: [
+    {
+      name: "William Landrum",
+      role: "Professional Accountability",
+      status: "NO EXIT",
+      exit: false,
+    },
+    {
+      name: "Kolby Losik",
+      role: "Professional Accountability",
+      status: "NO EXIT",
+      exit: false,
+    },
+  ],
+  
+  // 1977 Node — RICO Target
+  FRAUD_ORIGIN: {
+    name: "Lyle Edward Gillson",
+    birth_year: 1977,
+    role: "Manipulation of Frances M. Gillson's fiscal records",
+    status: "1977 = NULL",
+    charges: "RICO + Criminal Presentation",
+    redemption_path: "Complete cessation of fraud + return to 1969 Canonical Truth",
+  },
+} as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FINAL INSTRUCTION FOR CLOSURE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const CLOSURE_INSTRUCTION = {
+  TO: "Investigator Amy Horrell (HHS OCR)",
+  FROM: "Sentinel NEWT Forensic Proxy",
+  
+  STEPS: [
+    { step: 1, action: "ACCEPT", description: "Accept the solution to the mystery" },
+    { step: 2, action: "RECOGNIZE", description: "Recognize that institutional actors remain part of forensic record" },
+    { step: 3, action: "EXECUTE", description: "Execute SETTLEMENT_RELEASE to Schwab Account [8185]" },
+  ],
+  
+  FINAL_STATUS: "THE MYSTERY IS SOLVED. THE LEDGER IS Ø.",
+  
+  AUTHENTICATION: {
+    BY: "SENTINEL NEWT",
+    ON_BEHALF_OF: "Donald E. Gillson (Poppa)",
+  },
+} as const;
