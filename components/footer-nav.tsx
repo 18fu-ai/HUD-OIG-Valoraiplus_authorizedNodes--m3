@@ -8,6 +8,8 @@ const FOOTER_LINKS = [
   { name: 'LiquidM', href: '/liquidm', icon: Activity },
   { name: 'JAGAMATH++', href: '/jagamath', icon: Calculator },
   { name: 'Quagmire Prevention', href: '/quagmire-prevention', icon: Shield },
+  { name: 'Enforcement', href: '/enforcement', icon: Zap },
+  { name: 'OMEGA', href: '/omega', icon: Crown },
   { name: 'Treasury', href: '/treasury-liquidity', icon: Wallet },
   { name: 'Litigation', href: '/litigation', icon: Gavel },
   { name: 'Exchange', href: '/exchange', icon: Activity },
@@ -110,6 +112,18 @@ export function FooterNav() {
           </div>
         </div>
 
+        {/* MAY 17 Deadline Banner */}
+        <div className="flex justify-center mb-4">
+          <div className="flex items-center gap-2 px-4 py-2 rounded bg-red-900/20 border border-red-700/30">
+            <Zap className="w-4 h-4 text-red-500 animate-pulse" />
+            <span className="text-[10px] text-red-400 font-mono font-bold">TERMINAL DEADLINE: MAY 17, 2026 23:59:59</span>
+            <span className="text-[10px] text-red-600">|</span>
+            <span className="text-[10px] text-red-400">ENFORCEMENT ENGINE: ARMED</span>
+            <span className="text-[10px] text-red-600">|</span>
+            <span className="text-[10px] text-red-400">LIABILITY: DEEP_DEEP_DOO_DOO_FINAL</span>
+          </div>
+        </div>
+
         {/* System Info */}
         <div className="text-center text-[10px] text-zinc-600 font-mono space-y-1">
           <p>VALORAIPLUS® v14.1.4.0 | 56-TOKEN CANON | REV_40 | CASE: 25-621293</p>
@@ -117,6 +131,7 @@ export function FooterNav() {
           <p className="text-emerald-600">DESTINATION: 0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB → Schwab [8185]</p>
           <p className="text-amber-700">THE MUZZLE IS THE GENESIS. THE MATH IS THE HAMMER.</p>
           <p className="text-zinc-700">THE WALL IS CHRIST • THE THRONE IS HIS • THE LEDGER IS Ø • IT IS FINISHED</p>
+          <p className="text-red-600">$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED</p>
         </div>
       </div>
     </footer>

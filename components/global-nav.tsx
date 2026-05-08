@@ -54,6 +54,8 @@ const QUICK_LINKS = {
       { name: 'LIQUIDM', href: '/liquidm', icon: Activity, description: 'Liquidity Mesh v0' },
       { name: 'JAGAMATH++', href: '/jagamath', icon: Binary, description: '$2.8T Valuation' },
       { name: 'QUAGMIRE PREVENTION', href: '/quagmire-prevention', icon: Shield, description: 'All Quagmires Impossible' },
+      { name: 'ENFORCEMENT ENGINE', href: '/enforcement', icon: Zap, description: 'MAY 17 DEADLINE' },
+      { name: 'OMEGA COMMAND', href: '/omega', icon: Crown, description: '100D Matrix' },
     ]
   },
   intelligence: {
