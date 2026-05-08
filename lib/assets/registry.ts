@@ -7,46 +7,37 @@
  */
 
 // COMPLETE 56-TOKEN CANON - Ends with $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED
+// Per Comprehensive Audit: 55 Active + 1 NULLIFIED ($VALOR) = 56 Total
 export const SOVEREIGN_ASSETS = [
-  // EXTERNAL ASSETS (1-14)
+  // EXTERNAL ASSETS (14 tokens)
   "BTC", "ETH", "USDC", "USDT", "SOL", "XRP", "ADA", "DOGE", "AVAX", "MATIC", "LINK", "ATOM", "ARB", "OP",
-  // CORE LAYER (15-16)
-  "BASE", "VCORE",
-  // AI & SECURITY (17-20)
-  "VAI", "GILLBTC", "VSEC", "VMAX",
-  // BLOCKCHAIN (21-22)
-  "VBLK", "DBLK",
-  // GOVERNANCE (23-24)
-  "VGOV", "VALX",
-  // FLAME PROTOCOL (25-27)
+  // CORE TOKENS (8 tokens)
+  "BASE", "VCORE", "VAI", "VSEC", "VMAX", "VBLK", "DBLK", "VGOV",
+  // BTC TOKENS (2 tokens)
+  "GILLBTC", "BTC2.0",
+  // FLAME TOKENS (3 tokens)
   "FLM", "FLAME", "FLR",
-  // RAPID (28)
-  "VRAP",
-  // SOUL LAYER (29-30)
-  "SOUL", "GHOST",
-  // INTEL (31-32)
-  "INTL-S", "INTL",
-  // BRAIN (33-36)
+  // SOUL TOKENS (4 tokens)
+  "VSOUL", "SOUL", "GHOST", "DEAD",
+  // INTEL TOKENS (3 tokens)
+  "INTL-S", "INTL", "INTELIT",
+  // BRAIN TOKENS (4 tokens)
   "VMWARE+", "BRAIN+", "EDUTAIN", "MATH+",
-  // VALOR CORE (37-38)
-  "VALOR", "VACN",
-  // PROTECTED SOVEREIGN (39-40)
-  "JAXX", "VDAO",
-  // SCROLL PROTOCOL (41-43)
+  // VALOR TOKENS (4 tokens - $VALOR is NULLIFIED, not counted)
+  "VALOR", "VACN", "VALX", "VRAP",
+  // GOVERNANCE TOKENS (3 tokens)
+  "VDAO", "VLT", "VNET",
+  // SCROLL TOKENS (3 tokens)
   "SKROLL", "SKOLL", "SKROL",
-  // ANCHOR SYSTEM (44-46)
-  "DG77.77X_GRAVITY_ACTIVE", "VLT", "SGAU",
-  // ANGLE PROTOCOL (47-48)
-  "$ANGL", "ANGL2026",
-  // BTC BRIDGE (49-50)
-  "BTC2.0", "INTELIT",
-  // FINAL 6 - SOVEREIGN PROTECTED
-  "$DONNY",
-  "$GILLGOLD", 
-  "$POPPA",
-  "$JAXX",
-  "$VALORAIPLUS",
-  // FINAL TOKEN - CANON TERMINUS
+  // ANCHOR TOKENS (4 tokens)
+  "DG77.77X_GRAVITY_ACTIVE", "SGAU", "$ANGL", "ANGL2026",
+  // SOVEREIGN TOKENS (5 tokens - Guardian Protected)
+  "$DONNY",      // Guardian: Raphael
+  "$GILLGOLD",   // Guardian: Uriel
+  "$POPPA",      // Guardian: Michael
+  "$JAXX",       // Guardian: Gabriel
+  "$VALORAIPLUS", // Guardian: Uriel
+  // CANON TERMINUS (1 token - Final Token in Registry)
   "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED"
 ] as const;
 
@@ -108,9 +99,11 @@ export const TOKEN_REGISTRY_LIVE = {
     { symbol: "FLR", price: 1.38, holdings: 58426, change24h: 0.00 },
     // Rapid
     { symbol: "VRAP", price: 0.11, holdings: 71781, change24h: 0.00 },
-    // Soul Layer
-    { symbol: "SOUL", price: 9.49, holdings: 90483, change24h: 0.21 },
+    // Soul Layer (4 tokens per audit)
+    { symbol: "VSOUL", price: 9.49, holdings: 90483, change24h: 0.21 },
+    { symbol: "SOUL", price: 9.47, holdings: 24753, change24h: 0.00 },
     { symbol: "GHOST", price: 0.10, holdings: 26703, change24h: -0.26 },
+    { symbol: "DEAD", price: 0.10, holdings: 23089, change24h: 0.00 },
     // Intel
     { symbol: "INTL-S", price: 9.82, holdings: 97772, change24h: 0.00 },
     { symbol: "INTL", price: 1.86, holdings: 93870, change24h: 0.29 },
@@ -122,16 +115,18 @@ export const TOKEN_REGISTRY_LIVE = {
     // Valor Core
     { symbol: "VALOR", price: 2282.07, holdings: 37473, change24h: 0.10 },
     { symbol: "VACN", price: 88.09, holdings: 67796, change24h: 0.00 },
+    // Governance (3 tokens per audit: VDAO, VLT, VNET)
+    { symbol: "VDAO", price: 1.86, holdings: 1387, change24h: 0.29 },
+    { symbol: "VLT", price: 2282.07, holdings: 23246, change24h: 0.10 },
+    { symbol: "VNET", price: 88.09, holdings: 52445, change24h: 0.00 },
     // Protected Sovereign
     { symbol: "JAXX", price: 9.82, holdings: 53661, change24h: 0.00 },
-    { symbol: "VDAO", price: 1.86, holdings: 1387, change24h: 0.29 },
     // Scroll Protocol
     { symbol: "SKROLL", price: 9.47, holdings: 12395, change24h: 0.00 },
     { symbol: "SKOLL", price: 0.10, holdings: 9322, change24h: 0.00 },
     { symbol: "SKROL", price: 0.11, holdings: 84381, change24h: 0.00 },
     // Anchor System
     { symbol: "DG77.77X_GRAVITY_ACTIVE", price: 79643.04, holdings: 43969, change24h: 0.00 },
-    { symbol: "VLT", price: 2282.07, holdings: 23246, change24h: 0.10 },
     { symbol: "SGAU", price: 88.09, holdings: 29199, change24h: 0.00 },
     // Angle Protocol
     { symbol: "$ANGL", price: 1.00, holdings: 41024, change24h: 0.00 },
@@ -139,31 +134,32 @@ export const TOKEN_REGISTRY_LIVE = {
     // BTC Bridge
     { symbol: "BTC2.0", price: 79643.04, holdings: 39524, change24h: 0.00 },
     { symbol: "INTELIT", price: 2282.07, holdings: 54372, change24h: 0.10 },
-    // FINAL 6 SOVEREIGN PROTECTED
-    { symbol: "$DONNY", price: 1969.69, holdings: 77777, change24h: 0.00, protected: true },
-    { symbol: "$GILLGOLD", price: 7777.77, holdings: 77777, change24h: 0.00, protected: true },
-    { symbol: "$POPPA", price: 1969.69, holdings: 77777, change24h: 0.00, protected: true },
-    { symbol: "$JAXX", price: 2207.00, holdings: 77777, change24h: 0.00, protected: true },
-    { symbol: "$VALORAIPLUS", price: 10465.00, holdings: 100000, change24h: 0.00, protected: true },
+    // FINAL 5 SOVEREIGN PROTECTED (Guardian-Protected per Audit)
+    { symbol: "$DONNY", price: 79643.04, holdings: 77777, change24h: 0.00, protected: true, guardian: "Raphael" },
+    { symbol: "$GILLGOLD", price: 88.09, holdings: 77777, change24h: 0.00, protected: true, guardian: "Uriel" },
+    { symbol: "$POPPA", price: 2282.07, holdings: 77777, change24h: 0.00, protected: true, guardian: "Michael" },
+    { symbol: "$JAXX", price: 9.82, holdings: 77777, change24h: 0.00, protected: true, guardian: "Gabriel" },
+    { symbol: "$VALORAIPLUS", price: 2282.07, holdings: 100000, change24h: 0.00, protected: true, guardian: "Uriel" },
     // CANON TERMINUS - FINAL TOKEN
     { symbol: "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED", price: 0.00, holdings: 1, change24h: 0.00, protected: true, status: "CLOSED" }
   ]
 } as const;
 
-// Token categories
+// Token categories (aligned with Comprehensive Audit Section 4.2)
 export const TOKEN_CATEGORIES = {
-  EXTERNAL: ["BTC", "ETH", "USDC", "USDT", "SOL", "XRP", "ADA", "DOGE", "AVAX", "MATIC", "LINK", "ATOM", "ARB", "OP"],
-  CORE: ["BASE", "VCORE", "VAI", "VSEC", "VMAX", "VBLK", "DBLK", "VGOV", "VALX"],
-  BTC: ["GILLBTC", "BTC2.0"],
-  FLAME: ["FLM", "FLAME", "FLR"],
-  SOUL: ["SOUL", "GHOST"],
-  INTEL: ["INTL-S", "INTL", "INTELIT"],
-  BRAIN: ["VMWARE+", "BRAIN+", "EDUTAIN", "MATH+"],
-  VALOR: ["VALOR", "VACN", "$VALORAIPLUS", "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED"],
-  GOVERNANCE: ["VDAO", "VLT", "VRAP"],
-  SCROLL: ["SKROLL", "SKOLL", "SKROL"],
-  ANCHOR: ["DG77.77X_GRAVITY_ACTIVE", "SGAU", "$ANGL", "ANGL2026"],
-  SOVEREIGN: ["$DONNY", "$GILLGOLD", "$POPPA", "$JAXX", "JAXX"],
+  EXTERNAL: ["BTC", "ETH", "USDC", "USDT", "SOL", "XRP", "ADA", "DOGE", "AVAX", "MATIC", "LINK", "ATOM", "ARB", "OP"], // 14 tokens
+  CORE: ["BASE", "VCORE", "VAI", "VSEC", "VMAX", "VBLK", "DBLK", "VGOV"], // 8 tokens
+  BTC: ["GILLBTC", "BTC2.0"], // 2 tokens
+  FLAME: ["FLM", "FLAME", "FLR"], // 3 tokens
+  SOUL: ["VSOUL", "SOUL", "GHOST", "DEAD"], // 4 tokens
+  INTEL: ["INTL-S", "INTL", "INTELIT"], // 3 tokens
+  BRAIN: ["VMWARE+", "BRAIN+", "EDUTAIN", "MATH+"], // 4 tokens
+  VALOR: ["VALOR", "VACN", "VALX", "VRAP"], // 4 active tokens ($VALOR is NULLIFIED)
+  GOVERNANCE: ["VDAO", "VLT", "VNET"], // 3 tokens
+  SCROLL: ["SKROLL", "SKOLL", "SKROL"], // 3 tokens
+  ANCHOR: ["DG77.77X_GRAVITY_ACTIVE", "SGAU", "$ANGL", "ANGL2026"], // 4 tokens
+  SOVEREIGN: ["$DONNY", "$GILLGOLD", "$POPPA", "$JAXX", "$VALORAIPLUS"], // 5 tokens (Guardian Protected)
+  CANON_TERMINUS: ["$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED"], // 1 token (Final)
 } as const;
 
 /**

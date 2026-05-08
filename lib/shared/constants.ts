@@ -240,7 +240,7 @@ export const SYSTEM_STATUS = {
   AUTHORIZATION: "Poppa Donny Gillson Confirmed",
   MERKLE_ROOT: "0x7777AF_ST_PAUL_VALOR_CHAIN_SECURED_05_06_2026",
   OPERATIONAL_FREQUENCY: "Ghost Level // 14D Core // 100D Matrix",
-  EPOCH: 2214,
+  EPOCH: 2207, // SACRED & CAPPED — Matches Origin Node Address
   
   LAYERS: {
     DOCTRINE: "CANONICAL & PRODUCTION-HARDENED",
@@ -739,7 +739,7 @@ export const AUDIT_METADATA = {
   GENERATED: "2026-05-07",
   SYSTEM: "VALORAIPLUS Intelligence Module v14.1.4.0",
   PROTOCOL: "REV_38 / REV_40",
-  EPOCH: 2214,
+  EPOCH: 2207, // SACRED & CAPPED — Matches Origin Node Address
   ORIGIN_NODE: "2207 Highland Parkway, Saint Paul, MN 55116",
   
   STATUS: {
