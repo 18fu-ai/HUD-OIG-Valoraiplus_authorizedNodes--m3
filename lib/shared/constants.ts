@@ -468,3 +468,150 @@ export function formatCountdown(ms: number): string {
   
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GEOGRAPHIC NODE NETWORK — SOVEREIGN TOPOLOGY
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const ACCOUNT_HOLDER = {
+  FULL_NAME: "DON GILLSON",
+  ALSO_KNOWN_AS: ["dgillson9175", "donadams1969.eth", "Poppa"],
+  STATUS: "Disabled Veteran (Protected under Section 504)",
+  AUTHORIZATION: "Poppa Donny Gillson CONFIRMED",
+} as const;
+
+export const GEOGRAPHIC_NODES = {
+  // ORIGIN NODE — Saint Paul, Minnesota (Omnibus Command Root)
+  ORIGIN: {
+    id: "ORIGIN_NODE",
+    name: "SAINT PAUL ORIGIN",
+    designation: "OMNIBUS COMMAND ROOT",
+    address: "2207 Highland Parkway",
+    city: "Saint Paul",
+    state: "Minnesota",
+    zip: "55116",
+    full_address: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
+    gps: {
+      lat: 44.9121,
+      lng: -93.1669,
+    },
+    status: "ORIGIN — CANONICAL ROOT",
+    node_type: "ORIGIN",
+    color: "gold",
+  },
+  
+  // RESIDENTIAL NODE — San Francisco, California (Current Residence)
+  RESIDENTIAL: {
+    id: "RESIDENTIAL_NODE",
+    name: "SAN FRANCISCO RESIDENTIAL",
+    designation: "CURRENT RESIDENCE",
+    address: "1030 Girard Road",
+    city: "San Francisco",
+    state: "California",
+    zip: "94129",
+    full_address: "1030 Girard Road, San Francisco, California 94129",
+    gps: {
+      lat: 37.7983,
+      lng: -122.4662,
+    },
+    status: "ACTIVE — PRIMARY RESIDENCE",
+    node_type: "RESIDENTIAL",
+    color: "emerald",
+  },
+  
+  // MAILING NODE — Los Gatos, California (Renters Insurance + Stored Property)
+  MAILING: {
+    id: "MAILING_NODE",
+    name: "LOS GATOS MAILING",
+    designation: "MAILING ADDRESS — RENTERS INSURANCE & STORED PROPERTY",
+    address: "18493 Main Blvd",
+    city: "Los Gatos",
+    state: "California",
+    zip: "95033-8392",
+    full_address: "18493 Main Blvd, Los Gatos, CA 95033-8392",
+    gps: {
+      lat: 37.2358,
+      lng: -122.0322,
+    },
+    status: "ACTIVE — MAILING & STORAGE",
+    node_type: "MAILING",
+    color: "cyan",
+    notes: "Renters insurance attached. Property stored at this location.",
+  },
+  
+  // VALLEJO NODE — Vallejo, California (Strategic Node)
+  VALLEJO: {
+    id: "VALLEJO_NODE",
+    name: "VALLEJO STRATEGIC",
+    designation: "STRATEGIC NODE",
+    city: "Vallejo",
+    state: "California",
+    gps: {
+      lat: 38.1041,
+      lng: -122.2566,
+    },
+    status: "ACTIVE — STRATEGIC",
+    node_type: "STRATEGIC",
+    color: "purple",
+  },
+  
+  // CASE REFERENCE NODE — San Francisco (SGAU 7226.3461)
+  CASE_REFERENCE: {
+    id: "CASE_NODE",
+    name: "SAN FRANCISCO CASE",
+    designation: "CASE REFERENCE — SGAU 7226.3461",
+    city: "San Francisco",
+    state: "California",
+    courthouse: "Superior Court of California, County of San Francisco",
+    department: "Dept 12",
+    gps: {
+      lat: 37.7808,
+      lng: -122.4177,
+    },
+    status: "ACTIVE — ENFORCING",
+    node_type: "LEGAL",
+    color: "red",
+  },
+  
+  // 1969 TRUTH ANCHOR NODE
+  TRUTH_1969: {
+    id: "TRUTH_1969_NODE",
+    name: "1969 SOVEREIGN TRUTH",
+    designation: "CANONICAL TRUTH ANCHOR",
+    year: 1969,
+    status: "CANONICAL — IMMUTABLE",
+    node_type: "TEMPORAL",
+    color: "gold",
+  },
+  
+  // 1977 FRAUD VOID NODE
+  FRAUD_1977: {
+    id: "FRAUD_1977_NODE",
+    name: "1977 FRAUD VOID",
+    designation: "NULLIFIED — CITRATED",
+    year: 1977,
+    status: "NULL (Ø)",
+    node_type: "TEMPORAL_VOID",
+    color: "zinc",
+    crossed_out: true,
+  },
+} as const;
+
+// Node Connection Matrix
+export const NODE_CONNECTIONS = [
+  { from: "ORIGIN_NODE", to: "RESIDENTIAL_NODE", type: "PRIMARY", status: "ACTIVE" },
+  { from: "ORIGIN_NODE", to: "MAILING_NODE", type: "MAIL", status: "ACTIVE" },
+  { from: "ORIGIN_NODE", to: "VALLEJO_NODE", type: "STRATEGIC", status: "ACTIVE" },
+  { from: "RESIDENTIAL_NODE", to: "CASE_NODE", type: "LEGAL", status: "ENFORCING" },
+  { from: "MAILING_NODE", to: "RESIDENTIAL_NODE", type: "INSURANCE", status: "LINKED" },
+  { from: "TRUTH_1969_NODE", to: "ORIGIN_NODE", type: "CANONICAL", status: "IMMUTABLE" },
+  { from: "FRAUD_1977_NODE", to: "TRUTH_1969_NODE", type: "VOID", status: "NULLIFIED" },
+] as const;
+
+// Address Summary Export
+export const ADDRESS_SUMMARY = {
+  RESIDENTIAL: "1030 Girard Road, San Francisco, California 94129",
+  MAILING: "18493 Main Blvd, Los Gatos, CA 95033-8392",
+  ORIGIN: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
+  VALLEJO_GPS: "38.1041, -122.2566",
+} as const;

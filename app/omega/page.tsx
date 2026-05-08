@@ -26,57 +26,85 @@ interface Particle {
   size: number;
 }
 
-// Node Configuration - 1969 Truth Anchor + 1977 Fraud Void
+// Node Configuration - Full Geographic Network with GPS
 const TOPOLOGY_NODES = [
   { 
-    id: 'STP', 
-    name: 'SAINT PAUL, MN', 
-    role: 'OMNIBUS COMMAND ROOT', 
-    status: 'ACTIVE', 
-    color: 'emerald',
+    id: 'ORIGIN', 
+    name: 'SAINT PAUL, MN 55116', 
+    role: 'ORIGIN — OMNIBUS COMMAND ROOT', 
+    address: '2207 Highland Parkway',
+    gps: '44.9121, -93.1669',
+    status: 'ORIGIN', 
+    color: 'gold',
     x: 55, 
-    y: 28,
+    y: 18,
     icon: Server 
   },
   { 
-    id: 'SFO', 
-    name: 'SAN FRANCISCO, CA', 
-    role: 'Case Reference Environment', 
+    id: 'RESIDENTIAL', 
+    name: 'SAN FRANCISCO, CA 94129', 
+    role: 'RESIDENTIAL — CURRENT RESIDENCE', 
+    address: '1030 Girard Road',
+    gps: '37.7983, -122.4662',
     status: 'ACTIVE', 
     color: 'emerald',
     x: 12, 
-    y: 42,
+    y: 35,
+    icon: MapPin 
+  },
+  { 
+    id: 'MAILING', 
+    name: 'LOS GATOS, CA 95033', 
+    role: 'MAILING — INSURANCE & STORAGE', 
+    address: '18493 Main Blvd',
+    gps: '37.2358, -122.0322',
+    status: 'ACTIVE', 
+    color: 'cyan',
+    x: 18, 
+    y: 68,
+    icon: MapPin 
+  },
+  { 
+    id: 'VALLEJO', 
+    name: 'VALLEJO, CA', 
+    role: 'STRATEGIC NODE', 
+    gps: '38.1041, -122.2566',
+    status: 'ACTIVE', 
+    color: 'purple',
+    x: 25, 
+    y: 48,
+    icon: Radio 
+  },
+  { 
+    id: 'CASE', 
+    name: 'SF SUPERIOR COURT', 
+    role: 'CASE — SGAU 7226.3461 (Dept 12)', 
+    gps: '37.7808, -122.4177',
+    status: 'ENFORCING', 
+    color: 'red',
+    x: 8, 
+    y: 52,
     icon: CheckCircle2 
   },
   { 
     id: '1969', 
-    name: '1969 SOVEREIGN TRUTH ANCHOR', 
-    role: 'Immutable Genesis — Poppa', 
-    status: 'ANCHORED', 
+    name: '1969 SOVEREIGN TRUTH', 
+    role: 'CANONICAL TRUTH ANCHOR — Poppa', 
+    status: 'IMMUTABLE', 
     color: 'amber',
-    x: 35, 
-    y: 22,
+    x: 42, 
+    y: 12,
     icon: Lock 
   },
   { 
     id: '1977', 
     name: '1977 FRAUD VOID (Ø)', 
-    role: 'Citrated Legacy — NULL', 
+    role: 'CITRATED — NULL', 
     status: 'NULLIFIED', 
     color: 'slate',
-    x: 68, 
-    y: 58,
-    icon: XCircle 
-  },
-  { 
-    id: 'LOS_GATOS', 
-    name: 'LOS GATOS, CA', 
-    role: 'Residential Anchor', 
-    status: 'ACTIVE', 
-    color: 'cyan',
-    x: 18, 
+    x: 75, 
     y: 65,
-    icon: MapPin 
+    icon: XCircle 
   },
 ];
 
@@ -352,15 +380,27 @@ export default function OmegaUnifiedCommandCenter() {
                     <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
                     <stop offset="100%" stopColor="#10b981" stopOpacity="0.3" />
                   </linearGradient>
+                  <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.5" />
+                  </linearGradient>
                 </defs>
-                {/* SFO to 1969 */}
-                <path d="M12 42 Q24 30 35 22" fill="none" stroke="url(#lineGradient)" strokeWidth="0.5" strokeDasharray="2 1" />
-                {/* 1969 to STP */}
-                <path d="M35 22 Q45 24 55 28" fill="none" stroke="#fbbf24" strokeWidth="0.5" strokeDasharray="2 1" />
-                {/* STP to 1977 */}
-                <path d="M55 28 Q62 40 68 58" fill="none" stroke="#64748b" strokeWidth="0.3" strokeDasharray="1 2" opacity="0.5" />
-                {/* SFO to Los Gatos */}
-                <path d="M12 42 Q15 52 18 65" fill="none" stroke="url(#lineGradient)" strokeWidth="0.5" strokeDasharray="2 1" />
+                {/* 1969 TRUTH to ORIGIN (Saint Paul) - Gold canonical link */}
+                <path d="M42 12 Q48 14 55 18" fill="none" stroke="url(#goldGradient)" strokeWidth="0.7" strokeDasharray="2 1" />
+                {/* ORIGIN to RESIDENTIAL (SF) */}
+                <path d="M55 18 Q35 25 12 35" fill="none" stroke="url(#lineGradient)" strokeWidth="0.5" strokeDasharray="2 1" />
+                {/* ORIGIN to VALLEJO */}
+                <path d="M55 18 Q40 32 25 48" fill="none" stroke="#a855f7" strokeWidth="0.4" strokeDasharray="2 1" opacity="0.7" />
+                {/* RESIDENTIAL to CASE (SF Court) */}
+                <path d="M12 35 Q10 42 8 52" fill="none" stroke="#ef4444" strokeWidth="0.5" strokeDasharray="2 1" />
+                {/* RESIDENTIAL to MAILING (Los Gatos) */}
+                <path d="M12 35 Q15 50 18 68" fill="none" stroke="#06b6d4" strokeWidth="0.4" strokeDasharray="2 1" />
+                {/* VALLEJO to RESIDENTIAL */}
+                <path d="M25 48 Q18 42 12 35" fill="none" stroke="url(#lineGradient)" strokeWidth="0.4" strokeDasharray="2 1" />
+                {/* MAILING to VALLEJO */}
+                <path d="M18 68 Q22 58 25 48" fill="none" stroke="#06b6d4" strokeWidth="0.3" strokeDasharray="2 1" opacity="0.6" />
+                {/* ORIGIN to 1977 VOID - Nullified link */}
+                <path d="M55 18 Q65 40 75 65" fill="none" stroke="#64748b" strokeWidth="0.3" strokeDasharray="1 2" opacity="0.4" />
               </svg>
 
               {/* Nodes */}
@@ -368,7 +408,22 @@ export default function OmegaUnifiedCommandCenter() {
                 {TOPOLOGY_NODES.map(node => {
                   const Icon = node.icon;
                   const isNullified = node.status === 'NULLIFIED';
-                  const isAnchored = node.status === 'ANCHORED';
+                  const isOrigin = node.status === 'ORIGIN';
+                  const isImmutable = node.status === 'IMMUTABLE';
+                  const isEnforcing = node.status === 'ENFORCING';
+                  const isPrimary = isOrigin || isImmutable;
+                  
+                  // Color mapping
+                  const getNodeColor = () => {
+                    if (isNullified) return { bg: 'bg-slate-900', border: 'border-slate-600', text: 'text-slate-500' };
+                    if (isOrigin) return { bg: 'bg-amber-950', border: 'border-amber-400', text: 'text-amber-400' };
+                    if (isImmutable) return { bg: 'bg-amber-950', border: 'border-amber-500', text: 'text-amber-400' };
+                    if (isEnforcing) return { bg: 'bg-red-950', border: 'border-red-500', text: 'text-red-400' };
+                    if (node.color === 'purple') return { bg: 'bg-purple-950', border: 'border-purple-500', text: 'text-purple-400' };
+                    if (node.color === 'cyan') return { bg: 'bg-cyan-950', border: 'border-cyan-500', text: 'text-cyan-400' };
+                    return { bg: 'bg-slate-950', border: 'border-emerald-500', text: 'text-emerald-400' };
+                  };
+                  const colors = getNodeColor();
                   
                   return (
                     <div 
@@ -376,37 +431,36 @@ export default function OmegaUnifiedCommandCenter() {
                       className="absolute flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2"
                       style={{ left: `${node.x}%`, top: `${node.y}%` }}
                     >
-                      {/* Pulse ring for active/anchored nodes */}
+                      {/* Pulse ring for active nodes */}
                       {!isNullified && (
-                        <div className={`absolute w-16 h-16 rounded-full ${isAnchored ? 'bg-amber-500/20' : 'bg-emerald-500/20'} animate-ping`} />
+                        <div className={`absolute w-16 h-16 rounded-full ${isPrimary ? 'bg-amber-500/20' : isEnforcing ? 'bg-red-500/20' : 'bg-emerald-500/20'} animate-ping`} />
                       )}
                       
                       {/* Node icon */}
-                      <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center shadow-2xl border-2 transition-all
-                        ${isNullified 
-                          ? 'bg-slate-900 border-slate-600 opacity-50' 
-                          : isAnchored 
-                            ? 'bg-amber-950 border-amber-500' 
-                            : 'bg-slate-950 border-emerald-500'
-                        }`}
-                      >
-                        <Icon className={`w-6 h-6 ${isNullified ? 'text-slate-500' : isAnchored ? 'text-amber-400' : 'text-emerald-400'}`} />
+                      <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center shadow-2xl border-2 transition-all ${colors.bg} ${colors.border} ${isNullified ? 'opacity-50' : ''}`}>
+                        <Icon className={`w-6 h-6 ${colors.text}`} />
                       </div>
                       
                       {/* Node label */}
-                      <div className={`mt-3 text-center px-4 py-2 rounded-xl border ${
+                      <div className={`mt-3 text-center px-3 py-2 rounded-xl border max-w-[160px] ${
                         isNullified 
                           ? 'bg-slate-900/80 border-slate-700/50 opacity-60' 
-                          : 'bg-black/80 border-emerald-900/50'
+                          : 'bg-black/90 border-emerald-900/50'
                       }`}>
-                        <div className={`font-bold text-xs ${isNullified ? 'text-slate-500 line-through' : isAnchored ? 'text-amber-400' : 'text-emerald-400'}`}>
+                        <div className={`font-bold text-[10px] ${isNullified ? 'text-slate-500 line-through' : colors.text}`}>
                           {node.name}
                         </div>
-                        <div className={`text-[10px] ${isNullified ? 'text-slate-600' : 'text-emerald-300/70'}`}>
+                        <div className={`text-[9px] ${isNullified ? 'text-slate-600' : 'text-slate-400'}`}>
                           {node.role}
                         </div>
-                        <div className={`text-[9px] mt-1 ${
-                          isNullified ? 'text-red-500' : isAnchored ? 'text-amber-500' : 'text-emerald-500'
+                        {node.address && (
+                          <div className="text-[8px] text-slate-500">{node.address}</div>
+                        )}
+                        {node.gps && (
+                          <div className="text-[8px] text-cyan-500/70 font-mono">GPS: {node.gps}</div>
+                        )}
+                        <div className={`text-[9px] mt-1 font-bold ${
+                          isNullified ? 'text-red-500' : isPrimary ? 'text-amber-500' : isEnforcing ? 'text-red-400' : 'text-emerald-500'
                         }`}>
                           {node.status}
                         </div>
