@@ -53,6 +53,7 @@ const QUICK_LINKS = {
       { name: 'ORCHESTRATOR', href: '/orchestrator', icon: Crown, description: 'Elite Command' },
       { name: 'LIQUIDM', href: '/liquidm', icon: Activity, description: 'Liquidity Mesh v0' },
       { name: 'JAGAMATH++', href: '/jagamath', icon: Binary, description: '$2.8T Valuation' },
+      { name: 'QUAGMIRE PREVENTION', href: '/quagmire-prevention', icon: Shield, description: 'All Quagmires Impossible' },
     ]
   },
   intelligence: {

@@ -7,6 +7,7 @@ const FOOTER_LINKS = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'LiquidM', href: '/liquidm', icon: Activity },
   { name: 'JAGAMATH++', href: '/jagamath', icon: Calculator },
+  { name: 'Quagmire Prevention', href: '/quagmire-prevention', icon: Shield },
   { name: 'Treasury', href: '/treasury-liquidity', icon: Wallet },
   { name: 'Litigation', href: '/litigation', icon: Gavel },
   { name: 'Exchange', href: '/exchange', icon: Activity },
