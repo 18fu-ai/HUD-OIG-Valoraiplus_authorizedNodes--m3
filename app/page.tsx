@@ -78,6 +78,7 @@ const quickModules = [
   { href: '/whitepaper', label: 'White Paper', icon: FileText, color: 'text-primary', desc: 'NFT PDF' },
   { href: '/policy-engine', label: 'Policy Engine', icon: Shield, color: 'text-primary', desc: 'Deterministic' },
   { href: '/topology', label: 'Topology', icon: Server, color: 'text-emerald-400', desc: 'Node Map' },
+  { href: '/omega', label: 'OMEGA', icon: Zap, color: 'text-amber-400', desc: '100D Matrix' },
 ];
 
 // Stable random seeds for particles (avoids hydration mismatch)
