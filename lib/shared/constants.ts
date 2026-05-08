@@ -383,3 +383,88 @@ export const CLOSURE_INSTRUCTION = {
     ON_BEHALF_OF: "Donald E. Gillson (Poppa)",
   },
 } as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SGAU-VALUEGUARD-77.77X — AUTOMATED ENFORCEMENT ENGINE
+// TERMINAL DEADLINE: MAY 17, 2026, 23:59:59
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const ENFORCEMENT_ENGINE = {
+  // Authorization
+  AUTHORIZATION: "ROOT_468943461 (POPPA)",
+  DOCTRINE: "THE M-BLUEPRINT (MYSTERY SOLVED)",
+  SYSTEM: "SENTINEL NEWT — SYSTEM ENFORCEMENT ENGINE",
+  DOCUMENT_ID: "CDS-OMNIBUS-2026-05-07",
+  
+  // Canonical Anchors
+  SOVEREIGN_TRUTH: 1969,
+  FRAUD_VOID: 1977,
+  STATUS_1977: null, // NULL (Ø)
+  
+  // TERMINAL DEADLINE
+  FINALITY_DATE: "2026-05-17T23:59:59Z",
+  FINALITY_TIMESTAMP: 1747526399000, // Unix timestamp for May 17, 2026 23:59:59 UTC
+  
+  // Settlement Parameters
+  GATEWAY: "18fu.cash",
+  VALIDATOR: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+  TERMINUS: "SCHWAB_8185",
+  
+  // Protocol Status
+  SOVEREIGN_ENGINE: "ARMED",
+  FRAUD_FILTER: "LOCKED (1977=Ø)",
+  LIABILITY_CHAIN: "ACTIVE",
+  LEDGER_FINALITY: "CONSUMMATUM EST",
+  LIABILITY_LEVEL: "DEEP_DEEP_DOO_DOO_FINAL",
+} as const;
+
+// Liability Chain Targets
+export const LIABILITY_TARGETS = [
+  { name: "John Zanghi", entity: "SFHA", status: "LOCKED" },
+  { name: "SFHA", entity: "San Francisco Housing Authority", status: "LOCKED" },
+  { name: "Swords to Plowshares", entity: "Veteran Services Org", status: "LOCKED" },
+  { name: "SF Adult Protective Services", entity: "City of San Francisco", status: "LOCKED" },
+  { name: "William Landrum", entity: "Individual", status: "NO EXIT" },
+  { name: "Kolby Losik", entity: "Individual", status: "NO EXIT" },
+  { name: "Lyle Edward Gillson", entity: "1977 FRAUD NODE", status: "RICO TARGET" },
+] as const;
+
+// Enforcement Logic Function
+export function checkEnforcementStatus(): {
+  status: "PENDING" | "TRIGGERED";
+  message: string;
+  countdown: number;
+  liabilityActive: boolean;
+} {
+  const FINALITY_TIMESTAMP = 1747526399000; // May 17, 2026 23:59:59 UTC
+  const now = Date.now();
+  const countdown = FINALITY_TIMESTAMP - now;
+  
+  if (now > FINALITY_TIMESTAMP) {
+    return {
+      status: "TRIGGERED",
+      message: "ABSOLUTE FORENSIC LIABILITY TRIGGERED — RICO ACTIVE",
+      countdown: 0,
+      liabilityActive: true,
+    };
+  }
+  
+  return {
+    status: "PENDING",
+    message: `SYSTEM RESONANT. Awaiting Settlement to SCHWAB_8185 via 18fu.cash.`,
+    countdown,
+    liabilityActive: false,
+  };
+}
+
+// Format countdown to days/hours/minutes/seconds
+export function formatCountdown(ms: number): string {
+  if (ms <= 0) return "DEADLINE PASSED — LIABILITY TRIGGERED";
+  
+  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+  
+  return `${days}D ${hours}H ${minutes}M ${seconds}S`;
+}
