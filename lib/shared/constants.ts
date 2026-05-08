@@ -84,3 +84,104 @@ export const TOKEN_CANON = {
 
 // CANON TERMINUS - The final token in the 56-token registry
 export const CANON_TERMINUS = "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED" as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PRIMARY LIQUIDITY ROUTING — ALL FUNDS THROUGH 18fu.cash
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const LIQUIDITY_ROUTING = {
+  // Primary Liquidity Endpoint
+  PRIMARY_ENDPOINT: "https://www.18fu.cash",
+  ENDPOINT_STATUS: "ACTIVE",
+  
+  // Destination Wallet (ENS Resolver for donadams1969.eth)
+  DESTINATION_WALLET: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+  ENS_DOMAIN: "donadams1969.eth",
+  
+  // Final Banking Destination
+  FINAL_DESTINATION: "Schwab [8185]",
+  
+  // Routing Chain
+  ROUTING_CHAIN: [
+    "18fu.cash",
+    "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+    "Schwab ****8185"
+  ],
+  
+  // Verification
+  CHAIN_VERIFIED: true,
+  ROUTING_STATUS: "LOCKED",
+} as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// VERIFIED WALLET ADDRESSES — ALL VERIFIED & ACTIVE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const VERIFIED_WALLETS = {
+  // Primary ENS Resolver (DESTINATION FOR ALL FUNDS)
+  ENS_RESOLVER: {
+    address: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+    name: "donadams1969.eth Resolver",
+    status: "PRIMARY_DESTINATION",
+    verified: true,
+  },
+  
+  // Ethereum L1
+  ETH_L1: {
+    address: "0x2f0287B7B20e89f38BaED437bF3f185ebd561654",
+    name: "Ethereum Mainnet",
+    explorer: "https://etherscan.io/address/0x2f0287B7B20e89f38BaED437bF3f185ebd561654",
+    verified: true,
+  },
+  
+  // Base L2
+  BASE: {
+    address: "0x363155af8E130c2C80eC0548113eBfAf72A272da",
+    name: "Base Network",
+    explorer: "https://basescan.org/address/0x363155af8E130c2C80eC0548113eBfAf72A272da",
+    verified: true,
+  },
+  
+  // Bitcoin
+  BTC: {
+    address: "17SU56k2poJyN6wwbUTRb5wVQDaJ4MpvAw",
+    name: "Bitcoin Mainnet",
+    explorer: "https://mempool.space/address/17SU56k2poJyN6wwbUTRb5wVQDaJ4MpvAw",
+    verified: true,
+  },
+} as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ROUTING VALIDATION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function validateRouting(destination: string): boolean {
+  const VALID_DESTINATIONS = [
+    LIQUIDITY_ROUTING.DESTINATION_WALLET.toLowerCase(),
+    VERIFIED_WALLETS.ETH_L1.address.toLowerCase(),
+    VERIFIED_WALLETS.BASE.address.toLowerCase(),
+    VERIFIED_WALLETS.BTC.address.toLowerCase(),
+    VERIFIED_WALLETS.ENS_RESOLVER.address.toLowerCase(),
+  ];
+  
+  return VALID_DESTINATIONS.includes(destination.toLowerCase());
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ROUTING STATUS BANNER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const ROUTING_STATUS_BANNER = `
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                  ║
+║  ALL LIQUIDITY ROUTED THROUGH:                                                   ║
+║                                                                                  ║
+║  PRIMARY:     https://www.18fu.cash                                              ║
+║  WALLET:      0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB                          ║
+║  ENS:         donadams1969.eth                                                   ║
+║  FINAL:       Charles Schwab & Co. ****8185                                      ║
+║                                                                                  ║
+║  STATUS:      LOCKED — NO EXCEPTIONS                                             ║
+║                                                                                  ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+` as const;

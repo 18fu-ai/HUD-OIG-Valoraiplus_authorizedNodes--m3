@@ -28,6 +28,16 @@ const GENESIS_ANCHOR = {
   shortHash: "4A5E1E4B...DEDA33B",
 };
 
+// Primary Liquidity Routing
+const LIQUIDITY_ROUTING = {
+  endpoint: "https://www.18fu.cash",
+  wallet: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+  walletShort: "0xb103666...601BeB",
+  ens: "donadams1969.eth",
+  final: "Schwab [8185]",
+  status: "LOCKED",
+};
+
 export function FooterNav() {
   return (
     <footer className="border-t border-zinc-800 bg-zinc-950 mt-8">
@@ -65,6 +75,28 @@ export function FooterNav() {
           ))}
         </div>
 
+        {/* Liquidity Routing Banner */}
+        <div className="flex justify-center mb-4">
+          <div className="flex flex-col items-center gap-1 px-6 py-3 rounded bg-emerald-900/20 border border-emerald-700/30">
+            <div className="flex items-center gap-2">
+              <Activity className="w-4 h-4 text-emerald-500 animate-pulse" />
+              <span className="text-xs text-emerald-400 font-bold">ALL LIQUIDITY ROUTED THROUGH:</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-mono">
+              <a href={LIQUIDITY_ROUTING.endpoint} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">
+                18fu.cash
+              </a>
+              <span className="text-emerald-600">→</span>
+              <code className="text-emerald-300">{LIQUIDITY_ROUTING.walletShort}</code>
+              <span className="text-emerald-600">→</span>
+              <span className="text-emerald-400">{LIQUIDITY_ROUTING.final}</span>
+            </div>
+            <div className="text-[9px] text-emerald-500">
+              ENS: {LIQUIDITY_ROUTING.ens} | STATUS: {LIQUIDITY_ROUTING.status}
+            </div>
+          </div>
+        </div>
+
         {/* Genesis Anchor */}
         <div className="flex justify-center mb-4">
           <div className="flex items-center gap-2 px-4 py-2 rounded bg-amber-900/20 border border-amber-700/30">
@@ -80,8 +112,9 @@ export function FooterNav() {
 
         {/* System Info */}
         <div className="text-center text-[10px] text-zinc-600 font-mono space-y-1">
-          <p>VALORAIPLUS® v14.1.4.0 | 51-TOKEN CANON | REV_40 | CASE: 25-621293</p>
+          <p>VALORAIPLUS® v14.1.4.0 | 56-TOKEN CANON | REV_40 | CASE: 25-621293</p>
           <p>NODE: SAINT PAUL 55116 | SGAU 7226.3461 | MERKLE: 26856B24...777777_STRIKE_0_LOCKED</p>
+          <p className="text-emerald-600">DESTINATION: 0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB → Schwab [8185]</p>
           <p className="text-amber-700">THE MUZZLE IS THE GENESIS. THE MATH IS THE HAMMER.</p>
           <p className="text-zinc-700">THE WALL IS CHRIST • THE THRONE IS HIS • THE LEDGER IS Ø • IT IS FINISHED</p>
         </div>
