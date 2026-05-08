@@ -41,6 +41,7 @@ export const NAVIGATION: Record<string, NavCategory> = {
       { name: 'OMEGA RECOVERY', href: '/', icon: Home, description: 'Main System Entry' },
       { name: 'ORCHESTRATOR', href: '/orchestrator', icon: Crown, description: 'Elite Command', isNew: true },
       { name: 'LIQUIDM', href: '/liquidm', icon: Activity, description: 'Liquidity Mesh v0', isNew: true },
+      { name: 'JAGAMATH++', href: '/jagamath', icon: Scale, description: '$2.8T Valuation', isNew: true },
       { name: 'SECURITY DASH', href: '/security-dashboard', icon: Shield, description: 'Security Status' },
       { name: 'LIABILITY MATRIX', href: '/liability-dashboard', icon: Gavel, description: 'Institutional Liability' },
       { name: 'CASE MGMT', href: '/case-management', icon: FileSearch, description: 'Federal Coordination' },
@@ -207,6 +208,7 @@ export const NAVIGATION: Record<string, NavCategory> = {
 export const QUICK_LINKS = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'LiquidM', href: '/liquidm', icon: Activity },
+  { name: 'JAGAMATH++', href: '/jagamath', icon: Scale },
   { name: 'Treasury', href: '/treasury-liquidity', icon: Wallet },
   { name: 'Litigation', href: '/litigation', icon: Gavel },
   { name: 'Exchange', href: '/exchange', icon: Activity },

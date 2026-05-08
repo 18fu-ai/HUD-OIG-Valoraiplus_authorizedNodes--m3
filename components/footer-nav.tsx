@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { ExternalLink, Home, Wallet, Gavel, Activity, Briefcase, Zap, TrendingUp, Crown } from 'lucide-react';
+import { ExternalLink, Home, Wallet, Gavel, Activity, Briefcase, Zap, TrendingUp, Crown, Calculator } from 'lucide-react';
 
 const FOOTER_LINKS = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'LiquidM', href: '/liquidm', icon: Activity },
+  { name: 'JAGAMATH++', href: '/jagamath', icon: Calculator },
   { name: 'Treasury', href: '/treasury-liquidity', icon: Wallet },
   { name: 'Litigation', href: '/litigation', icon: Gavel },
   { name: 'Exchange', href: '/exchange', icon: Activity },

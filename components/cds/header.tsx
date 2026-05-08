@@ -100,6 +100,7 @@ const navItems = [
   { href: '/pitch-deck', label: 'Pitch Deck', icon: FileText, category: 'legal' },
   { href: '/orchestrator', label: 'Orchestrator', icon: Shield, category: 'system' },
   { href: '/liquidm', label: 'LiquidM v0', icon: Activity, category: 'core' },
+  { href: '/jagamath', label: 'JAGAMATH++', icon: Scale, category: 'core' },
 ];
 
 const categories = [
