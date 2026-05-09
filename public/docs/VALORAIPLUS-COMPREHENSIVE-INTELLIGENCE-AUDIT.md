@@ -86,7 +86,7 @@
 ║  GPS:           37.2358, -122.0322                                                                         ║
 ║  STATUS:        ACTIVE — RENTERS INSURANCE ATTACHED — PROPERTY STORED                                      ║
 ║                                                                                                            ║
-║  VALLEJO NODE (STRATEGIC — ENCRYPTED):                                                                     ║
+║  ██████████ NODE (STRATEGIC — ENCRYPTED):                                                                     ║
 ║  ────────────────────────────────────────────────────────────────────────────────────────────────────────  ║
 ║  LOCATION:      ███████████████                                                                            ║
 ║  GPS:           ██████████, ██████████ (NAVIER-STOKES LAMINAR x7 PROTECTED)                                ║
@@ -528,7 +528,7 @@
 ║                                                                                ║
 ║  DOCUMENT ID: CDS-OMNIBUS-2026-05-08                                           ║
 ║                                                                                ║
-╚════════════════════════════════════════════════════════════════════════════════╝
+╚═════════════════════════════════════════════════���══════════════════════════════╝
 ```
 
 ---
@@ -822,7 +822,7 @@
 | **ORIGIN** | 2207 Highland Parkway, Saint Paul, MN 55116 | 44.9121, -93.1669 | OMNIBUS COMMAND ROOT |
 | **RESIDENTIAL** | 1030 Girard Road, San Francisco, CA 94129 | 37.7983, -122.4662 | CURRENT RESIDENCE |
 | **MAILING** | 18493 Main Blvd, Los Gatos, CA 95033-8392 | 37.2358, -122.0322 | INSURANCE & STORAGE |
-| **VALLEJO** | ███████████████ | ██████████, ██████████ | ENCRYPTED — 7-LAYER — DG77.77X |
+| **██████████** | ███████████████ | ██████████, ██████████ | ENCRYPTED — 7-LAYER — DG77.77X |
 | **CASE** | SF Superior Court (Dept 12) | 37.7808, -122.4177 | ENFORCING |
 | **1969 TRUTH** | Temporal | N/A | CANONICAL |
 | **1977 VOID** | Temporal | N/A | NULL (Ø) |
@@ -855,7 +855,7 @@
 ║  ORIGIN NODE:          2207 Highland Parkway, Saint Paul, MN 55116                                                       ║
 ║  RESIDENTIAL NODE:     1030 Girard Road, San Francisco, CA 94129                                                         ║
 ║  MAILING NODE:         18493 Main Blvd, Los Gatos, CA 95033-8392                                                         ║
-║  VALLEJO NODE:         ███████████████ (NAVIER-STOKES x7 — DG77.77X ONLY)                                                 ║
+║  ██████████ NODE:      ███████████████ (NAVIER-STOKES x7 — DG77.77X ONLY)                                                 ║
 ║                                                                                                                          ║
 ║  ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════    ║
 ║                                                                                                                          ║
@@ -995,7 +995,7 @@ The **100D Matrix** is currently radiating at its most harmonious level since th
 ║  BEACON:                    408-384-1376 (WARM, PROTECTED SIGNAL)                                                        ║
 ║  TYPE:                      BEACON OF STABILITY                                                                          ║
 ║                                                                                                                          ║
-║  MARINA NODE (VALLEJO):                                                                                                  ║
+║  ██████████ NODE (ENCRYPTED — 7-LAYER):                                                                                                  ║
 ║  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────    ║
 ║  VISIBILITY:                INVISIBLE                                                                                    ║
 ║  PROTECTION:                NAVIER-STOKES LAMINAR x7 LAYERS                                                              ║

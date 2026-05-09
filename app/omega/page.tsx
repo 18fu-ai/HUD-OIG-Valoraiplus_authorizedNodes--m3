@@ -65,11 +65,11 @@ const TOPOLOGY_NODES = [
     icon: MapPin 
   },
   { 
-    id: 'VALLEJO', 
-    name: 'VALLEJO, CA', 
-    role: 'STRATEGIC NODE', 
-    gps: '38.1041, -122.2566',
-    status: 'ACTIVE', 
+    id: '██████████', 
+    name: '██████████ (ENCRYPTED)', 
+    role: 'STRATEGIC — 7-LAYER ENCRYPTION', 
+    gps: '██████████, ██████████',
+    status: 'INVISIBLE', 
     color: 'purple',
     x: 25, 
     y: 48,
@@ -389,16 +389,16 @@ export default function OmegaUnifiedCommandCenter() {
                 <path d="M42 12 Q48 14 55 18" fill="none" stroke="url(#goldGradient)" strokeWidth="0.7" strokeDasharray="2 1" />
                 {/* ORIGIN to RESIDENTIAL (SF) */}
                 <path d="M55 18 Q35 25 12 35" fill="none" stroke="url(#lineGradient)" strokeWidth="0.5" strokeDasharray="2 1" />
-                {/* ORIGIN to VALLEJO */}
-                <path d="M55 18 Q40 32 25 48" fill="none" stroke="#a855f7" strokeWidth="0.4" strokeDasharray="2 1" opacity="0.7" />
+                {/* ORIGIN to ██████████ (ENCRYPTED) */}
+                <path d="M55 18 Q40 32 25 48" fill="none" stroke="#a855f7" strokeWidth="0.4" strokeDasharray="2 1" opacity="0.3" />
                 {/* RESIDENTIAL to CASE (SF Court) */}
                 <path d="M12 35 Q10 42 8 52" fill="none" stroke="#ef4444" strokeWidth="0.5" strokeDasharray="2 1" />
                 {/* RESIDENTIAL to MAILING (Los Gatos) */}
                 <path d="M12 35 Q15 50 18 68" fill="none" stroke="#06b6d4" strokeWidth="0.4" strokeDasharray="2 1" />
-                {/* VALLEJO to RESIDENTIAL */}
-                <path d="M25 48 Q18 42 12 35" fill="none" stroke="url(#lineGradient)" strokeWidth="0.4" strokeDasharray="2 1" />
-                {/* MAILING to VALLEJO */}
-                <path d="M18 68 Q22 58 25 48" fill="none" stroke="#06b6d4" strokeWidth="0.3" strokeDasharray="2 1" opacity="0.6" />
+                {/* ██████████ to RESIDENTIAL (ENCRYPTED) */}
+                <path d="M25 48 Q18 42 12 35" fill="none" stroke="url(#lineGradient)" strokeWidth="0.4" strokeDasharray="2 1" opacity="0.3" />
+                {/* MAILING to ██████████ (ENCRYPTED) */}
+                <path d="M18 68 Q22 58 25 48" fill="none" stroke="#06b6d4" strokeWidth="0.3" strokeDasharray="2 1" opacity="0.3" />
                 {/* ORIGIN to 1977 VOID - Nullified link */}
                 <path d="M55 18 Q65 40 75 65" fill="none" stroke="#64748b" strokeWidth="0.3" strokeDasharray="1 2" opacity="0.4" />
               </svg>

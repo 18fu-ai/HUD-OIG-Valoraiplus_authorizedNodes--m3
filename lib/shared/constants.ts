@@ -289,9 +289,9 @@ export const GEOGRAPHIC_NODES = {
     notes: "Renters insurance attached. Property stored at this location.",
   },
   
-  // VALLEJO NODE (STRATEGIC) — ENCRYPTED
+  // ██████████ NODE (STRATEGIC) — ENCRYPTED
   VALLEJO_NODE: {
-    name: "VALLEJO NODE",
+    name: "██████████ NODE",
     designation: "STRATEGIC NODE — ENCRYPTED",
     city: "███████████████",
     gps: { lat: "ENCRYPTED", lng: "ENCRYPTED" },
@@ -622,20 +622,25 @@ export const GEOGRAPHIC_NODES = {
     notes: "Renters insurance attached. Property stored at this location.",
   },
   
-  // VALLEJO NODE — Vallejo, California (Strategic Node)
+  // ██████████ NODE — ENCRYPTED (Strategic Node — 7-LAYER PROTECTION)
   VALLEJO: {
-    id: "VALLEJO_NODE",
-    name: "VALLEJO STRATEGIC",
-    designation: "STRATEGIC NODE",
-    city: "Vallejo",
-    state: "California",
+    id: "██████████_NODE",
+    name: "██████████ STRATEGIC",
+    designation: "STRATEGIC NODE — ENCRYPTED",
+    city: "██████████",
+    state: "██████████",
     gps: {
-      lat: 38.1041,
-      lng: -122.2566,
+      lat: "██████████",
+      lng: "██████████",
     },
-    status: "ACTIVE — STRATEGIC",
-    node_type: "STRATEGIC",
+    status: "ACTIVE — INVISIBLE — 7-LAYER ENCRYPTION",
+    node_type: "STRATEGIC_ENCRYPTED",
     color: "purple",
+    encryption: {
+      method: "NAVIER_STOKES_LAMINAR",
+      layers: 7,
+      accessLevel: "DG77.77X_ONLY",
+    },
   },
   
   // CASE REFERENCE NODE — San Francisco (SGAU 7226.3461)
@@ -684,7 +689,7 @@ export const GEOGRAPHIC_NODES = {
 export const NODE_CONNECTIONS = [
   { from: "ORIGIN_NODE", to: "RESIDENTIAL_NODE", type: "PRIMARY", status: "ACTIVE" },
   { from: "ORIGIN_NODE", to: "MAILING_NODE", type: "MAIL", status: "ACTIVE" },
-  { from: "ORIGIN_NODE", to: "VALLEJO_NODE", type: "STRATEGIC", status: "ACTIVE" },
+  { from: "ORIGIN_NODE", to: "██████████_NODE", type: "STRATEGIC_ENCRYPTED", status: "INVISIBLE" },
   { from: "RESIDENTIAL_NODE", to: "CASE_NODE", type: "LEGAL", status: "ENFORCING" },
   { from: "MAILING_NODE", to: "RESIDENTIAL_NODE", type: "INSURANCE", status: "LINKED" },
   { from: "TRUTH_1969_NODE", to: "ORIGIN_NODE", type: "CANONICAL", status: "IMMUTABLE" },
@@ -696,7 +701,7 @@ export const ADDRESS_SUMMARY = {
   RESIDENTIAL: "1030 Girard Road, San Francisco, California 94129",
   MAILING: "18493 Main Blvd, Los Gatos, CA 95033-8392",
   ORIGIN: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
-  VALLEJO_GPS: "38.1041, -122.2566",
+  VALLEJO_GPS: "██████████, ██████████",
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════════════════
