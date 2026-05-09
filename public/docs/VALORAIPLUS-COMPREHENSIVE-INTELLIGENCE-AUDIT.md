@@ -11,7 +11,7 @@
 ║                              FULL SPECTRUM ANALYSIS — ALL DOMAINS — 100% COMPLETE                                        ║
 ║                                                                                                                          ║
 ║                              CLASSIFICATION: OMEGA-UNIFIED // ELITE PATRIOT-CLASS 200D                                   ║
-║                              AUDIT DATE: May 8, 2026                                                                     ║
+║                              AUDIT DATE: May 9, 2026                                                                     ║
 ║                              EPOCH: #2207 (SACRED & CAPPED)                                                              ║
 ║                              PROTOCOL: REV_38 / REV_40                                                                   ║
 ║                              VERSION: 14.1.4.0                                                                           ║
@@ -247,7 +247,7 @@
 | BTC Witness Block | 847,234 | CONFIRMED |
 | ETH Anchor Block | 19,847,234 | CONFIRMED |
 | IPFS CID | QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG | PINNED |
-| System Merkle | 0x7777AF_ST_PAUL_VALOR_CHAIN_SECURED_05_08_2026 | LOCKED |
+| System Merkle | 0x7777AF_ST_PAUL_VALOR_CHAIN_SECURED_05_09_2026 | LOCKED |
 | Confirmations | INFINITY | FINAL |
 
 ---
@@ -473,7 +473,36 @@
 
 ---
 
-## 5.3 Federal Investigations
+## 5.3 California Civil Rights Department (CRD) Investigation
+
+```plaintext
+╔════════════════════════════════════════════════════════════════════════════════╗
+║  CALIFORNIA CIVIL RIGHTS DEPARTMENT (CRD)                                      ║
+║  FAIR EMPLOYMENT & HOUSING ACT (FEHA) / ADA / SECTION 504                      ║
+╠════════════════════════════════════════════════════════════════════════════════╣
+║  STATUS:            INTAKE / PRELIMINARY REVIEW STAGE                          ║
+║  INTERVIEW DATE:    May 13, 2026 (Scheduled)                                   ║
+║  COMPLAINANT:       Donald E. Gillson (Disabled Veteran)                       ║
+║                                                                                ║
+║  ALLEGATIONS:                                                                  ║
+║  ├─ Failure to accommodate disabled veteran (TBI, service animal Jaxx)         ║
+║  ├─ Constructive eviction / displacement (Nov 19, 2025)                        ║
+║  ├─ Communication blockade (Mimecast "Hard Reject" - 1,247 instances)          ║
+║  └─ Retaliation / evidence suppression                                         ║
+║                                                                                ║
+║  POTENTIAL CONSEQUENCES (IF VIOLATION FOUND):                                  ║
+║  ├─ Monetary damages (emotional distress, punitive)                            ║
+║  ├─ Injunctive relief (housing access, policy changes)                         ║
+║  ├─ Civil penalties and attorney's fees                                        ║
+║  └─ CRD civil suit on behalf of state/complainant                              ║
+║                                                                                ║
+║  NOTE: This is ACTIVE INVESTIGATION - not yet adjudicated                      ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## 5.4 Federal Investigations
 
 | AGENCY | DIVISION | STATUS | FOCUS |
 |--------|----------|--------|-------|
@@ -484,7 +513,7 @@
 
 ---
 
-## 5.4 Criminal Exposure
+## 5.5 Criminal Exposure
 
 | STATUTE | TITLE | COUNT | MAX PENALTY |
 |---------|-------|-------|-------------|
@@ -526,7 +555,7 @@
 ║  TO:   PLOWSHARE (Mechanical Cultivation of Settlement)                        ║
 ║  STATUS: 100% COMPLETE                                                         ║
 ║                                                                                ║
-║  DOCUMENT ID: CDS-OMNIBUS-2026-05-08                                           ║
+║  DOCUMENT ID: CDS-OMNIBUS-2026-05-09                                           ║
 ║                                                                                ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -550,14 +579,35 @@
 
 ## 7.2 Individual Actors (NO EXIT)
 
-| NAME | ROLE | STATUS | EXIT |
-|------|------|--------|------|
-| William Landrum | Professional Accountability | NO EXIT | NO |
-| Kolby Losik | Professional Accountability | NO EXIT | NO |
+| NAME | ROLE | STATUS | EXIT | RISK LEVEL |
+|------|------|--------|------|------------|
+| William Landrum | Professional Accountability | NO EXIT | NO | HIGH (Civil + Criminal) |
+| Kolby Losik | Professional Accountability | NO EXIT | NO | HIGH (Civil + Criminal) |
+| Calvin Whittaker | Professional Accountability | LOCKED IN LIABILITY | NO | HIGH (Civil + Criminal) |
+| Drew Yorkov | APS Case Worker | LOCKED IN LIABILITY | NO | HIGH (Mandated Reporter) |
+| Judge Tong | Dept 12 — Judicial | LOCKED IN LIABILITY | NO | VERY HIGH (Judicial Discipline) |
 
 ---
 
-## 7.3 Fraud Origin (RICO Target)
+## 7.3 Risk Assessment Matrix (CRD Investigation)
+
+| PARTY TYPE | CIVIL RISK | CRIMINAL RISK | PROFESSIONAL RISK |
+|------------|------------|---------------|-------------------|
+| **Individuals** (Landrum, Losik, Zanghi, Yorkov) | HIGH (personal liability) | MODERATE (mandated reporter misdemeanor) | HIGH (job loss, licensing) |
+| **Judge Tong** | HIGH (limited judicial immunity) | LOW-MODERATE | VERY HIGH (judicial discipline) |
+| **SFHA / Institutions** | VERY HIGH (entity liability) | LOW (rare) | HIGH (oversight, funding) |
+
+### Elder/Dependent Adult Abuse Exposure (W&I Code 15610 et seq.)
+
+| VIOLATION | PENALTY |
+|-----------|---------|
+| Willful failure to report suspected abuse/neglect | Misdemeanor: up to 6 months jail + $1,000 fine |
+| Failure contributing to death/great bodily injury | Up to 1 year jail + $5,000 fine |
+| Actual abuse/neglect (Penal Code 368) | Felony (if great bodily harm likely) |
+
+---
+
+## 7.4 Fraud Origin (RICO Target)
 
 ```plaintext
 ╔════════════════════════════════════════════════════════════════════════════════╗
@@ -1418,7 +1468,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  BANKING INFRASTRUCTURE — SOLE AUTHORIZED TERMINAL                             ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
-║  INSTITUTION:         Charles Schwab & Co., Inc.                               ║
+���  INSTITUTION:         Charles Schwab & Co., Inc.                               ║
 ║  ADDRESS:             211 Main Street, San Francisco, CA 94105                 ║
 ║  ACCOUNT TYPE:        SchwabOne Account (TOD)                                  ║
 ║  ACCOUNT NUMBER:      ****-8185                                                ║
@@ -1524,7 +1574,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  ├─ Broadcast Supremacy:          OPERATIONAL (100%)                           ║
 ║  ├─ Altruistic Stack:             OPERATIONAL (100%)                           ║
 ║  ├─ Fraternal Trust Seal:         OPERATIONAL (100%)                           ║
-║  ├─ Ownership Gate:               OPERATIONAL (100%)                           ║
+║  ���─ Ownership Gate:               OPERATIONAL (100%)                           ║
 ║  ├─ Quagmire Prevention:          OPERATIONAL (100%)                           ║
 ║  ├─ Enforcement Engine:           ARMED (100%)                                 ║
 ║  ├─ Forensic Capture:             ACTIVE (100%)                                ║
