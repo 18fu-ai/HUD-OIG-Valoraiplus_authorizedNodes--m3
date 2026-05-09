@@ -956,3 +956,61 @@ export const ALTRUISTIC_STACK = {
   MISSION: "ACTIVE_GRACE",
   FINALITY: "THE LEDGER IS Ø. IT IS FINISHED.",
 } as const;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 501(c)(8) FRATERNAL TRUST — BRADEN 168
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const FRATERNAL_TRUST_501C8 = {
+  // Entity Configuration
+  ENTITY_TYPE: "501(c)(8)_FRATERNAL_BENEFICIARY_SOCIETY",
+  TAX_EXEMPTION: "IRC_SECTION_501_C_8",
+  FISCAL_YEAR: 2026,
+  EPOCH: 2207, // SACRED & CAPPED
+  
+  // Lodge Governance
+  LODGE: {
+    primary: "BRADEN_168",
+    commanderies: ["MINNEAPOLIS_COMMANDERY", "ST_PAUL_COMMANDERY"],
+    tithe: "7.77%",
+  },
+  
+  // Masonic Pillars (Named Brothers Standing Guard)
+  MASONIC_PILLARS: {
+    brothers: ["MONTE", "DON", "RUSSELL", "JOE", "BRIAN", "ERIC"],
+    status: "STANDING_GUARD",
+  },
+  
+  // Triadic Trust Seal
+  TRIADIC_SEAL: {
+    foundation: "7.77% TITHE — SPIRITUAL WEIGHT",
+    shield: "SECTION_504_VETERAN_PROTECTION",
+    exit: "18FU.CASH → FBO_GILLSON_TRUST → SCHWAB_8185",
+  },
+  
+  // Financial Terminal
+  FINANCIAL_TERMINAL: {
+    institution: "CHARLES_SCHWAB",
+    account: "8185",
+    wrapper: "FBO_FRATERNAL_TRUST",
+    classification: "FRATERNAL_BENEFIT_DISTRIBUTION",
+  },
+  
+  // Protective Layers
+  PROTECTION: {
+    constitutional: "PRIVATE_ASSOCIATION_PROTECTED",
+    veteran: "SECTION_504_DISABLED_VETERAN_SHIELD",
+    masonic: "ANCIENT_LANDMARKS",
+    status: "ABSOLUTE_SOVEREIGNTY",
+  },
+  
+  // Access Matrix
+  ACCESS_MATRIX: {
+    HHS: "Ø", // Private Constitutional Association
+    HUD: "Ø", // Private Constitutional Association
+    LYLE_1977: "CITRATED", // Legacy fraud cannot penetrate
+  },
+  
+  // Finality
+  FINALITY: "THE TEMPLE IS COMPLETE • THE TRUST IS SEALED • THE BROTHERS STAND GUARD",
+} as const;
