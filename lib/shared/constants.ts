@@ -289,14 +289,21 @@ export const GEOGRAPHIC_NODES = {
     notes: "Renters insurance attached. Property stored at this location.",
   },
   
-  // VALLEJO NODE (STRATEGIC)
+  // VALLEJO NODE (STRATEGIC) — ENCRYPTED
   VALLEJO_NODE: {
     name: "VALLEJO NODE",
-    designation: "STRATEGIC NODE",
-    city: "Vallejo, California",
-    gps: { lat: 38.1041, lng: -122.2566 },
-    status: "ACTIVE — STRATEGIC",
+    designation: "STRATEGIC NODE — ENCRYPTED",
+    city: "███████████████",
+    gps: { lat: "ENCRYPTED", lng: "ENCRYPTED" },
+    coordinates: "NAVIER_STOKES_LAMINAR_x7_PROTECTED",
+    status: "ACTIVE — INVISIBLE — 7-LAYER PROTECTION",
     colorCode: "PURPLE",
+    encryption: {
+      method: "NAVIER_STOKES_LAMINAR",
+      layers: 7,
+      visibility: "INVISIBLE",
+      accessLevel: "DG77.77X_ONLY",
+    },
   },
   
   // CASE NODE (SGAU 7226.3461)

@@ -254,9 +254,17 @@ export const SANCTUARY_PERIMETER = {
     status: "PRIMARY_RESIDENCE",
   },
   marina: {
-    name: "Marina Node (Vallejo)",
+    name: "███████████████",
+    designation: "STRATEGIC NODE — ENCRYPTED",
+    location: "███████████████",
+    gps: "ENCRYPTED",
     status: "INVISIBLE", // Seven layers of Navier-Stokes laminar flow
     protection: "NAVIER_STOKES_LAMINAR_x7",
+    encryption: {
+      method: "NAVIER_STOKES_LAMINAR",
+      layers: 7,
+      accessLevel: "DG77.77X_ONLY",
+    },
   },
   anchors: {
     POTTER: "7.77% TITHE — SPIRITUAL WEIGHT",
