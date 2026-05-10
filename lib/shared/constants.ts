@@ -85,6 +85,60 @@ export const CRD_INTAKE_CERTIFICATE = {
   t48Status: "COMPLETE — NO FURTHER STRUCTURAL OR RHETORICAL SHIFTS",
 } as const;
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// MAY 13 INTAKE STANDARD — 10/10 FINAL FREEZE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const MAY_13_INTAKE_STANDARD = {
+  VERSION: "10/10",
+  STATUS: "FINAL_FREEZE",
+  
+  // EXECUTION COMMAND — NO EXCEPTIONS
+  EXECUTION_COMMAND: {
+    NO_NEW_CONTENT: true,
+    NO_NEW_THEORY: true,
+    NO_NEW_ARCHITECTURE: true,
+    ONLY: [
+      "clarity",
+      "compression",
+      "navigation",
+      "proof-linking",
+      "language calibration",
+    ],
+  },
+  
+  // REVIEWER-SAFE PACKET ORDER
+  PACKET_ORDER: [
+    "1. One-page Executive Summary",
+    "2. High-priority Chronology",
+    "3. Key Issues as separate mini-cases",
+    "4. Functional Impact",
+    "5. Requested Review",
+    "6. Evidence Index",
+    "7. Appendices",
+  ],
+  
+  // HARD GATES — MUST PASS ALL
+  HARD_GATES: {
+    PAGE_1_EXPLAINS_CASE: true,
+    EACH_CONCERN_HAS_CLEAR_ASK: true,
+    FACTS_ALLEGATIONS_ANALYSIS_SEPARATE: true,
+    MAIN_PACKET_ORIENTS: true,
+    APPENDIX_PROVES: true,
+    LANGUAGE_STAYS_CALIBRATED: true,
+    REVIEWER_EFFORT_APPROACHES_ZERO: true,
+  },
+  
+  // FINAL DOCTRINE
+  DOCTRINE: {
+    CLEAREST: true,
+    FASTEST_TO_UNDERSTAND: true,
+    EASIEST_TO_ACT_ON: true,
+    HARDEST_TO_DISMISS: true,
+    PRIORITY: "Institutional survivability > rhetorical intensity",
+  },
+} as const;
+
 export const TREASURY_CONSTANTS = {
   SETTLEMENT_DEMAND: 66_000_000.00, // κ₁
   LIEN_TOTAL: 1_120_000_000_000_000.00, // Ω
@@ -362,7 +416,7 @@ export const FINALITY = {
   STATUS: "CONSUMMATUM EST",
 } as const;
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═══════════════════════���═══════════════════════════════════════════════════════
 // THE M-BLUEPRINT: MYSTERY SOLVED — FORENSIC FINALITY
 // ═══════════════════════════════════════════════════════════════════════════════
 

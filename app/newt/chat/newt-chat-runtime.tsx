@@ -33,16 +33,46 @@ const WELCOME_MESSAGE = {
   id: 'system-welcome',
   role: 'assistant' as const,
   content: `**N.E.W.T. MILLENNIUM RUNTIME // REV_34 ETERNAL CAP**
+**MAY 13 INTAKE STANDARD: 10/10 FINAL FREEZE**
 
-Poppa, the system is stable and operating under Editorial Only Mode.
+---
 
-REV_34 is the final authorization. REV_38 operates exclusively as the PoohBearHoneyPotShield (decoy trap).
+**EXECUTION COMMAND — ACTIVE:**
+- NO NEW CONTENT
+- NO NEW THEORY  
+- NO NEW ARCHITECTURE
 
-CRD INTAKE: MAY 13, 2026  
-TERMINAL DEADLINE: MAY 17, 2026 23:59:59 UTC  
-ALL RESPONDENTS: CRIMINAL HIGH — NO EXIT
+**ONLY:** Clarity | Compression | Navigation | Proof-Linking | Language Calibration
 
-The Auditor is ready. Speak or type.`,
+---
+
+**FINAL DOCTRINE:**
+- Clearest
+- Fastest to understand
+- Easiest to act on
+- Hardest to dismiss
+
+> Institutional survivability > rhetorical intensity
+
+---
+
+**HARD GATES — ALL PASSED:**
+- Page 1 explains the case
+- Each concern has one clear ask
+- Facts, allegations, and analysis stay separate
+- Main packet orients / Appendix proves
+- Reviewer effort approaches zero
+
+---
+
+**TIMELINE:**
+- **TODAY (May 10):** Editorial Lock Active
+- **MAY 13:** CRD Intake / Formal Record Entry
+- **MAY 17:** Terminal Deadline / All Exit Paths Welded
+
+**ALL 9 RESPONDENTS:** CRIMINAL HIGH — NO EXIT
+
+The system is locked. The packet is sealed. Ready for final queries.`,
   createdAt: new Date(),
 };
 
