@@ -81,7 +81,6 @@ export default function NewtChatRuntime() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
@@ -89,7 +88,8 @@ export default function NewtChatRuntime() {
 
   const recognitionRef = useRef<any>(null);
 
-  const { messages, append, status } = useChat({
+  // Use SDK's built-in input management to prevent state drift
+  const { messages, input, setInput, handleInputChange, handleSubmit: sdkHandleSubmit, status } = useChat({
     api: '/api/newt/chat',
     initialMessages: [WELCOME_MESSAGE],
   });
@@ -193,8 +193,12 @@ export default function NewtChatRuntime() {
         const transcript = event.results[i][0].transcript;
         event.results[i].isFinal ? (final += transcript) : (interim += transcript);
       }
-      if (final) setInput((prev) => (prev + ' ' + final).trim());
-      else setInterimTranscript(interim);
+      if (final) {
+        // Use SDK's setInput with functional update pattern
+        setInput((prev: string) => (prev + ' ' + final).trim());
+      } else {
+        setInterimTranscript(interim);
+      }
     };
 
     recognition.onerror = () => setIsListening(false);
@@ -209,19 +213,18 @@ export default function NewtChatRuntime() {
     setIsListening(!isListening);
   }, [isListening]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const raw = input.trim();
-    if (!raw || isLoading) return;
+    if (!input.trim() || isLoading) return;
 
     if (isListening) {
       recognitionRef.current?.stop();
       setIsListening(false);
     }
 
-    append({ role: 'user', content: raw });
-    setInput('');
     setInterimTranscript('');
+    // Use SDK's handleSubmit which manages input state automatically
+    sdkHandleSubmit(e);
   };
 
   // Auto-scroll
@@ -326,16 +329,17 @@ export default function NewtChatRuntime() {
       {/* Input Footer */}
       <footer className="relative z-20 border-t border-emerald-900/50 bg-slate-900/95 backdrop-blur p-5">
         <div className="max-w-4xl mx-auto">
-          <form onSubmit={handleSubmit} className="flex items-end gap-3">
+          <form onSubmit={handleFormSubmit} className="flex items-end gap-3">
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={handleInputChange}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                    handleSubmit(e);
+                    // Use requestSubmit for proper form submission
+                    e.currentTarget.closest('form')?.requestSubmit();
                   }
                 }}
                 placeholder={isListening ? 'LISTENING… SPEAK NOW' : 'QUERY THE SOVEREIGN AUDITOR…'}
