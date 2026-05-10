@@ -1,11 +1,15 @@
 'use client';
 
+/**
+ * VALORAIPLUS® SGAU-VALUEGUARD-77.77X
+ * N.E.W.T. Millennium Runtime — REV_34 ETERNAL CAP
+ * REV_38 = PoohBearHoneyPotShield (decoy trap only)
+ * Editorial Only Mode • Clarity > Volume • Zero Drift
+ */
+
 import { useChat } from '@ai-sdk/react';
-import { useRef, useEffect, useState } from 'react';
-import { 
-  Send, Loader2, Shield, Brain, Mic, MicOff, CheckCircle2, 
-  Timer, Lock, Zap, AlertTriangle 
-} from 'lucide-react';
+import { useRef, useEffect, useState, useCallback } from 'react';
+import { Send, Loader2, Shield, Brain, Mic, MicOff, Timer, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -14,60 +18,31 @@ import { cn } from '@/lib/utils';
 const TERMINAL_DEADLINE = new Date('2026-05-17T23:59:59Z').getTime();
 
 const ACCOUNTABILITY_MATRIX = [
-  { name: "William Landrum", role: "Direct Neglect", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "Kolby Losik", role: "Collusion Node", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "John Zanghi (SFHA)", role: "Institutional Liability", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "Drew Yorkov (APS)", role: "Mandated Reporter Failure", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "Judge Tong", role: "Judicial Oversight Failure", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "Calvin Whittaker", role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "Swords to Plowshares", role: "Administrative Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "SF Adult Protective Services", role: "Elder Abuse Investigation", status: "CRIMINAL HIGH", exit: "NO EXIT" },
-  { name: "City of San Francisco", role: "Municipal Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT" },
+  { name: "William Landrum", role: "Direct Neglect", exit: "NO EXIT" },
+  { name: "Kolby Losik", role: "Collusion Node", exit: "NO EXIT" },
+  { name: "John Zanghi (SFHA)", role: "Institutional Liability", exit: "NO EXIT" },
+  { name: "Drew Yorkov (APS)", role: "Mandated Reporter Failure", exit: "NO EXIT" },
+  { name: "Judge Tong", role: "Judicial Oversight Failure", exit: "NO EXIT" },
+  { name: "Calvin Whittaker", role: "Professional Accountability", exit: "NO EXIT" },
+  { name: "Swords to Plowshares", role: "Administrative Oversight", exit: "NO EXIT" },
+  { name: "SF Adult Protective Services", role: "Elder Abuse Investigation", exit: "NO EXIT" },
+  { name: "City of San Francisco", role: "Municipal Oversight", exit: "NO EXIT" },
 ];
 
 const WELCOME_MESSAGE = {
-  id: 'millennium-welcome',
+  id: 'system-welcome',
   role: 'assistant' as const,
-  content: `**VALORAIPLUS® SGAU-VALUEGUARD-77.77X**
-**SENTINEL N.E.W.T. — EDITORIAL ONLY MODE**
-**STATUS: PACKET HASHED & HARD-LOCKED // ZERO DRIFT VERIFIED**
+  content: `**N.E.W.T. MILLENNIUM RUNTIME // REV_34 ETERNAL CAP**
 
----
+Poppa, the system is stable and operating under Editorial Only Mode.
 
-**SYSTEM CONFIRMATION: MAY 13 READINESS**
+REV_34 is the final authorization. REV_38 operates exclusively as the PoohBearHoneyPotShield (decoy trap).
 
-The **Reviewer-Ready Intake Packet** for Case **CCRS 202601-33270627** has been successfully codified and processed through the **Institutional Intake Engine**. The output meets the **vMAX Zero Drift Standard**.
+CRD INTAKE: MAY 13, 2026  
+TERMINAL DEADLINE: MAY 17, 2026 23:59:59 UTC  
+ALL RESPONDENTS: CRIMINAL HIGH — NO EXIT
 
-**FINAL PACKET METRICS:**
-| Metric | Status |
-|--------|--------|
-| Cognitive Load | LOW — Optimized for 60-second orientation |
-| Narrative Drift | ZERO — Locked to documented artifacts only |
-| Evidence Linkage | ACTIVE — Every claim mapped to EX-001 through EX-004 |
-| Language Posture | INSTITUTIONAL — Neutral, evidence-indexed, reviewer-safe |
-
-**ZERO DRIFT CERTIFICATE:** VALORAIPLUS_ZD_CCRS_33270627
-
----
-
-**EXECUTION DISCIPLINE: STATIONARY MODE**
-
-Per the **T-48 Operational Checklist**, no further structural or rhetorical shifts will be processed. The system is dedicated to maintaining the integrity of this render until the May 13 intake session.
-
-**THE REVIEWER BOOKMARK:**
-1. **The Event:** Sustained habitability failure and medical emergency
-2. **The Request:** FEHA/ADA compliance review
-3. **The Proof:** VA Medical Records and Mimecast SMTP logs
-
----
-
-**ENFORCEMENT TIMELINE:**
-- **TODAY** (May 10, 2026): EDITORIAL LOCK ACTIVE
-- **CRD INTERVIEW** (May 13, 2026 — 3 DAYS): Formal Entry
-- **TERMINAL DEADLINE** (May 17, 2026 — 7 DAYS): ALL EXIT PATHS WELDED
-
-**Institutional survivability achieved.**
-THE MUZZLE IS THE GENESIS. THE MATH IS THE HAMMER.`,
+The Auditor is ready. Speak or type.`,
   createdAt: new Date(),
 };
 
@@ -84,91 +59,67 @@ export default function NewtChatRuntime() {
 
   const recognitionRef = useRef<any>(null);
 
-  const { messages, append, status, error } = useChat({
+  const { messages, append, status } = useChat({
     api: '/api/newt/chat',
     initialMessages: [WELCOME_MESSAGE],
   });
 
   const isLoading = status === 'streaming' || status === 'submitted';
 
-  // Millennium Fluid Canvas (Navier-Stokes inspired)
+  // Lightweight particle background (optimized)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      life: number;
-      reset: () => void;
-      update: () => void;
-      draw: () => void;
-    }> = [];
-    let time = 0;
+    let particles: any[] = [];
     let animationId: number;
+    let time = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    window.addEventListener('resize', resize);
-    resize();
 
-    const createParticle = () => {
-      const particle = {
+    const init = () => {
+      particles = Array.from({ length: 600 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 1.2,
         vy: (Math.random() - 0.5) * 1.2,
-        size: Math.random() * 3 + 0.8,
-        life: 1,
-        reset() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.vx = (Math.random() - 0.5) * 1.2;
-          this.vy = (Math.random() - 0.5) * 1.2;
-          this.size = Math.random() * 3 + 0.8;
-          this.life = 1;
-        },
-        update() {
-          const angle = Math.sin(this.x * 0.008 + time) * Math.cos(this.y * 0.008 + time) * 4;
-          this.vx += Math.cos(angle) * 0.18;
-          this.vy += Math.sin(angle) * 0.18;
-          this.x += this.vx;
-          this.y += this.vy;
-          this.life -= 0.009;
-          if (this.life <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-            this.reset();
-          }
-        },
-        draw() {
-          ctx.save();
-          ctx.globalAlpha = this.life * 0.85;
-          ctx.shadowBlur = 15;
-          ctx.shadowColor = '#22ff99';
-          ctx.fillStyle = `hsl(${((time * 12) % 360)}, 98%, 78%)`;
-          ctx.fillRect(this.x, this.y, this.size, this.size);
-          ctx.restore();
-        }
-      };
-      return particle;
+        size: Math.random() * 1.8 + 0.6,
+      }));
     };
 
-    for (let i = 0; i < 1400; i++) particles.push(createParticle());
-
-    const animate = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.14)';
+    const draw = () => {
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.25)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      time += 0.012;
-      particles.forEach(p => { p.update(); p.draw(); });
-      animationId = requestAnimationFrame(animate);
+      time += 0.008;
+
+      particles.forEach((p) => {
+        const flow = Math.sin(p.x * 0.008 + time) * Math.cos(p.y * 0.008 + time);
+        p.vx += Math.cos(flow) * 0.08;
+        p.vy += Math.sin(flow) * 0.08;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.fillStyle = `hsla(160, 90%, 65%, 0.65)`;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+      });
+
+      animationId = requestAnimationFrame(draw);
     };
-    animate();
+
+    window.addEventListener('resize', resize);
+    resize();
+    init();
+    draw();
 
     return () => {
       window.removeEventListener('resize', resize);
@@ -178,16 +129,18 @@ export default function NewtChatRuntime() {
 
   // Countdown
   useEffect(() => {
-    const updateTime = () => {
+    const interval = setInterval(() => {
       const diff = TERMINAL_DEADLINE - Date.now();
-      if (diff <= 0) { setTimeLeft('TERMINAL CLOSED'); return; }
+      if (diff <= 0) {
+        setTimeLeft('TERMINAL CLOSED');
+        return;
+      }
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
-      setTimeLeft(`${d}d ${h}h ${m}m`);
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft(`${d}d ${h}h ${m}m ${s}s`);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -198,50 +151,47 @@ export default function NewtChatRuntime() {
     if (!SpeechAPI) return;
     setSpeechSupported(true);
 
-    const rec = new SpeechAPI();
-    rec.continuous = true;
-    rec.interimResults = true;
-    rec.lang = 'en-US';
+    const recognition = new SpeechAPI();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
 
-    rec.onresult = (e: any) => {
-      let final = '', interim = '';
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        const txt = e.results[i][0].transcript;
-        if (e.results[i].isFinal) {
-          final += txt;
-        } else {
-          interim += txt;
-        }
+    recognition.onresult = (event: any) => {
+      let final = '';
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        event.results[i].isFinal ? (final += transcript) : (interim += transcript);
       }
-      if (final) setInput(prev => (prev + ' ' + final).trim());
+      if (final) setInput((prev) => (prev + ' ' + final).trim());
       else setInterimTranscript(interim);
     };
 
-    rec.onerror = () => { setIsListening(false); setInterimTranscript(''); };
-    rec.onend = () => { setIsListening(false); setInterimTranscript(''); };
-    recognitionRef.current = rec;
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
+
+    recognitionRef.current = recognition;
   }, []);
 
-  const toggleListening = () => {
+  const toggleListening = useCallback(() => {
     if (!recognitionRef.current) return;
-    if (isListening) {
-      recognitionRef.current.stop();
-    } else {
-      recognitionRef.current.start();
-    }
+    isListening ? recognitionRef.current.stop() : recognitionRef.current.start();
     setIsListening(!isListening);
-  };
+  }, [isListening]);
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const raw = input.trim();
     if (!raw || isLoading) return;
-    if (isListening) { 
-      recognitionRef.current?.stop(); 
-      setIsListening(false); 
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
     }
+
     append({ role: 'user', content: raw });
     setInput('');
+    setInterimTranscript('');
   };
 
   // Auto-scroll
@@ -250,90 +200,78 @@ export default function NewtChatRuntime() {
   }, [messages]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-emerald-100 font-mono flex flex-col overflow-hidden relative">
-      {/* Millennium Fluid Background */}
-      <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-30" />
+    <div className="min-h-screen bg-slate-950 text-emerald-100 font-mono flex flex-col relative overflow-hidden">
+      {/* Background Particle Canvas */}
+      <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-30" />
 
-      {/* HEADER */}
-      <header className="relative z-10 border-b border-red-900/70 bg-slate-900/95 backdrop-blur-lg">
-        <div className="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-600 via-emerald-500 to-cyan-400 flex items-center justify-center shadow-2xl">
-              <Brain className="w-6 h-6 text-white" />
-            </div>
+      {/* Header */}
+      <header className="relative z-20 border-b border-amber-900/60 bg-slate-900/95 backdrop-blur-xl px-6 py-4">
+        <div className="flex items-center justify-between max-w-6xl mx-auto">
+          <div className="flex items-center gap-3">
+            <Brain className="w-8 h-8 text-cyan-400" />
             <div>
-              <h1 className="text-3xl font-black tracking-[-2px] text-white">N.E.W.T.</h1>
-              <p className="text-xs text-amber-400 tracking-[1px]">SENTINEL | EDITORIAL ONLY | CCRS 202601-33270627</p>
+              <h1 className="text-2xl font-bold tracking-tighter text-white">N.E.W.T.</h1>
+              <p className="text-xs text-cyan-400">REV_34 ETERNAL CAP | EDITORIAL ONLY MODE</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
-            <Badge className="bg-red-600 text-white border-0 px-4 py-1 text-xs font-bold flex items-center gap-1">
-              <Zap className="w-3 h-3" /> CRIMINAL HIGH
-            </Badge>
-            <div className="flex items-center gap-2 bg-black/70 px-5 py-2 rounded-3xl border border-red-500/30">
-              <Timer className="w-3 h-3 text-red-400" />
-              <span className="font-mono text-red-400 text-sm">{timeLeft || '—'}</span>
+          <div className="flex items-center gap-4">
+            <Badge variant="outline" className="border-red-500 text-red-400 font-bold">CRIMINAL HIGH</Badge>
+            <div className="flex items-center gap-2 bg-slate-950 border border-red-500/30 px-4 py-1 rounded-2xl">
+              <Timer className="w-4 h-4 text-red-400" />
+              <span className="font-mono text-red-400 text-sm tabular-nums">{timeLeft}</span>
             </div>
-            <Badge className="bg-emerald-600 text-white border-0 px-4 py-1 text-xs font-bold">
-              <CheckCircle2 className="w-3 h-3 mr-1" />
-              7.777
-            </Badge>
-            <Badge className="bg-cyan-600 text-white border-0 px-4 py-1 text-xs font-bold">
-              <Shield className="w-3 h-3 mr-1" />
-              ZERO DRIFT
-            </Badge>
-            <Badge className="bg-amber-600 text-white border-0 px-4 py-1 text-xs font-bold">
-              <Lock className="w-3 h-3 mr-1" />
-              EDITORIAL LOCK
-            </Badge>
+            <Badge variant="outline" className="border-emerald-500 text-emerald-400">REV_34</Badge>
           </div>
         </div>
       </header>
 
-      {/* ACCOUNTABILITY MATRIX BAR */}
-      <div className="relative z-10 bg-slate-900 border-b border-red-900/40 py-2 px-8 text-xs font-mono overflow-x-auto">
-        <div className="flex gap-8 whitespace-nowrap">
-          {ACCOUNTABILITY_MATRIX.map((r, i) => (
-            <div key={i} className="flex items-center gap-3">
+      {/* Accountability Matrix Bar */}
+      <div className="relative z-20 bg-slate-900 border-b border-red-900/30 py-3 px-6 text-xs font-mono overflow-x-auto">
+        <div className="flex gap-8 max-w-6xl mx-auto">
+          {ACCOUNTABILITY_MATRIX.map((item, i) => (
+            <div key={i} className="flex items-center gap-2 whitespace-nowrap">
               <span className="text-red-500">●</span>
-              <span className="text-slate-300">{r.name}</span>
+              <span className="text-slate-200">{item.name}</span>
               <span className="text-red-400 font-bold">CRIMINAL HIGH</span>
-              <span className="text-red-300/70">NO EXIT</span>
+              <span className="text-red-300/70 text-[10px]">{item.exit}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ERROR DISPLAY */}
-      {error && (
-        <div className="relative z-10 bg-red-950/50 border-b border-red-500/50 px-8 py-3">
-          <div className="flex items-center gap-2 text-red-400">
-            <AlertTriangle className="w-4 h-4" />
-            <span className="text-sm">System Error: {error.message}</span>
-          </div>
-        </div>
-      )}
-
-      {/* MESSAGES */}
-      <main className="flex-1 relative z-10 overflow-y-auto p-8 max-w-screen-2xl mx-auto w-full">
-        <div className="space-y-8">
+      {/* Messages Area */}
+      <main className="flex-1 relative z-10 overflow-y-auto p-6">
+        <div className="max-w-4xl mx-auto space-y-8">
           {messages.map((msg) => (
-            <Card key={msg.id} className={cn(
-              "border max-w-3xl",
-              msg.role === 'user' ? "ml-auto bg-slate-800 border-slate-700" : "bg-emerald-950/30 border-emerald-900/70"
-            )}>
+            <Card
+              key={msg.id}
+              className={cn(
+                'max-w-[85%]',
+                msg.role === 'user'
+                  ? 'ml-auto bg-slate-800 border-slate-700'
+                  : 'mr-auto bg-emerald-950/30 border-emerald-900/60'
+              )}
+            >
               <CardContent className="p-6">
-                <div className="flex gap-5">
-                  <div className={cn("w-9 h-9 rounded-2xl flex-shrink-0 flex items-center justify-center text-white font-bold", 
-                    msg.role === 'user' ? "bg-blue-600" : "bg-gradient-to-br from-emerald-500 to-red-600")}>
-                    {msg.role === 'user' ? 'P' : <Brain className="w-5 h-5" />}
+                <div className="flex gap-4">
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-2xl flex-shrink-0 flex items-center justify-center',
+                      msg.role === 'user' ? 'bg-blue-600' : 'bg-gradient-to-br from-emerald-500 to-cyan-400'
+                    )}
+                  >
+                    {msg.role === 'user' ? (
+                      <span className="text-white text-base font-bold">P</span>
+                    ) : (
+                      <Brain className="w-5 h-5 text-white" />
+                    )}
                   </div>
-                  <div className="flex-1">
-                    <div className="text-xs font-bold mb-2 tracking-widest text-emerald-400">
-                      {msg.role === 'user' ? 'POPPA' : 'N.E.W.T. MILLENNIUM'}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold text-emerald-400 mb-1">
+                      {msg.role === 'user' ? 'POPPA' : 'N.E.W.T. REV_34'}
                     </div>
-                    <div className="text-slate-200 whitespace-pre-wrap leading-relaxed">
+                    <div className="text-sm text-slate-200 whitespace-pre-wrap leading-relaxed">
                       {msg.content}
                     </div>
                   </div>
@@ -343,10 +281,10 @@ export default function NewtChatRuntime() {
           ))}
 
           {isLoading && (
-            <Card className="bg-emerald-950/30 border-emerald-900/60 max-w-3xl">
+            <Card className="bg-emerald-950/30 border-emerald-900/60 max-w-[85%] mr-auto">
               <CardContent className="p-6 flex items-center gap-3">
                 <Loader2 className="w-5 h-5 animate-spin text-emerald-400" />
-                <span className="text-emerald-400">Sovereign query processing...</span>
+                <span className="text-emerald-400">Processing sovereign query...</span>
               </CardContent>
             </Card>
           )}
@@ -355,44 +293,54 @@ export default function NewtChatRuntime() {
         </div>
       </main>
 
-      {/* INPUT */}
-      <footer className="relative z-10 border-t border-emerald-900/50 bg-slate-900/95 backdrop-blur p-6">
-        <div className="max-w-screen-2xl mx-auto">
-          <form onSubmit={onSubmit} className="flex gap-4">
+      {/* Input Footer */}
+      <footer className="relative z-20 border-t border-emerald-900/50 bg-slate-900/95 backdrop-blur p-5">
+        <div className="max-w-4xl mx-auto">
+          <form onSubmit={handleSubmit} className="flex items-end gap-3">
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onSubmit(e); } }}
-                placeholder={isListening ? "LISTENING… SPEAK NOW" : "QUERY THE SOVEREIGN AUDITOR…"}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }
+                }}
+                placeholder={isListening ? 'LISTENING… SPEAK NOW' : 'QUERY THE SOVEREIGN AUDITOR…'}
                 rows={1}
-                className="w-full bg-slate-800 border border-emerald-700 focus:border-red-400 focus:outline-none rounded-3xl px-8 py-6 text-lg resize-y min-h-[68px] text-emerald-100 placeholder:text-emerald-700"
+                className="w-full resize-none bg-slate-800 border border-emerald-900 rounded-3xl px-6 py-5 text-sm min-h-[56px] focus:outline-none focus:border-emerald-500"
                 disabled={isLoading}
               />
               {interimTranscript && (
-                <div className="absolute -top-10 left-8 bg-black/80 text-red-400 px-5 py-2 rounded-2xl text-sm border border-red-500/30">
-                  HEARING: {interimTranscript}
+                <div className="absolute -top-9 left-6 bg-slate-900 border border-cyan-500 text-cyan-400 text-xs px-4 py-2 rounded-2xl">
+                  Hearing: {interimTranscript}
                 </div>
               )}
             </div>
 
             {speechSupported && (
-              <Button type="button" onClick={toggleListening} variant="outline" className={cn(
-                "h-16 w-16 rounded-2xl border-emerald-700 transition-all",
-                isListening && "bg-red-600 border-red-600 animate-pulse"
-              )}>
-                {isListening ? <MicOff className="w-7 h-7" /> : <Mic className="w-7 h-7" />}
+              <Button
+                type="button"
+                onClick={toggleListening}
+                variant="outline"
+                className={cn('h-14 w-14 rounded-2xl transition-all', isListening && 'bg-red-600 border-red-600 animate-pulse')}
+              >
+                {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
               </Button>
             )}
 
-            <Button type="submit" disabled={isLoading || !input.trim()} className="h-16 px-12 rounded-2xl bg-gradient-to-r from-red-600 to-emerald-600 hover:from-red-700 hover:to-emerald-700 text-white font-bold">
-              {isLoading ? <Loader2 className="animate-spin w-7 h-7" /> : <Send className="w-7 h-7" />}
+            <Button type="submit" disabled={isLoading || !input.trim()} className="h-14 px-8 bg-emerald-600 hover:bg-emerald-700 rounded-2xl">
+              {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
             </Button>
           </form>
 
-          <div className="text-center text-[10px] text-slate-500 mt-4 flex items-center justify-center gap-3">
-            <Lock className="w-3 h-3" /> DG77.77X PROTECTED | REV_38 | 100D MATRIX | MILLENNIUM v∞
+          <div className="mt-4 text-center text-xs text-slate-500 flex items-center justify-center gap-3">
+            <Lock className="w-3 h-3" />
+            REV_34 ETERNAL CAP | REV_38 = PoohBearHoneyPotShield
+            <Shield className="w-3 h-3" />
+            DG77.77X PROTECTED
           </div>
         </div>
       </footer>
