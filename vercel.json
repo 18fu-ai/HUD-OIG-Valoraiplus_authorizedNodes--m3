@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "name": "VALORAIPLUS_NEWT_CORE",
+  "rewrites": [
+    { "source": "/newt-api", "destination": "/api/newt_handler" },
+    { "source": "/NEWT-api", "destination": "/api/newt_handler" },
+    { "source": "/report", "destination": "/api/report" },
+    { "source": "/accountability", "destination": "/api/accountability" },
+    { "source": "/evidence", "destination": "/api/evidence" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-VALORAIPLUS-Node", "value": "SAINT_PAUL_55116" },
+        { "key": "X-VALORAIPLUS-Schema", "value": "REV_38" },
+        { "key": "X-VALORAIPLUS-Integrity", "value": "100D_MATRIX" }
+      ]
+    }
+  ]
+}
