@@ -205,7 +205,7 @@ export default function NewtChatRuntime() {
     recognition.onend = () => setIsListening(false);
 
     recognitionRef.current = recognition;
-  }, []);
+  }, [setInput]);
 
   const toggleListening = useCallback(() => {
     if (!recognitionRef.current) return;
