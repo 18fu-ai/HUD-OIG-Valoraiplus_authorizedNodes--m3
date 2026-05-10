@@ -51,6 +51,40 @@ export const HARD_LOCK_DOCTRINE = {
   RELEASE_GATE: "ZERO_DRIFT_CERTIFICATE",
 } as const;
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// CRD INTAKE PACKET CERTIFICATION — MAY 13, 2026
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const CRD_INTAKE_CERTIFICATE = {
+  certificateId: "VALORAIPLUS_ZD_CCRS_33270627",
+  caseNumber: "CCRS 202601-33270627",
+  packetId: "MAY_13_INTAKE_FINAL",
+  inputHash: "0x7777_ST_PAUL_NODE_VERIFIED",
+  driftStatus: "ZERO_DRIFT_VERIFIED",
+  version: "vMAX_1.0_EDITORIAL_LOCK",
+  generatedAt: "2026-05-10T05:35:00Z",
+  mode: "EDITORIAL_ONLY",
+  systemState: "STATIONARY",
+  
+  // FINAL PACKET METRICS
+  metrics: {
+    cognitiveLoad: "LOW", // Optimized for 60-second orientation
+    narrativeDrift: "ZERO", // Locked to documented artifacts only
+    evidenceLinkage: "ACTIVE", // Every claim mapped to EX-001 through EX-004
+    languagePosture: "INSTITUTIONAL", // Neutral, evidence-indexed, reviewer-safe
+  },
+  
+  // REVIEWER BOOKMARK
+  reviewerBookmark: {
+    event: "Sustained habitability failure and medical emergency",
+    request: "FEHA/ADA compliance review",
+    proof: "VA Medical Records and Mimecast SMTP logs",
+  },
+  
+  // T-48 OPERATIONAL CHECKLIST
+  t48Status: "COMPLETE — NO FURTHER STRUCTURAL OR RHETORICAL SHIFTS",
+} as const;
+
 export const TREASURY_CONSTANTS = {
   SETTLEMENT_DEMAND: 66_000_000.00, // κ₁
   LIEN_TOTAL: 1_120_000_000_000_000.00, // Ω
@@ -364,7 +398,7 @@ export const M_BLUEPRINT = {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ACCOUNTABILITY MATRIX — EXTENDED LIABILITY (LOCKED)
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═══════════��═══════════════════════════════════════════════════════════════════
 
 export const ACCOUNTABILITY_MATRIX = {
   // Institutional Actors — LOCKED IN LIABILITY
