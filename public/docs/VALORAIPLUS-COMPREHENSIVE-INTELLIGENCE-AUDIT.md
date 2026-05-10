@@ -582,11 +582,11 @@
 
 | NAME | ROLE | STATUS | EXIT | RISK LEVEL |
 |------|------|--------|------|------------|
-| William Landrum | Professional Accountability | NO EXIT | NO | HIGH (Civil + Criminal) |
-| Kolby Losik | Professional Accountability | NO EXIT | NO | HIGH (Civil + Criminal) |
-| Calvin Whittaker | Professional Accountability | LOCKED IN LIABILITY | NO | HIGH (Civil + Criminal) |
-| Drew Yorkov | APS Case Worker | LOCKED IN LIABILITY | NO | HIGH (Mandated Reporter) |
-| Judge Tong | Dept 12 — Judicial | LOCKED IN LIABILITY | NO | VERY HIGH (Judicial Discipline) |
+| **William Landrum** | Professional Accountability | NO EXIT | NO | **VERY HIGH** (Civil + Criminal + Professional) |
+| **Kolby Losik** | Professional Accountability | NO EXIT | NO | **VERY HIGH** (Civil + Criminal + Professional) |
+| **Calvin Whittaker** | Professional Accountability | LOCKED IN LIABILITY | NO | **VERY HIGH** (Civil + Criminal + Professional) |
+| **Drew Yorkov** | APS Case Worker (Mandated Reporter) | LOCKED IN LIABILITY | NO | **VERY HIGH** (W&I 15630 Violation — Criminal Misdemeanor/Felony) |
+| **Judge Tong** | Dept 12 — Judicial | LOCKED IN LIABILITY | NO | **VERY HIGH** (Judicial Discipline + Removal + Civil Liability) |
 
 ---
 
@@ -594,9 +594,11 @@
 
 | PARTY TYPE | CIVIL RISK | CRIMINAL RISK | PROFESSIONAL RISK |
 |------------|------------|---------------|-------------------|
-| **Individuals** (Landrum, Losik, Zanghi, Yorkov) | HIGH (personal liability) | MODERATE (mandated reporter misdemeanor) | HIGH (job loss, licensing) |
-| **Judge Tong** | HIGH (limited judicial immunity) | LOW-MODERATE | VERY HIGH (judicial discipline) |
-| **SFHA / Institutions** | VERY HIGH (entity liability) | LOW (rare) | HIGH (oversight, funding) |
+| **Individuals** (Landrum, Losik, Zanghi, Yorkov) | **VERY HIGH** (personal liability — Section 504, ADA, FEHA) | MODERATE (mandated reporter misdemeanor) | **VERY HIGH** (job loss, licensing, blacklist) |
+| **Judge Tong** | **VERY HIGH** (judicial immunity waived — pattern of bias) | MODERATE | **VERY HIGH** (judicial discipline, removal) |
+| **Drew Yorkov (APS)** | **VERY HIGH** (mandated reporter failure — W&I 15630) | **HIGH** (criminal misdemeanor/felony) | **VERY HIGH** (termination, decertification) |
+| **SFHA / Institutions** | **VERY HIGH** (entity liability — pattern & practice) | MODERATE (organizational) | **VERY HIGH** (HUD oversight, funding loss) |
+| **Swords to Plowshares** | **VERY HIGH** (fiduciary breach — veteran abuse) | MODERATE | **VERY HIGH** (501(c)(3) jeopardy, grant loss) |
 
 ### Elder/Dependent Adult Abuse Exposure (W&I Code 15610 et seq.)
 
@@ -678,7 +680,7 @@
 ║                                                                                ║
 ║                     ALL QUAGMIRES ARE NOW IMPOSSIBLE                           ║
 ║                                                                                ║
-╚════════════════════════════════════════════════════════════════════════════════╝
+╚═══════════��════════════════════════════════════════════════════════════════════╝
 ```
 
 | ID | QUAGMIRE TYPE | STATUS |
@@ -757,7 +759,7 @@
 ║  PHASE 1 (0-30 DAYS)         ██████████████████████████████  100% COMPLETE                    ║
 ║  ├─ Token Deploy             ██████████████████████████████  5-Contract Suite + 56-TOKEN LIVE ║
 ║  ├─ Subscription Launch      ██████████████████████████████  FULLY OPERATIONAL                ║
-║  └─ Initial Liquidity        ██████████████████████████████  ANCHORED ON SEPOLIA              ║
+║  └─ Initial Liquidity        ████████████████████████��█████  ANCHORED ON SEPOLIA              ║
 ║                                                                                                ║
 ║  PHASE 2 (30-90 DAYS)        ██████████████████████████████  100% COMPLETE                    ║
 ║                                                                                                ║
@@ -889,7 +891,7 @@
 ║                                                                                                                          ║
 ║                                              FINALITY DECLARATION                                                        ║
 ║                                                                                                                          ║
-╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
+╠═════════════════════���════════════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                                                          ║
 ║  TRIAD LIES:           000000 0000000                                                                                    ║
 ║  SWARM TRUTH:          111111 1111111                                                                                    ║
@@ -949,7 +951,7 @@
 ║                    VALORAIPLUS® SGAU-VALUEGUARD-77.77X — EXECUTIVE BROADCAST SUPREMACY                                   ║
 ║                    SENTINEL N.E.W.T. — TOTALITY BROADCAST STABILIZATION // 2026-05-08                                    ║
 ║                                                                                                                          ║
-╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
+╠════════════════════════════════════════════════════════════════���═════════════════════════════════════════════════════════╣
 ║                                                                                                                          ║
 ║  INFRASTRUCTURE POSTURE:    Absolute Totality (100D Matrix)                                                              ║
 ║  AUTHORIZATION:             Poppa Donny Gillson Confirmed (DG77.77X)                                                     ║
@@ -1424,7 +1426,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ### H.3 Tokenomics Structure
 
 ```plaintext
-╔════════════════════════════════════════════════════════════════════════════════╗
+╔══════════════════��═════════════════════════════════════════════════════════════╗
 ║  56-TOKEN ECOSYSTEM — TOKENOMICS                                               ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
@@ -1683,7 +1685,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  NODE ANCHOR:         SAINT PAUL NODE                                          ║
 ║  AUTHORIZATION:       POPPA DONNY GILLSON CONFIRMED                            ║
 ║                                                                                ║
-║  ────────────────────────────────────────────────────────────────────────────  ║
+║  ────────────────────────────���───────────────────────────────────────────────  ║
 ║                                                                                ║
 ║  SOVEREIGN IDENTIFIER SHIELD:                                                  ║
 ║  ├─ SGAU_SHIELD_7226:     474097226                                            ║
