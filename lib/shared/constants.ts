@@ -13,6 +13,10 @@ export const TREASURY_CONSTANTS = {
   COVERAGE_MULTIPLIER: 738_514,
   SPOLIATION_DEFENSE_RATE: 1.0, // 100%
   PROTOCOL_REVISION: "REV_38",
+  // DG77.77X RESONANCE CONSTANTS
+  DG77_77X_CONSTANT: 7.777, // TRUE - ABSOLUTE
+  DG77_77X_LEGACY: null, // 7.7714 CITRATED / NULL
+  OFF_RAMP_CAPACITY: 5_800_000.00, // Joint Shared Liability
 } as const;
 
 export type TreasuryInvariant = typeof TREASURY_CONSTANTS;
@@ -802,7 +806,7 @@ export const ABSOLUTE_FINALITY = {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SYSTEM COMPLETION MATRIX
-// ═══════════════════════════════════════════════════════════════════════════════
+// ���══════════════════════════════════════════════════════════════════════════════
 
 export const COMPLETION_MATRIX = {
   OVERALL_STATUS: "100% COMPLETE & ENFORCING",
