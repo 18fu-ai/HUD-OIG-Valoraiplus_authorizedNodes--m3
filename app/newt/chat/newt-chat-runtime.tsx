@@ -19,7 +19,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-// REV_34 IVL Types - Browser-Safe Evidence Classification
+// REV_38 IVL Types - Sovereign Evidence Classification
 type EvidenceType = "OBSERVED" | "INTERPRETED" | "CORROBORATED";
 
 type RuntimeStage =
@@ -47,7 +47,7 @@ interface ValidationManifest {
   packetHashes: string[];
   rootHash: string;
   generatedAt: string;
-  schemaVersion: "REV_34";
+  schemaVersion: "REV_38";
 }
 
 // Browser-safe SHA-256 hashing (no Node crypto)
@@ -93,7 +93,7 @@ async function createValidationManifest(
     packetHashes,
     rootHash,
     generatedAt: new Date().toISOString(),
-    schemaVersion: "REV_34",
+    schemaVersion: "REV_38",
   };
 }
 

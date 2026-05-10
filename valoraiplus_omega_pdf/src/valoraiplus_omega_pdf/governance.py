@@ -72,6 +72,36 @@ class ReviewPriority(str, Enum):
     SENSITIVE_REVIEW = "SENSITIVE REVIEW"
 
 
+class RuntimeMode(str, Enum):
+    """
+    Runtime mode for document generation.
+    INTERNAL: Symbolic language allowed (internal dashboards, development)
+    INSTITUTIONAL: Reviewer-safe language only (CRD, HHS OCR, courts)
+    """
+    INTERNAL = "internal"
+    INSTITUTIONAL = "institutional"
+
+
+# Automatic Language Guard — Rewrite Rules for Institutional Mode
+# Converts internal symbolic language to reviewer-safe terminology
+REWRITE_RULES = {
+    "criminal high": "elevated review priority",
+    "no exit": "requires independent review",
+    "armed": "active review posture",
+    "enforcing": "under assessment",
+    "locked liability": "potential accountability exposure",
+    "fraud confirmed": "alleged irregularity requiring review",
+    "wiretap active": "reported investigative coordination",
+    "grand jury empaneled": "reported legal-process status requiring verification",
+    "violation confirmed": "formal agency finding",
+    "consummatum est": "matter concluded",
+    "criminal exposure": "potential legal exposure",
+    "spoliation": "alleged evidence handling concern",
+    "consciousness of guilt": "documented non-response pattern",
+    "retaliation": "alleged adverse action following protected activity",
+}
+
+
 class OperatingDoctrine:
     """
     Enforces VALORAIFORENSICS++ terminology constraints.

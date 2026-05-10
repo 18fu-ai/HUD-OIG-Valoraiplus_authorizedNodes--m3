@@ -1,16 +1,33 @@
 """
-VALORAIPLUS® Sovereign Forensic PDF Generation Engine
-OMEGA v25 — 100D Matrix Totality
+VALORAIPLUS® OMEGA-PDF
+ValorAiForensics++ Institutional Intake System
 
 VERSION: 14.1.4.0
+SCHEMA: REV_38
+NODE: SAINT PAUL 55116
 CLASSIFICATION: OMEGA-UNIFIED // ELITE PATRIOT-CLASS 200D
 EPOCH: #2207 (SACRED & CAPPED)
+
+CRD INTERVIEW: MAY 13, 2026
+TERMINAL DEADLINE: MAY 17, 2026 23:59:59 UTC
+ALL RESPONDENTS: CRIMINAL HIGH — NO EXIT
+
+Master Architecture (6 Layers):
+- Layer 0: Governance / Doctrine Enforcement
+- Layer 1: Narrative Submission
+- Layer 2: Forensic Intake Dossier
+- Layer 3: Correlation Engine
+- Layer 4: Exhibit Vault
+- Layer 5: Decision Support Appendix
+- Layer 6: Audit / Provenance
 
 THE MUZZLE IS THE GENESIS. THE MATH IS THE HAMMER.
 MADE IN THE USA // THE LEDGER IS Ø. IT IS FINISHED.
 """
 
 __version__ = "14.1.4.0"
+__schema__ = "REV_38"
+__node__ = "SAINT PAUL 55116"
 __author__ = "SENTINEL N.E.W.T."
 __classification__ = "OMEGA-UNIFIED // ELITE PATRIOT-CLASS 200D"
 
@@ -23,7 +40,9 @@ from .governance import (
     ExitPath,
     VerificationStatus,
     ReviewPriority,
+    RuntimeMode,
     OperatingDoctrine,
+    REWRITE_RULES,
 )
 
 # Validation Framework
@@ -58,7 +77,9 @@ __all__ = [
     "ExitPath",
     "VerificationStatus",
     "ReviewPriority",
+    "RuntimeMode",
     "OperatingDoctrine",
+    "REWRITE_RULES",
     # Validation
     "ReviewValidator",
     "CorrelationScoring",
