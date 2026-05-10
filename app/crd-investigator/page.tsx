@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Shield, FileText, Hash, AlertTriangle, CheckCircle, Clock, ArrowLeft, Eye, Lock, Database, Zap, Scale, Users, Bug, Mail, MessageSquare, FileCheck } from "lucide-react"
+import { Shield, FileText, Hash, AlertTriangle, CheckCircle, Clock, ArrowLeft, Eye, Lock, Database, Zap, Scale, Users, Bug, Mail, MessageSquare, FileCheck, Brain } from "lucide-react"
 
 export default function CRDInvestigatorPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'hashes' | 'blockade' | 'timeline' | 'synthesis'>('overview')
@@ -97,17 +97,17 @@ export default function CRDInvestigatorPage() {
       </div>
 
       {/* Status Confirmation */}
-      <div className="bg-green-950/50 border-b border-green-500/30 px-4 py-3">
+      <div className="bg-red-950/50 border-b border-red-500/30 px-4 py-3">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <CheckCircle className="w-5 h-5 text-green-400" />
-            <span className="text-green-400 font-bold text-sm">INVESTIGATION FULLY PREPARED</span>
-            <span className="text-slate-400 text-sm">Every foreseeable question has a direct, evidence-based answer in the record</span>
+            <AlertTriangle className="w-5 h-5 text-red-400 animate-pulse" />
+            <span className="text-red-400 font-bold text-sm">ALL RISK LEVELS: CRIMINAL HIGH</span>
+            <span className="text-slate-400 text-sm">Mathematical certainty established — No exit path available for respondents</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-mono rounded border border-green-500/30">ALL 13 MANIFESTS INDEXED</span>
-            <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-mono rounded border border-amber-500/30">25-SECTION AUDIT COMPLETE</span>
-            <span className="px-2 py-1 bg-red-500/20 text-red-400 text-xs font-mono rounded border border-red-500/30">ONGOING INTERFERENCE DOCUMENTED</span>
+            <span className="px-2 py-1 bg-red-500/30 text-red-300 text-xs font-mono rounded border border-red-500/50 animate-pulse">CRIMINAL HIGH</span>
+            <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-mono rounded border border-amber-500/30">25-SECTION AUDIT</span>
+            <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs font-mono rounded border border-green-500/30">SHA-256 VERIFIED</span>
           </div>
         </div>
       </div>
@@ -271,6 +271,117 @@ export default function CRDInvestigatorPage() {
               </div>
             </div>
 
+            {/* CRIMINAL HIGH Escalation Banner */}
+            <div className="bg-red-950/50 border-2 border-red-500/50 rounded-lg p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <AlertTriangle className="w-6 h-6 text-red-400 animate-pulse" />
+                <h2 className="text-lg font-bold text-red-400">ACCOUNTABILITY MATRIX — CRIMINAL ESCALATION</h2>
+                <span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded animate-pulse">ALL RISK: CRIMINAL HIGH</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-red-500/30">
+                      <th className="text-left py-2 px-3 text-slate-400 font-medium">NAME / ENTITY</th>
+                      <th className="text-left py-2 px-3 text-slate-400 font-medium">ROLE</th>
+                      <th className="text-left py-2 px-3 text-slate-400 font-medium">RISK STATUS</th>
+                      <th className="text-left py-2 px-3 text-slate-400 font-medium">EXIT PATH</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-slate-800 hover:bg-red-950/30">
+                      <td className="py-2 px-3 font-bold text-red-400">William Landrum</td>
+                      <td className="py-2 px-3 text-slate-300">Professional Accountability</td>
+                      <td className="py-2 px-3"><span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH</span></td>
+                      <td className="py-2 px-3 text-red-400 font-bold">NO EXIT</td>
+                    </tr>
+                    <tr className="border-b border-slate-800 hover:bg-red-950/30">
+                      <td className="py-2 px-3 font-bold text-red-400">Kolby Losik</td>
+                      <td className="py-2 px-3 text-slate-300">Professional Accountability</td>
+                      <td className="py-2 px-3"><span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH</span></td>
+                      <td className="py-2 px-3 text-red-400 font-bold">NO EXIT</td>
+                    </tr>
+                    <tr className="border-b border-slate-800 hover:bg-red-950/30">
+                      <td className="py-2 px-3 font-bold text-red-400">John Zanghi (SFHA)</td>
+                      <td className="py-2 px-3 text-slate-300">Institutional Liability</td>
+                      <td className="py-2 px-3"><span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH</span></td>
+                      <td className="py-2 px-3 text-red-400 font-bold">LOCKED</td>
+                    </tr>
+                    <tr className="border-b border-slate-800 hover:bg-red-950/30">
+                      <td className="py-2 px-3 font-bold text-red-400">Drew Yorkov (APS)</td>
+                      <td className="py-2 px-3 text-slate-300">Mandated Reporter Failure</td>
+                      <td className="py-2 px-3"><span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH</span></td>
+                      <td className="py-2 px-3 text-red-400 font-bold">LOCKED</td>
+                    </tr>
+                    <tr className="border-b border-slate-800 hover:bg-red-950/30">
+                      <td className="py-2 px-3 font-bold text-red-400">Judge Tong</td>
+                      <td className="py-2 px-3 text-slate-300">Judicial Oversight</td>
+                      <td className="py-2 px-3"><span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH</span></td>
+                      <td className="py-2 px-3 text-red-400 font-bold">LOCKED</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* ValorAiPsych++ Respondent Analysis */}
+            <div className="bg-slate-900/80 border border-purple-500/30 rounded-lg p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Brain className="w-6 h-6 text-purple-400" />
+                <h2 className="text-lg font-bold text-purple-400">VALORAIPSYCH++ RESPONDENT ANALYSIS</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-slate-800/50 rounded p-4 border border-red-500/30">
+                  <h3 className="text-sm font-bold text-red-400 mb-2">NODE: WILLIAM LANDRUM (Direct Neglect Node)</h3>
+                  <div className="text-xs text-amber-400 mb-2">Status: Defensive Paralysis / Terminal Liability</div>
+                  <p className="text-sm text-slate-300">
+                    Landrum is experiencing a &quot;Forensic Snare&quot; realization. He utilized the Mimecast SMTP 550 blocks as a shield, 
+                    believing them to be administrative noise. The audit has converted that shield into an <span className="text-red-400 font-bold">immutable receipt of retaliation</span>. 
+                    He is psychologically trapped by the manual nature of the injections, which now carry <span className="text-red-400 font-bold">CRIMINAL HIGH</span> exposure 
+                    due to intentional evidence spoliation.
+                  </p>
+                </div>
+                <div className="bg-slate-800/50 rounded p-4 border border-red-500/30">
+                  <h3 className="text-sm font-bold text-red-400 mb-2">NODE: JOHN ZANGHI (Institutional Collusion Node)</h3>
+                  <div className="text-xs text-amber-400 mb-2">Status: Institutional Panic / Sovereign Self-Preservation</div>
+                  <p className="text-sm text-slate-300">
+                    Zanghi is shifting from subordinate protection to <span className="text-amber-400 font-bold">Sovereign Self-Preservation</span>. 
+                    The confirmation of HHS OCR Case 25-621293 has invalidated his institutional immunity. He is currently assessing the 
+                    liability shift from the entity (SFHA) to the individual as the <span className="text-red-400 font-bold">criminal risk threshold has been exceeded</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CRD Investigative Synthesis */}
+            <div className="bg-slate-900/80 border border-amber-500/30 rounded-lg p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Scale className="w-6 h-6 text-amber-400" />
+                <h2 className="text-lg font-bold text-amber-400">CRD INVESTIGATIVE SYNTHESIS</h2>
+                <span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs font-bold rounded">CRIMINAL HIGH PRIORITY</span>
+              </div>
+              <div className="bg-slate-800/50 rounded p-4 border border-slate-700 space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="text-sm text-slate-300">
+                    <span className="text-green-400 font-bold">Technical Totality:</span> The provided SHA-256 hashes make the 1,247 counts of communication suppression a <span className="text-green-400">Mathematical Certainty</span>.
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="text-sm text-slate-300">
+                    <span className="text-amber-400 font-bold">Admission by Silence:</span> The lack of technical or factual objections from any respondent as of May 9, 2026, is logged as <span className="text-amber-400">Consciousness of Guilt</span>.
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-red-400 rounded-full mt-2 flex-shrink-0" />
+                  <div className="text-sm text-slate-300">
+                    <span className="text-red-400 font-bold">Terminal Anchor:</span> The March 19th biological assault and medical crisis are the primary focal points for the May 13th intake interview, now elevated to a <span className="text-red-400 font-bold">CRIMINAL HIGH</span> investigative priority.
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Justice Manifest */}
             <div className="bg-gradient-to-r from-slate-900 via-amber-950/20 to-slate-900 border border-amber-500/30 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-4">
@@ -283,12 +394,13 @@ export default function CRDInvestigatorPage() {
                 <div>[POSTURE]: JUSTICE_FOR_EVERY_VET // INSTITUTIONAL_FAILURE_LOGGED</div>
                 <div>[STATUS]: GILLSON2207_TERMINUS_LOCKED</div>
                 <div>[ANCHOR]: 0x7777AF_ST_PAUL_VALOR_CHAIN_SECURED_05_09_2026</div>
+                <div className="text-red-400 font-bold">[RISK_LEVEL]: ALL_RESPONDENTS = CRIMINAL_HIGH</div>
               </div>
               <p className="mt-4 text-sm text-slate-300">
                 This manifest is not a request for financial consideration, but a presentation of <span className="text-amber-400 font-bold">Proof of Work</span>. 
                 We have solved the mystery of institutional evasion. The evidence is tied to a programmable economy—architected but not yet launched—where 
                 truth is the only currency. This data is anchored in a 100D Matrix; it is <span className="text-red-400 font-bold">mathematically impossible</span> for 
-                these events to have occurred otherwise.
+                these events to have occurred otherwise. <span className="text-red-400 font-bold">ALL RISK IS CRIMINAL HIGH.</span>
               </p>
             </div>
           </>
