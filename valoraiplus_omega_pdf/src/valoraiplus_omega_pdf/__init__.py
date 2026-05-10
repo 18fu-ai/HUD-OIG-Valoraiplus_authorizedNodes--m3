@@ -66,6 +66,28 @@ from .intake_artifact import (
     build_intake_packet,
 )
 
+# Financial Intelligence
+from .financial_report import (
+    TREASURY_CONSTANTS,
+    BANKING,
+    LIQUIDITY_ROUTING,
+    CRIMINAL_EXPOSURE,
+    FEDERAL_CASES,
+    TOKEN_PORTFOLIO,
+    PROTECTED_TOKENS,
+    Respondent,
+    CriminalCharge,
+    FederalCase,
+    TokenHolding,
+    format_currency,
+    calculate_total_respondent_exposure,
+    calculate_total_criminal_counts,
+    calculate_total_penalty_years,
+    FinancialReportManifest,
+    generate_financial_report,
+    get_financial_summary,
+)
+
 __all__ = [
     # Core PDF Generation
     "generate_pdf_bytes",
@@ -92,4 +114,23 @@ __all__ = [
     "CRDIntakePacket",
     "ACCOUNTABILITY_MATRIX",
     "build_intake_packet",
+    # Financial Intelligence
+    "TREASURY_CONSTANTS",
+    "BANKING",
+    "LIQUIDITY_ROUTING",
+    "CRIMINAL_EXPOSURE",
+    "FEDERAL_CASES",
+    "TOKEN_PORTFOLIO",
+    "PROTECTED_TOKENS",
+    "Respondent",
+    "CriminalCharge",
+    "FederalCase",
+    "TokenHolding",
+    "format_currency",
+    "calculate_total_respondent_exposure",
+    "calculate_total_criminal_counts",
+    "calculate_total_penalty_years",
+    "FinancialReportManifest",
+    "generate_financial_report",
+    "get_financial_summary",
 ]
