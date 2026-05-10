@@ -16,4 +16,59 @@ __classification__ = "OMEGA-UNIFIED // ELITE PATRIOT-CLASS 200D"
 
 from .report_core import generate_pdf_bytes, generate_pdf_file, MASTER_HTML
 
-__all__ = ["generate_pdf_bytes", "generate_pdf_file", "MASTER_HTML"]
+# Governance Framework
+from .governance import (
+    StatementType,
+    RiskLevel,
+    ExitPath,
+    VerificationStatus,
+    ReviewPriority,
+    OperatingDoctrine,
+)
+
+# Validation Framework
+from .validators import (
+    ReviewValidator,
+    CorrelationScoring,
+)
+
+# Provenance Framework
+from .provenance import (
+    PacketProvenance,
+    EvidenceHashRegistry,
+)
+
+# Intake Artifact Models
+from .intake_artifact import (
+    IntakeArtifact,
+    RespondentEntry,
+    CRDIntakePacket,
+    ACCOUNTABILITY_MATRIX,
+    build_intake_packet,
+)
+
+__all__ = [
+    # Core PDF Generation
+    "generate_pdf_bytes",
+    "generate_pdf_file",
+    "MASTER_HTML",
+    # Governance
+    "StatementType",
+    "RiskLevel",
+    "ExitPath",
+    "VerificationStatus",
+    "ReviewPriority",
+    "OperatingDoctrine",
+    # Validation
+    "ReviewValidator",
+    "CorrelationScoring",
+    # Provenance
+    "PacketProvenance",
+    "EvidenceHashRegistry",
+    # Intake Models
+    "IntakeArtifact",
+    "RespondentEntry",
+    "CRDIntakePacket",
+    "ACCOUNTABILITY_MATRIX",
+    "build_intake_packet",
+]
