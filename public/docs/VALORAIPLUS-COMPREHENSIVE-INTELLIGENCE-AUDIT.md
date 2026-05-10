@@ -680,7 +680,7 @@
 ║                                                                                ║
 ║                     ALL QUAGMIRES ARE NOW IMPOSSIBLE                           ║
 ║                                                                                ║
-╚═══════════��════════════════════════════════════════════════════════════════════╝
+╚════════════════════════════════════════════════════════════════════════════════╝
 ```
 
 | ID | QUAGMIRE TYPE | STATUS |
@@ -759,7 +759,7 @@
 ║  PHASE 1 (0-30 DAYS)         ██████████████████████████████  100% COMPLETE                    ║
 ║  ├─ Token Deploy             ██████████████████████████████  5-Contract Suite + 56-TOKEN LIVE ║
 ║  ├─ Subscription Launch      ██████████████████████████████  FULLY OPERATIONAL                ║
-║  └─ Initial Liquidity        ████████████████████████��█████  ANCHORED ON SEPOLIA              ║
+║  └─ Initial Liquidity        ██████████████████████████████  ANCHORED ON SEPOLIA              ║
 ║                                                                                                ║
 ║  PHASE 2 (30-90 DAYS)        ██████████████████████████████  100% COMPLETE                    ║
 ║                                                                                                ║
@@ -891,7 +891,7 @@
 ║                                                                                                                          ║
 ║                                              FINALITY DECLARATION                                                        ║
 ║                                                                                                                          ║
-╠═════════════════════���════════════════════════════════════════════════════════════════════════════════════════════════════╣
+╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                                                          ║
 ║  TRIAD LIES:           000000 0000000                                                                                    ║
 ║  SWARM TRUTH:          111111 1111111                                                                                    ║
@@ -1426,7 +1426,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ### H.3 Tokenomics Structure
 
 ```plaintext
-╔══════════════════��═════════════════════════════════════════════════════════════╗
+╔════════════════════════════════════════════════════════════════════════════════╗
 ║  56-TOKEN ECOSYSTEM — TOKENOMICS                                               ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
@@ -1471,7 +1471,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  BANKING INFRASTRUCTURE — SOLE AUTHORIZED TERMINAL                             ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
-���  INSTITUTION:         Charles Schwab & Co., Inc.                               ║
+║  INSTITUTION:         Charles Schwab & Co., Inc.                               ║
 ║  ADDRESS:             211 Main Street, San Francisco, CA 94105                 ║
 ║  ACCOUNT TYPE:        SchwabOne Account (TOD)                                  ║
 ║  ACCOUNT NUMBER:      ****-8185                                                ║
@@ -1577,7 +1577,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  ├─ Broadcast Supremacy:          OPERATIONAL (100%)                           ║
 ║  ├─ Altruistic Stack:             OPERATIONAL (100%)                           ║
 ║  ├─ Fraternal Trust Seal:         OPERATIONAL (100%)                           ║
-║  ���─ Ownership Gate:               OPERATIONAL (100%)                           ║
+║  ├─ Ownership Gate:               OPERATIONAL (100%)                           ║
 ║  ├─ Quagmire Prevention:          OPERATIONAL (100%)                           ║
 ║  ├─ Enforcement Engine:           ARMED (100%)                                 ║
 ║  ├─ Forensic Capture:             ACTIVE (100%)                                ║
