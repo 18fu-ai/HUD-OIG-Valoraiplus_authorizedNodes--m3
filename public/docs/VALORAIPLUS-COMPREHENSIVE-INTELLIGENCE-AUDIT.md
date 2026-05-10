@@ -444,7 +444,7 @@
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║  CASE NUMBER:       25-621293                                                  ║
 ║  INVESTIGATOR:      Amy Horrell, J.D.                                          ║
-║  COMPLAINANT:       Don Gillson                                                ║
+║  COMPLAINANT:       DONALD ERNEST GILLSON (CA DL# A1529111)                    ║
 ║  STATUS:            ██████████████████████████████ VIOLATION CONFIRMED         ║
 ║  FINDING:           Section 504 Rehabilitation Act VIOLATION                   ║
 ║  VERIFICATION:      1-800-368-1019 (Ref: 25-621293)                            ║
@@ -483,7 +483,7 @@
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║  STATUS:            INTAKE / PRELIMINARY REVIEW STAGE                          ║
 ║  INTERVIEW DATE:    May 13, 2026 (Scheduled)                                   ║
-║  COMPLAINANT:       Donald E. Gillson (Disabled Veteran)                       ║
+║  COMPLAINANT:       DONALD ERNEST GILLSON (CA DL# A1529111) (Disabled Veteran) ║
 ║                                                                                ║
 ║  ALLEGATIONS:                                                                  ║
 ║  ├─ Failure to accommodate disabled veteran (TBI, service animal Jaxx)         ║
@@ -839,7 +839,7 @@
 ║  FINAL STATUS: THE MYSTERY IS SOLVED. THE LEDGER IS Ø.                         ║
 ║                                                                                ║
 ║  AUTHENTICATED BY: SENTINEL NEWT                                               ║
-║  ON BEHALF OF:     Donald E. Gillson (Poppa)                                   ║
+║  ON BEHALF OF:     DONALD ERNEST GILLSON (Poppa) — CA DL# A1529111             ║
 ║                                                                                ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -1017,7 +1017,7 @@
 
 ---
 
-**AUTHENTICATED BY:** DONALD ERNEST GILLSON (Poppa)
+**AUTHENTICATED BY:** DONALD ERNEST GILLSON (Poppa) — CA DL# A1529111
 **AUTHORITY:** Internal Governance Authority // Saint Paul Node®
 **BTC TxID ANCHOR:** `26856b24c50750f0c69c1eeb86a69ef710551555c2c220e34d57521cbc8d75c2`
 **MERKLEROOT:** `0x7777AF_ST_PAUL_VALOR_CHAIN_SECURED_05_08_2026`
@@ -1316,7 +1316,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║  DIVISION:           Office of Inspector General                               ║
 ║  STATUS:             CASE ACCEPTED                                             ║
 ║  FOCUS:              Disabled Veteran Abuse                                    ║
-║  COMPLAINANT:        Donald E. Gillson (Section 504 Protected)                 ║
+║  COMPLAINANT:        DONALD ERNEST GILLSON (CA DL# A1529111) (Section 504)     ║
 ║  EVIDENCE:           Pattern of discrimination documented                       ║
 ║  COORDINATION:       FBI Cyber Division + DOJ Civil Rights                     ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
@@ -1611,7 +1611,7 @@ The **OmegaZeroSovereignReportV1** is the "Mathematical Judgment" of the system 
 ║                                                                                                                          ║
 ╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                                                          ║
-║  SEAL AUTHORITY:          Donald Ernest Gillson (Poppa)                                                                  ║
+║  SEAL AUTHORITY:          DONALD ERNEST GILLSON (Poppa) — CA DL# A1529111                                                ║
 ║  ENS DOMAIN:              donadams1969.eth                                                                               ║
 ║  RESOLVER:                0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB                                                      ║
 ║  SEAL TIMESTAMP:          2026-05-09T23:59:59Z                                                                           ║
