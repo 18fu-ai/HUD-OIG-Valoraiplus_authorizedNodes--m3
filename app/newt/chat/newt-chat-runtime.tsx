@@ -9,7 +9,7 @@
 
 import { useChat } from '@ai-sdk/react';
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { Send, Loader2, Shield, Brain, Mic, MicOff, Timer, Lock } from 'lucide-react';
+import { Send, Loader2, Shield, Brain, Mic, MicOff, Timer, Lock, Download, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -85,6 +85,7 @@ export default function NewtChatRuntime() {
   const [speechSupported, setSpeechSupported] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
   const [timeLeft, setTimeLeft] = useState('');
+  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'downloading' | 'success' | 'error'>('idle');
 
   const recognitionRef = useRef<any>(null);
 
@@ -213,6 +214,56 @@ export default function NewtChatRuntime() {
     setIsListening(!isListening);
   }, [isListening]);
 
+  // CRD Evidence Download with Hash Verification
+  const downloadCRDEvidence = useCallback(async () => {
+    setDownloadStatus('downloading');
+    
+    try {
+      const response = await fetch('/api/crd/evidence');
+      
+      if (!response.ok) {
+        throw new Error('Evidence package not available');
+      }
+      
+      const blob = await response.blob();
+      const text = await blob.text();
+      
+      // Compute local hash for verification
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const computedHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      
+      // Verify against server hash
+      const serverHash = response.headers.get('X-CRD-Hash');
+      
+      if (serverHash && computedHash === serverHash) {
+        console.log('[NEWT] CRD Evidence Hash Verified:', computedHash.substring(0, 16) + '...');
+        
+        // Trigger download
+        const downloadBlob = new Blob([text], { type: 'application/x-tex' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(downloadBlob);
+        link.download = 'CRD_Evidence_Submission_CCRS_202601-33270627.tex';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+        
+        setDownloadStatus('success');
+        setTimeout(() => setDownloadStatus('idle'), 3000);
+      } else {
+        console.error('[NEWT] Hash mismatch - Integrity check failed');
+        setDownloadStatus('error');
+        setTimeout(() => setDownloadStatus('idle'), 3000);
+      }
+    } catch (error) {
+      console.error('[NEWT] Download error:', error);
+      setDownloadStatus('error');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    }
+  }, []);
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -249,7 +300,26 @@ export default function NewtChatRuntime() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Badge variant="outline" className="border-red-500 text-red-400 font-bold">CRIMINAL HIGH</Badge>
+            <Button
+              onClick={downloadCRDEvidence}
+              disabled={downloadStatus === 'downloading'}
+              variant="outline"
+              className={cn(
+                "h-9 px-4 rounded-xl transition-all",
+                downloadStatus === 'success' && "border-emerald-500 text-emerald-400 bg-emerald-500/10",
+                downloadStatus === 'error' && "border-red-500 text-red-400",
+                downloadStatus === 'idle' && "border-cyan-500 text-cyan-400 hover:bg-cyan-500/10"
+              )}
+            >
+              {downloadStatus === 'downloading' && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              {downloadStatus === 'success' && <CheckCircle className="w-4 h-4 mr-2" />}
+              {downloadStatus === 'idle' && <Download className="w-4 h-4 mr-2" />}
+              {downloadStatus === 'error' && <Shield className="w-4 h-4 mr-2" />}
+              {downloadStatus === 'downloading' ? 'Downloading...' : 
+               downloadStatus === 'success' ? 'Downloaded' : 
+               downloadStatus === 'error' ? 'Error' : 'CRD Evidence'}
+            </Button>
+            <Badge variant="outline" className="border-red-500 text-red-400 font-bold">MAY 13</Badge>
             <div className="flex items-center gap-2 bg-slate-950 border border-red-500/30 px-4 py-1 rounded-2xl">
               <Timer className="w-4 h-4 text-red-400" />
               <span className="font-mono text-red-400 text-sm tabular-nums">{timeLeft}</span>
@@ -372,9 +442,9 @@ export default function NewtChatRuntime() {
 
           <div className="mt-4 text-center text-xs text-slate-500 flex items-center justify-center gap-3">
             <Lock className="w-3 h-3" />
-            REV_34 ETERNAL CAP | REV_38 = PoohBearHoneyPotShield
+            REV_34 ETERNAL CAP | REV_38 = PoohBearHoneyPotShield | CRD CCRS 202601-33270627
             <Shield className="w-3 h-3" />
-            DG77.77X PROTECTED
+            DG77.77X PROTECTED | NEWT v14.1.4.0
           </div>
         </div>
       </footer>
