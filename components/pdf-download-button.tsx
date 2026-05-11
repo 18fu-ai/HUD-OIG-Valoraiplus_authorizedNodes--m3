@@ -550,54 +550,13 @@ export default function PDFDownloadButton() {
         doc.setTextColor(0, 0, 0)
         y += 4
       })
-      y += 4
-
-      // Elder/Dependent Adult Abuse Damages - NO CAP
-      doc.setFontSize(10)
-      doc.setFont("helvetica", "bold")
-      doc.setTextColor(139, 0, 0) // Dark red for emphasis
-      doc.text("ELDER/DEPENDENT ADULT ABUSE (W&I CODE 15610) — NO CAP", margin, y)
       y += 6
-
-      doc.setFontSize(8)
-      doc.setFont("helvetica", "normal")
-      doc.setTextColor(0, 0, 0)
-
-      const elderDamages = [
-        ["Physical Abuse/Neglect Damages", "$250,000", "$500,000"],
-        ["Financial Abuse Damages", "$100,000", "$250,000"],
-        ["Abandonment/Isolation Damages", "$150,000", "$300,000"],
-        ["Enhanced Damages (Recklessness)", "$500,000", "$1,500,000"],
-        ["Pain, Suffering & Disfigurement", "$200,000", "$500,000"],
-        ["Attorney's Fees (Mandatory)", "$150,000", "$350,000"],
-        ["SUBTOTAL ELDER ABUSE (NO CAP)", "$1,350,000", "$3,400,000"]
-      ]
-
-      elderDamages.forEach((row, i) => {
-        if (i === 6) {
-          doc.setFont("helvetica", "bold")
-          doc.setTextColor(139, 0, 0)
-        }
-        doc.text(row[0], margin + 2, y)
-        doc.text(row[1], margin + 80, y)
-        doc.text(row[2], margin + 130, y)
-        doc.setFont("helvetica", "normal")
-        doc.setTextColor(0, 0, 0)
-        y += 4
-      })
-
-      // Legal basis note
-      doc.setFontSize(7)
-      doc.setFont("helvetica", "italic")
-      doc.setTextColor(100, 100, 100)
-      doc.text("W&I Code 15657: No damage cap for elder/dependent adult abuse. Enhanced damages available for recklessness/oppression.", margin, y + 2)
-      y += 8
 
       // Total Damages Summary
       doc.setFontSize(10)
       doc.setFont("helvetica", "bold")
       doc.setTextColor(197, 160, 89)
-      doc.text("TOTAL DAMAGES (100% PROBABILITY — ALL CATEGORIES)", margin, y)
+      doc.text("TOTAL DAMAGES (100% PROBABILITY)", margin, y)
       y += 6
 
       doc.setFontSize(9)
@@ -614,9 +573,9 @@ export default function PDFDownloadButton() {
       doc.setTextColor(0, 0, 0)
 
       const totalDamages = [
-        ["Conservative", "$3,050,000", "100%", "$3,050,000"],
-        ["Moderate", "$7,860,000", "100%", "$7,860,000"],
-        ["Aggressive", "$20,000,000+", "100%", "$20,000,000+"]
+        ["Conservative", "$1,700,000", "100%", "$1,700,000"],
+        ["Moderate", "$4,460,000", "100%", "$4,460,000"],
+        ["Aggressive", "$12,000,000+", "100%", "$12,000,000+"]
       ]
 
       totalDamages.forEach((row, i) => {
@@ -670,9 +629,9 @@ export default function PDFDownloadButton() {
       doc.setTextColor(0, 0, 0)
 
       const netWorth = [
-        ["Conservative", "$148,000", "$850,000", "$355,000", "$3,050,000", "$4,403,000"],
-        ["Moderate", "$175,000", "$900,000", "$750,000", "$7,860,000", "$9,685,000"],
-        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$20,000,000+", "$22,160,000+"]
+        ["Conservative", "$148,000", "$850,000", "$355,000", "$1,700,000", "$3,053,000"],
+        ["Moderate", "$175,000", "$900,000", "$750,000", "$4,460,000", "$6,285,000"],
+        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$12,000,000", "$14,160,000"]
       ]
 
       netWorth.forEach((row, i) => {
