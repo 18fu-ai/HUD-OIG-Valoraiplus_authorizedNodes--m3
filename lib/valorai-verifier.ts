@@ -138,6 +138,22 @@ export const MIMECAST_BLOCKADE = {
   daysActive: 784
 };
 
+// Utility functions (defined before class that uses them)
+export function formatCurrency(value: number): string {
+  if (value >= 1e12) return `$${(value / 1e12).toFixed(1)}T`;
+  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
+  if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
+  return `$${value.toFixed(2)}`;
+}
+
+export function getTotalDynastyValue(): number {
+  return DYNASTY_TOKENS.reduce((sum, t) => sum + t.capValue, 0);
+}
+
+export function getTotalEcosystemValue(): number {
+  return ECOSYSTEM_TOKENS.reduce((sum, t) => sum + t.capValue, 0);
+}
+
 // ValorAiOmega Class (TypeScript implementation v11.1)
 export class ValorAiOmega {
   private ledgerStatus: string = "Ø";
@@ -248,19 +264,3 @@ export class ValorAiOmega {
 export const valorAiOmega = new ValorAiOmega();
 // Legacy alias
 export const valorAiOS = valorAiOmega;
-
-// Utility functions
-export function formatCurrency(value: number): string {
-  if (value >= 1e12) return `$${(value / 1e12).toFixed(1)}T`;
-  if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
-  if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
-  return `$${value.toFixed(2)}`;
-}
-
-export function getTotalDynastyValue(): number {
-  return DYNASTY_TOKENS.reduce((sum, t) => sum + t.capValue, 0);
-}
-
-export function getTotalEcosystemValue(): number {
-  return ECOSYSTEM_TOKENS.reduce((sum, t) => sum + t.capValue, 0);
-}
