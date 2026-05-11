@@ -45,10 +45,10 @@ export const VALORAIPLUS_CONNECTED_ACCOUNT = {
   accountNumberMasked: "••••-8185",
   routingInfo: "SIPC Member",
   address: {
-    street: "18493 MAIN BLVD",
-    city: "LOS GATOS",
+    street: "[ADDRESS ON FILE]",
+    city: "[CITY ON FILE]",
     state: "CA",
-    zip: "95033-8392"
+    zip: "[REDACTED]"
   },
   statementPeriod: "April 1-30, 2026",
   endingValue: "$5.53",

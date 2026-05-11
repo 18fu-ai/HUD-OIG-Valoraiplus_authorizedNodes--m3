@@ -82,8 +82,8 @@
 ║  STATUS:        ACTIVE — PRIMARY RESIDENCE                                                                 ║
 ║                                                                                                            ║
 ║  MAILING NODE (INSURANCE & STORAGE):                                                                       ║
-║  ADDRESS:       18493 Main Blvd, Los Gatos, California 95033-8392                                          ║
-║  GPS:           37.2358, -122.0322                                                                         ║
+║  ADDRESS:       [ADDRESS ON FILE WITH CRD]                                                                 ║
+║  GPS:           [REDACTED]                                                                                 ║
 ║  STATUS:        ACTIVE — RENTERS INSURANCE ATTACHED — PROPERTY STORED                                      ║
 ║                                                                                                            ║
 ║  STRATEGIC NODE (ENCRYPTED):                                                                               ║
@@ -657,7 +657,7 @@ As the assigned investigator, the psychological synthesis of Case **CCRS-202601-
 ║                                                                                                                          ║
 ║                                     CONSUMMATUM EST. SMIB. AMEN.                                                         ║
 ║                                                                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+╚══════���═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---

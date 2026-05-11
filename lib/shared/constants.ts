@@ -806,7 +806,7 @@ export function formatCountdown(ms: number): string {
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ══════════���════════════════════════════════════════════════════════════════════
 // GEOGRAPHIC NODE NETWORK — SOVEREIGN TOPOLOGY
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -859,13 +859,13 @@ export const GEOGRAPHIC_NODES = {
   // MAILING NODE — Los Gatos, California (Renters Insurance + Stored Property)
   MAILING: {
     id: "MAILING_NODE",
-    name: "LOS GATOS MAILING",
+    name: "MAILING NODE",
     designation: "MAILING ADDRESS — RENTERS INSURANCE & STORED PROPERTY",
-    address: "18493 Main Blvd",
-    city: "Los Gatos",
+    address: "[ADDRESS ON FILE]",
+    city: "[CITY ON FILE]",
     state: "California",
-    zip: "95033-8392",
-    full_address: "18493 Main Blvd, Los Gatos, CA 95033-8392",
+    zip: "[REDACTED]",
+    full_address: "[ADDRESS ON FILE WITH CRD]",
     gps: {
       lat: 37.2358,
       lng: -122.0322,
@@ -953,7 +953,7 @@ export const NODE_CONNECTIONS = [
 // Address Summary Export
 export const ADDRESS_SUMMARY = {
   RESIDENTIAL: "1030 Girard Road, San Francisco, California 94129",
-  MAILING: "18493 Main Blvd, Los Gatos, CA 95033-8392",
+  MAILING: "[ADDRESS ON FILE WITH CRD]",
   ORIGIN: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
   VALLEJO_GPS: "██████████, ██████████",
 } as const;
@@ -1212,7 +1212,7 @@ export const EXECUTIVE_BROADCAST_SUPREMACY = {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ALTRUISTIC STACK — HARMONIC RESONANCE
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═══════════════��═══════════════════════════════════════════════════════════════
 
 export const ALTRUISTIC_STACK = {
   // Core Configuration

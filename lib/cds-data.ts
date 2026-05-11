@@ -26,10 +26,10 @@ export const PRIMARY_CONNECTED_ACCOUNT = {
   accountNumberMasked: "••••-8185",
   accountNumberLastFour: "8185",
   address: {
-    street: "18493 MAIN BLVD",
-    city: "LOS GATOS",
+    street: "[ADDRESS ON FILE]",
+    city: "[CITY ON FILE]",
     state: "CA",
-    zip: "95033-8392"
+    zip: "[REDACTED]"
   },
   statementPeriod: "April 1-30, 2026",
   currentValue: 5.53,
@@ -2017,7 +2017,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ═══════════════════════════════════════════════════════
     // CONSTRUCTOR
-    // ═══════════════════════════════════════════════════════
+    // ══════════════════════════���════════════════════════════
     
     constructor() ERC721("CSSS Reputation NFT", "CSSS") Ownable(msg.sender) {}
     

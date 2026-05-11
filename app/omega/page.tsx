@@ -54,10 +54,10 @@ const TOPOLOGY_NODES = [
   },
   { 
     id: 'MAILING', 
-    name: 'LOS GATOS, CA 95033', 
+    name: 'MAILING NODE (ON FILE)', 
     role: 'MAILING — INSURANCE & STORAGE', 
-    address: '18493 Main Blvd',
-    gps: '37.2358, -122.0322',
+    address: '[ADDRESS ON FILE]',
+    gps: '[REDACTED]',
     status: 'ACTIVE', 
     color: 'cyan',
     x: 18, 
