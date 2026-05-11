@@ -444,12 +444,120 @@ export default function PDFDownloadButton() {
       })
       y += 8
 
-      // Damages
+      // Damages - Full Breakdown
       doc.setFontSize(11)
       doc.setFont("helvetica", "bold")
       doc.setTextColor(0, 26, 44)
       doc.text("DAMAGES ASSESSMENT (100% SETTLEMENT)", margin, y)
       y += 8
+
+      // Economic Damages
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(0, 100, 100)
+      doc.text("ECONOMIC DAMAGES", margin, y)
+      y += 6
+
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(0, 0, 0)
+
+      doc.setFillColor(0, 26, 44)
+      doc.rect(margin, y - 4, pageWidth - 2 * margin, 6, "F")
+      doc.setTextColor(255, 255, 255)
+      doc.text("CATEGORY", margin + 2, y - 1)
+      doc.text("CONSERVATIVE", margin + 80, y - 1)
+      doc.text("MODERATE", margin + 130, y - 1)
+      y += 5
+      doc.setTextColor(0, 0, 0)
+
+      const econDamages = [
+        ["Lost Housing Value", "$50,000", "$75,000"],
+        ["Medical Costs", "$10,000", "$25,000"],
+        ["Service Animal Harm", "$5,000", "$15,000"],
+        ["Lost Services Access", "$25,000", "$50,000"],
+        ["Legal/Advocacy Costs", "$10,000", "$25,000"],
+        ["SUBTOTAL ECONOMIC", "$100,000", "$190,000"]
+      ]
+
+      econDamages.forEach((row, i) => {
+        if (i === 5) doc.setFont("helvetica", "bold")
+        doc.text(row[0], margin + 2, y)
+        doc.text(row[1], margin + 80, y)
+        doc.text(row[2], margin + 130, y)
+        doc.setFont("helvetica", "normal")
+        y += 4
+      })
+      y += 4
+
+      // Non-Economic Damages
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(0, 100, 100)
+      doc.text("NON-ECONOMIC DAMAGES", margin, y)
+      y += 6
+
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(0, 0, 0)
+
+      const nonEconDamages = [
+        ["Emotional Distress", "$100,000", "$300,000"],
+        ["Loss of Dignity", "$50,000", "$100,000"],
+        ["Pain and Suffering", "$50,000", "$100,000"],
+        ["Mental Anguish", "$100,000", "$200,000"],
+        ["SUBTOTAL NON-ECONOMIC", "$300,000", "$700,000"]
+      ]
+
+      nonEconDamages.forEach((row, i) => {
+        if (i === 4) doc.setFont("helvetica", "bold")
+        doc.text(row[0], margin + 2, y)
+        doc.text(row[1], margin + 80, y)
+        doc.text(row[2], margin + 130, y)
+        doc.setFont("helvetica", "normal")
+        y += 4
+      })
+      y += 4
+
+      // Punitive & Treble Damages
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(180, 0, 0)
+      doc.text("PUNITIVE & TREBLE DAMAGES", margin, y)
+      y += 6
+
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(0, 0, 0)
+
+      const punitDamages = [
+        ["Statutory Damages", "$100,000", "$300,000"],
+        ["Punitive Damages (2-5x)", "$800,000", "$2,500,000"],
+        ["Treble Damages (3x Economic)", "$300,000", "$570,000"],
+        ["Attorney's Fees", "$100,000", "$200,000"],
+        ["SUBTOTAL PUNITIVE/TREBLE", "$1,300,000", "$3,570,000"]
+      ]
+
+      punitDamages.forEach((row, i) => {
+        if (i === 4) {
+          doc.setFont("helvetica", "bold")
+          doc.setTextColor(180, 0, 0)
+        }
+        doc.text(row[0], margin + 2, y)
+        doc.text(row[1], margin + 80, y)
+        doc.text(row[2], margin + 130, y)
+        doc.setFont("helvetica", "normal")
+        doc.setTextColor(0, 0, 0)
+        y += 4
+      })
+      y += 6
+
+      // Total Damages Summary
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(197, 160, 89)
+      doc.text("TOTAL DAMAGES (100% PROBABILITY)", margin, y)
+      y += 6
 
       doc.setFontSize(9)
       doc.setFont("helvetica", "normal")
@@ -458,19 +566,19 @@ export default function PDFDownloadButton() {
       doc.rect(margin, y - 4, pageWidth - 2 * margin, 7, "F")
       doc.setTextColor(255, 255, 255)
       doc.text("SCENARIO", margin + 2, y)
-      doc.text("TOTAL DAMAGES", margin + 50, y)
+      doc.text("TOTAL", margin + 50, y)
       doc.text("PROBABILITY", margin + 100, y)
       doc.text("EXPECTED VALUE", margin + 140, y)
       y += 6
       doc.setTextColor(0, 0, 0)
 
-      const damages = [
-        ["Conservative", "$1,400,000", "100%", "$1,400,000"],
-        ["Moderate", "$3,900,000", "100%", "$3,900,000"],
-        ["Aggressive", "$10,000,000+", "100%", "$10,000,000+"]
+      const totalDamages = [
+        ["Conservative", "$1,700,000", "100%", "$1,700,000"],
+        ["Moderate", "$4,460,000", "100%", "$4,460,000"],
+        ["Aggressive", "$12,000,000+", "100%", "$12,000,000+"]
       ]
 
-      damages.forEach((row, i) => {
+      totalDamages.forEach((row, i) => {
         if (i % 2 === 0) {
           doc.setFillColor(245, 245, 245)
           doc.rect(margin, y - 4, pageWidth - 2 * margin, 6, "F")
@@ -521,9 +629,9 @@ export default function PDFDownloadButton() {
       doc.setTextColor(0, 0, 0)
 
       const netWorth = [
-        ["Conservative", "$148,000", "$850,000", "$355,000", "$1,400,000", "$2,753,000"],
-        ["Moderate", "$175,000", "$900,000", "$750,000", "$3,900,000", "$5,725,000"],
-        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$10,000,000", "$12,160,000"]
+        ["Conservative", "$148,000", "$850,000", "$355,000", "$1,700,000", "$3,053,000"],
+        ["Moderate", "$175,000", "$900,000", "$750,000", "$4,460,000", "$6,285,000"],
+        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$12,000,000", "$14,160,000"]
       ]
 
       netWorth.forEach((row, i) => {
