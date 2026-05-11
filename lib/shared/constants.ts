@@ -296,6 +296,7 @@ export const PACKET_LIMITS = {
 
 // FAILURE CLASS 2 — PROMPT ABSOLUTISM FIX (Runtime enforcement)
 export function sanitizeForInstitutionalMode(output: string): string {
+  if (!output || typeof output !== 'string') return '';
   let sanitized = output;
   for (const [symbolic, institutional] of Object.entries(LANGUAGE_GUARD)) {
     if (institutional === "") {
@@ -440,7 +441,7 @@ export const CANON_TERMINUS = "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED" as con
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PRIMARY LIQUIDITY ROUTING — ALL FUNDS THROUGH 18fu.cash
-// ═══════════════════════════════════════════════════════════════════════════════
+// ══════════════════════════════════��════════════════════════════════════════════
 
 export const LIQUIDITY_ROUTING = {
   // Primary Liquidity Endpoint

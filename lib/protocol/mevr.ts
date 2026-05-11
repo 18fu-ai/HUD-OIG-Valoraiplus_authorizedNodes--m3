@@ -110,7 +110,7 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
  * Runtime rule: No verified identity source → no sovereign latch → no export → route70
  */
 export function validateIdentityClaim(name: string): IdentityClaim {
-  const normalized = name.toLowerCase().trim();
+  const normalized = (name ?? '').toLowerCase().trim();
   
   // Check blocked identities first
   if (BLOCKED_IDENTITIES[normalized]) {

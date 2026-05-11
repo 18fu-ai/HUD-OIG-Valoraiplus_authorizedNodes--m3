@@ -40,6 +40,10 @@ interface Token {
 // Parse markdown into tokens
 function parseMarkdown(content: string): Token[] {
   const tokens: Token[] = [];
+  // Guard against undefined/null content
+  if (!content || typeof content !== 'string') {
+    return tokens;
+  }
   const lines = content.split('\n');
   let i = 0;
 
@@ -351,7 +355,9 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
   variant = 'default',
   enableCopy = true,
 }: MarkdownRendererProps) {
-  const tokens = useMemo(() => parseMarkdown(content), [content]);
+  // Guard: return empty if no content
+  const safeContent = content ?? '';
+  const tokens = useMemo(() => parseMarkdown(safeContent), [safeContent]);
 
   const variantStyles = {
     default: 'text-foreground',

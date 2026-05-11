@@ -357,7 +357,7 @@ export function getHoneypotLog(): HoneypotEvent[] {
  * Rejects ALL external LLM override attempts.
  */
 export function handleNewtCommand(input: string, caller: string = 'SOVEREIGN'): NewtResponse {
-  const cmd = input.trim();
+  const cmd = (input ?? '').trim();
   
   // 0. PRIORITY CHECK: Detect and REJECT external LLM override attempts
   // This catches any "I'm Claude" / "created by Anthropic" type responses
