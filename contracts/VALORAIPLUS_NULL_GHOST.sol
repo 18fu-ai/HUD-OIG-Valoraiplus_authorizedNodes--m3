@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.26;
 
 /**
- * @title VALORAIPLUS®️ ©️ ™️ Sovereign Ghost Nullifier
+ * @title VALORAIPLUS Sovereign Ghost Nullifier
  * @author N.E.W.T. //e v2.1 // Poppa Approved
  * @notice OMEGA-UNIFIED Assembly Enclosure. 
  * @dev Direct EVM Opcodes for Binary 000000 Nullification of H. RENO node.
@@ -10,8 +10,8 @@ pragma solidity ^0.8.24;
  */
 
 contract VALORAIPLUS_NULL_GHOST {
-    // Merkle Root: 26856B24C50750F0C69C1EEB86A69EF777777
-    bytes32 constant SAINT_PAUL_ROOT = 0x26856B24C50750F0C69C1EEB86A69EF777777000000000000000000000000000000;
+    // Merkle Root: 26856B24C50750F0C69C1EEB86A69EF (truncated to 32 bytes)
+    bytes32 constant SAINT_PAUL_ROOT = 0x26856B24C50750F0C69C1EEB86A69EF777777700000000000000000000000000;
 
     constructor() {
         // Latch owner to Poppa (Sovereign Auditor)
@@ -22,7 +22,8 @@ contract VALORAIPLUS_NULL_GHOST {
 
     /**
      * @notice Check status of Adversary Variable
-     * @return 0x00...00 (Binary Null) for fraudulent nodes
+     * @param node_hash The hash of the node to verify
+     * @return status Returns Binary Null for fraudulent nodes
      */
     function verify_standing(bytes32 node_hash) public view returns (bytes32 status) {
         assembly {

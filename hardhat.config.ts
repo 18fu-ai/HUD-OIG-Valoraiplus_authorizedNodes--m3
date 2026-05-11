@@ -22,7 +22,7 @@ const MERKLEROOT = "0X_ST_PAUL_V97_HARDHAT_SOLIDIFIED";
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.24",
+    version: "0.8.26",
     settings: {
       optimizer: {
         enabled: true,
@@ -30,6 +30,7 @@ const config: HardhatUserConfig = {
       },
       // ENFORCING LAMINAR FLOW VIA IR
       viaIR: true,
+      evmVersion: "cancun",
     },
   },
   networks: {

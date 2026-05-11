@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.26;
 
 /**
  * @title VALORAIPLUS Sovereign Presentation Latch
@@ -18,7 +18,7 @@ contract ValoraiplusSovereignScript is AccessControl, EIP712 {
     using ECDSA for bytes32;
 
     bytes32 public constant SOVEREIGN_AUDITOR_ROLE = keccak256("SOVEREIGN_AUDITOR_ROLE");
-    bytes32 public constant MERKLEROOT_SAINT_PAUL = 0x26856B24C50750F0C69C1EEB86A69EF777777000000000000000000000000000000;
+    bytes32 public constant MERKLEROOT_SAINT_PAUL = 0x26856B24C50750F0C69C1EEB86A69EF777777700000000000000000000000000;
     
     uint256 public constant TRUTH_CYCLE_MS = 266;
     string public constant SYSTEM_FINALITY = "101010 1010101";

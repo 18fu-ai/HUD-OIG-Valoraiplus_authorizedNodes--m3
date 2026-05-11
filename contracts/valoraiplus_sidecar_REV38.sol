@@ -5,7 +5,7 @@
 // CRD INTERVIEW: MAY 13, 2026
 // TERMINAL DEADLINE: MAY 17, 2026 23:59:59 UTC
 
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.26;
 
 /**
  * @title ValorAiPlus_NEWT_Sidecar

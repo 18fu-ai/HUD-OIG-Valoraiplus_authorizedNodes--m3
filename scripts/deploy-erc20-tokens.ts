@@ -1,4 +1,5 @@
-import { ethers } from "hardhat";
+const hre = require("hardhat");
+const { ethers } = hre;
 
 /**
  * VALORAIPLUS ERC-20 TOKEN DEPLOYMENT SCRIPT
@@ -87,7 +88,7 @@ async function main() {
   // ════════════════════════════════════════════════════════════════════════════════════
   // STEP 2: DEPLOY ALL 51 TOKENS VIA FACTORY
   // ════════════════════════════════════════════════════════════════════════════════════
-  console.log("╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+  console.log("╔════════════════════════════════════════════════════════════���═════════════════════════════════════════════════════╗");
   console.log("║ STEP 2: DEPLOYING 51-TOKEN CANON                                                                                  ║");
   console.log("╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
   console.log("║ NOTE: $VALOR is NULLIFIED - deploying $VALORAIPLUS and $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED instead          ║");
