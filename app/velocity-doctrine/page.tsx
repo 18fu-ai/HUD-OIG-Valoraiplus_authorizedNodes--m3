@@ -65,7 +65,7 @@ export default function VelocityDoctrinePage() {
               <div>
                 <p className="font-semibold text-amber-400 mb-2">VELOCITY DOCTRINE INVARIANT</p>
                 <pre className="text-sm text-amber-300/80 whitespace-pre-wrap font-mono">
-                  {VELOCITY_DOCTRINE_INVARIANT.trim()}
+                  {(VELOCITY_DOCTRINE_INVARIANT ?? '').trim()}
                 </pre>
               </div>
             </div>
