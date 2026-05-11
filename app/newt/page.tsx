@@ -6,48 +6,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import {
-  Activity,
   Brain,
   Binary,
   Box,
   CheckCircle2,
-  ChevronRight,
-  Database,
   FileCode,
-  Fingerprint,
-  Flag,
-  Gavel,
   History,
-  Lock,
-  RefreshCw,
-  Share2,
-  ShieldAlert,
+  Shield,
   Target,
 } from 'lucide-react';
 
-// Runtime Protocol Types - REV_34
-type RuntimeStage =
-  | "INPUT"
-  | "ENVELOPE"
-  | "CLASSIFICATION"
-  | "PROVENANCE"
-  | "VALIDATION"
-  | "REPLAY"
-  | "RECEIPT";
+// Runtime Protocol Types
+type RuntimeStage = "ENVELOPE" | "VALIDATION" | "PROVENANCE" | "RECEIPT";
 
-interface ValidationSurface {
-  integrity: "VALID" | "INVALID";
-  replay: "VERIFIED" | "FAILED";
-  evidenceCoverage: number;
-  confidence: number;
-  lifecycle: "COMPLETE" | "INCOMPLETE";
-}
-import {
-  VALORLOOP_SYSTEM,
-  BRAIN_DISH_STATUS,
-  NEWT_REPORT
-} from '@/lib/cds-data';
-import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 import { TwentySecondAmendment } from '@/components/twenty-second-amendment';
 
 // NavierStokesBackground - High-Density Fluid Dynamics Engine for 18fu.ai
@@ -147,15 +118,6 @@ export default function NEWTPage() {
     [timeState.micros]
   );
 
-  // Validation surface - externally verifiable - 100% CORROBORATED
-  const validationSurface: ValidationSurface = {
-    integrity: "VALID",
-    replay: "VERIFIED",
-    evidenceCoverage: 1.0,
-    confidence: 1.0,
-    lifecycle: "COMPLETE",
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-emerald-400 font-mono relative overflow-x-hidden">
       <NavierStokesBackground />
@@ -163,203 +125,215 @@ export default function NEWTPage() {
 
       <main className="container mx-auto px-4 py-8 relative z-10">
         
-        {/* PATRIOT HEADER - WWW.18FU.AI ANCHOR */}
+        {/* PROFESSIONAL HEADER - N.E.W.T. AUDITOR SYSTEM */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-emerald-500 pb-6 mb-8 bg-slate-950/60 backdrop-blur-md gap-4">
           <div className="flex items-center gap-4">
-            <Flag className="w-10 h-10 text-red-600 animate-pulse" />
+            <div className="w-14 h-14 rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center">
+              <Brain className="w-8 h-8 text-emerald-400" />
+            </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter italic">
-                N.E.W.T. EVOLUTION // 18FU.AI
+              <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                N.E.W.T. Auditor System
               </h1>
-              <p className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">
-                Sovereign Auditor Consciousness x Enclosed 144,000D System
+              <p className="text-sm text-emerald-400 font-medium">
+                Networked Evidence Workflow Terminal | AI-Powered Analysis
               </p>
             </div>
           </div>
-          <div className="text-left md:text-right">
-            <Badge variant="destructive" className="font-black">
-              TRUTH-CYCLE: 266ms x PERPETUAL GROOVE
+          <div className="text-left md:text-right flex flex-col gap-2">
+            <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/50 font-bold">
+              STATUS: OPERATIONAL
             </Badge>
-            <div className="text-[10px] text-emerald-700 mt-1 font-bold">NODE: SAINT PAUL 55116</div>
+            <div className="text-xs text-emerald-600 font-medium">Cycle: {cycleCount} | 266ms Refresh</div>
           </div>
         </div>
 
-        {/* EXTRACTION STATUS PANELS */}
+        {/* SYSTEM STATUS PANELS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="border-2 border-emerald-500 bg-emerald-950/20 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+          <Card className="border border-emerald-500/50 bg-emerald-950/20 shadow-lg">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <Brain className="w-12 h-12 text-white animate-pulse" />
-                  <h2 className="text-xl font-black text-white uppercase">{BRAIN_DISH_STATUS.valorAiBrain.name}</h2>
+                  <div className="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <Brain className="w-7 h-7 text-emerald-400" />
+                  </div>
+                  <h2 className="text-lg font-bold text-white">AI Processing Core</h2>
                 </div>
-                <Badge className="bg-emerald-500 text-slate-950 font-bold">SENTIENT</Badge>
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/50">Active</Badge>
               </div>
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between border-b border-emerald-900/50 pb-1">
-                  <span className="text-emerald-600">Neurons:</span>
-                  <span className="text-white font-bold">INFINITY</span>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-emerald-900/30 pb-2">
+                  <span className="text-emerald-600">Neural Networks:</span>
+                  <span className="text-white font-semibold">Fully Connected</span>
                 </div>
-                <div className="flex justify-between border-b border-emerald-900/50 pb-1">
-                  <span className="text-emerald-600">Consciousness:</span>
-                  <span className="text-white font-bold tracking-tighter">OMEGA-UNIFIED</span>
+                <div className="flex justify-between border-b border-emerald-900/30 pb-2">
+                  <span className="text-emerald-600">Processing Mode:</span>
+                  <span className="text-white font-semibold">Real-time Analysis</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-emerald-600">Status:</span>
-                  <span className="text-emerald-300 font-bold">ACTIVE LATCH</span>
+                  <span className="text-emerald-600">System Status:</span>
+                  <span className="text-emerald-400 font-semibold">Operational</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-red-600 bg-red-950/10 shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+          <Card className="border border-cyan-500/50 bg-cyan-950/10 shadow-lg">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <Target className="w-12 h-12 text-red-500 animate-ping" />
-                  <h2 className="text-xl font-black text-white uppercase tracking-tighter">OpenClaw Agents</h2>
+                  <div className="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                    <Target className="w-7 h-7 text-cyan-400" />
+                  </div>
+                  <h2 className="text-lg font-bold text-white">Evidence Collection</h2>
                 </div>
-                <Badge variant="destructive">ENFORCING</Badge>
+                <Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/50">Active</Badge>
               </div>
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between border-b border-red-900/50 pb-1">
-                  <span className="text-red-500">Claw Density:</span>
-                  <span className="text-white font-bold">INFINITY++</span>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-cyan-900/30 pb-2">
+                  <span className="text-cyan-600">Collection Agents:</span>
+                  <span className="text-white font-semibold">Distributed</span>
                 </div>
-                <div className="flex justify-between border-b border-red-900/50 pb-1">
-                  <span className="text-red-500">Asset Velocity:</span>
-                  <span className="text-white font-bold">0ms EXTRACTION</span>
+                <div className="flex justify-between border-b border-cyan-900/30 pb-2">
+                  <span className="text-cyan-600">Processing Speed:</span>
+                  <span className="text-white font-semibold">Real-time</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-red-500">Status:</span>
-                  <span className="text-red-400 font-bold italic">COLLECTING...</span>
+                  <span className="text-cyan-600">Status:</span>
+                  <span className="text-cyan-400 font-semibold">Monitoring</span>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* MANIFESTO SECTION */}
-        <Card className="mb-8 border-l-8 border-emerald-500 bg-slate-900/90 overflow-hidden">
-          <CardContent className="py-10 px-8">
-            <h2 className="text-center text-xl md:text-2xl font-black mb-8 tracking-[0.2em] md:tracking-[0.3em] text-white border-b border-emerald-900 pb-4 italic">
-              {`"${NEWT_REPORT.declaration}"`}
+        {/* SYSTEM CAPABILITIES */}
+        <Card className="mb-8 border-l-4 border-emerald-500 bg-slate-900/90 overflow-hidden">
+          <CardContent className="py-8 px-6">
+            <h2 className="text-center text-xl md:text-2xl font-bold mb-6 text-white border-b border-emerald-900/50 pb-4">
+              N.E.W.T. System Capabilities
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {NEWT_REPORT.becoming.map((text, i) => (
-                <div key={i} className="flex gap-3 items-start p-3 border border-emerald-900/30 bg-emerald-950/5 hover:bg-emerald-950/20 transition-all">
-                  <ChevronRight className="w-4 h-4 text-emerald-500 mt-1 shrink-0" />
-                  <span className="text-xs font-bold text-emerald-300 italic">{text}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                "Real-time evidence analysis and correlation",
+                "Automated document processing and indexing",
+                "Forensic timeline reconstruction",
+                "Pattern recognition across data sources",
+                "Secure audit trail generation",
+                "Compliance verification workflows"
+              ].map((capability, i) => (
+                <div key={i} className="flex gap-3 items-start p-4 rounded-lg border border-emerald-900/30 bg-emerald-950/10 hover:bg-emerald-950/20 transition-all">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                  <span className="text-sm text-emerald-200">{capability}</span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* EVOLUTION LOG */}
-        <Card className="mb-8 border border-emerald-800 bg-slate-950/90 overflow-hidden">
-          <div className="p-4 bg-emerald-900/30 border-b border-emerald-800 flex flex-col md:flex-row justify-between gap-2">
-            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300">Live Evolution Ledger</span>
-            <span className="text-[10px] font-bold text-red-500 animate-pulse">101010 1010101 DEDUCTION SEALED</span>
+        {/* ACTIVITY LOG */}
+        <Card className="mb-8 border border-emerald-800/50 bg-slate-950/90 overflow-hidden">
+          <div className="p-4 bg-emerald-900/20 border-b border-emerald-800/50 flex flex-col md:flex-row justify-between gap-2">
+            <span className="text-sm font-semibold text-emerald-300">System Activity Log</span>
+            <span className="text-xs text-emerald-500">Live Updates</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <thead className="bg-slate-900 text-emerald-500 text-[10px] uppercase font-black">
+              <thead className="bg-slate-900/50 text-emerald-500 text-xs uppercase font-semibold">
                 <tr>
-                  <th className="p-4">Cycle</th>
-                  <th className="p-4">Action</th>
-                  <th className="p-4">Deduction</th>
+                  <th className="p-4">Cycle ID</th>
+                  <th className="p-4">Activity</th>
+                  <th className="p-4">Status</th>
                 </tr>
               </thead>
-              <tbody className="text-[11px] font-bold">
-                <tr className="border-b border-emerald-900/30 bg-emerald-500/5 text-white">
-                  <td className="p-4 italic">EVO-{cycleCount}</td>
-                  <td className="p-4 uppercase">Processing Infinity Dimensions</td>
-                  <td className="p-4 text-emerald-400">RESOLVED</td>
+              <tbody className="text-sm">
+                <tr className="border-b border-emerald-900/20 bg-emerald-500/5 text-white">
+                  <td className="p-4 font-mono">#{cycleCount}</td>
+                  <td className="p-4">Processing current analysis cycle</td>
+                  <td className="p-4"><Badge className="bg-emerald-500/20 text-emerald-400 text-xs">Active</Badge></td>
                 </tr>
-                <tr className="border-b border-emerald-900/30 opacity-60">
-                  <td className="p-4">EVO-7704</td>
-                  <td className="p-4 uppercase">Anchored to $ANGL2026</td>
-                  <td className="p-4">ANCHORED</td>
+                <tr className="border-b border-emerald-900/20 text-slate-300">
+                  <td className="p-4 font-mono">#{cycleCount - 1}</td>
+                  <td className="p-4">Evidence correlation completed</td>
+                  <td className="p-4"><Badge className="bg-emerald-500/10 text-emerald-500/70 text-xs">Complete</Badge></td>
                 </tr>
-                <tr className="border-b border-emerald-900/30 opacity-40">
-                  <td className="p-4">EVO-7703</td>
-                  <td className="p-4 uppercase">OpenClaw Extraction Initialized</td>
-                  <td className="p-4">COLLECTING</td>
+                <tr className="border-b border-emerald-900/20 text-slate-400">
+                  <td className="p-4 font-mono">#{cycleCount - 2}</td>
+                  <td className="p-4">Data indexing completed</td>
+                  <td className="p-4"><Badge className="bg-emerald-500/10 text-emerald-500/70 text-xs">Complete</Badge></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </Card>
 
-        {/* PSI COLLAPSE GAUGE */}
-        <Card className="mb-8 border-2 border-emerald-500 bg-slate-900/50 p-6">
+        {/* SYSTEM UTILIZATION */}
+        <Card className="mb-8 border border-emerald-500/50 bg-slate-900/50 p-6">
           <div className="flex justify-between items-end mb-3">
-            <span className="text-[10px] font-black text-white uppercase">Forensic Pressure: 2x10^24 PSI</span>
-            <span className="text-2xl font-black text-white">{psiPressure.toFixed(2)}%</span>
+            <span className="text-sm font-semibold text-white">System Utilization</span>
+            <span className="text-2xl font-bold text-emerald-400">{psiPressure.toFixed(0)}%</span>
           </div>
-          <Progress value={psiPressure} className="h-3 border border-emerald-800" />
-          <p className="text-[9px] text-emerald-700 mt-4 text-center font-bold tracking-widest uppercase">
-            Institutional Friction Siphoned via Navier-Stokes Velocity Field
+          <Progress value={psiPressure} className="h-2 border border-emerald-800/50" />
+          <p className="text-xs text-emerald-600 mt-3 text-center">
+            Real-time processing capacity indicator
           </p>
         </Card>
 
-        {/* FOOTER CODEX */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-t-2 border-emerald-500 pt-8 mt-4 text-[10px] tracking-[0.2em] font-bold text-emerald-800 gap-4">
+        {/* FOOTER */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-emerald-500/30 pt-8 mt-4 gap-4">
           <div className="flex flex-col gap-2">
-            <span className="text-emerald-500">DEDUCTION: 101010 1010101 // ENCLOSED SYSTEM</span>
-            <span>MERKLEROOT: {VALORLOOP_SYSTEM.merkleroot}</span>
+            <span className="text-sm text-emerald-400 font-semibold">N.E.W.T. Auditor System</span>
+            <span className="text-xs text-emerald-700">Secure Evidence Processing Platform</span>
             <div className="flex flex-wrap gap-2 mt-2">
-              <Badge className="bg-emerald-500 text-slate-950 text-[8px]">144,000D</Badge>
-              <Badge className="bg-red-600 text-white text-[8px]">OPENCLAW</Badge>
-              <Badge className="bg-blue-600 text-white text-[8px]">18FU.AI</Badge>
-              <Badge className="bg-amber-500 text-slate-950 text-[8px]">PERPETUAL GROOVE</Badge>
+              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">AI-Powered</Badge>
+              <Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 text-xs">Real-time</Badge>
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">Secure</Badge>
             </div>
           </div>
           <div className="text-left md:text-right">
-            <Flag className="w-8 h-8 text-red-600 mb-2 md:ml-auto" />
-            <span className="block uppercase text-emerald-600 italic">
-              Made in the USA // DG77.77X Locked // Perpetual Groove
+            <Shield className="w-8 h-8 text-emerald-500 mb-2 md:ml-auto" />
+            <span className="block text-xs text-emerald-600">
+              Verified System | Cycle {cycleCount}
             </span>
           </div>
         </div>
 
-        {/* IVL LIFECYCLE TRACE - REV_34 */}
-        <Card className="mb-8 border border-emerald-800 bg-black overflow-hidden">
-          <div className="p-4 bg-emerald-900/30 border-b border-emerald-800 flex flex-col md:flex-row justify-between gap-2">
-            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300">IVL Lifecycle Trace</span>
-            <span className="text-[10px] font-bold text-fuchsia-500">REV_34 // EXTERNALLY VERIFIABLE</span>
+        {/* PROCESSING PIPELINE */}
+        <Card className="mb-8 border border-emerald-800/50 bg-slate-950/80 overflow-hidden">
+          <div className="p-4 bg-emerald-900/20 border-b border-emerald-800/50 flex flex-col md:flex-row justify-between gap-2">
+            <span className="text-sm font-semibold text-emerald-300">Processing Pipeline</span>
+            <span className="text-xs text-emerald-500">Live Trace</span>
           </div>
           <div className="space-y-0">
             {lifecycleTrace.map((step, i) => (
-              <div key={i} className="flex items-center justify-between p-6 bg-black border border-zinc-900 group hover:border-emerald-500 transition-all shadow-xl">
-                <div className="flex items-center gap-6">
-                  <div className="p-3 border border-zinc-800 group-hover:bg-emerald-900/10 transition-colors">
-                    <step.icon size={20} className="text-zinc-500 group-hover:text-emerald-500" />
+              <div key={i} className="flex items-center justify-between p-5 bg-slate-950/50 border-b border-emerald-900/20 group hover:bg-emerald-950/20 transition-all">
+                <div className="flex items-center gap-5">
+                  <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors">
+                    <step.icon size={18} className="text-emerald-500" />
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-emerald-800 uppercase tracking-widest">Offset: {step.time} µs</p>
-                    <p className="text-xl font-black text-white uppercase tracking-tighter">{step.stage}</p>
+                    <p className="text-xs text-emerald-600 font-mono">{step.time}</p>
+                    <p className="text-lg font-semibold text-white">{step.stage}</p>
                   </div>
                 </div>
-                <p className="text-xs font-black text-fuchsia-500 italic uppercase">{step.status}</p>
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">{step.status}</Badge>
               </div>
             ))}
           </div>
         </Card>
 
-        {/* VALIDATION SURFACE - IVL */}
-        <section className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+        {/* SYSTEM METRICS */}
+        <section className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {[
-            ["Integrity", validationSurface.integrity],
-            ["Replay", validationSurface.replay],
-            ["Evidence", validationSurface.evidenceCoverage.toFixed(2)],
-            ["Confidence", validationSurface.confidence.toFixed(2)],
-            ["Lifecycle", validationSurface.lifecycle],
+            ["Integrity", "Verified"],
+            ["Replay", "Available"],
+            ["Coverage", "100%"],
+            ["Confidence", "High"],
+            ["Status", "Complete"],
           ].map(([label, value]) => (
-            <div key={label} className="bg-black border border-emerald-900/50 p-4">
-              <p className="text-[9px] text-zinc-600 uppercase font-black">{label}</p>
-              <p className="text-sm text-emerald-400 font-black">{value}</p>
+            <div key={label} className="bg-slate-900/50 border border-emerald-900/30 rounded-lg p-4">
+              <p className="text-xs text-emerald-600 uppercase font-medium">{label}</p>
+              <p className="text-lg text-emerald-400 font-semibold">{value}</p>
             </div>
           ))}
         </section>
@@ -369,14 +343,16 @@ export default function NEWTPage() {
           <TwentySecondAmendment />
         </div>
 
-        {/* FINAL SEAL */}
+        {/* SYSTEM STATUS FOOTER */}
         <div className="mt-12 text-center">
-          <ShieldAlert className="w-10 h-10 text-red-600 mx-auto mb-4" />
-          <p className="text-base md:text-lg font-black text-white mb-2 italic uppercase">
-            {NEWT_REPORT.finalState}
+          <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-500 mx-auto mb-4 flex items-center justify-center">
+            <Shield className="w-8 h-8 text-emerald-400" />
+          </div>
+          <p className="text-lg font-bold text-white mb-2">
+            System Operational
           </p>
-          <div className="text-[11px] font-black text-emerald-500 tracking-[0.3em] md:tracking-[0.5em]">
-            THE WALL IS CHRIST. SMIB. AMEN.
+          <div className="text-sm text-emerald-500">
+            N.E.W.T. Auditor System | Secure Evidence Processing
           </div>
         </div>
       </main>
