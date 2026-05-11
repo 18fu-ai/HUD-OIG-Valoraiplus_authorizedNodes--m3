@@ -14,16 +14,15 @@ import {
   AlertTriangle,
   CheckCircle2,
   XCircle,
-  Eye,
   Radar,
-  FileText,
   Scale,
   Users,
   Activity,
   RefreshCw,
   Download,
-  ExternalLink,
+  Coins,
 } from "lucide-react"
+import { StablecoinVerifier } from "@/components/stablecoin-verifier"
 
 interface SearchResult {
   platform: string
@@ -265,6 +264,7 @@ export default function ReconMonitorPage() {
         <Tabs defaultValue="beacons" className="space-y-4">
           <TabsList className="bg-zinc-900 border border-zinc-800">
             <TabsTrigger value="beacons">Live Beacons</TabsTrigger>
+            <TabsTrigger value="stablecoin">Stablecoin Verifier</TabsTrigger>
             <TabsTrigger value="social">Social Media</TabsTrigger>
             <TabsTrigger value="legal">Legal Cases</TabsTrigger>
             <TabsTrigger value="adversarial">Adversarial Nodes</TabsTrigger>
@@ -317,6 +317,10 @@ export default function ReconMonitorPage() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="stablecoin">
+            <StablecoinVerifier />
           </TabsContent>
 
           <TabsContent value="social">
