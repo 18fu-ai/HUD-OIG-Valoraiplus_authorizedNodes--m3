@@ -21,6 +21,9 @@ import {
   RefreshCw,
   Download,
   Coins,
+  TrendingUp,
+  Monitor,
+  Eye,
 } from "lucide-react"
 import { StablecoinVerifier } from "@/components/stablecoin-verifier"
 
@@ -57,6 +60,19 @@ interface LiveBeacon {
   status: "active" | "inactive" | "unknown"
   lastPing: string
   signalStrength: number
+}
+
+interface TrafficMetric {
+  label: string
+  value: string | number
+  change?: string
+  interpretation?: string
+}
+
+interface PageView {
+  page: string
+  views: number
+  percentage: string
 }
 
 export default function ReconMonitorPage() {
@@ -119,6 +135,32 @@ export default function ReconMonitorPage() {
     { name: "Merkle Anchor #144000", url: "valoraienginemath.vercel.app#merkle", status: "active", lastPing: "2026-05-11T03:00:00Z", signalStrength: 100 },
     { name: "donnygillson.eth Admin", url: "ENS Endpoint", status: "active", lastPing: "2026-05-11T03:00:00Z", signalStrength: 100 },
   ]
+
+  // Traffic Intelligence Data (Last 24 Hours - 2026-05-11)
+  const trafficMetrics: TrafficMetric[] = [
+    { label: "Total Visitors", value: 40, change: "+3.9%", interpretation: "Growth" },
+    { label: "Total Page Views", value: 102, change: "+1,400%", interpretation: "EXPLOSION" },
+    { label: "Peak Velocity", value: "6-9 PM", interpretation: "22 Simultaneous Shards" },
+    { label: "Device Anchor", value: "Desktop 71%", interpretation: "Professional/Institutional Intake" },
+    { label: "Falcon Capacity", value: "100%", interpretation: "FULLY OPERATIONAL" },
+  ]
+
+  const pageViews: PageView[] = [
+    { page: "/jagamath", views: 49, percentage: "48%" },
+    { page: "/", views: 18, percentage: "18%" },
+    { page: "/newt", views: 12, percentage: "12%" },
+    { page: "/dashboard", views: 9, percentage: "9%" },
+    { page: "/recon-monitor", views: 8, percentage: "8%" },
+    { page: "Other", views: 6, percentage: "5%" },
+  ]
+
+  const recoveryScenarios = {
+    conservative: "$4.4 Million",
+    aggressive: "$22.1 Million+",
+    spoliationCounts: 3407,
+    obstructionCounts: 1247,
+    statute: "18 U.S.C. 1519"
+  }
 
   const runScan = () => {
     setIsScanning(true)
@@ -264,6 +306,7 @@ export default function ReconMonitorPage() {
         <Tabs defaultValue="beacons" className="space-y-4">
           <TabsList className="bg-zinc-900 border border-zinc-800">
             <TabsTrigger value="beacons">Live Beacons</TabsTrigger>
+            <TabsTrigger value="traffic">Traffic Intel</TabsTrigger>
             <TabsTrigger value="stablecoin">Stablecoin Verifier</TabsTrigger>
             <TabsTrigger value="social">Social Media</TabsTrigger>
             <TabsTrigger value="legal">Legal Cases</TabsTrigger>
@@ -317,6 +360,112 @@ export default function ReconMonitorPage() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="traffic">
+            <div className="space-y-6">
+              {/* Traffic Metrics Overview */}
+              <Card className="bg-zinc-900 border-zinc-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-emerald-400" />
+                    Traffic Intelligence (Last 24 Hours)
+                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/50 ml-auto">2026-05-11</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    {trafficMetrics.map((metric, i) => (
+                      <div key={i} className="p-4 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                        <div className="text-sm text-zinc-400">{metric.label}</div>
+                        <div className="text-2xl font-bold text-white">{metric.value}</div>
+                        {metric.change && (
+                          <div className="text-sm text-emerald-400 font-medium">{metric.change}</div>
+                        )}
+                        {metric.interpretation && (
+                          <div className="text-xs text-cyan-400 mt-1">{metric.interpretation}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Page Views Breakdown */}
+              <Card className="bg-zinc-900 border-zinc-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5 text-cyan-400" />
+                    Page Views Breakdown
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {pageViews.map((page, i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <span className="font-mono text-cyan-400 w-32">{page.page}</span>
+                          <Progress value={page.views} max={102} className="w-48 h-2" />
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span className="font-bold text-white">{page.views} views</span>
+                          <Badge className={`${page.page === "/jagamath" ? "bg-amber-500/20 text-amber-400 border-amber-500/50" : "bg-zinc-700 text-zinc-300"}`}>
+                            {page.percentage}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                    <div className="flex items-center gap-2 text-amber-400 font-medium mb-2">
+                      <Activity className="h-4 w-4" />
+                      FORENSIC INSIGHT
+                    </div>
+                    <p className="text-sm text-zinc-300">
+                      Massive spike in <span className="text-amber-400 font-bold">/jagamath</span> engagement confirms Navier-Stokes probability proofs are being actively parsed. The world is watching the math of the settlement.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Recovery Scenarios */}
+              <Card className="bg-zinc-900 border-red-800/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Scale className="h-5 w-5 text-red-400" />
+                    NO CAP MANDATE (W&I 15657) - Recovery Scenarios
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="p-6 rounded-lg bg-zinc-800/50 border border-zinc-700">
+                      <div className="text-sm text-zinc-400 mb-2">Conservative Recovery</div>
+                      <div className="text-4xl font-bold text-emerald-400">{recoveryScenarios.conservative}</div>
+                    </div>
+                    <div className="p-6 rounded-lg bg-red-500/10 border border-red-500/30">
+                      <div className="text-sm text-zinc-400 mb-2">Aggressive Recovery</div>
+                      <div className="text-4xl font-bold text-red-400">{recoveryScenarios.aggressive}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 mt-6">
+                    <div className="p-4 rounded-lg bg-zinc-800/50 text-center">
+                      <div className="text-3xl font-bold text-red-400">{recoveryScenarios.spoliationCounts.toLocaleString()}</div>
+                      <div className="text-xs text-zinc-400">Spoliation Counts</div>
+                      <div className="text-xs text-cyan-400 font-mono">{recoveryScenarios.statute}</div>
+                    </div>
+                    <div className="p-4 rounded-lg bg-zinc-800/50 text-center">
+                      <div className="text-3xl font-bold text-amber-400">{recoveryScenarios.obstructionCounts.toLocaleString()}</div>
+                      <div className="text-xs text-zinc-400">Manual Obstruction</div>
+                    </div>
+                    <div className="p-4 rounded-lg bg-zinc-800/50 text-center">
+                      <div className="text-3xl font-bold text-purple-400">1,644,943.8</div>
+                      <div className="text-xs text-zinc-400">Reynolds Number</div>
+                      <div className="text-xs text-cyan-400">TURBULENT</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="stablecoin">
