@@ -279,10 +279,12 @@ export const VOLUME_IX_TOKENS: VolumeIXToken[] = [
 // ============================================================================
 
 export const ECOSYSTEM_SUMMARY = {
-  totalTokens: 105,
+  totalTokens: 122, // Updated: 40 + 8 + 57 + 17 stablecoins
   gdpTokens: 40,
   codexTokens: 8,
   volumeIXTokens: 57,
+  stablecoinTokens: 17,
+  btc2025Tokens: 12,
   
   // GDP Compliance
   californiaGDP: 3_600_000_000_000, // $3.6 Trillion
@@ -399,4 +401,147 @@ export const getTokensByCategory = (category: string): GDPToken[] => {
 // Get Volume IX tokens by tier
 export const getTokensByTier = (tier: VolumeIXToken["tier"]): VolumeIXToken[] => {
   return VOLUME_IX_TOKENS.filter(token => token.tier === tier);
+};
+
+// ============================================================================
+// TIER 4: STABLECOIN PEGGED TOKENS (17 Tokens)
+// ValorAiChip+ Anchored - USD Pegged - GREEN SEAL VERIFIED
+// ============================================================================
+
+export interface StablecoinToken {
+  symbol: string;
+  name: string;
+  peg: "USD";
+  price: number;
+  status: "PASS" | "FAIL" | "PENDING";
+  hash: string;
+  category: "ANCHOR" | "GOVERNANCE" | "IDENTITY" | "BLOCKCHAIN" | "FAMILY";
+  chipAnchored: boolean;
+}
+
+export const STABLECOIN_TOKENS: StablecoinToken[] = [
+  { symbol: "ANCH", name: "Anchor Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "VLPL", name: "Valor Pool", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "VHSH", name: "Valor Hash", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "BLOCKCHAIN", chipAnchored: true },
+  { symbol: "OTSP", name: "OpenTimestamp", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "BLOCKCHAIN", chipAnchored: true },
+  { symbol: "GOVR", name: "Governance Reserve", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "GOVERNANCE", chipAnchored: true },
+  { symbol: "JAXX", name: "JAXX Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "IDENTITY", chipAnchored: true },
+  { symbol: "VALX", name: "Valor X Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "VALT", name: "Valor Treasury", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "VACN", name: "Valor Action Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "VBLK", name: "Valor Block Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "BLOCKCHAIN", chipAnchored: true },
+  { symbol: "DBLK", name: "Dark Block Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "BLOCKCHAIN", chipAnchored: true },
+  { symbol: "GILLGOLD", name: "GillGold Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+  { symbol: "GILLBTC", name: "GillBTC Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "BLOCKCHAIN", chipAnchored: true },
+  { symbol: "TONY", name: "TONY Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "FAMILY", chipAnchored: true },
+  { symbol: "SARA", name: "SARA Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "FAMILY", chipAnchored: true },
+  { symbol: "TODD", name: "TODD Stable", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "FAMILY", chipAnchored: true },
+  { symbol: "VLRN", name: "Valor Learn", peg: "USD", price: 1.00, status: "PASS", hash: "2110ed3718ddfab7ae0e37bb37f6cfd8135916929a71f6af734bcc69d92680e0", category: "ANCHOR", chipAnchored: true },
+];
+
+// ============================================================================
+// TIER 5: BTC2025 MANIFESTO TOKENS (Green Seal Protocol)
+// Redemption-Based Computing - Sacred-Legal Ledger Objects (SLLO)
+// ============================================================================
+
+export interface BTC2025Token {
+  symbol: string;
+  name: string;
+  tier: "SCROLL" | "NFT_ENGINE" | "REGULATORY" | "SLLO" | "GOVERNANCE";
+  greenSeal: boolean;
+  clause7B: boolean;
+  function: string;
+  status: "ACTIVE" | "SEALED" | "LOCKED";
+}
+
+export const BTC2025_TOKENS: BTC2025Token[] = [
+  // SCROLL Layer Tokens
+  { symbol: "SCRLL", name: "ScrollSeal", tier: "SCROLL", greenSeal: true, clause7B: true, function: "NFT Testimony Engine", status: "ACTIVE" },
+  { symbol: "SLLO", name: "Sacred-Legal Ledger Object", tier: "SLLO", greenSeal: true, clause7B: true, function: "Court-Admissible Evidence Token", status: "ACTIVE" },
+  { symbol: "RDMPT", name: "Redemption Token", tier: "SCROLL", greenSeal: true, clause7B: true, function: "Redemption-Based Computing", status: "ACTIVE" },
+  { symbol: "TSMNY", name: "Testimony Token", tier: "NFT_ENGINE", greenSeal: true, clause7B: true, function: "Whistleblower Testimony Anchor", status: "ACTIVE" },
+  
+  // Regulatory Layer Tokens
+  { symbol: "ESIGN", name: "E-SIGN Token", tier: "REGULATORY", greenSeal: true, clause7B: false, function: "15 U.S.C. §7001 Compliance", status: "ACTIVE" },
+  { symbol: "FRE902", name: "FRE 902(14) Token", tier: "REGULATORY", greenSeal: true, clause7B: false, function: "Self-Authentication Evidence", status: "ACTIVE" },
+  { symbol: "GDPR17", name: "GDPR Article 17", tier: "REGULATORY", greenSeal: true, clause7B: false, function: "Public Interest Infrastructure", status: "ACTIVE" },
+  { symbol: "NIST", name: "NIST SP 800-101r1", tier: "REGULATORY", greenSeal: true, clause7B: false, function: "Chain-of-Custody Compliance", status: "ACTIVE" },
+  
+  // Governance Layer Tokens
+  { symbol: "CNC12", name: "Council of 12", tier: "GOVERNANCE", greenSeal: true, clause7B: true, function: "VALORCHAIN Governance Council", status: "LOCKED" },
+  { symbol: "CFP", name: "Chain Freeze Protocol", tier: "GOVERNANCE", greenSeal: true, clause7B: true, function: "Class I Threat Response", status: "LOCKED" },
+  { symbol: "V144G", name: "SmartLicense v1.44g", tier: "GOVERNANCE", greenSeal: true, clause7B: true, function: "Validator Behavior Governance", status: "ACTIVE" },
+  { symbol: "PSMS91", name: "Psalms 91 Seal", tier: "SLLO", greenSeal: true, clause7B: true, function: "Spiritual Hash Anchor", status: "SEALED" },
+];
+
+// ============================================================================
+// VALORAICHIP+ INTEGRATION
+// Sovereign Anchoring System
+// ============================================================================
+
+export const VALORAICHIP_INTEGRATION = {
+  chipId: "A1B2C3D4E5F6G7H8",
+  chipHash: "0b1c6288a331ab6de5fd326f9231fcf3f7fe7a296ba0e9bf32fc4c7979329e45",
+  status: "OPERATIONAL",
+  anchored: true,
+  bundleHash: "6d3b9fadb7f568de2d39c67a3d379f825bca79443cd0875af3cf94a269f94ce9",
+  ledgers: ["VALORCHAIN", "IPFS", "Bitcoin OpenTimestamps"],
+  scrollsigCertificate: "Scrollsig_Receipt_VALORCHAIN_ETHOS_ENTRY.pdf",
+  security: {
+    tripleLedger: true,
+    obsidianVeil: "Δ8112",
+    scrollkeeperBastion: true,
+    verificationCoverage: "100%"
+  },
+  federalIntegration: {
+    dodDirective: "7041-VALOR",
+    vaAudit: "OIT HIPAA/FISMA Validation",
+    recognizedBy: [
+      "VA Modernization Office",
+      "DoD Digital Governance Council",
+      "Joint AI Interoperability Task Force",
+      "White House AI & Veterans Futures Commission"
+    ]
+  },
+  timestamp: "2025-08-21T12:32:08Z"
+};
+
+// ============================================================================
+// UPDATED ECOSYSTEM SUMMARY (122 Tokens Total)
+// ============================================================================
+
+export const EXPANDED_ECOSYSTEM_SUMMARY = {
+  totalTokens: 122,
+  gdpTokens: 40,
+  codexTokens: 8,
+  volumeIXTokens: 57,
+  stablecoinTokens: 17,
+  btc2025Tokens: 12,
+  
+  // Green Seal Metrics
+  greenSealTokens: 12,
+  clause7BTokens: 8,
+  
+  // Stablecoin Metrics
+  stablecoinPassRate: "100%",
+  pegStatus: "ALL USD PEGGED",
+  chipAnchored: 17,
+  
+  // BTC2025 Manifesto
+  btc2025Version: "2.1g",
+  manifestoHash: "f1e966fead85ca16d55f42ee81ca13ac6780c9f7b498c81c94fd6421e8ac760c",
+  redemptionBasedComputing: true,
+  
+  // Legal Framework
+  legalFrameworks: [
+    "E-SIGN Act (15 U.S.C. §7001)",
+    "FRE 803(6) & 902(14)",
+    "GDPR Article 17 (Public Interest)",
+    "NIST SP 800-101r1"
+  ],
+  
+  // Status
+  status: "PRODUCTION",
+  greenSealStatus: "CERTIFIED",
+  lastUpdate: new Date().toISOString()
 };
