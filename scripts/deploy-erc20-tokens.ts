@@ -50,8 +50,16 @@ async function main() {
   console.log("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
   console.log("");
   
-  const [deployer] = await ethers.getSigners();
-  const balance = await deployer.provider.getBalance(deployer.address);
+  const signers = await ethers.getSigners();
+  console.log("  Signers count:", signers.length);
+  
+  if (signers.length === 0) {
+    throw new Error("No signers available. Check that PRIVATE_KEY is set correctly in environment variables.");
+  }
+  
+  const deployer = signers[0];
+  console.log("  Deployer:", deployer.address);
+  const balance = await ethers.provider.getBalance(deployer.address);
   
   console.log("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
   console.log("│ DEPLOYMENT CONFIGURATION                                                                                         │");
@@ -88,7 +96,7 @@ async function main() {
   // ════════════════════════════════════════════════════════════════════════════════════
   // STEP 2: DEPLOY ALL 51 TOKENS VIA FACTORY
   // ════════════════════════════════════════════════════════════════════════════════════
-  console.log("╔════════════════════════════════════════════════════════════���═════════════════════════════════════════════════════╗");
+  console.log("╔════════════════════════════════════════════════════��═══════���═════════════════════════════════════════════════════╗");
   console.log("║ STEP 2: DEPLOYING 51-TOKEN CANON                                                                                  ║");
   console.log("╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
   console.log("║ NOTE: $VALOR is NULLIFIED - deploying $VALORAIPLUS and $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED instead          ║");
