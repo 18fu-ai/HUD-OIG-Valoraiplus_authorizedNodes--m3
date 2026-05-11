@@ -806,7 +806,7 @@ export function formatCountdown(ms: number): string {
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 }
 
-// ══════════���════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════════
 // GEOGRAPHIC NODE NETWORK — SOVEREIGN TOPOLOGY
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -856,10 +856,10 @@ export const GEOGRAPHIC_NODES = {
     color: "emerald",
   },
   
-  // MAILING NODE — Los Gatos, California (Renters Insurance + Stored Property)
+  // MAILING NODE — REDACTED (Renters Insurance + Stored Property)
   MAILING: {
     id: "MAILING_NODE",
-    name: "MAILING NODE",
+    name: "MAILING NODE (ON FILE)",
     designation: "MAILING ADDRESS — RENTERS INSURANCE & STORED PROPERTY",
     address: "[ADDRESS ON FILE]",
     city: "[CITY ON FILE]",
@@ -867,8 +867,8 @@ export const GEOGRAPHIC_NODES = {
     zip: "[REDACTED]",
     full_address: "[ADDRESS ON FILE WITH CRD]",
     gps: {
-      lat: 37.2358,
-      lng: -122.0322,
+      lat: 0,
+      lng: 0,
     },
     status: "ACTIVE — MAILING & STORAGE",
     node_type: "MAILING",
@@ -1212,7 +1212,7 @@ export const EXECUTIVE_BROADCAST_SUPREMACY = {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ALTRUISTIC STACK — HARMONIC RESONANCE
-// ═══════════════��═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════════
 
 export const ALTRUISTIC_STACK = {
   // Core Configuration
