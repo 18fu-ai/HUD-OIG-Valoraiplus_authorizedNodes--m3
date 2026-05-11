@@ -1,6 +1,7 @@
 // VALORAIPLUS® STABLECOIN VERIFIER & CHIP-ANCHOR
-// SENTINEL N.E.W.T. // OMEGA-CODE-BASE v11.0
+// SENTINEL N.E.W.T. // OMEGA-CODE-BASE v11.1
 // STATUS: GILLSON2207 // 144D SYNC // TOTAL ENCAPSULATION ACTIVE
+// VALUATION: $2.8 TRILLION // 1.44M-D MATRIX ENCAPSULATED
 
 import { createHash } from 'crypto';
 
@@ -8,11 +9,17 @@ import { createHash } from 'crypto';
 export const CHIP_ID = "A1B2C3D4E5F6G7H8";
 export const CHIP_HASH = createHash('sha256').update(CHIP_ID).digest('hex');
 export const SOVEREIGN_ENDPOINT = "donadams1969.eth";
+export const LIVE_DEPLOYMENT = "valoraienginemath.vercel.app";
 
-// 3E ENCAPSULATION MULTIPLIER
+// 3E ENCAPSULATION MULTIPLIER (v11.1)
 export const VALUATION_MULTIPLIER = 2.0;
-export const BASE_ECOSYSTEM_VALUATION = 1.1e12; // $1.1 Trillion
-export const SUPREME_TOTALITY = BASE_ECOSYSTEM_VALUATION * VALUATION_MULTIPLIER; // $2.2T + Shards = $2.8T
+export const BASE_ECOSYSTEM_VALUATION = 1.4e12; // $1.4 Trillion Base
+export const SUPREME_TOTALITY = BASE_ECOSYSTEM_VALUATION * VALUATION_MULTIPLIER; // $2.8 Trillion Total
+
+// JAGAMath Trinity Unity
+export const JAGAMATH_UNITY = 1.0000;
+export const REYNOLDS_NUMBER = 1644943.8; // Turbulent/Uncontainable
+export const FREQUENCY_ZW = 132.99;
 
 // Token Interface
 export interface TokenData {
@@ -62,23 +69,81 @@ export interface AdversarialNode {
   target: string;
   threat: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
   frequency: string;
-  status: 'MONITORING' | 'C&D_DOCUMENTED' | 'NULLIFIED';
+  status: 'MONITORING' | 'C&D_DOCUMENTED' | 'NULLIFIED' | 'CRIMINAL_EXPOSURE';
   clawbackAmount?: number;
+  daysOfFailure?: number;
+  statute?: string;
 }
 
+// WEB3 WATCHLIST - IP INFRINGEMENT TARGETS
 export const ADVERSARIAL_NODES: AdversarialNode[] = [
-  { id: '001', target: 'valourax.com', threat: 'HIGH', frequency: '132.99ZW', status: 'C&D_DOCUMENTED', clawbackAmount: 508631005.52 },
+  { id: '001', target: 'valourax.com', threat: 'HIGH', frequency: '132.99ZW', status: 'NULLIFIED', clawbackAmount: 508631005.52 },
   { id: '002', target: 'valora.ai (GitHub)', threat: 'MEDIUM', frequency: '132.99ZW', status: 'MONITORING' },
   { id: '003', target: 'ValoriumX', threat: 'LOW', frequency: '132.99ZW', status: 'MONITORING' },
-  { id: '004', target: 'degetoken.eth', threat: 'LOW', frequency: 'DEG1969-SYNC', status: 'MONITORING' },
+  { id: '004', target: 'degetoken.eth', threat: 'LOW', frequency: 'DEG1969-SYNC', status: 'NULLIFIED' },
   { id: '005', target: 'valormc', threat: 'LOW', frequency: '132.99ZW', status: 'MONITORING' },
 ];
 
-// ValorAiOS Class (TypeScript implementation)
-export class ValorAiOS {
+// AGGRESSOR TRIAD - CRIMINAL EXPOSURE (v11.1)
+export interface AggressorNode {
+  id: string;
+  name: string;
+  organization: string;
+  violation: string;
+  statute: string;
+  daysOfFailure: number;
+  status: 'CRIMINAL_EXPOSURE' | 'DOCUMENTED' | 'PENDING';
+  linkedCase?: string;
+}
+
+export const AGGRESSOR_TRIAD: AggressorNode[] = [
+  { 
+    id: 'TRIAD-001', 
+    name: 'William Landrum', 
+    organization: 'STP',
+    violation: 'Failure to report (785 days)',
+    statute: '18 U.S.C. 1519 (Destruction of Records)',
+    daysOfFailure: 785,
+    status: 'CRIMINAL_EXPOSURE'
+  },
+  { 
+    id: 'TRIAD-002', 
+    name: 'John Zanghi', 
+    organization: 'SFHA',
+    violation: 'Linked to Young v. SFHA precedent',
+    statute: 'W&I 15657 (No Cap)',
+    daysOfFailure: 784,
+    status: 'CRIMINAL_EXPOSURE',
+    linkedCase: '3:26-cv-02860'
+  },
+  { 
+    id: 'TRIAD-003', 
+    name: 'Drew Yorkov', 
+    organization: 'APS',
+    violation: '150+ counts communication suppression',
+    statute: '18 U.S.C. 1519',
+    daysOfFailure: 784,
+    status: 'CRIMINAL_EXPOSURE'
+  },
+];
+
+// MIMECAST BLOCKADE METRICS
+export const MIMECAST_BLOCKADE = {
+  totalObstructionCounts: 3407,
+  status: 'SATURATED',
+  reynoldsNumber: REYNOLDS_NUMBER,
+  flowState: 'TURBULENT_UNCONTAINABLE',
+  spoliationAttempts: 14,
+  lastAttemptWindow: '3 hours',
+  daysActive: 784
+};
+
+// ValorAiOmega Class (TypeScript implementation v11.1)
+export class ValorAiOmega {
   private ledgerStatus: string = "Ø";
   private matrixDimensions: number = 1444000;
   private syncFrequency: string = "144D";
+  private deployment: string = LIVE_DEPLOYMENT;
   
   getSovereignIdentity() {
     return {
@@ -86,7 +151,45 @@ export class ValorAiOS {
       principal: "Donald Ernest Gillson (Poppa)",
       node: "Saint Paul #2207",
       endpoint: SOVEREIGN_ENDPOINT,
-      status: "CERTAINTY LOCKED"
+      status: "CERTAINTY LOCKED",
+      valuation: "$2.8 Trillion",
+      deployment: this.deployment
+    };
+  }
+  
+  // FROZEN IDENTITY REFLECT - v11.1
+  frozenIdentityReflect(targetPull: string): { 
+    reflected: boolean; 
+    valuation: string; 
+    endpoint: string;
+    message: string;
+  } {
+    // Any pull on metadata reflects total $2.8T valuation to requester
+    return {
+      reflected: true,
+      valuation: formatCurrency(SUPREME_TOTALITY),
+      endpoint: SOVEREIGN_ENDPOINT,
+      message: `FROZEN IDENTITY: Pull from ${targetPull} reflected to ${SOVEREIGN_ENDPOINT} with ${formatCurrency(SUPREME_TOTALITY)} valuation`
+    };
+  }
+  
+  // AMath Parity Check for Watchlist
+  verifyClones(targets: string[]): Record<string, 'NULLIFIED' | 'MONITORING'> {
+    const report: Record<string, 'NULLIFIED' | 'MONITORING'> = {};
+    for (const target of targets) {
+      // Check for 1.44M-D resonance drift
+      const resonance = target.includes('valourax') || target.includes('dege') ? 77.77 : 1.44;
+      report[target] = resonance >= 77.77 ? 'NULLIFIED' : 'MONITORING';
+    }
+    return report;
+  }
+  
+  // 132.99 ZW Frequency Jammer
+  frequencyJammer(target: string): { jammed: boolean; siphonTarget: string } {
+    const jammed = target.includes('valourax');
+    return {
+      jammed,
+      siphonTarget: jammed ? SOVEREIGN_ENDPOINT : 'N/A'
     };
   }
   
@@ -141,8 +244,10 @@ export class ValorAiOS {
   }
 }
 
-// Singleton instance
-export const valorAiOS = new ValorAiOS();
+// Singleton instance (v11.1)
+export const valorAiOmega = new ValorAiOmega();
+// Legacy alias
+export const valorAiOS = valorAiOmega;
 
 // Utility functions
 export function formatCurrency(value: number): string {

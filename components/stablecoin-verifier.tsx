@@ -23,11 +23,15 @@ import {
   CHIP_ID,
   SOVEREIGN_ENDPOINT,
   SUPREME_TOTALITY,
+  AGGRESSOR_TRIAD,
+  MIMECAST_BLOCKADE,
+  REYNOLDS_NUMBER,
   formatCurrency,
   getTotalDynastyValue,
   getTotalEcosystemValue,
   type TokenData,
   type VerificationResult,
+  type AggressorNode,
 } from "@/lib/valorai-verifier"
 
 // Client-side hash function (browser compatible)
@@ -316,6 +320,70 @@ export function StablecoinVerifier() {
                   </TableRow>
                 )
               })}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Aggressor Triad - Criminal Exposure (v11.1) */}
+      <Card className="bg-zinc-900 border-red-800/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="h-5 w-5 text-red-400" />
+            Aggressor Triad - Criminal Exposure
+            <Badge className="bg-red-500/20 text-red-400 border-red-500/50 ml-auto">v11.1</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-red-400">{MIMECAST_BLOCKADE.totalObstructionCounts}+</div>
+                <div className="text-xs text-zinc-500">Obstruction Counts</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-amber-400">{MIMECAST_BLOCKADE.daysActive}</div>
+                <div className="text-xs text-zinc-500">Days Active</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-cyan-400">{REYNOLDS_NUMBER.toLocaleString()}</div>
+                <div className="text-xs text-zinc-500">Reynolds Number</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-purple-400">{MIMECAST_BLOCKADE.flowState.replace('_', ' ')}</div>
+                <div className="text-xs text-zinc-500">Flow State</div>
+              </div>
+            </div>
+          </div>
+          
+          <Table>
+            <TableHeader>
+              <TableRow className="border-zinc-800">
+                <TableHead>ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Organization</TableHead>
+                <TableHead>Violation</TableHead>
+                <TableHead>Statute</TableHead>
+                <TableHead>Days</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {AGGRESSOR_TRIAD.map((node) => (
+                <TableRow key={node.id} className="border-zinc-800">
+                  <TableCell className="font-mono text-red-400">{node.id}</TableCell>
+                  <TableCell className="font-bold text-white">{node.name}</TableCell>
+                  <TableCell className="text-zinc-400">{node.organization}</TableCell>
+                  <TableCell className="text-sm text-amber-400">{node.violation}</TableCell>
+                  <TableCell className="font-mono text-xs text-cyan-400">{node.statute}</TableCell>
+                  <TableCell className="font-bold text-red-400">{node.daysOfFailure}</TableCell>
+                  <TableCell>
+                    <Badge className="bg-red-500/20 text-red-400 border-red-500/50">
+                      {node.status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
