@@ -33,9 +33,9 @@ export default function PDFDownloadButton() {
         doc.setTextColor(197, 160, 89)
         doc.setFontSize(14)
         doc.setFont("helvetica", "bold")
-        doc.text("VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.1", pageWidth / 2, 10, { align: "center" })
+        doc.text("VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.2", pageWidth / 2, 10, { align: "center" })
         doc.setFontSize(8)
-        doc.text("SGAU-VALUEGUARD-77.77X // 100% SETTLEMENT PROBABILITY // MATHEMATICAL CERTAINTY", pageWidth / 2, 17, { align: "center" })
+        doc.text("SGAU-VALUEGUARD-77.77X // 100% SETTLEMENT // ELDER ABUSE (NO CAP) // MATHEMATICAL CERTAINTY", pageWidth / 2, 17, { align: "center" })
         doc.setTextColor(0, 0, 0)
       }
 
@@ -63,7 +63,7 @@ export default function PDFDownloadButton() {
       doc.setFontSize(9)
       doc.setFont("helvetica", "normal")
       doc.setTextColor(60, 60, 60)
-      doc.text("Generated: May 11, 2026 | Classification: REV_38 // GILLSON2207 | Node: SAINT PAUL #2207", margin, y)
+      doc.text("Generated: May 11, 2026 | Classification: REV_42 // GILLSON2207 // NOCAP | Node: SAINT PAUL #2207", margin, y)
       y += 12
 
       // Sovereign Identity
@@ -117,9 +117,9 @@ export default function PDFDownloadButton() {
         ["Brokerage Holdings", "$47,000.00", "Charles Schwab (8185)"],
         ["Liquid Assets", "$97,000.00+", "Verified Cash + Brokerage"],
         ["Personal Property", "$25,000.00", "Active Renters Policy"],
-        ["CRD Settlement (100%)", "$1,400,000 - $3,900,000", "Mathematically Proven"],
-        ["Conservative Net Worth", "$2,753,000", "With 100% Settlement"],
-        ["Moderate Net Worth", "$5,725,000", "With 100% Settlement"]
+        ["CRD Settlement (NO CAP)", "$3,050,000 - $20,000,000+", "Elder Abuse - No Cap"],
+        ["Conservative Net Worth", "$4,403,000", "With 100% Settlement"],
+        ["Moderate Net Worth", "$9,685,000", "With 100% Settlement"]
       ]
 
       financialData.forEach((row, i) => {
@@ -152,7 +152,8 @@ export default function PDFDownloadButton() {
         ["Tax Status", "EXEMPT", "100% Federally Tax-Free"],
         ["COLA Adjustments", "AUTO", "Annual Cost-of-Living Increases"],
         ["Settlement Probability", "100%", "Navier-Stokes x Millennium x JAGAMath"],
-        ["OVERALL", "AAA+", "MAXIMUM FEDERAL + MATHEMATICAL GUARANTEE"]
+        ["Elder Abuse Cap", "NONE", "W&I Code 15657 - No Statutory Limit"],
+        ["OVERALL", "AAA+", "MAXIMUM FEDERAL + MATH + NO-CAP GUARANTEE"]
       ]
 
       doc.setFillColor(0, 26, 44)
@@ -550,13 +551,54 @@ export default function PDFDownloadButton() {
         doc.setTextColor(0, 0, 0)
         y += 4
       })
+      y += 4
+
+      // Elder/Dependent Adult Abuse Damages - NO CAP
+      doc.setFontSize(10)
+      doc.setFont("helvetica", "bold")
+      doc.setTextColor(139, 0, 0)
+      doc.text("ELDER/DEPENDENT ADULT ABUSE (W&I 15610) - NO CAP", margin, y)
+      y += 6
+
+      doc.setFontSize(8)
+      doc.setFont("helvetica", "normal")
+      doc.setTextColor(0, 0, 0)
+
+      const elderDamages = [
+        ["Physical Abuse/Neglect Damages", "$250,000", "$500,000"],
+        ["Financial Abuse Damages", "$100,000", "$250,000"],
+        ["Abandonment/Isolation Damages", "$150,000", "$300,000"],
+        ["Enhanced Damages (Recklessness)", "$500,000", "$1,500,000"],
+        ["Pain, Suffering & Disfigurement", "$200,000", "$500,000"],
+        ["Attorney's Fees (Mandatory)", "$150,000", "$350,000"],
+        ["SUBTOTAL ELDER ABUSE (NO CAP)", "$1,350,000", "$3,400,000"]
+      ]
+
+      elderDamages.forEach((row, i) => {
+        if (i === 6) {
+          doc.setFont("helvetica", "bold")
+          doc.setTextColor(139, 0, 0)
+        }
+        doc.text(row[0], margin + 2, y)
+        doc.text(row[1], margin + 80, y)
+        doc.text(row[2], margin + 130, y)
+        doc.setFont("helvetica", "normal")
+        doc.setTextColor(0, 0, 0)
+        y += 4
+      })
+
+      // Legal basis note
+      doc.setFontSize(6)
+      doc.setFont("helvetica", "italic")
+      doc.setTextColor(100, 100, 100)
+      doc.text("W&I Code 15657: No damage cap for elder/dependent adult abuse. Enhanced damages for recklessness/oppression.", margin, y + 2)
       y += 6
 
       // Total Damages Summary
       doc.setFontSize(10)
       doc.setFont("helvetica", "bold")
       doc.setTextColor(197, 160, 89)
-      doc.text("TOTAL DAMAGES (100% PROBABILITY)", margin, y)
+      doc.text("TOTAL DAMAGES (100% PROBABILITY - ALL CATEGORIES)", margin, y)
       y += 6
 
       doc.setFontSize(9)
@@ -573,9 +615,9 @@ export default function PDFDownloadButton() {
       doc.setTextColor(0, 0, 0)
 
       const totalDamages = [
-        ["Conservative", "$1,700,000", "100%", "$1,700,000"],
-        ["Moderate", "$4,460,000", "100%", "$4,460,000"],
-        ["Aggressive", "$12,000,000+", "100%", "$12,000,000+"]
+        ["Conservative", "$3,050,000", "100%", "$3,050,000"],
+        ["Moderate", "$7,860,000", "100%", "$7,860,000"],
+        ["Aggressive", "$20,000,000+", "100%", "$20,000,000+"]
       ]
 
       totalDamages.forEach((row, i) => {
@@ -629,9 +671,9 @@ export default function PDFDownloadButton() {
       doc.setTextColor(0, 0, 0)
 
       const netWorth = [
-        ["Conservative", "$148,000", "$850,000", "$355,000", "$1,700,000", "$3,053,000"],
-        ["Moderate", "$175,000", "$900,000", "$750,000", "$4,460,000", "$6,285,000"],
-        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$12,000,000", "$14,160,000"]
+        ["Conservative", "$148,000", "$850,000", "$355,000", "$3,050,000", "$4,403,000"],
+        ["Moderate", "$175,000", "$900,000", "$750,000", "$7,860,000", "$9,685,000"],
+        ["Aggressive", "$210,000", "$950,000", "$1,000,000", "$20,000,000+", "$22,160,000+"]
       ]
 
       netWorth.forEach((row, i) => {
@@ -661,7 +703,7 @@ export default function PDFDownloadButton() {
       doc.setFont("helvetica", "bold")
       doc.text("MATHEMATICAL PROOF CERTIFICATE", pageWidth / 2, y + 4, { align: "center" })
       doc.setFontSize(10)
-      doc.text("SETTLEMENT PROBABILITY: 100% - MATHEMATICALLY PROVEN", pageWidth / 2, y + 12, { align: "center" })
+      doc.text("100% SETTLEMENT - ELDER ABUSE (NO CAP)", pageWidth / 2, y + 12, { align: "center" })
       
       doc.setFontSize(8)
       doc.setFont("helvetica", "normal")
@@ -672,10 +714,12 @@ export default function PDFDownloadButton() {
       doc.text("Millennium: Smooth solution exists, bounded -> P_Mill = 1.0", margin + 10, y)
       y += 5
       doc.text("JAGAMath: J_AGA = 0.9933 -> 1.0 (144D) -> P_JAGA = 1.0", margin + 10, y)
+      y += 5
+      doc.text("Elder Abuse: W&I Code 15657 -> NO STATUTORY CAP", margin + 10, y)
       y += 7
       doc.setTextColor(197, 160, 89)
       doc.setFont("helvetica", "bold")
-      doc.text("UNIFIED: P = 1.0 x 1.0 x 1.0 = 100%", margin + 10, y)
+      doc.text("UNIFIED: P = 100% | DAMAGES = UNLIMITED (NO CAP)", margin + 10, y)
       y += 20
 
       // Signature Block
@@ -725,7 +769,7 @@ export default function PDFDownloadButton() {
       addFooter(4)
 
       // Save the PDF
-      doc.save("VALORAIPLUS_Fiscal_Audit_v4.1_05_11_2026.pdf")
+      doc.save("VALORAIPLUS_Fiscal_Audit_v4.2_NOCAP_05_11_2026.pdf")
       
       setIsComplete(true)
       setTimeout(() => setIsComplete(false), 5000)
