@@ -79,10 +79,10 @@ async function main() {
   // STEP 1: DEPLOY VALOR TOKEN FACTORY
   // ════════════════════════════════════════════════════════════════════════════════════
   console.log("╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-  console.log("║ STEP 1: DEPLOYING VALOR TOKEN FACTORY                                                                             ║");
+  console.log("║ STEP 1: DEPLOYING JAXX.server.factory (VALOR Ai++//e)                                                             ║");
   console.log("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
   
-  const Factory = await ethers.getContractFactory("ValorTokenFactory");
+  const Factory = await ethers.getContractFactory("JAXXServerFactory");
   const factory = await Factory.deploy(SOVEREIGN_POPPA);
   await factory.waitForDeployment();
   const factoryAddress = await factory.getAddress();
@@ -95,7 +95,7 @@ async function main() {
   
   // ════════════════════════════════════════════════════════════════════════════════════
   // STEP 2: DEPLOY ALL 51 TOKENS VIA FACTORY
-  // ════════════════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════��═════════════════════════════════════
   console.log("╔════════════════════════════════════════════════════��═══════���═════════════════════════════════════════════════════╗");
   console.log("║ STEP 2: DEPLOYING 51-TOKEN CANON                                                                                  ║");
   console.log("╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");

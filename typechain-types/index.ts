@@ -72,6 +72,8 @@ export type { ValorAiPlus_NEWT_Sidecar } from "./contracts/valoraiplus_sidecar_R
 export { ValorAiPlus_NEWT_Sidecar__factory } from "./factories/contracts/valoraiplus_sidecar_REV38.sol/ValorAiPlus_NEWT_Sidecar__factory";
 export type { ValoraiplusSovereignScript } from "./contracts/ValoraiplusSovereignScript";
 export { ValoraiplusSovereignScript__factory } from "./factories/contracts/ValoraiplusSovereignScript__factory";
+export type { JAXXServerFactory } from "./contracts/ValorTokenFactory.sol/JAXXServerFactory";
+export { JAXXServerFactory__factory } from "./factories/contracts/ValorTokenFactory.sol/JAXXServerFactory__factory";
 export type { ValorToken } from "./contracts/ValorTokenFactory.sol/ValorToken";
 export { ValorToken__factory } from "./factories/contracts/ValorTokenFactory.sol/ValorToken__factory";
 export type { ValorTokenFactory } from "./contracts/ValorTokenFactory.sol/ValorTokenFactory";

@@ -146,6 +146,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ValoraiplusSovereignScript__factory>;
     getContractFactory(
+      name: "JAXXServerFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.JAXXServerFactory__factory>;
+    getContractFactory(
       name: "ValorToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ValorToken__factory>;
@@ -320,6 +324,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ValoraiplusSovereignScript>;
     getContractAt(
+      name: "JAXXServerFactory",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.JAXXServerFactory>;
+    getContractAt(
       name: "ValorToken",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -463,6 +472,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ValoraiplusSovereignScript>;
     deployContract(
+      name: "JAXXServerFactory",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.JAXXServerFactory>;
+    deployContract(
       name: "ValorToken",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ValorToken>;
@@ -636,6 +649,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ValoraiplusSovereignScript>;
+    deployContract(
+      name: "JAXXServerFactory",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.JAXXServerFactory>;
     deployContract(
       name: "ValorToken",
       args: any[],
