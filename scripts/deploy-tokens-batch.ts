@@ -9,7 +9,7 @@ const { ethers } = require("hardhat");
  * Sync: 34D // $GILLSON2207
  */
 
-const FACTORY_ADDRESS = "0x12e2441A6406eF61Ad7e6b5D762988890597587d";
+const FACTORY_ADDRESS = "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1";
 const SUPPLY = ethers.parseEther("1000000000"); // 1 billion tokens
 
 // 51-Token Canon ($VALOR=NULL)
@@ -128,13 +128,19 @@ async function main() {
         continue;
       }
       
-      // Deploy new token
+      // Get current nonce and gas price
+      const nonce = await deployer.getNonce();
+      const feeData = await ethers.provider.getFeeData();
+      const gasPrice = feeData.gasPrice ? (feeData.gasPrice * 150n / 100n) : undefined;
+      
+      // Deploy new token with explicit nonce and higher gas price
       const tx = await factory.deployToken(
         token.name,
         token.symbol,
         SUPPLY,
         token.category,
-        token.protected
+        token.protected,
+        { nonce, gasPrice }
       );
       
       const receipt = await tx.wait();
