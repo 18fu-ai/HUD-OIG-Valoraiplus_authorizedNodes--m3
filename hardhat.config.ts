@@ -50,6 +50,13 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 1,
     },
+    // BASE MAINNET (Coinbase L2)
+    base: {
+      url: "https://mainnet.base.org",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 8453,
+      gasPrice: 1000000, // 0.001 gwei - Base has very low fees
+    },
   },
   etherscan: {
     // FORENSIC VERIFICATION KEYS
