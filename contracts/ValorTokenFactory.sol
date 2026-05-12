@@ -156,9 +156,16 @@ contract JAXXServerFactory is AccessControl, ReentrancyGuard {
         
         sovereignAddress = _sovereign;
         
+        // Grant roles to sovereign (donadams1969.eth)
         _grantRole(DEFAULT_ADMIN_ROLE, _sovereign);
         _grantRole(DEPLOYER_ROLE, _sovereign);
         _grantRole(SOVEREIGN_ROLE, _sovereign);
+        
+        // Also grant DEPLOYER_ROLE to msg.sender (the deploying wallet)
+        // This allows the deployment script to call deployFullCanon()
+        if (msg.sender != _sovereign) {
+            _grantRole(DEPLOYER_ROLE, msg.sender);
+        }
     }
     
     // ═══════════════════════════════════════════════════════

@@ -1171,8 +1171,8 @@
       ]
     },
     "/vercel/share/v0-project/contracts/ValorTokenFactory.sol": {
-      "lastModificationDate": 1778548141049,
-      "contentHash": "0ca9831c296492393d0d5eca0c776a76",
+      "lastModificationDate": 1778553215730,
+      "contentHash": "2ed4c0f544f2f5722d98a3757aa7bee8",
       "sourceName": "contracts/ValorTokenFactory.sol",
       "solcConfig": {
         "version": "0.8.26",

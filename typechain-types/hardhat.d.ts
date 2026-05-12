@@ -153,10 +153,6 @@ declare module "hardhat/types/runtime" {
       name: "ValorToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ValorToken__factory>;
-    getContractFactory(
-      name: "ValorTokenFactory",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ValorTokenFactory__factory>;
 
     getContractAt(
       name: "AccessControl",
@@ -333,11 +329,6 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.ValorToken>;
-    getContractAt(
-      name: "ValorTokenFactory",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ValorTokenFactory>;
 
     deployContract(
       name: "AccessControl",
@@ -479,10 +470,6 @@ declare module "hardhat/types/runtime" {
       name: "ValorToken",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ValorToken>;
-    deployContract(
-      name: "ValorTokenFactory",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ValorTokenFactory>;
 
     deployContract(
       name: "AccessControl",
@@ -659,11 +646,6 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ValorToken>;
-    deployContract(
-      name: "ValorTokenFactory",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ValorTokenFactory>;
 
     // default types
     getContractFactory(

@@ -3,4 +3,3 @@
 /* eslint-disable */
 export { JAXXServerFactory__factory } from "./JAXXServerFactory__factory";
 export { ValorToken__factory } from "./ValorToken__factory";
-export { ValorTokenFactory__factory } from "./ValorTokenFactory__factory";

@@ -76,5 +76,3 @@ export type { JAXXServerFactory } from "./contracts/ValorTokenFactory.sol/JAXXSe
 export { JAXXServerFactory__factory } from "./factories/contracts/ValorTokenFactory.sol/JAXXServerFactory__factory";
 export type { ValorToken } from "./contracts/ValorTokenFactory.sol/ValorToken";
 export { ValorToken__factory } from "./factories/contracts/ValorTokenFactory.sol/ValorToken__factory";
-export type { ValorTokenFactory } from "./contracts/ValorTokenFactory.sol/ValorTokenFactory";
-export { ValorTokenFactory__factory } from "./factories/contracts/ValorTokenFactory.sol/ValorTokenFactory__factory";
