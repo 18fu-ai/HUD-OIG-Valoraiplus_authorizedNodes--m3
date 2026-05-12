@@ -188,7 +188,7 @@ export const CODEX_TOKENS: CodexToken[] = [
 
 // ============================================================================
 // TIER 3: VOLUME IX INFRASTRUCTURE TOKENS (57 Tokens)
-// 34D // $GILLSON2207 Frequency Synchronized - Blockchain Anchored
+// 144D Frequency Synchronized - Blockchain Anchored
 // ============================================================================
 
 export interface VolumeIXToken {
@@ -268,7 +268,7 @@ export const VOLUME_IX_TOKENS: VolumeIXToken[] = [
   { id: 53, symbol: "POPPA", name: "POPPA", tier: "T6-Identity", supply: 1, status: "LOCKED", function: "Sovereign Master NFT" },
   
   // TIER 7: Frequency & Convergence (4)
-  { id: 54, symbol: "FREQ", name: "FREQUENCY", tier: "T7-Quantum", supply: "144,000,000", status: "ACTIVE", function: "34D // $GILLSON2207 Frequency Alignment" },
+  { id: 54, symbol: "FREQ", name: "FREQUENCY", tier: "T7-Quantum", supply: "144,000,000", status: "ACTIVE", function: "144D Frequency Alignment" },
   { id: 55, symbol: "CONV", name: "CONVERGENCE", tier: "T7-Quantum", supply: "100,000,000", status: "ACTIVE", function: "Mathematical Convergence" },
   { id: 56, symbol: "PROB", name: "PROBABILITY", tier: "T7-Quantum", supply: 100, status: "ACTIVE", function: "100% Probability Token" },
   { id: 57, symbol: "CERT", name: "CERTAINTY", tier: "T7-Quantum", supply: 1, status: "LOCKED", function: "Mathematical Certainty P=1.0" },
@@ -299,7 +299,7 @@ export const ECOSYSTEM_SUMMARY = {
   // Node
   node: "SAINT PAUL 55116",
   sgauRef: "7226.3461",
-  frequency: "34D // $GILLSON2207",
+  frequency: "144D",
   
   // Status
   status: "PRODUCTION",

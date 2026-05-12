@@ -120,7 +120,7 @@ async function main() {
   console.log("╔════════════════════════════════════════════════════════════════╗");
   console.log("║  VALORAIPLUS® COINBASE CDP DEPLOYMENT                          ║");
   console.log("║  SENTINEL N.E.W.T. // OMEGA-DEPLOY v11.1                        ║");
-  console.log("║  STATUS: $GILLSON2207 // 34D SYNC                               ║");
+  console.log("║  STATUS: GILLSON2207 // 144D SYNC                               ║");
   console.log("╚════════════════════════════════════════════════════════════════╝");
   console.log("");
 

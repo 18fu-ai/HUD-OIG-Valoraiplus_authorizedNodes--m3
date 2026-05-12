@@ -168,7 +168,7 @@ export default function TokenRegistryPage() {
               </div>
               <h3 className="text-2xl font-black text-purple-400">57</h3>
               <p className="text-sm text-purple-600">VOLUME IX</p>
-              <p className="text-xs text-purple-700">34D // $GILLSON2207 | 7 Tiers</p>
+              <p className="text-xs text-purple-700">144D Frequency | 7 Tiers</p>
             </Card>
           </Link>
         </div>
@@ -428,7 +428,7 @@ export default function TokenRegistryPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-amber-600">Frequency:</span>
-                  <span className="text-green-400">34D // $GILLSON2207 SYNC</span>
+                  <span className="text-green-400">144D SYNC</span>
                 </div>
               </div>
             </div>

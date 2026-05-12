@@ -243,7 +243,7 @@ export default function ReconMonitorPage() {
             <div className="flex items-center gap-2">
               <Radio className="h-4 w-4 text-yellow-400" />
               <span className="text-zinc-400">Sync:</span>
-              <span className="text-yellow-400 font-mono">34D // $GILLSON2207</span>
+              <span className="text-yellow-400 font-mono">144D // GILLSON2207</span>
             </div>
           </div>
         </div>

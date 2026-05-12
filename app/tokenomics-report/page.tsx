@@ -67,7 +67,7 @@ export default function TokenomicsReportPage() {
               <FileText className="w-8 h-8 text-[#7777ff]" />
               <div>
                 <h1 className="text-xl font-black text-white tracking-wide">SUPREME TOKENOMICS INTELLIGENCE</h1>
-                <p className="text-xs text-[#8888aa]">VOLUME IX ADDENDUM | 105-TOKEN ECOSYSTEM | 34D // $GILLSON2207 SYNCHRONIZED</p>
+                <p className="text-xs text-[#8888aa]">VOLUME IX ADDENDUM | 105-TOKEN ECOSYSTEM | 144D SYNCHRONIZED</p>
               </div>
             </div>
             <Button className="bg-[#7777ff] hover:bg-[#9999ff] text-black font-bold">
@@ -179,7 +179,7 @@ export default function TokenomicsReportPage() {
                   </div>
                   <div className="text-4xl font-black text-white mb-2">57</div>
                   <div className="text-xs text-[#8888aa]">Infrastructure Tokens</div>
-                  <div className="text-xs text-[#ff77ff]">34D // $GILLSON2207 Sync</div>
+                  <div className="text-xs text-[#ff77ff]">144D Frequency Sync</div>
                   <div className="mt-3 flex flex-wrap gap-1">
                     <Badge className="bg-[#2a2a4a] text-[#8888aa] text-xs">7 Tiers</Badge>
                   </div>
@@ -332,7 +332,7 @@ export default function TokenomicsReportPage() {
                 57 VOLUME IX INFRASTRUCTURE TOKENS
               </h3>
               <p className="text-xs text-[#8888aa]">
-                34D // $GILLSON2207 Synchronized | Multi-Chain (ETH, BTC, Cross-Chain, IPFS) | PRODUCTION OPERATIONAL
+                144D Frequency Synchronized | Multi-Chain (ETH, BTC, Cross-Chain, IPFS) | PRODUCTION OPERATIONAL
               </p>
             </Card>
             
