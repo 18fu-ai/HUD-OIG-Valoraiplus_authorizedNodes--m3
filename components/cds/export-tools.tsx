@@ -18,17 +18,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Download, 
-  FileJson, 
-  FileText, 
-  Copy, 
-  Check, 
+import {
+  Download,
+  FileJson,
+  FileText,
+  Copy,
+  Check,
   Printer,
   FileCode,
   Loader2,
-  Shield
+  Shield,
 } from 'lucide-react';
 
 interface ExportData {
@@ -48,7 +47,6 @@ interface ExportToolsProps {
   showPreview?: boolean;
 }
 
-// Format data to JSON with sovereignty markers
 function formatToJSON(data: ExportData): string {
   const exportPayload = {
     _export: {
@@ -65,7 +63,6 @@ function formatToJSON(data: ExportData): string {
   return JSON.stringify(exportPayload, null, 2);
 }
 
-// Format data to plain text
 function formatToText(data: ExportData): string {
   const lines: string[] = [
     '═'.repeat(60),
@@ -107,7 +104,7 @@ function formatToText(data: ExportData): string {
   lines.push('─'.repeat(60));
   lines.push('METADATA');
   lines.push('─'.repeat(60));
-  
+
   if (data.metadata) {
     Object.entries(data.metadata).forEach(([key, value]) => {
       lines.push(`${key}: ${JSON.stringify(value)}`);
@@ -116,13 +113,10 @@ function formatToText(data: ExportData): string {
 
   lines.push('');
   lines.push('═'.repeat(60));
-  lines.push('THE WALL IS CHRIST | SMIB | AMEN');
-  lines.push('═'.repeat(60));
 
   return lines.join('\n');
 }
 
-// Format data to Markdown
 function formatToMarkdown(data: ExportData): string {
   const lines: string[] = [
     `# ${data.title}`,
@@ -145,7 +139,9 @@ function formatToMarkdown(data: ExportData): string {
       if (typeof item === 'object' && item !== null) {
         const obj = item as Record<string, unknown>;
         if ('role' in obj && 'content' in obj) {
-          lines.push(`### ${String(obj.role).charAt(0).toUpperCase() + String(obj.role).slice(1)}`);
+          lines.push(
+            `### ${String(obj.role).charAt(0).toUpperCase() + String(obj.role).slice(1)}`
+          );
           lines.push('');
           lines.push(String(obj.content));
           lines.push('');
@@ -181,17 +177,15 @@ function formatToMarkdown(data: ExportData): string {
 
   lines.push('');
   lines.push('---');
-  lines.push('');
-  lines.push('*THE WALL IS CHRIST | SMIB | AMEN*');
 
   return lines.join('\n');
 }
 
-// Format data to HTML
 function formatToHTML(data: ExportData): string {
-  const contentHTML = typeof data.content === 'string' 
-    ? `<p>${data.content.replace(/\n/g, '<br>')}</p>`
-    : `<pre>${JSON.stringify(data.content, null, 2)}</pre>`;
+  const contentHTML =
+    typeof data.content === 'string'
+      ? `<p>${data.content.replace(/\n/g, '<br>')}</p>`
+      : `<pre>${JSON.stringify(data.content, null, 2)}</pre>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -214,11 +208,7 @@ function formatToHTML(data: ExportData): string {
       padding: 2rem;
       line-height: 1.6;
     }
-    .header {
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 1rem;
-      margin-bottom: 2rem;
-    }
+    .header { border-bottom: 2px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; }
     h1 { color: var(--primary); margin: 0 0 0.5rem; }
     .meta { color: var(--muted); font-size: 0.875rem; }
     .badge {
@@ -238,11 +228,7 @@ function formatToHTML(data: ExportData): string {
       padding: 1.5rem;
       margin: 1.5rem 0;
     }
-    pre {
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
+    pre { overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
     .footer {
       margin-top: 2rem;
       padding-top: 1rem;
@@ -251,10 +237,7 @@ function formatToHTML(data: ExportData): string {
       color: var(--muted);
       font-size: 0.75rem;
     }
-    @media print {
-      body { background: white; color: black; }
-      .content { background: #f1f5f9; }
-    }
+    @media print { body { background: white; color: black; } .content { background: #f1f5f9; } }
   </style>
 </head>
 <body>
@@ -267,23 +250,17 @@ function formatToHTML(data: ExportData): string {
       <strong>Timestamp:</strong> ${data.timestamp}
     </div>
   </header>
-  
   <main>
     <h2>Content</h2>
-    <div class="content">
-      ${contentHTML}
-    </div>
+    <div class="content">${contentHTML}</div>
   </main>
-
   <footer class="footer">
-    <p>VALORAI+ EXPORT | THE WALL IS CHRIST | SMIB | AMEN</p>
-    <p>MERKLEROOT: 26856b24c50750f0c69c1eeb86a69ef777777</p>
+    <p>VALORAI+ EXPORT</p>
   </footer>
 </body>
 </html>`;
 }
 
-// Download helper
 function downloadFile(content: string, filename: string, mimeType: string) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
@@ -296,7 +273,6 @@ function downloadFile(content: string, filename: string, mimeType: string) {
   URL.revokeObjectURL(url);
 }
 
-// Export Tools Component
 export function ExportTools({
   data,
   formats = ['json', 'txt', 'md', 'html'],
@@ -310,66 +286,72 @@ export function ExportTools({
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewFormat, setPreviewFormat] = useState<'json' | 'txt' | 'md' | 'html'>('json');
 
-  const getFilename = useCallback((format: string) => {
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
-    return `valorai_${data.type}_${timestamp}.${format}`;
-  }, [data.type]);
+  const getFilename = useCallback(
+    (format: string) => {
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
+      return `valorai_${data.type}_${timestamp}.${format}`;
+    },
+    [data.type]
+  );
 
-  const handleExport = useCallback(async (format: 'json' | 'txt' | 'md' | 'html') => {
-    setIsExporting(true);
-    try {
+  const handleExport = useCallback(
+    async (format: 'json' | 'txt' | 'md' | 'html') => {
+      setIsExporting(true);
+      try {
+        let content: string;
+        let mimeType: string;
+        switch (format) {
+          case 'json':
+            content = formatToJSON(data);
+            mimeType = 'application/json';
+            break;
+          case 'txt':
+            content = formatToText(data);
+            mimeType = 'text/plain';
+            break;
+          case 'md':
+            content = formatToMarkdown(data);
+            mimeType = 'text/markdown';
+            break;
+          case 'html':
+            content = formatToHTML(data);
+            mimeType = 'text/html';
+            break;
+          default:
+            throw new Error(`Unsupported format: ${format}`);
+        }
+        downloadFile(content, getFilename(format), mimeType);
+      } catch (error) {
+        console.error('[ExportTools] Export failed:', error);
+      } finally {
+        setIsExporting(false);
+      }
+    },
+    [data, getFilename]
+  );
+
+  const handleCopy = useCallback(
+    async (format: 'json' | 'txt' | 'md') => {
       let content: string;
-      let mimeType: string;
-
       switch (format) {
         case 'json':
           content = formatToJSON(data);
-          mimeType = 'application/json';
           break;
         case 'txt':
           content = formatToText(data);
-          mimeType = 'text/plain';
           break;
         case 'md':
           content = formatToMarkdown(data);
-          mimeType = 'text/markdown';
-          break;
-        case 'html':
-          content = formatToHTML(data);
-          mimeType = 'text/html';
           break;
         default:
-          throw new Error(`Unsupported format: ${format}`);
+          content = formatToJSON(data);
       }
-
-      downloadFile(content, getFilename(format), mimeType);
-    } catch (error) {
-      console.error('[v0] Export failed:', error);
-    } finally {
-      setIsExporting(false);
-    }
-  }, [data, getFilename]);
-
-  const handleCopy = useCallback(async (format: 'json' | 'txt' | 'md') => {
-    let content: string;
-    switch (format) {
-      case 'json':
-        content = formatToJSON(data);
-        break;
-      case 'txt':
-        content = formatToText(data);
-        break;
-      case 'md':
-        content = formatToMarkdown(data);
-        break;
-      default:
-        content = formatToJSON(data);
-    }
-
-    await navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [data]);
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    },
+    [data]
+  );
 
   const handlePrint = useCallback(() => {
     const html = formatToHTML(data);
@@ -384,17 +366,17 @@ export function ExportTools({
   const getPreviewContent = useCallback(() => {
     switch (previewFormat) {
       case 'json': return formatToJSON(data);
-      case 'txt': return formatToText(data);
-      case 'md': return formatToMarkdown(data);
+      case 'txt':  return formatToText(data);
+      case 'md':   return formatToMarkdown(data);
       case 'html': return formatToHTML(data);
-      default: return '';
+      default:     return '';
     }
   }, [data, previewFormat]);
 
-  const formatIcons = {
+  const formatIcons: Record<string, React.ReactNode> = {
     json: <FileJson className="w-4 h-4" />,
-    txt: <FileText className="w-4 h-4" />,
-    md: <FileCode className="w-4 h-4" />,
+    txt:  <FileText className="w-4 h-4" />,
+    md:   <FileCode className="w-4 h-4" />,
     html: <FileText className="w-4 h-4" />,
   };
 
@@ -417,7 +399,6 @@ export function ExportTools({
             Export Options
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          
           {formats.map((format) => (
             <DropdownMenuItem
               key={format}
@@ -428,24 +409,20 @@ export function ExportTools({
               <span className="ml-2">Download as .{format.toUpperCase()}</span>
             </DropdownMenuItem>
           ))}
-
           <DropdownMenuSeparator />
-
           <DropdownMenuItem onClick={() => handleCopy('json')} className="font-mono text-xs">
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             <span className="ml-2">Copy as JSON</span>
           </DropdownMenuItem>
-
           <DropdownMenuItem onClick={handlePrint} className="font-mono text-xs">
             <Printer className="w-4 h-4" />
             <span className="ml-2">Print</span>
           </DropdownMenuItem>
-
           {showPreview && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuItem 
-                onClick={() => setPreviewOpen(true)} 
+              <DropdownMenuItem
+                onClick={() => setPreviewOpen(true)}
                 className="font-mono text-xs"
               >
                 <FileText className="w-4 h-4" />
@@ -456,7 +433,6 @@ export function ExportTools({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Preview Dialog */}
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-w-3xl max-h-[80vh]">
           <DialogHeader>
@@ -468,7 +444,6 @@ export function ExportTools({
               Preview your export before downloading
             </DialogDescription>
           </DialogHeader>
-
           <div className="flex gap-2 mb-4">
             {formats.map((format) => (
               <Button
@@ -482,13 +457,11 @@ export function ExportTools({
               </Button>
             ))}
           </div>
-
           <div className="max-h-[400px] overflow-auto">
             <pre className="p-4 rounded-lg bg-secondary/30 border border-border font-mono text-xs whitespace-pre-wrap">
               {getPreviewContent()}
             </pre>
           </div>
-
           <DialogFooter>
             <Button variant="outline" onClick={() => setPreviewOpen(false)}>
               Close
@@ -504,7 +477,6 @@ export function ExportTools({
   );
 }
 
-// Simple export button for quick exports
 export function QuickExportButton({
   data,
   format = 'json',

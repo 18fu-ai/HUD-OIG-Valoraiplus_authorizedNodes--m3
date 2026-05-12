@@ -204,7 +204,7 @@ function generateFullReport(sections: string[]): string {
     WITNESS_RETALIATION.forEach((event) => {
       lines.push(`[${event.id}] ${event.timestamp}`);
       lines.push(`  Target: ${event.target}`);
-      lines.push(`  Action: ${event.actionType}`);
+      lines.push(`  Action: ${event.action}`);
       lines.push(`  Perpetrator: ${event.perpetrator}`);
       lines.push(`  Evidence Hash: ${event.evidenceHash}`);
       lines.push('');
