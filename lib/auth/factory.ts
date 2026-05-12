@@ -2,9 +2,18 @@
  * VALORAIPLUS® FACTORY AUTHORITY
  * Single source of truth for the active JAXX.server.factory address.
  * All token activity MUST originate from this factory.
+ *
+ * Anchor and factory are tracked separately — see lib/auth/anchors.ts.
  */
 
-export const FACTORY_ADDRESS = "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1";
+import {
+  BASE_FACTORY_ADDRESS,
+  DEPRECATED_FACTORY_ADDRESSES,
+} from "./anchors";
+
+export { BASE_FACTORY_ADDRESS, DEPRECATED_FACTORY_ADDRESSES };
+
+export const FACTORY_ADDRESS = BASE_FACTORY_ADDRESS;
 
 export const FACTORY_CHAIN_ID = 8453;
 
