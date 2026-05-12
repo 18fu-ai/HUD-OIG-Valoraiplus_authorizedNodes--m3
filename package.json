@@ -11,7 +11,7 @@
     "validate:ontology":          "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-ontology.ts",
     "validate:factory":           "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-factory.ts",
     "validate:runtime-addresses": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-runtime-addresses.ts",
-    "validate:token-manifest":    "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-token-manifest.ts",
+    "validate:token-manifest":    "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-token-manifest.ts || npx tsx scripts/validate-token-manifest.ts",
     "security:check":             "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/security-check.ts",
     "db:readiness":               "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/db-readiness.ts",
     "smoke:test":                 "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/smoke-test.ts",

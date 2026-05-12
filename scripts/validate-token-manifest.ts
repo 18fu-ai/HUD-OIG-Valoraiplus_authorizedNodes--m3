@@ -1,79 +1,115 @@
 /**
- * VALORAIPLUS® TOKEN MANIFEST VALIDATION
- * Validates deployment-manifest-base.json schema and completeness
+ * VALORAIPLUS® TOKEN MANIFEST VALIDATOR
+ * Blocks release if:
+ *   - invalid token address
+ *   - wrong factory source
+ *   - duplicate token
+ *   - missing symbol / name
+ *   - active token not tied to active factory
+ *
+ * Pending tokens (pendingVerification) are reported as warnings, not failures.
  */
 
-import fs from "fs";
+import { FACTORY_ADDRESS } from "../lib/auth/factory";
+import { TOKEN_MANIFEST } from "../lib/tokens/manifest";
 
-const MANIFEST_PATH  = "./deployment-manifest-base.json";
-const REQUIRED_KEYS  = ["factory", "network", "chainId", "tokens"] as const;
-const NULL_ADDRESS   = "0x0000000000000000000000000000000000000000";
+type TokenManifestViolationType =
+  | "INVALID_TOKEN_ADDRESS"
+  | "INVALID_FACTORY_SOURCE"
+  | "DUPLICATE_TOKEN"
+  | "MISSING_METADATA"
+  | "UNAUTHORIZED_ACTIVE_TOKEN";
 
-interface TokenEntry {
-  symbol: string;
-  name: string;
-  address: string;
-  status: "deployed" | "failed" | "pending";
-  txHash?: string;
+interface TokenManifestViolation {
+  type: TokenManifestViolationType;
+  target: string;
+  recommendation: string;
 }
 
-interface Manifest {
-  factory?: string;
-  network?: string;
-  chainId?: number;
-  tokens?: TokenEntry[];
+const ETH_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
+
+function validateTokenManifest(): TokenManifestViolation[] {
+  const violations: TokenManifestViolation[] = [];
+  const seenAddresses = new Set<string>();
+
+  for (const token of TOKEN_MANIFEST) {
+    // Skip pending tokens — address is intentionally empty
+    if (token.status === "pendingVerification" || token.status === "deprecated") continue;
+
+    const normalizedAddress = token.address.toLowerCase();
+
+    // Address validity
+    if (!ETH_ADDRESS_REGEX.test(token.address)) {
+      violations.push({
+        type: "INVALID_TOKEN_ADDRESS",
+        target: token.symbol,
+        recommendation: `Invalid token address: ${token.address}`,
+      });
+    }
+
+    // Duplicate detection
+    if (seenAddresses.has(normalizedAddress)) {
+      violations.push({
+        type: "DUPLICATE_TOKEN",
+        target: token.symbol,
+        recommendation: `Duplicate token address detected: ${token.address}`,
+      });
+    }
+    seenAddresses.add(normalizedAddress);
+
+    // Required metadata
+    if (!token.symbol?.trim() || !token.name?.trim()) {
+      violations.push({
+        type: "MISSING_METADATA",
+        target: token.address,
+        recommendation: "Token must include symbol and name.",
+      });
+    }
+
+    // Factory source enforcement
+    if (token.sourceFactory.toLowerCase() !== FACTORY_ADDRESS.toLowerCase()) {
+      violations.push({
+        type: "INVALID_FACTORY_SOURCE",
+        target: token.symbol,
+        recommendation: `Expected source factory ${FACTORY_ADDRESS}, got ${token.sourceFactory}`,
+      });
+    }
+
+    // Active token gate
+    if (
+      token.status === "active" &&
+      token.sourceFactory.toLowerCase() !== FACTORY_ADDRESS.toLowerCase()
+    ) {
+      violations.push({
+        type: "UNAUTHORIZED_ACTIVE_TOKEN",
+        target: token.symbol,
+        recommendation: "Active tokens must originate from the active factory.",
+      });
+    }
+  }
+
+  return violations;
 }
 
-function main() {
-  if (!fs.existsSync(MANIFEST_PATH)) {
-    console.error("FAIL: Manifest not found at " + MANIFEST_PATH);
-    process.exit(1);
-  }
+const pending   = TOKEN_MANIFEST.filter((t) => t.status === "pendingVerification");
+const active    = TOKEN_MANIFEST.filter((t) => t.status === "active");
+const violations = validateTokenManifest();
 
-  let manifest: Manifest;
-  try {
-    manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8")) as Manifest;
-  } catch (e) {
-    console.error("FAIL: Manifest is not valid JSON:", (e as Error).message);
-    process.exit(1);
-  }
-
-  // Check top-level keys
-  const missing = REQUIRED_KEYS.filter((k) => manifest[k] === undefined);
-  if (missing.length > 0) {
-    console.error("FAIL: Manifest missing keys:", missing.join(", "));
-    process.exit(1);
-  }
-
-  // Validate factory address
-  if (!manifest.factory?.startsWith("0x") || manifest.factory.length !== 42) {
-    console.error("FAIL: Invalid factory address:", manifest.factory);
-    process.exit(1);
-  }
-  console.log("Factory:  " + manifest.factory);
-  console.log("Network:  " + manifest.network + " (chainId " + manifest.chainId + ")");
-
-  const tokens = manifest.tokens ?? [];
-  const deployed  = tokens.filter((t) => t.status === "deployed" && t.address !== NULL_ADDRESS);
-  const failed    = tokens.filter((t) => t.status === "failed");
-  const pending   = tokens.filter((t) => t.status === "pending" || !t.address || t.address === NULL_ADDRESS);
-
-  // Check for duplicate addresses
-  const addresses = deployed.map((t) => t.address.toLowerCase());
-  const dupes = addresses.filter((a, i) => addresses.indexOf(a) !== i);
-  if (dupes.length > 0) {
-    console.error("FAIL: Duplicate token addresses detected:", dupes);
-    process.exit(1);
-  }
-
-  // Report
-  console.log("\nToken summary:");
-  console.log("  Deployed : " + deployed.length);
-  console.log("  Failed   : " + failed.length + (failed.length > 0 ? " (" + failed.map((t) => t.symbol).join(", ") + ")" : ""));
-  console.log("  Pending  : " + pending.length);
-  console.log("  Total    : " + tokens.length);
-
-  console.log("\nToken manifest validation: PASS");
+console.log(`Factory:  ${FACTORY_ADDRESS}`);
+console.log(`Active:   ${active.length}`);
+console.log(`Pending:  ${pending.length} (LAMINAR_FLUSH_FORCE — not blocking)`);
+if (pending.length > 0) {
+  console.log(`  -> ${pending.map((t) => t.symbol).join(", ")}`);
 }
 
-main();
+if (violations.length > 0) {
+  console.error("\nToken manifest validation FAILED:\n");
+  for (const v of violations) {
+    console.error(`  [${v.type}] ${v.target}`);
+    console.error(`  -> ${v.recommendation}\n`);
+  }
+  process.exit(1);
+}
+
+console.log("\nToken manifest validation: PASS");
+process.exit(0);
