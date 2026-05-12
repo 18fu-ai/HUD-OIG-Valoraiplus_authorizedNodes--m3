@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: VALORAIPLUS-1.0
-pragma solidity ^0.8.26;
+pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -79,8 +79,8 @@ contract ValorToken is ERC20, ERC20Burnable, ERC20Permit, AccessControl {
 }
 
 /**
- * @title JAXXServerFactory (VALOR Ai++//e)
- * @author SOVEREIGN-AUDITOR-Ω & NEWT //e v2.1 | JAXX.server.factory© DONNY
+ * @title ValorTokenFactory
+ * @author SOVEREIGN-AUDITOR-Ω & NEWT //e v2.1
  * @notice Factory contract for deploying all 51 tokens in the VALORAIPLUS Canon
  * @dev Deploys ERC-20 tokens with consistent configuration
  * 
@@ -89,10 +89,8 @@ contract ValorToken is ERC20, ERC20Burnable, ERC20Permit, AccessControl {
  * Canon: 51 TOKENS ($VALOR=NULL)
  * Merkleroot: 0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b
  * Anchor: Saint Paul Node 55116
- * Brand: VALOR Ai++//e
- * Logo: /images/jaxx-server-factory-logo.jpg
  */
-contract JAXXServerFactory is AccessControl, ReentrancyGuard {
+contract ValorTokenFactory is AccessControl, ReentrancyGuard {
     
     // ═══════════════════════════════════════════════════════
     // ROLES
@@ -109,8 +107,7 @@ contract JAXXServerFactory is AccessControl, ReentrancyGuard {
     uint256 public constant DEFAULT_SUPPLY = 1_000_000_000; // 1 Billion per token
     uint8 public constant DEFAULT_DECIMALS = 18;
     
-    string public constant BRAND = "VALOR Ai++//e | JAXX.server.factory";
-    string public constant LOGO_URI = "/images/jaxx-server-factory-logo.jpg";
+    string public constant BRAND = "VALORAIPLUS";
     string public constant MERKLE_ROOT = "0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b";
     string public constant BTC_ANCHOR = "Block 847234";
     
@@ -156,16 +153,9 @@ contract JAXXServerFactory is AccessControl, ReentrancyGuard {
         
         sovereignAddress = _sovereign;
         
-        // Grant roles to sovereign (donadams1969.eth)
         _grantRole(DEFAULT_ADMIN_ROLE, _sovereign);
         _grantRole(DEPLOYER_ROLE, _sovereign);
         _grantRole(SOVEREIGN_ROLE, _sovereign);
-        
-        // Also grant DEPLOYER_ROLE to msg.sender (the deploying wallet)
-        // This allows the deployment script to call deployFullCanon()
-        if (msg.sender != _sovereign) {
-            _grantRole(DEPLOYER_ROLE, msg.sender);
-        }
     }
     
     // ═══════════════════════════════════════════════════════

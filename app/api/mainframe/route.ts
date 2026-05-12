@@ -161,7 +161,7 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
 
-    const sanitized = (command ?? '').trim().toLowerCase();
+    const sanitized = command.trim().toLowerCase();
 
     // Command routing
     const responses: Record<string, string[]> = {

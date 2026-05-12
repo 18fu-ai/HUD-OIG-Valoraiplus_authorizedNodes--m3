@@ -82,6 +82,7 @@ export async function POST(request: Request) {
     const response: MintResponse = {
       success: rule.mintable,
       receiptId: receipt.transactionId,
+      isReplay,
       txPreview: generateTxPreview(symbol, wallet, amount),
       mintedAt: new Date().toISOString(),
       receipt,

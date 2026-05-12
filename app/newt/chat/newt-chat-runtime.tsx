@@ -196,7 +196,7 @@ export default function NewtChatRuntime() {
       }
       if (final) {
         // Use SDK's setInput with functional update pattern
-        setInput((prev: string) => ((prev ?? '') + ' ' + final).trim());
+        setInput((prev: string) => (prev + ' ' + final).trim());
       } else {
         setInterimTranscript(interim);
       }
@@ -266,7 +266,7 @@ export default function NewtChatRuntime() {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!(input ?? '').trim() || isLoading) return;
+    if (!input.trim() || isLoading) return;
 
     if (isListening) {
       recognitionRef.current?.stop();
@@ -435,7 +435,7 @@ export default function NewtChatRuntime() {
               </Button>
             )}
 
-            <Button type="submit" disabled={isLoading || !(input ?? '').trim()} className="h-14 px-8 bg-emerald-600 hover:bg-emerald-700 rounded-2xl">
+            <Button type="submit" disabled={isLoading || !input.trim()} className="h-14 px-8 bg-emerald-600 hover:bg-emerald-700 rounded-2xl">
               {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
             </Button>
           </form>

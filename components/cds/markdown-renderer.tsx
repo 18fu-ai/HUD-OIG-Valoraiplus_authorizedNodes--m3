@@ -40,10 +40,6 @@ interface Token {
 // Parse markdown into tokens
 function parseMarkdown(content: string): Token[] {
   const tokens: Token[] = [];
-  // Guard against undefined/null content
-  if (!content || typeof content !== 'string') {
-    return tokens;
-  }
   const lines = content.split('\n');
   let i = 0;
 
@@ -355,9 +351,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
   variant = 'default',
   enableCopy = true,
 }: MarkdownRendererProps) {
-  // Guard: return empty if no content
-  const safeContent = content ?? '';
-  const tokens = useMemo(() => parseMarkdown(safeContent), [safeContent]);
+  const tokens = useMemo(() => parseMarkdown(content), [content]);
 
   const variantStyles = {
     default: 'text-foreground',
@@ -371,7 +365,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
       {tokens.map((token, index) => {
         switch (token.type) {
           case 'heading':
-            const HeadingTag = `h${token.level || 2}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+            const HeadingTag = `h${token.level || 2}` as keyof JSX.IntrinsicElements;
             const headingSizes: Record<number, string> = {
               1: 'text-2xl font-bold',
               2: 'text-xl font-bold',

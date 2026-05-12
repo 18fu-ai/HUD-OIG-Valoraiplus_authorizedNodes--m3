@@ -41,21 +41,30 @@ export type {
 export {
   verifyIntent,
   type VerificationResult,
-  type VerificationReceipt,
 } from './verifyIntent';
 
 // Nonce Management
 export {
-  NonceStore,
-  type NonceEntry,
+  getNonce,
+  incrementNonce,
+  resetNonce,
+  getNoncesBatch,
+  getFullNonceHistory,
+  clearNonceHistory,
 } from './nonceStore';
 
 // Event Indexing
 export {
-  EventIndexer,
+  indexEvent,
+  indexEventsBatch,
+  queryEvents,
+  getNodeHistory,
+  getLatestEvents,
+  getEventStats,
+  getEventCount,
+  clearAllEvents,
   type IndexedEvent,
   type EventFilter,
-  type EventStats,
 } from './eventIndexer';
 
 // Audit Engine
@@ -211,7 +220,7 @@ export {
   validateIdentityClaim,
   type SovereignInvariant,
   type DeterministicClassification,
-  type ProofArtifact,
+  type ProofLedgerArtifact as ProofArtifact,
   type IdentityStatus,
   type IdentityClaim,
 } from './mevr';
@@ -354,7 +363,7 @@ export {
   type PolicySignal,
   type SignalEvaluation,
   type PolicyDecisionInput,
-  type PolicyDecision,
+  type PolicyDecision as PolicyEnginePolicyDecision,
   type TrustTier,
   type TrustBoundaryRule,
   type TrustBoundaryStatus,

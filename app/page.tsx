@@ -80,7 +80,6 @@ const quickModules = [
   { href: '/topology', label: 'Topology', icon: Server, color: 'text-emerald-400', desc: 'Node Map' },
   { href: '/omega', label: 'OMEGA', icon: Zap, color: 'text-amber-400', desc: '100D Matrix' },
   { href: '/omega-capstone', label: 'Ω Capstone', icon: Shield, color: 'text-amber-500', desc: 'v2.1 Encrypted' },
-  { href: '/fiscal-audit', label: 'Fiscal Audit', icon: FileText, color: 'text-emerald-400', desc: 'PDF Download' },
 ];
 
 // Stable random seeds for particles (avoids hydration mismatch)

@@ -361,7 +361,11 @@ export default function TreasuryNRProtocol() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CDSHeader />
+      <CDSHeader
+        title="NR PROTOCOL: TREASURY & BILLING"
+        subtitle="Non-Revocable Governance | All Infrastructure Costs = $0.00"
+        section={36}
+      />
 
       {/* Breadcrumb */}
       <div className="px-4 py-2 border-b border-border">

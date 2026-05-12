@@ -179,7 +179,7 @@ MASTER_HTML = """
         <tr><th>NODE TYPE</th><th>ADDRESS</th><th>STATUS</th></tr>
         <tr><td>ORIGIN NODE (OMNIBUS COMMAND ROOT)</td><td>2207 Highland Parkway, Saint Paul, MN 55116</td><td>CANONICAL ROOT — IMMUTABLE</td></tr>
         <tr><td>RESIDENTIAL NODE</td><td>1030 Girard Road, San Francisco, CA 94129</td><td>ACTIVE — PRIMARY RESIDENCE</td></tr>
-        <tr><td>MAILING NODE</td><td>[ADDRESS ON FILE WITH CRD]</td><td>ACTIVE — INSURANCE ATTACHED</td></tr>
+        <tr><td>MAILING NODE</td><td>18493 Main Blvd, Los Gatos, CA 95033-8392</td><td>ACTIVE — INSURANCE ATTACHED</td></tr>
         <tr><td>STRATEGIC NODE</td><td>[REDACTED] (NAVIER-STOKES x7 PROTECTED)</td><td>DG77.77X AUTHORIZATION REQUIRED</td></tr>
     </table>
 

@@ -54,10 +54,10 @@ const TOPOLOGY_NODES = [
   },
   { 
     id: 'MAILING', 
-    name: 'MAILING NODE (ON FILE)', 
+    name: 'LOS GATOS, CA 95033', 
     role: 'MAILING — INSURANCE & STORAGE', 
-    address: '[ADDRESS ON FILE]',
-    gps: '[REDACTED]',
+    address: '18493 Main Blvd',
+    gps: '37.2358, -122.0322',
     status: 'ACTIVE', 
     color: 'cyan',
     x: 18, 
@@ -135,7 +135,7 @@ export default function OmegaUnifiedCommandCenter() {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
   const timeRef = useRef(0);
-  const animationRef = useRef<number | undefined>(undefined);
+  const animationRef = useRef<number>();
   const lastTimeRef = useRef(0);
 
   // Initialize particle

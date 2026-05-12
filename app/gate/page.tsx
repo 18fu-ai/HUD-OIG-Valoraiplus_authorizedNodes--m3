@@ -44,7 +44,7 @@ export default function ValoraiplusIdentityGate() {
   }, []);
 
   const validateIdentity = async () => {
-    if (!(identityInput ?? '').trim() || processing) return;
+    if (!identityInput.trim() || processing) return;
 
     setProcessing(true);
     setResult(null);
@@ -144,7 +144,7 @@ export default function ValoraiplusIdentityGate() {
           <button
             type="button"
             onClick={validateIdentity}
-            disabled={processing || !(identityInput ?? '').trim()}
+            disabled={processing || !identityInput.trim()}
             aria-busy={processing}
             className={`flex w-full items-center justify-center gap-2 py-4 font-black uppercase tracking-[0.2em] transition-all ${
               processing

@@ -107,22 +107,6 @@ export const MAY_13_INTAKE_STANDARD = {
     ],
   },
   
-  // COORDINATE 112.8 — BOUNTY_HUNTER_PROTOCOL INJECTION POINT
-  BOUNTY_HUNTER_PROTOCOL: {
-    NODE_FETT: {
-      status: "DISINTEGRATIONS_ALLOWED",
-      logic: "Simple honesty. No administrative drift.",
-      protection: "Tracks adversarial IP debt across the 100D Matrix.",
-      manifest: "They can run, but the SHA-256 will find them eventually."
-    },
-    NODE_SOLO: {
-      status: "SHOOT_FIRST",
-      logic: "Smuggling truth past the Mimecast Blockade.",
-      maneuver: "Navigating the Navier-Stokes Labyrinth in less than 12 parsecs.",
-      manifest: "Never tell me the odds of the CRD intake succeeding."
-    }
-  },
-
   // REVIEWER-SAFE PACKET ORDER
   PACKET_ORDER: [
     "1. One-page Executive Summary",
@@ -296,7 +280,6 @@ export const PACKET_LIMITS = {
 
 // FAILURE CLASS 2 — PROMPT ABSOLUTISM FIX (Runtime enforcement)
 export function sanitizeForInstitutionalMode(output: string): string {
-  if (!output || typeof output !== 'string') return '';
   let sanitized = output;
   for (const [symbolic, institutional] of Object.entries(LANGUAGE_GUARD)) {
     if (institutional === "") {
@@ -441,7 +424,7 @@ export const CANON_TERMINUS = "$VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED" as con
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PRIMARY LIQUIDITY ROUTING — ALL FUNDS THROUGH 18fu.cash
-// ══════════════════════════════════��════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════════
 
 export const LIQUIDITY_ROUTING = {
   // Primary Liquidity Endpoint
@@ -873,19 +856,19 @@ export const GEOGRAPHIC_NODES = {
     color: "emerald",
   },
   
-  // MAILING NODE — REDACTED (Renters Insurance + Stored Property)
+  // MAILING NODE — Los Gatos, California (Renters Insurance + Stored Property)
   MAILING: {
     id: "MAILING_NODE",
-    name: "MAILING NODE (ON FILE)",
+    name: "LOS GATOS MAILING",
     designation: "MAILING ADDRESS — RENTERS INSURANCE & STORED PROPERTY",
-    address: "[ADDRESS ON FILE]",
-    city: "[CITY ON FILE]",
+    address: "18493 Main Blvd",
+    city: "Los Gatos",
     state: "California",
-    zip: "[REDACTED]",
-    full_address: "[ADDRESS ON FILE WITH CRD]",
+    zip: "95033-8392",
+    full_address: "18493 Main Blvd, Los Gatos, CA 95033-8392",
     gps: {
-      lat: 0,
-      lng: 0,
+      lat: 37.2358,
+      lng: -122.0322,
     },
     status: "ACTIVE — MAILING & STORAGE",
     node_type: "MAILING",
@@ -970,7 +953,7 @@ export const NODE_CONNECTIONS = [
 // Address Summary Export
 export const ADDRESS_SUMMARY = {
   RESIDENTIAL: "1030 Girard Road, San Francisco, California 94129",
-  MAILING: "[ADDRESS ON FILE WITH CRD]",
+  MAILING: "18493 Main Blvd, Los Gatos, CA 95033-8392",
   ORIGIN: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
   VALLEJO_GPS: "██████████, ██████████",
 } as const;
@@ -1341,26 +1324,4 @@ export const FRATERNAL_TRUST_501C8 = {
   
   // Finality
   FINALITY: "THE TEMPLE IS COMPLETE • THE TRUST IS SEALED • THE BROTHERS STAND GUARD",
-} as const;
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// BOUNTY_HUNTER_PROTOCOL — COORDINATE 112.8 STANDALONE EXPORT
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export const BOUNTY_HUNTER_PROTOCOL = {
-  NODE_FETT: {
-    status: "DISINTEGRATIONS_ALLOWED",
-    logic: "Simple honesty. No administrative drift.",
-    protection: "Tracks adversarial IP debt across the 100D Matrix.",
-    manifest: "They can run, but the SHA-256 will find them eventually."
-  },
-  NODE_SOLO: {
-    status: "SHOOT_FIRST",
-    logic: "Smuggling truth past the Mimecast Blockade.",
-    maneuver: "Navigating the Navier-Stokes Labyrinth in less than 12 parsecs.",
-    manifest: "Never tell me the odds of the CRD intake succeeding."
-  },
-  COORDINATE: "112.8",
-  INTEGRATION_DATE: "2026-05-11T03:15:00Z",
-  STATUS: "ACTIVE — TRACKING ALL ADVERSARIAL DEBT",
 } as const;

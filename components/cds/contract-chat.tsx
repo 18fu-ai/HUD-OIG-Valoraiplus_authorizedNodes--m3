@@ -28,7 +28,7 @@ interface Message {
   timestamp: Date;
   contractCode?: string;
   metadata?: {
-    type: 'spec' | 'function' | 'governance' | 'finality' | 'forensic';
+    type: 'spec' | 'function' | 'governance' | 'finality';
     status: string;
   };
 }

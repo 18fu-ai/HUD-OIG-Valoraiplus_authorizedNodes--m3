@@ -134,7 +134,7 @@ export function FooterNav() {
               <div className="text-emerald-500">RESIDENTIAL:</div>
               <div className="text-slate-400">1030 Girard Road, San Francisco, CA 94129</div>
               <div className="text-cyan-500">MAILING:</div>
-              <div className="text-slate-400">[ADDRESS ON FILE WITH CRD]</div>
+              <div className="text-slate-400">18493 Main Blvd, Los Gatos, CA 95033</div>
               <div className="text-purple-500">██████████:</div>
               <div className="text-slate-400">██████████, ██████████ (ENCRYPTED)</div>
             </div>

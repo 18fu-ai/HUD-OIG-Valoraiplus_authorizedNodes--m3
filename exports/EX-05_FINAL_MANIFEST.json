@@ -1,0 +1,430 @@
+{
+  "header": {
+    "exhibitId": "EX-05",
+    "title": "Proof of Record Integrity & Persistence",
+    "manifestVersion": "13.2.0-OMEGA",
+    "reconciliationDate": "2026-05-11",
+    "generatedAt": "2026-05-12T06:55:28.711Z",
+    "node": "SAINT_PAUL_NODE_2207",
+    "syncSignature": "34D // $GILLSON2207",
+    "posture": "INVESTIGATOR-SAFE // CRD COMPLIANT"
+  },
+  "integrityAnchors": {
+    "factory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1",
+    "sovereign": "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+    "deployer": "0x50FB4a7da28ACaDbD452949508A32726aD6E36C0"
+  },
+  "compliance": {
+    "auditScore": "8/8 PASS",
+    "totalTokensCanon": 51,
+    "activeTokens": 42,
+    "pendingTokens": 9,
+    "intakeDate": "2026-05-13"
+  },
+  "investigatorPosture": "The 51-token manifest serves as the technical spine for this evidence package. Records verified for integrity and persistence as of May 11, 2026. Factory confirmed live on Base Mainnet via eth_getCode. All 42 active tokens verified. 9 pending deployment upon funding of deployer wallet.",
+  "activeTokens": [
+    {
+      "symbol": "VCORE",
+      "name": "ValorCore",
+      "address": "0xC20610545cc936cEF4eD884ae034bD6514322d40",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VAI",
+      "name": "ValorAI",
+      "address": "0x86330A16121978e62CC2580a955b0983eaF8268d",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VSEC",
+      "name": "ValorSecurity",
+      "address": "0x7b072C8d7905e991F851e447db6a3764e3A843EB",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VMAX",
+      "name": "ValorMax",
+      "address": "0x4f1a078847C3cA6bd2795B68eeA221dEb8c27FB2",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VBLK",
+      "name": "ValorBlock",
+      "address": "0xB6178393A8691Ea80FEFF0656ceD63Fe1Bd19F23",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "DBLK",
+      "name": "DynastyBlock",
+      "address": "0x03563e91D01f4f8a04657500e8eb3F18e8610668",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VGOV",
+      "name": "ValorGov",
+      "address": "0x27f9e880F91E1f3b94Dc059caE2AaB28719F9f31",
+      "category": "GOVERNANCE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VALX",
+      "name": "ValorAlpha",
+      "address": "0x66D1c350F3B27523CE4360cF65C4082343A58a45",
+      "category": "CORE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "GILLBTC",
+      "name": "GillBTC",
+      "address": "0x3ea6d23C18843141251866a32a699cf0FA360aa8",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "BTC2.0",
+      "name": "Bitcoin 2.0",
+      "address": "0x313bAe03D68A575B966fa39b19516B6A926dFeEc",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "FLAME",
+      "name": "Flame",
+      "address": "0xf8b057924a8d5043478Ee38ED41Db77b9DEb4CdD",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "BLUFLM",
+      "name": "BlueFlame",
+      "address": "0xe41eaf1Ec35E4A682A07317Eb3b703C3C39f2adc",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "GILLSON2207",
+      "name": "Gillson 2207",
+      "address": "0xc28e8d0F978a1341a7cA56600b50C2f4763C7865",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "JAXX2207",
+      "name": "Jaxx 2207",
+      "address": "0x427b3b1dbDc4ea1713c708a0F0d913c7d464c2A5",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "NEWT2207",
+      "name": "Newt 2207",
+      "address": "0xA974A31fD78cD4B0DaaDFA7793931f42CD907cb0",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "FMG1918",
+      "name": "FMG 1918",
+      "address": "0x76d8ca560f41036CA55DFdFAACe6a1413F689077",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "DBG1932",
+      "name": "DBG 1932",
+      "address": "0xBA1Abc4aFf7E658Bf4496cBFF080477E52DD8A49",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "DEG1969",
+      "name": "DEG 1969",
+      "address": "0xEac8e1812541DDF65D2B102125dbD7A80B1F7463",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "LEG1977",
+      "name": "LEG 1977",
+      "address": "0x436a7d1E812347eD7F56398649947B5bf71FDe19",
+      "category": "DYNASTY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "SGAU",
+      "name": "SGAU ValueGuard",
+      "address": "0x374366eE057d6eef3ffF91877CC131896CfA8C7B",
+      "category": "ANCHOR",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VALORAIPLUS",
+      "name": "ValorAI Plus",
+      "address": "0x70943DEac156Ee8715e450ac15197A00212f1420",
+      "category": "VALOR",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VALORAIPLUS3E",
+      "name": "ValorAI Plus 3E",
+      "address": "0xfA5F1Ca2D807CA473E82FF4E9f299c1c39c4e31b",
+      "category": "VALOR",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VREW",
+      "name": "ValorReward",
+      "address": "0x51e538D4BacC72d8FedEcb38E08F21F7371966Db",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VPNT",
+      "name": "ValorPoint",
+      "address": "0x57788813aadbA3b96da602aBdd5bB211c2937Da5",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "POPPA",
+      "name": "Poppa",
+      "address": "0xCFD95eC167EaAC35D4055b1416E2Ab668EB87213",
+      "category": "SOVEREIGN",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "NEWT",
+      "name": "Newt",
+      "address": "0xA1FE26FB66Dfd99EE29315B39d1F001A67F75923",
+      "category": "SOVEREIGN",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VRES",
+      "name": "ValorResource",
+      "address": "0x9BBd47E4d217668a256Bcd42662c1748c0a683C7",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VDAT",
+      "name": "ValorData",
+      "address": "0xBB1eDD091e40B63E00A24110A9527507710b6C4A",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VANA",
+      "name": "ValorAna",
+      "address": "0x0A9840Ac81d0E4BCA22D5153583f953632c8Aa7D",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VTRS",
+      "name": "ValorTrust",
+      "address": "0x5eF623696B00f8Ce5ef060bEa75E6CC20a8Cd159",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VRSV",
+      "name": "ValorReserve",
+      "address": "0x9F0a6D0F3DFC088C673e6262A648CdcB9fc9CfD5",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VFND",
+      "name": "ValorFund",
+      "address": "0xaFAbe9F4720403dD211Ff428DB87f3EDc769A3C7",
+      "category": "UTILITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VGAM",
+      "name": "ValorGame",
+      "address": "0x55cB4D26cebb78E2CCEdd4f5C63F24bb779EDDA8",
+      "category": "GAMING",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VMTA",
+      "name": "ValorMeta",
+      "address": "0xF0BC7F7ef1a084860EfD112B07cD8E9cF5A5A620",
+      "category": "META",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VSWP",
+      "name": "ValorSwap",
+      "address": "0x2e40f28DE29636b8800710b6b04c506c74Dbb3f8",
+      "category": "DEFI",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VYLD",
+      "name": "ValorYield",
+      "address": "0xD7057959b6d610311016320AE7e741ff70925f73",
+      "category": "DEFI",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VLND",
+      "name": "ValorLend",
+      "address": "0x17e8177aAa10E3c0072470419d2Ee0d4C7d5F934",
+      "category": "DEFI",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VID",
+      "name": "ValorID",
+      "address": "0x3Ea9c41Bf9FAb5A6e9432EA44928Ae05c602e41f",
+      "category": "IDENTITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VKYC",
+      "name": "ValorKYC",
+      "address": "0x0D0B30dC98518DE2597F5d9517f06b577CcFD7D9",
+      "category": "IDENTITY",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VENT",
+      "name": "ValorEnterprise",
+      "address": "0xA19a6463bBFFA67d4cB6A3064497E23FFDfF53A2",
+      "category": "ENTERPRISE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VPRO",
+      "name": "ValorPro",
+      "address": "0x8DCF80331c9f864b005583dAe14B6Da0ca81998C",
+      "category": "ENTERPRISE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    },
+    {
+      "symbol": "VBIZ",
+      "name": "ValorBiz",
+      "address": "0xBa44c13829aA21833a5AA351c60953334f314d02",
+      "category": "ENTERPRISE",
+      "status": "active",
+      "sourceFactory": "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1"
+    }
+  ],
+  "pendingTokens": [
+    {
+      "symbol": "DONNY2207",
+      "name": "Donny 2207",
+      "category": "DYNASTY",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "LEG1904",
+      "name": "LEG 1904",
+      "category": "DYNASTY",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VALORAIPLUS2E",
+      "name": "ValorAI Plus 2E",
+      "category": "VALOR",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VCRD",
+      "name": "ValorCredit",
+      "category": "DEFI",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "JAXX",
+      "name": "Jaxx",
+      "category": "DYNASTY",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VNFT",
+      "name": "ValorNFT",
+      "category": "NFT",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VSOC",
+      "name": "ValorSocial",
+      "category": "SOCIAL",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VCOM",
+      "name": "ValorComm",
+      "category": "SOCIAL",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    },
+    {
+      "symbol": "VACN",
+      "name": "ValorAcademy",
+      "category": "EDUCATION",
+      "status": "pendingVerification",
+      "note": "Pending deployment — awaiting ETH in deployer wallet for gas"
+    }
+  ],
+  "integrityHash": "0xa13401bc7c23b0fe274c611d7fe7bea5ab4d4a783a702a8323ba9c21aa0baefd",
+  "integrityHashAlgorithm": "SHA-256 (derived from package content)"
+}

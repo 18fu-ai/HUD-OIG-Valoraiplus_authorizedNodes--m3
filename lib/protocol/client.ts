@@ -26,21 +26,22 @@ export type {
 export type {
   ReceiptV1,
   ReceiptV2,
+  ReceiptProof,
+  ReceiptBlock,
   AdmissionStatus,
 } from './receipt';
 
 // Topology types
 export type {
-  SovereignRoute,
-  TopologyReasonCode,
-  RuntimeSignal,
-  TopologyDecision,
+  TopologyRoute,
+  TopologySignal,
+  TopologyResult,
 } from './topology-authority';
 
-// Verify Contract types - use available exports
+// Verify Contract types
 export type {
-  VerifyRequest as VerificationInput,
-  VerifyResponse as VerificationResponse,
+  SignalInput,
+  VerificationOutput,
 } from './verify-contract';
 
 // ============================================================
@@ -58,13 +59,9 @@ export {
 
 // Reason codes (pure data)
 export {
-  REASON_CODE_REGISTRY,
+  REASON_CODES,
   getReasonCode,
-  getReasonCodesByCategory,
-  getReasonCodesBySeverity,
-  type ReasonCode,
-  type ReasonCategory,
-  type ReasonSeverity,
+  getReasonSeverity,
 } from './reasonCodes';
 
 // Invariant Engine (pure sync functions)
@@ -106,6 +103,7 @@ export {
   type ClaimSafety,
   type ProofLedgerEntry,
   type ProofStatistics,
+  type SpoliationEvent,
 } from './auditEngine';
 
 // ============================================================

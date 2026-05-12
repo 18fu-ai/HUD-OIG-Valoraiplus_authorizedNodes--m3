@@ -1,5 +1,4 @@
-const hre = require("hardhat");
-const { ethers } = hre;
+import { ethers } from "hardhat";
 
 /**
  * VALORAIPLUS ERC-20 TOKEN DEPLOYMENT SCRIPT
@@ -50,16 +49,8 @@ async function main() {
   console.log("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
   console.log("");
   
-  const signers = await ethers.getSigners();
-  console.log("  Signers count:", signers.length);
-  
-  if (signers.length === 0) {
-    throw new Error("No signers available. Check that PRIVATE_KEY is set correctly in environment variables.");
-  }
-  
-  const deployer = signers[0];
-  console.log("  Deployer:", deployer.address);
-  const balance = await ethers.provider.getBalance(deployer.address);
+  const [deployer] = await ethers.getSigners();
+  const balance = await deployer.provider.getBalance(deployer.address);
   
   console.log("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
   console.log("│ DEPLOYMENT CONFIGURATION                                                                                         │");
@@ -79,17 +70,11 @@ async function main() {
   // STEP 1: DEPLOY VALOR TOKEN FACTORY
   // ════════════════════════════════════════════════════════════════════════════════════
   console.log("╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-  console.log("║ STEP 1: DEPLOYING JAXX.server.factory (VALOR Ai++//e)                                                             ║");
+  console.log("║ STEP 1: DEPLOYING VALOR TOKEN FACTORY                                                                             ║");
   console.log("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
   
-  const Factory = await ethers.getContractFactory("JAXXServerFactory");
-  
-  // Get current gas price and add 20% buffer to replace any stuck transactions
-  const feeData = await ethers.provider.getFeeData();
-  const gasPrice = feeData.gasPrice ? (feeData.gasPrice * 120n / 100n) : undefined;
-  console.log("  Gas Price (with 20% buffer): " + (gasPrice ? ethers.formatUnits(gasPrice, "gwei") + " gwei" : "auto"));
-  
-  const factory = await Factory.deploy(SOVEREIGN_POPPA, { gasPrice });
+  const Factory = await ethers.getContractFactory("ValorTokenFactory");
+  const factory = await Factory.deploy(SOVEREIGN_POPPA);
   await factory.waitForDeployment();
   const factoryAddress = await factory.getAddress();
   const factoryReceipt = await factory.deploymentTransaction()?.wait();
@@ -101,8 +86,8 @@ async function main() {
   
   // ════════════════════════════════════════════════════════════════════════════════════
   // STEP 2: DEPLOY ALL 51 TOKENS VIA FACTORY
-  // ══════════════════════════════════════════════��═════════════════════════════════════
-  console.log("╔════════════════════════════════════════════════════��═══════���═════════════════════════════════════════════════════╗");
+  // ════════════════════════════════════════════════════════════════════════════════════
+  console.log("╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
   console.log("║ STEP 2: DEPLOYING 51-TOKEN CANON                                                                                  ║");
   console.log("╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
   console.log("║ NOTE: $VALOR is NULLIFIED - deploying $VALORAIPLUS and $VALORAIPLUS2E_DAO_GOVERNANCE_2035_CLOSED instead          ║");

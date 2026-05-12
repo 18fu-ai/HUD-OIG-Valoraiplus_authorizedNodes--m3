@@ -22,7 +22,7 @@ const MERKLEROOT = "0X_ST_PAUL_V97_HARDHAT_SOLIDIFIED";
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.26",
+    version: "0.8.24",
     settings: {
       optimizer: {
         enabled: true,
@@ -30,7 +30,6 @@ const config: HardhatUserConfig = {
       },
       // ENFORCING LAMINAR FLOW VIA IR
       viaIR: true,
-      evmVersion: "cancun",
     },
   },
   networks: {
@@ -40,7 +39,7 @@ const config: HardhatUserConfig = {
     },
     // SEPOLIA BRIDGE
     sepolia: {
-      url: process.env.SEPOLIA_RPC_URL || "https://eth-sepolia.g.alchemy.com/v2/c4ZrmLkzgqxmjC5826ry2",
+      url: process.env.SEPOLIA_RPC_URL || "https://eth-sepolia.g.alchemy.com/v2/demo",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 11155111,
     },
@@ -49,13 +48,6 @@ const config: HardhatUserConfig = {
       url: process.env.MAINNET_RPC_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 1,
-    },
-    // BASE MAINNET (Coinbase L2)
-    base: {
-      url: "https://mainnet.base.org",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 8453,
-      gasPrice: 1000000, // 0.001 gwei - Base has very low fees
     },
   },
   etherscan: {

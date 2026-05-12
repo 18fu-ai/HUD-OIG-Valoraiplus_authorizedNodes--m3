@@ -43,55 +43,45 @@ export {
 
 // Receipt System
 export {
-  createReceipt,
+  generateReceipt,
   getReceipt,
-  generateReceiptHash,
   type ReceiptV1,
-  type ReceiptV2,
-  type AdmissionStatus,
-  type CreateReceiptInput,
+  type ReceiptProof,
 } from './receipt';
 
 // Topology Authority
 export {
   enforceTopology,
-  ValoraiplusTopologyAuthority,
-  topologyAuthority,
-  type SovereignRoute,
-  type TopologyReasonCode,
-  type RuntimeSignal,
-  type TopologyDecision,
+  TopologyAuthority,
+  VALID_ROUTES,
+  type TopologyRoute,
+  type TopologySignal,
+  type TopologyResult,
 } from './topology-authority';
 
 // Verify Contract (REV_33)
 export {
   verifySignal,
-  type RuntimeSignal as VerifyRuntimeSignal,
-  type PolicyDecision,
-  type VerifyRequest,
-  type VerifyResponse,
+  type SignalInput,
+  type VerificationOutput,
 } from './verify-contract';
 
 // Audit Engine
 export {
-  SYSTEM_AUDIT_REGISTRY,
+  recordSpoliationAttempt,
+  getSpoliationLog,
   computeValidationScore,
-  computeProtocolSignals,
-  generateAuditSummary,
-  generateDefensibleOutput,
-  softenClaim,
+  type SpoliationEvent,
   type AuditRecord,
-  type ProofVector,
-  type ValidationScores,
 } from './auditEngine';
 
 // Proof Ledger
 export {
-  createProofVector,
-  buildProofVector,
-  computeProofScore,
-  getLedger,
-  appendToLedger,
+  anchorProof,
+  getProof,
+  verifyProofChain,
+  type ProofEntry,
+  type ProofChain,
 } from './proofLedger';
 
 // Verification Pipeline
@@ -102,55 +92,42 @@ export {
 
 // Invariant Engine
 export {
-  enforceInvariants,
-  validateInvariant,
-  runAdmissionPipeline,
-  createRuntimeClaim,
+  enforceInvariant,
+  checkInvariant,
   type InvariantRule,
   type InvariantResult,
-  type RuntimeClaim,
-  type AdmissionPipelineResult,
 } from './invariantEngine';
 
 // Reason Codes
 export {
-  REASON_CODE_REGISTRY,
+  REASON_CODES,
   getReasonCode,
-  getReasonCodesByCategory,
-  type ReasonCode,
-  type ReasonCategory,
+  getReasonSeverity,
 } from './reasonCodes';
 
 // Trace Graph
 export {
-  constructTraceGraph,
-  TraceGraphBuilder,
+  buildTraceGraph,
   type TraceNode,
   type TraceGraph,
 } from './traceGraph';
 
 // Replay Validator
 export {
-  validateReplayConsistency,
-  performReplayValidation,
-  type ReplaySnapshot,
-  type ReplayValidationResult,
+  validateReplay,
+  type ReplayResult,
 } from './replayValidator';
 
 // Governance Kernel
 export {
-  GovernanceKernel,
-  getGovernanceKernel,
+  evaluateGovernance,
   type GovernanceDecision,
-  type GovernanceMode,
 } from './governanceKernel';
 
 // Export Policy
 export {
-  evaluateExportEligibility,
-  findBestPolicy,
-  type ExportEligibility,
-  type ExportPolicy,
+  checkExportEligibility,
+  type ExportDecision,
 } from './exportPolicy';
 
 // Runtime Topology
@@ -173,10 +150,10 @@ export {
 
 // EIP-712 Signing
 export {
-  createTypedData,
+  buildDomain,
   validateIntentPayload,
   type IntentType,
-  type TypedDataPayload,
+  type ValidationResult as TypedDataPayload,
 } from './eip712';
 
 // Nonce Store

@@ -113,10 +113,10 @@ export class GovernanceKernel {
     // Step 1: Enforce invariants
     const enforcement = enforceInvariants(claim);
     const hardViolations = enforcement.invariantResults
-      .filter(r => !r.passed && r.severity === 'BLOCK')
+      .filter(r => !r.passed && r.severity === 'HARD')
       .map(r => r.invariantId);
     const softViolations = enforcement.invariantResults
-      .filter(r => !r.passed && r.severity === 'WARN')
+      .filter(r => !r.passed && r.severity === 'SOFT')
       .map(r => r.invariantId);
 
     // Step 2: Perform replay validation (if enabled)
@@ -124,7 +124,7 @@ export class GovernanceKernel {
     if (this.config.enableReplayValidation) {
       replayResult = performReplayValidation(
         { id: claim.id, statement: claim.statement, component: claim.component, sourceRef: claim.sourceRef },
-        { proofScore: claim.proofScore, confidenceScore: claim.confidenceScore, validationScore: claim.validationScore, status: claim.validationScore >= 0.95 ? 'VERIFIED' : claim.validationScore >= 0.75 ? 'HIGH' : 'MEDIUM' },
+        { proofScore: claim.proofScore, confidenceScore: claim.confidenceScore, validationScore: claim.validationScore, status: claim.status },
         enforcement.invariantResults.map(r => `${r.invariantId}:${r.passed}`)
       );
     }

@@ -26,10 +26,10 @@ export const PRIMARY_CONNECTED_ACCOUNT = {
   accountNumberMasked: "••••-8185",
   accountNumberLastFour: "8185",
   address: {
-    street: "[ADDRESS ON FILE]",
-    city: "[CITY ON FILE]",
+    street: "18493 MAIN BLVD",
+    city: "LOS GATOS",
     state: "CA",
-    zip: "[REDACTED]"
+    zip: "95033-8392"
   },
   statementPeriod: "April 1-30, 2026",
   currentValue: 5.53,
@@ -753,7 +753,6 @@ export interface MimecastEvent {
   id: string;
   timestamp: string;
   actor: string;
-  action?: string;
   actionType: string;
   target: string;
   sourceIP: string;
@@ -2009,7 +2008,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ══��════════════════════════════════════════════════════
     // MODIFIERS
-    // ══════════════════════════════════════════════════════��
+    // ═══════════════════════════════════════════════════════
     
     modifier notExcluded(address user) {
         require(!isExcluded[user], "CSSS: USER EXCLUDED FOR LIFE");
@@ -2018,7 +2017,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ═══════════════════════════════════════════════════════
     // CONSTRUCTOR
-    // ══════════════════════════���════════════════════════════
+    // ═══════════════════════════════════════════════════════
     
     constructor() ERC721("CSSS Reputation NFT", "CSSS") Ownable(msg.sender) {}
     

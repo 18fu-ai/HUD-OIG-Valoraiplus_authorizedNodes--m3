@@ -36,10 +36,10 @@ export const CONNECTED_BROKERAGE_ACCOUNT = {
   accountNumberMasked: "****-*185",
   routingInfo: "SIPC Member",
   address: {
-    street: "[ADDRESS ON FILE]",
-    city: "[CITY ON FILE]",
+    street: "18493 MAIN BLVD",
+    city: "LOS GATOS",
     state: "CA",
-    zip: "[REDACTED]"
+    zip: "95033-8392"
   },
   statementPeriod: "April 1-30, 2026",
   endingValue: "$5.53",

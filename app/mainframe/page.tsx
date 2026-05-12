@@ -367,7 +367,7 @@ function MainframeTerminal() {
   const focusInput = () => inputRef.current?.focus();
 
   const executeCommand = useCallback((cmd: string) => {
-    const trimmed = (cmd ?? '').trim();
+    const trimmed = cmd.trim();
     if (!trimmed) return;
 
     const newLines = [...lines, `poppa_g@cds-mainframe-00:~# ${trimmed}`];
