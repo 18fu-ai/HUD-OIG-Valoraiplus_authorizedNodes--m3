@@ -690,7 +690,7 @@ function verifySpoliation(
     return true;
 }`,
         metadata: {
-          type: 'governance' as const,
+          type: 'forensic',
           status: 'SATURATED',
         },
       };

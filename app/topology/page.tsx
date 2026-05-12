@@ -13,7 +13,7 @@ import {
 
 import FlowFieldParticleBackground from "@/components/flow-field/FlowFieldParticleBackground";
 
-type NodeStatus = "ACTIVE" | "INACTIVE / DEPRECATED" | "INVISIBLE";
+type NodeStatus = "ACTIVE" | "INACTIVE / DEPRECATED";
 
 type TopologyNode = {
   id: string;

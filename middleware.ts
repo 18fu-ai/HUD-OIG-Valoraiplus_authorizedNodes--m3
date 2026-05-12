@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
 
 const RATE_LIMIT = 60; // requests per IP per minute
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(uuidv4()).toString('base64');
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
 
   // Derive IP — Vercel sets x-forwarded-for; fall back to a static tag for local dev
   const ip =

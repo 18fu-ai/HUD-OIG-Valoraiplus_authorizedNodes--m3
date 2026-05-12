@@ -20,51 +20,34 @@ export * from './types';
 // EIP-712 Signature Layer
 export {
   buildDomain,
-  EIP712_DOMAIN,
-  EIP712_TYPES,
-  SignedIntentSchema as LatchIntentSchema,
+  buildLatchIntentTypedData,
+  buildRevisionIntentTypedData,
+  buildNullifyIntentTypedData,
+  hashTypedData,
+  LatchIntentSchema,
   RevisionIntentSchema,
   NullifyIntentSchema,
-} from './eip712';
-
-export type {
-  SignedIntent,
-  RevisionIntent,
-  NullifyIntent,
-  AnchorIntent,
-  VerifierIntent,
-  IntentType,
-  ValidationResult,
 } from './eip712';
 
 // Intent Verification
 export {
   verifyIntent,
   type VerificationResult,
+  type VerificationReceipt,
 } from './verifyIntent';
 
 // Nonce Management
 export {
-  getNonce,
-  incrementNonce,
-  resetNonce,
-  getNoncesBatch,
-  getNonceHistory,
-  clearAllNonces,
+  NonceStore,
+  type NonceEntry,
 } from './nonceStore';
 
 // Event Indexing
 export {
-  indexEvent,
-  indexEventsBatch,
-  queryEvents,
-  getNodeHistory,
-  getLatestEvents,
-  getEventStats,
-  getEventCount,
-  clearAllEvents,
+  EventIndexer,
   type IndexedEvent,
   type EventFilter,
+  type EventStats,
 } from './eventIndexer';
 
 // Audit Engine
@@ -220,7 +203,7 @@ export {
   validateIdentityClaim,
   type SovereignInvariant,
   type DeterministicClassification,
-  type ProofLedgerArtifact as ProofArtifact,
+  type ProofArtifact,
   type IdentityStatus,
   type IdentityClaim,
 } from './mevr';
@@ -363,7 +346,7 @@ export {
   type PolicySignal,
   type SignalEvaluation,
   type PolicyDecisionInput,
-  type PolicyDecision as PolicyEnginePolicyDecision,
+  type PolicyDecision,
   type TrustTier,
   type TrustBoundaryRule,
   type TrustBoundaryStatus,

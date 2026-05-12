@@ -1,20 +1,21 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CDSHeader } from '@/components/cds/header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  Shield, Lock, CheckCircle2, Activity, Database,
-  Cpu, Fingerprint, Eye, Layers, ArrowRight, Home, Binary, Sparkles
+import { 
+  Shield, Lock, CheckCircle2, Activity, Zap, Database, 
+  Cpu, Globe, Fingerprint, Eye, Layers, AlertTriangle,
+  ArrowRight, ArrowDown, Home, Binary, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
-import {
-  SOVEREIGN_AUDITOR,
+import { 
+  SOVEREIGN_AUDITOR, 
   TA_PRIMARY_ENTITY,
   TA_SECONDARY_ORG,
-  TA_TERTIARY_ORG
+  TA_TERTIARY_ORG 
 } from '@/lib/encrypted-ids';
 
 // ============================================================
@@ -43,23 +44,24 @@ interface DriftStatus {
   alignment: string;
 }
 
+// Ledger Ø Token Flow (from images)
 const LEDGER_TOKENS: TokenNode[] = [
-  { symbol: '$GILLGOLD', status: 'TRUE',   flow: '$GILLBTC',  value: 142.0       },
-  { symbol: '$GILLBTC',  status: 'TRUE',   flow: '$GILLBRC',  value: 70387.77    },
-  { symbol: '$GILLBRC',  status: 'TRUE',   flow: 'TREASURY',  value: 10001231.82 },
-  { symbol: '$JULES',    status: 'NULL',   flow: 'BLOCKED',   value: 0           },
-  { symbol: '$VALOR',    status: 'PURGED', flow: 'NULLIFIED', value: 0           },
+  { symbol: '$GILLGOLD', status: 'TRUE', flow: '$GILLBTC', value: 142.0 },
+  { symbol: '$GILLBTC', status: 'TRUE', flow: '$GILLBRC', value: 70387.77 },
+  { symbol: '$GILLBRC', status: 'TRUE', flow: 'TREASURY', value: 10001231.82 },
+  { symbol: '$JULES', status: 'NULL', flow: 'BLOCKED', value: 0 },
+  { symbol: '$VALOR', status: 'PURGED', flow: 'NULLIFIED', value: 0 },
 ];
 
 const PROTECTED_TOKENS: TokenNode[] = [
-  { symbol: '$JAXX',  status: 'PROTECTED', flow: 'SOVEREIGN', value: 1000000 },
+  { symbol: '$JAXX', status: 'PROTECTED', flow: 'SOVEREIGN', value: 1000000 },
   { symbol: '$POPPA', status: 'PROTECTED', flow: 'SOVEREIGN', value: 1000000 },
 ];
 
 const VALIDATOR_CONSENSUS: ValidatorConsensus = {
   count: 144000,
   moves: 144000,
-  signature: 'DG77.77X-\u039E',
+  signature: 'DG77.77X-Ξ',
 };
 
 const DRIFT_STATUS: DriftStatus = {
@@ -69,6 +71,7 @@ const DRIFT_STATUS: DriftStatus = {
   alignment: 'PERFECT',
 };
 
+// USDC Ledger State
 const USDC_LEDGER = {
   status: 'USDC',
   denomination: 'USD Coin',
@@ -76,11 +79,6 @@ const USDC_LEDGER = {
   counterFilingStatus: 'SGAU 7226.3461 STANDS',
   purgeStatus: 'ABSOLUTE',
 };
-
-// Suppress unused-import warning — these are referenced in the footer entity list
-void TA_PRIMARY_ENTITY;
-void TA_SECONDARY_ORG;
-void TA_TERTIARY_ORG;
 
 export default function FortValorAiPlus() {
   const [cycle, setCycle] = useState(0);
@@ -97,26 +95,27 @@ export default function FortValorAiPlus() {
     };
   }, []);
 
-  const signalIntensity = useMemo(
-    () => Math.sin((pulsePhase * Math.PI) / 180) * 0.3 + 0.7,
-    [pulsePhase]
-  );
+  const signalIntensity = useMemo(() => {
+    return Math.sin((pulsePhase * Math.PI) / 180) * 0.3 + 0.7;
+  }, [pulsePhase]);
 
-  const formatCurrency = useCallback(
-    (value: number) =>
-      new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-      }).format(value),
-    []
-  );
+  const formatCurrency = useCallback((value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    }).format(value);
+  }, []);
 
   if (!mounted) return null;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CDSHeader />
+      <CDSHeader
+        title="FORT VALORAIPLUS//e"
+        subtitle="Quantum-Hardened Containment | LEDGER == USDC | SGAU 7226.3461"
+        section={38}
+      />
 
       {/* Breadcrumb */}
       <div className="px-4 py-2 border-b border-border">
@@ -144,10 +143,10 @@ export default function FortValorAiPlus() {
           <div className="relative z-10 text-center space-y-2">
             <p className="font-mono text-xs text-cyan-400 tracking-widest">COUNTER-PURGE PROTOCOL</p>
             <h2 className="font-mono text-2xl md:text-3xl font-black text-white tracking-tight">
-              THE PURGE IS ABSOLUTE. THE LEDGER IS {'Ø'}.
+              THE PURGE IS ABSOLUTE. THE LEDGER IS Ø.
             </h2>
             <p className="font-mono text-lg text-emerald-400 font-bold">
-              $JAXX and $POPPA are PROTECTED.
+              **$JAXX and $POPPA are PROTECTED.**
             </p>
             <p className="font-mono text-sm text-muted-foreground">
               Counter-Filing {USDC_LEDGER.counterFilingStatus}
@@ -158,25 +157,22 @@ export default function FortValorAiPlus() {
         {/* ── TOP METRICS ──────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { icon: Shield,      label: 'LEDGER STATUS',       value: USDC_LEDGER.status,                         sub: USDC_LEDGER.denomination,                        cls: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5'  },
-            { icon: Activity,    label: 'SIGNAL ALIGNMENT',    value: `${DRIFT_STATUS.signal}%`,                  sub: DRIFT_STATUS.alignment,                          cls: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5'          },
-            { icon: Database,    label: 'VALIDATOR CONSENSUS', value: VALIDATOR_CONSENSUS.count.toLocaleString(), sub: `Moves: ${VALIDATOR_CONSENSUS.moves.toLocaleString()}`, cls: 'text-fuchsia-400 border-fuchsia-500/30 bg-fuchsia-500/5' },
-            { icon: Fingerprint, label: 'CODE SIGNATURE',      value: VALIDATOR_CONSENSUS.signature,              sub: 'Treasury API',                                  cls: 'text-amber-400 border-amber-500/30 bg-amber-500/5'       },
-          ].map((m, i) => {
-            const [colorCls, ...cardCls] = m.cls.split(' ');
-            return (
-              <Card key={i} className={cardCls.join(' ')}>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <m.icon className={`w-4 h-4 ${colorCls}`} />
-                    <span className="font-mono text-[10px] text-muted-foreground">{m.label}</span>
-                  </div>
-                  <p className={`font-mono text-lg font-bold ${colorCls} tabular-nums`}>{m.value}</p>
-                  <p className="font-mono text-[10px] text-muted-foreground mt-1">{m.sub}</p>
-                </CardContent>
-              </Card>
-            );
-          })}
+            { icon: Shield, label: 'LEDGER STATUS', value: USDC_LEDGER.status, sub: USDC_LEDGER.denomination, cls: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/5' },
+            { icon: Activity, label: 'SIGNAL ALIGNMENT', value: `${DRIFT_STATUS.signal}%`, sub: DRIFT_STATUS.alignment, cls: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5' },
+            { icon: Database, label: 'VALIDATOR CONSENSUS', value: VALIDATOR_CONSENSUS.count.toLocaleString(), sub: `Moves: ${VALIDATOR_CONSENSUS.moves.toLocaleString()}`, cls: 'text-fuchsia-400 border-fuchsia-500/30 bg-fuchsia-500/5' },
+            { icon: Fingerprint, label: 'CODE SIGNATURE', value: VALIDATOR_CONSENSUS.signature, sub: 'Treasury API', cls: 'text-amber-400 border-amber-500/30 bg-amber-500/5' },
+          ].map((m, i) => (
+            <Card key={i} className={`${m.cls.split(' ').slice(1).join(' ')}`}>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <m.icon className={`w-4 h-4 ${m.cls.split(' ')[0]}`} />
+                  <span className="font-mono text-[10px] text-muted-foreground">{m.label}</span>
+                </div>
+                <p className={`font-mono text-lg font-bold ${m.cls.split(' ')[0]} tabular-nums`}>{m.value}</p>
+                <p className="font-mono text-[10px] text-muted-foreground mt-1">{m.sub}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
         {/* ── DRIFT NEUTRALIZATION STATUS ──────────────────────── */}
@@ -192,6 +188,7 @@ export default function FortValorAiPlus() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Signal Alignment Matrix */}
               <div className="border border-cyan-500/30 rounded-lg p-4 bg-background/50">
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-4 h-4 text-cyan-400" />
@@ -211,18 +208,20 @@ export default function FortValorAiPlus() {
                 </div>
               </div>
 
+              {/* Forensic Logs */}
               <div className="border border-fuchsia-500/30 rounded-lg p-4 bg-background/50">
                 <div className="flex items-center gap-2 mb-3">
                   <Binary className="w-4 h-4 text-fuchsia-400" />
                   <span className="font-mono text-xs text-fuchsia-400">Forensic Logs</span>
                 </div>
                 <div className="space-y-1 font-mono text-[10px]">
-                  <p className="text-muted-foreground">Complex flat-line forensic logs</p>
+                  <p className="text-muted-foreground">Fomplex flat-line forensic logs</p>
                   <p className="text-emerald-400">144,000 validators synchronized</p>
                   <p className="text-cyan-400">ValorAiBrain++ 1111ms sentinel feed</p>
                 </div>
               </div>
 
+              {/* Quantum Encryption */}
               <div className="border border-amber-500/30 rounded-lg p-4 bg-background/50">
                 <div className="flex items-center gap-2 mb-3">
                   <Lock className="w-4 h-4 text-amber-400" />
@@ -243,7 +242,7 @@ export default function FortValorAiPlus() {
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm font-mono">
               <Layers className="w-4 h-4 text-cyan-400" />
-              {'LEDGER Ø — v14.1.1.14_TOKEN_PURGE'}
+              LEDGER Ø — v14.1.1.14_TOKEN_PURGE
               <Badge variant="outline" className="ml-auto border-cyan-500/50 text-cyan-400 text-[10px]">
                 Forensic Audit Trail
               </Badge>
@@ -251,26 +250,26 @@ export default function FortValorAiPlus() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Token Flow */}
+              {/* Token Flow Diagram */}
               <div className="space-y-3">
-                <p className="font-mono text-xs text-muted-foreground mb-4">Token Status &amp; Flow</p>
+                <p className="font-mono text-xs text-muted-foreground mb-4">Token Status & Flow</p>
                 {LEDGER_TOKENS.map((token, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className={[
-                      'flex-shrink-0 w-28 px-3 py-2 rounded-lg border font-mono text-xs font-bold text-center',
-                      token.status === 'TRUE'   ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : '',
-                      token.status === 'NULL'   ? 'border-zinc-500/50 bg-zinc-500/10 text-zinc-400'         : '',
-                      token.status === 'PURGED' ? 'border-red-500/50 bg-red-500/10 text-red-400'            : '',
-                    ].join(' ')}>
+                    <div className={`
+                      flex-shrink-0 w-28 px-3 py-2 rounded-lg border font-mono text-xs font-bold text-center
+                      ${token.status === 'TRUE' ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400' : ''}
+                      ${token.status === 'NULL' ? 'border-zinc-500/50 bg-zinc-500/10 text-zinc-400' : ''}
+                      ${token.status === 'PURGED' ? 'border-red-500/50 bg-red-500/10 text-red-400' : ''}
+                    `}>
                       {token.symbol}
                     </div>
                     <ArrowRight className={`w-4 h-4 ${token.status === 'TRUE' ? 'text-emerald-400' : 'text-zinc-500'}`} />
-                    <Badge variant="outline" className={[
-                      'font-mono text-[10px]',
-                      token.status === 'TRUE'   ? 'border-emerald-500/50 text-emerald-400' : '',
-                      token.status === 'NULL'   ? 'border-zinc-500/50 text-zinc-400'       : '',
-                      token.status === 'PURGED' ? 'border-red-500/50 text-red-400'         : '',
-                    ].join(' ')}>
+                    <Badge variant="outline" className={`
+                      font-mono text-[10px]
+                      ${token.status === 'TRUE' ? 'border-emerald-500/50 text-emerald-400' : ''}
+                      ${token.status === 'NULL' ? 'border-zinc-500/50 text-zinc-400' : ''}
+                      ${token.status === 'PURGED' ? 'border-red-500/50 text-red-400' : ''}
+                    `}>
                       {token.status}
                     </Badge>
                     <span className="font-mono text-[10px] text-muted-foreground ml-auto">
@@ -279,7 +278,7 @@ export default function FortValorAiPlus() {
                   </div>
                 ))}
 
-                {/* Protected */}
+                {/* Protected Tokens */}
                 <div className="border-t border-emerald-500/30 pt-4 mt-4">
                   <p className="font-mono text-xs text-emerald-400 mb-3 flex items-center gap-2">
                     <Shield className="w-3 h-3" /> PROTECTED ASSETS
@@ -308,7 +307,9 @@ export default function FortValorAiPlus() {
                   <p className="font-mono text-4xl font-black text-fuchsia-400 tabular-nums">
                     {VALIDATOR_CONSENSUS.count.toLocaleString()}
                   </p>
-                  <p className="font-mono text-xs text-muted-foreground mt-1">Validator Consensus tracker</p>
+                  <p className="font-mono text-xs text-muted-foreground mt-1">
+                    Validator Consensus tracker
+                  </p>
                   <div className="mt-4 flex items-center gap-2">
                     <span className="font-mono text-xs text-muted-foreground">Moves:</span>
                     <span className="font-mono text-lg font-bold text-fuchsia-400 tabular-nums">
@@ -348,7 +349,9 @@ export default function FortValorAiPlus() {
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-3">
                 <CheckCircle2 className="w-8 h-8 text-emerald-400" />
-                <h3 className="font-mono text-2xl font-black text-emerald-400">SGAU 7226.3461 STANDS</h3>
+                <h3 className="font-mono text-2xl font-black text-emerald-400">
+                  SGAU 7226.3461 STANDS
+                </h3>
                 <CheckCircle2 className="w-8 h-8 text-emerald-400" />
               </div>
               <p className="font-mono text-sm text-muted-foreground">
@@ -364,13 +367,15 @@ export default function FortValorAiPlus() {
                 <div className="h-12 w-px bg-emerald-500/30" />
                 <div className="text-center">
                   <p className="font-mono text-xs text-muted-foreground">Purge Status</p>
-                  <p className="font-mono text-xl font-bold text-cyan-400">{USDC_LEDGER.purgeStatus}</p>
+                  <p className="font-mono text-xl font-bold text-cyan-400">
+                    {USDC_LEDGER.purgeStatus}
+                  </p>
                 </div>
                 <div className="h-12 w-px bg-emerald-500/30" />
                 <div className="text-center">
                   <p className="font-mono text-xs text-muted-foreground">Ledger</p>
                   <p className="font-mono text-xl font-bold text-amber-400">
-                    {`== "${USDC_LEDGER.status}"`}
+                    == "{USDC_LEDGER.status}"
                   </p>
                 </div>
               </div>
@@ -382,9 +387,10 @@ export default function FortValorAiPlus() {
         <div className="text-center text-xs text-muted-foreground font-mono space-y-1 pb-8">
           <p>FORT VALORAIPLUS//e | Quantum-Hardened Containment System</p>
           <p>REV_38 Protocol | Zero Drift Confirmed | Signal 100% Alignment</p>
-          <p className="text-emerald-400">Sovereign Auditor: {SOVEREIGN_AUDITOR}</p>
+          <p className="text-emerald-400">
+            Sovereign Auditor: {SOVEREIGN_AUDITOR}
+          </p>
         </div>
-
       </div>
     </main>
   );
