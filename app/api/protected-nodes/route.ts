@@ -18,7 +18,6 @@ export async function GET(request: Request) {
 
   if (nodeFilter) {
     nodes = nodes.filter(n => 
-      n.symbol.toLowerCase().includes(nodeFilter.toLowerCase()) ||
       n.name.toLowerCase().includes(nodeFilter.toLowerCase())
     );
   }

@@ -111,7 +111,7 @@ export default function AuthAuditPage() {
       <div className="max-w-6xl mx-auto space-y-8 relative z-10">
         
         {/* HOME BUTTON */}
-        <HomeButton variant="ghost" />
+        <HomeButton variant="default" />
 
         {/* HEADER: AUTH COMMAND */}
         <header className="bg-black/80 backdrop-blur-3xl border border-cyan-500/20 p-8 rounded-3xl shadow-2xl flex flex-col xl:flex-row justify-between items-center gap-6 relative overflow-hidden group">

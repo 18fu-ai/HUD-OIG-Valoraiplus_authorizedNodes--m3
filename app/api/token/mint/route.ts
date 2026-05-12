@@ -74,7 +74,6 @@ export async function POST(request: Request) {
     // Create receipt regardless of decision (for audit trail)
     const receipt = createReceipt({
       signer: wallet,
-      claim: `MINT:${symbol}:${amount}`,
       verdict: rule.mintable ? 'ADMITTED' : 'REJECTED',
       route: rule.route,
       reasonCode: rule.mintable ? 'SOVEREIGN_VALID' : 'IDENTITY_REJECTED',
@@ -87,7 +86,7 @@ export async function POST(request: Request) {
 
     const response: MintResponse = {
       success: rule.mintable,
-      receiptId: receipt.txid,
+      receiptId: receipt.transactionId,
       txPreview: generateTxPreview(symbol, wallet, amount),
       mintedAt: new Date().toISOString(),
       receipt,

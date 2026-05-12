@@ -111,11 +111,7 @@ export default function FortValorAiPlus() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CDSHeader
-        title="FORT VALORAIPLUS//e"
-        subtitle="Quantum-Hardened Containment | LEDGER == USDC | SGAU 7226.3461"
-        section={38}
-      />
+      <CDSHeader />
 
       {/* Breadcrumb */}
       <div className="px-4 py-2 border-b border-border">

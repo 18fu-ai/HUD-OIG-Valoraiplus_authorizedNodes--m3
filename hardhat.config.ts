@@ -35,6 +35,7 @@ const config: HardhatUserConfig = {
   networks: {
     // LOCAL LATTICE NODE
     hardhat: {
+      type: 'hardhat' as const,
       chainId: 31337,
     },
     // SEPOLIA BRIDGE
