@@ -364,8 +364,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
     <div className={cn('space-y-2', variantStyles[variant], className)}>
       {tokens.map((token, index) => {
         switch (token.type) {
-          case 'heading':
-            const HeadingTag = `h${token.level || 2}` as keyof JSX.IntrinsicElements;
+          case 'heading': {
             const headingSizes: Record<number, string> = {
               1: 'text-2xl font-bold',
               2: 'text-xl font-bold',
@@ -374,17 +373,16 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
               5: 'text-sm font-semibold',
               6: 'text-xs font-semibold uppercase tracking-wider',
             };
-            return (
-              <HeadingTag
-                key={index}
-                className={cn(
-                  headingSizes[token.level || 2],
-                  'font-mono text-foreground mt-4 mb-2'
-                )}
-              >
-                {renderInline(token.content, variant)}
-              </HeadingTag>
-            );
+            const lvl = token.level || 2;
+            const hClass = cn(headingSizes[lvl], 'font-mono text-foreground mt-4 mb-2');
+            const hContent = renderInline(token.content, variant);
+            if (lvl === 1) return <h1 key={index} className={hClass}>{hContent}</h1>;
+            if (lvl === 2) return <h2 key={index} className={hClass}>{hContent}</h2>;
+            if (lvl === 3) return <h3 key={index} className={hClass}>{hContent}</h3>;
+            if (lvl === 4) return <h4 key={index} className={hClass}>{hContent}</h4>;
+            if (lvl === 5) return <h5 key={index} className={hClass}>{hContent}</h5>;
+            return <h6 key={index} className={hClass}>{hContent}</h6>;
+          }
 
           case 'paragraph':
             return (

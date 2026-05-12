@@ -43,45 +43,46 @@ export {
 
 // Receipt System
 export {
-  generateReceipt,
-  getReceipt,
+  generateReceiptHash,
+  generateIntentHash,
   type ReceiptV1,
-  type ReceiptProof,
+  type ReceiptV2,
+  type AdmissionStatus,
 } from './receipt';
 
 // Topology Authority
 export {
   enforceTopology,
-  TopologyAuthority,
-  VALID_ROUTES,
-  type TopologyRoute,
-  type TopologySignal,
-  type TopologyResult,
+  topologyAuthority,
+  type SovereignRoute,
+  type TopologyDecision,
+  type TopologyReasonCode,
 } from './topology-authority';
 
 // Verify Contract (REV_33)
 export {
-  verifySignal,
-  type SignalInput,
-  type VerificationOutput,
+  type RuntimeSignal,
+  type PolicyDecision,
+  type VerifyRequest,
 } from './verify-contract';
 
 // Audit Engine
 export {
-  recordSpoliationAttempt,
-  getSpoliationLog,
   computeValidationScore,
-  type SpoliationEvent,
+  computeProtocolSignals,
+  generateAuditSummary,
+  generateDefensibleOutput,
   type AuditRecord,
+  type AuditSummary,
+  type ProtocolSignals,
 } from './auditEngine';
 
 // Proof Ledger
 export {
-  anchorProof,
-  getProof,
-  verifyProofChain,
-  type ProofEntry,
-  type ProofChain,
+  appendToLedger,
+  getLedger,
+  createProofLedgerEntry,
+  computeProofScore,
 } from './proofLedger';
 
 // Verification Pipeline
@@ -92,48 +93,66 @@ export {
 
 // Invariant Engine
 export {
-  enforceInvariant,
-  checkInvariant,
+  enforceInvariants,
+  extractViolations,
   type InvariantRule,
   type InvariantResult,
+  type EnforcementResult,
 } from './invariantEngine';
 
 // Reason Codes
 export {
-  REASON_CODES,
+  REASON_CODE_REGISTRY,
   getReasonCode,
-  getReasonSeverity,
+  type ReasonCode,
+  type ReasonSeverity,
 } from './reasonCodes';
 
 // Trace Graph
 export {
-  buildTraceGraph,
+  constructTraceGraph,
+  getDecisionPath,
+  generateTraceSummary,
   type TraceNode,
   type TraceGraph,
+  type TraceEdge,
 } from './traceGraph';
 
 // Replay Validator
 export {
-  validateReplay,
-  type ReplayResult,
+  createSnapshot,
+  storeSnapshot,
+  getSnapshots,
+  type ReplaySnapshot,
+  type ReplayValidationResult,
 } from './replayValidator';
 
 // Governance Kernel
 export {
-  evaluateGovernance,
+  getGovernanceKernel,
+  resetGovernanceKernel,
   type GovernanceDecision,
+  type GovernanceMode,
+  type GovernanceConfig,
 } from './governanceKernel';
 
 // Export Policy
 export {
-  checkExportEligibility,
-  type ExportDecision,
+  evaluateExportEligibility,
+  findBestPolicy,
+  type ExportEligibility,
+  type ExportCandidate,
+  type ExportPolicy,
 } from './exportPolicy';
 
 // Runtime Topology
 export {
-  routeClaim,
-  type ClaimRoute,
+  route66DualEvaluation,
+  kernelGovernance,
+  decisionBoundary,
+  type TopologyClaim,
+  type RuntimeResult,
+  type DualEvaluation,
 } from './runtimeTopology';
 
 // Machine-Enforced Runtime Surface
@@ -174,8 +193,13 @@ export {
 // Event Indexer
 export {
   indexEvent,
-  getEvents,
+  indexEventsBatch,
+  queryEvents,
+  getNodeHistory,
+  getLatestEvents,
+  getEventStats,
   type IndexedEvent,
+  type EventFilter,
 } from './eventIndexer';
 
 // ============================================================

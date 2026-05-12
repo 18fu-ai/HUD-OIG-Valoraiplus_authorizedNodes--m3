@@ -84,7 +84,7 @@ async function runSmokeTests(): Promise<SmokeViolation[]> {
         redirect: "manual"
       });
 
-      if (!endpoint.expectedStatus.includes(res.status)) {
+      if (!(endpoint.expectedStatus as readonly number[]).includes(res.status)) {
         violations.push({
           type: "UNEXPECTED_STATUS",
           target,

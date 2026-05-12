@@ -194,49 +194,15 @@ function formatToHTML(data: ExportData): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${data.title} | VALORAI+ Export</title>
   <style>
-    :root {
-      --bg: #020617;
-      --fg: #e2e8f0;
-      --primary: #10b981;
-      --muted: #64748b;
-      --border: #1e293b;
-    }
-    body {
-      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
-      background: var(--bg);
-      color: var(--fg);
-      padding: 2rem;
-      line-height: 1.6;
-    }
+    :root { --bg: #020617; --fg: #e2e8f0; --primary: #10b981; --muted: #64748b; --border: #1e293b; }
+    body { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace; background: var(--bg); color: var(--fg); padding: 2rem; line-height: 1.6; }
     .header { border-bottom: 2px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem; }
     h1 { color: var(--primary); margin: 0 0 0.5rem; }
     .meta { color: var(--muted); font-size: 0.875rem; }
-    .badge {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--primary);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      margin-right: 0.5rem;
-    }
-    .content {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-    }
+    .badge { display: inline-block; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--primary); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-right: 0.5rem; }
+    .content { background: rgba(30,41,59,0.5); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1.5rem; margin: 1.5rem 0; }
     pre { overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
-    .footer {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
+    .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.75rem; }
     @media print { body { background: white; color: black; } .content { background: #f1f5f9; } }
   </style>
 </head>
@@ -254,9 +220,7 @@ function formatToHTML(data: ExportData): string {
     <h2>Content</h2>
     <div class="content">${contentHTML}</div>
   </main>
-  <footer class="footer">
-    <p>VALORAI+ EXPORT</p>
-  </footer>
+  <footer class="footer"><p>VALORAI+ EXPORT</p></footer>
 </body>
 </html>`;
 }
@@ -334,17 +298,10 @@ export function ExportTools({
     async (format: 'json' | 'txt' | 'md') => {
       let content: string;
       switch (format) {
-        case 'json':
-          content = formatToJSON(data);
-          break;
-        case 'txt':
-          content = formatToText(data);
-          break;
-        case 'md':
-          content = formatToMarkdown(data);
-          break;
-        default:
-          content = formatToJSON(data);
+        case 'json':  content = formatToJSON(data);     break;
+        case 'txt':   content = formatToText(data);     break;
+        case 'md':    content = formatToMarkdown(data); break;
+        default:      content = formatToJSON(data);
       }
       await navigator.clipboard.writeText(content);
       setCopied(true);
@@ -365,11 +322,11 @@ export function ExportTools({
 
   const getPreviewContent = useCallback(() => {
     switch (previewFormat) {
-      case 'json': return formatToJSON(data);
-      case 'txt':  return formatToText(data);
-      case 'md':   return formatToMarkdown(data);
-      case 'html': return formatToHTML(data);
-      default:     return '';
+      case 'json':  return formatToJSON(data);
+      case 'txt':   return formatToText(data);
+      case 'md':    return formatToMarkdown(data);
+      case 'html':  return formatToHTML(data);
+      default:      return '';
     }
   }, [data, previewFormat]);
 
@@ -497,24 +454,11 @@ export function QuickExportButton({
       const filename = `valorai_${data.type}_${timestamp}.${format}`;
 
       switch (format) {
-        case 'json':
-          content = formatToJSON(data);
-          mimeType = 'application/json';
-          break;
-        case 'txt':
-          content = formatToText(data);
-          mimeType = 'text/plain';
-          break;
-        case 'md':
-          content = formatToMarkdown(data);
-          mimeType = 'text/markdown';
-          break;
-        case 'html':
-          content = formatToHTML(data);
-          mimeType = 'text/html';
-          break;
-        default:
-          return;
+        case 'json':  content = formatToJSON(data);     mimeType = 'application/json'; break;
+        case 'txt':   content = formatToText(data);     mimeType = 'text/plain';       break;
+        case 'md':    content = formatToMarkdown(data); mimeType = 'text/markdown';    break;
+        case 'html':  content = formatToHTML(data);     mimeType = 'text/html';        break;
+        default: return;
       }
 
       downloadFile(content, filename, mimeType);

@@ -49,8 +49,8 @@ export {
   incrementNonce,
   resetNonce,
   getNoncesBatch,
-  getFullNonceHistory,
-  clearNonceHistory,
+  getNonceHistory,
+  clearAllNonces,
 } from './nonceStore';
 
 // Event Indexing

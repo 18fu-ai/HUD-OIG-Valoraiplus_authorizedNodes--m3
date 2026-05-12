@@ -328,7 +328,7 @@ export function evaluatePolicy(input: PolicyDecisionInput): PolicyDecision {
     input.isReplayConsistent;
 
   // Step 9: Visibility
-  const visibilityGranted = classification === 'ADMIT' || classification === 'REDACT';
+  const visibilityGranted = classification === 'ADMIT' || classification === 'ESCALATE';
 
   // Step 10: Decision hash (deterministic fingerprint)
   const decisionHash = computeDecisionHash(input);

@@ -350,7 +350,7 @@ export default function NewtChatRuntime() {
       {/* Messages Area */}
       <main className="flex-1 relative z-10 overflow-y-auto p-6">
         <div className="max-w-4xl mx-auto space-y-8">
-          {messages.map((msg) => (
+          {messages.map((msg: any) => (
             <Card
               key={msg.id}
               className={cn(
