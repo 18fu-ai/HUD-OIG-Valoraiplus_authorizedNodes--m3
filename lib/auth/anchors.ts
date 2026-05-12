@@ -12,6 +12,14 @@
 export const MAINNET_ANCHOR =
   "0x50FB4a7da28ACaDbD452949508A32726aD6E36C0" as const;
 
+/** Deployer EOA — the wallet that signed all factory deployment transactions. */
+export const DEPLOYER_ADDRESS =
+  "0x50FB4a7da28ACaDbD452949508A32726aD6E36C0" as const;
+
+/** Sovereign EOA — donadams1969.eth, the rights-holder of record. */
+export const SOVEREIGN_ADDRESS =
+  "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB" as const;
+
 export const BASE_FACTORY_ADDRESS =
   "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1" as const;
 

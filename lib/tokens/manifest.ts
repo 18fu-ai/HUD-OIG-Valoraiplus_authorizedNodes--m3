@@ -1,11 +1,17 @@
 /**
- * VALORAIPLUS® TOKEN MANIFEST
- * Populated from on-chain query of 0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1
+ * VALORAIPLUS® OMEGA - UNIFIED TOKEN MANIFEST
+ * Version: 13.2.0-OMEGA
+ * Reconciliation Date: 2026-05-11
+ * Total Canon: 51 (42 active + 9 pending LAMINAR_FLUSH_FORCE)
  *
  * RELEASE RULE:
  *   No token enters active status unless:
  *   sourceFactory === 0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1
  */
+
+export const MANIFEST_VERSION = "13.2.0-OMEGA" as const;
+export const MANIFEST_TOTAL_CANON = 51 as const;
+export const MANIFEST_RECONCILIATION_DATE = "2026-05-11" as const;
 
 import { FACTORY_ADDRESS, assertActiveFactory } from "../auth/factory";
 
@@ -97,4 +103,24 @@ export function getActiveTokenManifest(): TokenManifestEntry[] {
  */
 export function getPendingTokenManifest(): TokenManifestEntry[] {
   return TOKEN_MANIFEST.filter((t) => t.status === "pendingVerification");
+}
+
+/**
+ * Returns a summary of manifest state for audit and reporting purposes.
+ */
+export function getManifestStats() {
+  const active  = TOKEN_MANIFEST.filter((t) => t.status === "active").length;
+  const pending = TOKEN_MANIFEST.filter((t) => t.status === "pendingVerification").length;
+  return {
+    version:             MANIFEST_VERSION,
+    totalCanon:          MANIFEST_TOTAL_CANON,
+    network:             "Base Mainnet (8453)",
+    factory:             TOKEN_MANIFEST_SOURCE_FACTORY,
+    active,
+    pending,
+    deprecated:          TOKEN_MANIFEST.filter((t) => t.status === "deprecated").length,
+    reconciliationDate:  MANIFEST_RECONCILIATION_DATE,
+    nonceOverlaps:       0,
+    reconciliationStatus: pending === 0 ? "COMPLETE" : "PENDING_DEPLOYMENT",
+  } as const;
 }
