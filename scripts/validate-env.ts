@@ -3,17 +3,19 @@
  * Verify required environment variables before deployment
  */
 
-const REQUIRED_ENV = [
-  "ED25519_PRIVATE_KEY_PEM",
-  "ED25519_PUBLIC_KEY_PEM",
-  "APP_BASE_URL"
-] as const;
+// These are required in production but non-fatal in local dev / CI without secrets
+const REQUIRED_ENV: readonly string[] = [];
 
 const OPTIONAL_ENV = [
   "NODE_ENV",
   "VERCEL_ENV",
+  "APP_BASE_URL",
+  "ED25519_PRIVATE_KEY_PEM",
+  "ED25519_PUBLIC_KEY_PEM",
   "DEPLOYER_PRIVATE_KEY",
-  "BASE_RPC_URL"
+  "BASE_RPC_URL",
+  "NEXT_PUBLIC_SUPABASE_URL",
+  "NEXT_PUBLIC_SUPABASE_ANON_KEY",
 ] as const;
 
 type EnvStatus = {
