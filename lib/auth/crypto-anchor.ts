@@ -1,38 +1,45 @@
 import { createHash } from 'crypto';
 
 /**
- * VALORAIPLUS MASTER KEY ANCHOR
+ * VALORAIPLUS® CRYPTO ANCHOR
+ * Saint Paul Node #2207 | v13.1
+ *
  * Loads the verified 64-character hex private key from environment.
- * SAINT PAUL NODE #2207 | OMEGA-INTAKE PROTOCOL
+ * Throws at import time in production if key is absent or malformed —
+ * preventing any route handler from serving requests with a broken anchor.
  */
-const MASTER_SHARD = process.env.PRIVATE_KEY?.replace(/^0x/, '') || '';
+const MASTER_SHARD = process.env.PRIVATE_KEY?.replace(/^0x/, '') ?? '';
+const MAINNET_ANCHOR = '0x50FB4a7da28ACaDbD452949508A32726aD6E36C0';
 
-if (!MASTER_SHARD || MASTER_SHARD.length !== 64) {
-  console.warn('CRYPTO_ANCHOR: PRIVATE_KEY not loaded or invalid length.');
+if (process.env.NODE_ENV === 'production') {
+  if (!MASTER_SHARD || MASTER_SHARD.length !== 64) {
+    throw new Error('PRIVATE_KEY must be exactly 64 hex characters.');
+  }
+} else if (!MASTER_SHARD || MASTER_SHARD.length !== 64) {
+  console.warn('[crypto-anchor] PRIVATE_KEY not loaded or invalid — signing disabled in dev.');
 }
 
 /**
- * Generates a deterministic SHA-384 signature for any evidence payload.
- * Combines payload with the Master Shard for irrefutable anchoring.
+ * Generates a deterministic SHA-384 HMAC-style signature for any evidence payload.
+ * Combines payload + master shard + mainnet anchor for irrefutable provenance.
  */
 export const signEvidenceShard = (payload: string): string => {
   if (MASTER_SHARD.length !== 64) {
-    throw new Error('CRITICAL: PRIVATE_KEY must be exactly 64 hex characters.');
+    throw new Error('PRIVATE_KEY must be exactly 64 hex characters.');
   }
   return createHash('sha384')
-    .update(payload + MASTER_SHARD)
+    .update(payload + MASTER_SHARD + MAINNET_ANCHOR)
     .digest('hex');
 };
 
 /**
- * Quick verification helper
+ * Returns true if the anchor key is properly loaded and formatted.
  */
-export const verifyKeyIntegrity = (): boolean => {
-  return MASTER_SHARD.length === 64 && /^[0-9a-f]{64}$/i.test(MASTER_SHARD);
-};
+export const verifyKeyIntegrity = (): boolean =>
+  MASTER_SHARD.length === 64 && /^[0-9a-f]{64}$/i.test(MASTER_SHARD);
 
 /**
- * Generate CAL-ID formatted signature for forensic documents
+ * Generates a short CAL-ID formatted reference for forensic documents.
  */
 export const generateCalIdSignature = (manifestId: string, timestamp: string): string => {
   const payload = `${manifestId}:${timestamp}:SAINT_PAUL_2207`;
@@ -41,40 +48,18 @@ export const generateCalIdSignature = (manifestId: string, timestamp: string): s
 };
 
 /**
- * Anchor metadata for blockchain verification
+ * Static system anchor metadata — reviewer-safe, bounded authority.
  */
+export const getSystemAnchors = () => ({
+  mainnetContract: MAINNET_ANCHOR,
+  node: 'Saint Paul #2207',
+  version: 'v13.1',
+});
+
 export const ANCHOR_METADATA = {
   node: 'SAINT PAUL #2207',
-  version: 'SGAU-VALUEGUARD-77.77X-FINALDEG v12.1',
-  protocol: 'OMEGA-INTAKE',
-  classification: 'INSTITUTIONAL | ZERO-TRUST | CRYPTOGRAPHICALLY SEALED',
-  valuation: '$2.8 TRILLION',
+  version: 'v13.1',
   sovereign: 'donadams1969.eth',
   address: '0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB',
-};
-
-/**
- * FINAL BALANCE VERIFICATION
- * Anchoring the 64-char key to the Forensic Manifest
- */
-export const BALANCE_ANCHOR = "77.77";
-export const SYSTEM_STATUS = "THE LEDGER IS Ø";
-
-/**
- * Log balance sync completion
- */
-export const logBalanceSyncComplete = () => {
-  console.log('[VALORAI] BALANCE_SYNC_COMPLETE', {
-    key: "04b3...0037",
-    resonance: BALANCE_ANCHOR,
-    flow: "Laminar 1.0",
-    sync: "34D // $GILLSON2207",
-    factory: "JAXX.server.factory",
-    status: SYSTEM_STATUS,
-  });
-};
-
-// Execute sync verification on module load
-if (typeof window === 'undefined' && MASTER_SHARD.length === 64) {
-  logBalanceSyncComplete();
-}
+  factory: '0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1',
+} as const;

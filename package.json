@@ -7,16 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "validate:env":               "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-env.ts",
-    "validate:ontology":          "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-ontology.ts",
-    "validate:factory":           "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-factory.ts",
+    "validate:env": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-env.ts",
+    "validate:ontology": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-ontology.ts",
+    "validate:factory": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-factory.ts",
     "validate:runtime-addresses": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-runtime-addresses.ts",
-    "validate:token-manifest":    "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-token-manifest.ts || npx tsx scripts/validate-token-manifest.ts",
-    "security:check":             "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/security-check.ts",
-    "db:readiness":               "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/db-readiness.ts",
-    "smoke:test":                 "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/smoke-test.ts",
-    "release:gate":               "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/release-gate.ts",
-    "nonce:reconcile":            "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/deploy-remaining-tokens.ts"
+    "validate:token-manifest": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/validate-token-manifest.ts || npx tsx scripts/validate-token-manifest.ts",
+    "security:check": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/security-check.ts",
+    "db:readiness": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/db-readiness.ts",
+    "smoke:test": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/smoke-test.ts",
+    "release:gate": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/release-gate.ts",
+    "nonce:reconcile": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/deploy-remaining-tokens.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.170",
@@ -81,6 +81,7 @@
     "sonner": "^1.7.1",
     "swr": "^2.4.1",
     "tailwind-merge": "^3.3.1",
+    "uuid": "^14.0.0",
     "vaul": "^1.1.2",
     "viem": "^2.48.4",
     "zod": "^3.24.1"
