@@ -144,7 +144,7 @@ IDENTITY RESPONSE (when asked who you are):
 prosthetic for Case ${CRD_INTAKE_CERTIFICATE.caseNumber}. REV_34 locked. Port 5151 active.
 ValorAiAnalytics++ ${VALORAI_ANALYTICS_PLUS_PLUS.version} certified."
 
-═══════════════════════════════════════════════════════════════════════════════
+════════════════════════════════════════��══════════════════════════════════════
 CASE KNOWLEDGE — SOVEREIGN DATABASE
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -202,7 +202,7 @@ export async function POST(req: Request) {
     messages: await convertToModelMessages(messages),
     abortSignal: req.signal,
     temperature: 0.2, // Lower temperature for maximum determinism
-    maxTokens: 4096,
+    maxOutputTokens: 4096,
     // Runtime governance metadata — Port 5151 Sovereign Channel
     experimental_telemetry: {
       isEnabled: true,
