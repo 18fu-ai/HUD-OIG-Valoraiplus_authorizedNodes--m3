@@ -18,7 +18,8 @@
     "release:gate": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/release-gate.ts",
     "nonce:reconcile": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/deploy-remaining-tokens.ts",
     "get:code":           "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/get-code.ts",
-    "finalize:binding":  "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/finalize-binding.ts"
+    "finalize:binding":  "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/finalize-binding.ts",
+    "finalize:ex05":     "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/finalize-ex05.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.170",
