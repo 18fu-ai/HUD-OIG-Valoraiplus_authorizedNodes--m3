@@ -177,12 +177,12 @@ export const enforceLien = async (
 /**
  * Get wallet balance
  */
-export const getWalletBalance = async (wallet: Wallet): Promise<Record<string, number>> => {
+export const getWalletBalance = async (wallet: WalletType): Promise<Record<string, number>> => {
   const balances = await wallet.listBalances();
   const result: Record<string, number> = {};
   
-  for (const [asset, balance] of Object.entries(balances)) {
-    result[asset] = parseFloat(balance.toString());
+  for (const [asset, bal] of Object.entries(balances as Record<string, unknown>)) {
+    result[asset] = parseFloat(String(bal));
   }
   
   return result;

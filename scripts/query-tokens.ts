@@ -1,6 +1,6 @@
 const { ethers } = require("hardhat");
 
-const FACTORY_ADDRESS = "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1";
+import { FACTORY_ADDRESS } from "../lib/auth/factory";
 
 const FACTORY_ABI = [
   "function getAllDeployedTokens() view returns (string[])",

@@ -18,6 +18,7 @@ type MintResponse = {
   txPreview: string;
   mintedAt: string;
   receipt: ReceiptV1;
+  isReplay?: boolean;
   decision: {
     allowed: boolean;
     reason: string;
@@ -72,22 +73,15 @@ export async function POST(request: Request) {
     }
 
     // Create receipt regardless of decision (for audit trail)
-    const receipt = createReceipt({
+    const { receipt, isReplay } = createReceipt({
       signer: wallet,
-      claim: `MINT:${symbol}:${amount}`,
-      verdict: rule.mintable ? 'ADMITTED' : 'REJECTED',
-      route: rule.route,
-      reasonCode: rule.mintable ? 'SOVEREIGN_VALID' : 'IDENTITY_REJECTED',
-      proof: {
-        inputHash: Buffer.from(`${symbol}:${wallet}:${amount}`).toString('base64'),
-        outputHash: Buffer.from(`${rule.route}:${Date.now()}`).toString('base64'),
-        invariantSnapshot: rule.mintable ? '111111' : '000000',
-      },
+      status: rule.mintable ? 'ADMITTED' : 'REJECTED',
+      reason: rule.reason,
     });
 
     const response: MintResponse = {
       success: rule.mintable,
-      receiptId: receipt.txid,
+      receiptId: receipt.transactionId,
       txPreview: generateTxPreview(symbol, wallet, amount),
       mintedAt: new Date().toISOString(),
       receipt,

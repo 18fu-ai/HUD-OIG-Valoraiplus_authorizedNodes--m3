@@ -20,13 +20,21 @@ export * from './types';
 // EIP-712 Signature Layer
 export {
   buildDomain,
-  buildLatchIntentTypedData,
-  buildRevisionIntentTypedData,
-  buildNullifyIntentTypedData,
-  hashTypedData,
-  LatchIntentSchema,
+  EIP712_DOMAIN,
+  EIP712_TYPES,
+  SignedIntentSchema as LatchIntentSchema,
   RevisionIntentSchema,
   NullifyIntentSchema,
+} from './eip712';
+
+export type {
+  SignedIntent,
+  RevisionIntent,
+  NullifyIntent,
+  AnchorIntent,
+  VerifierIntent,
+  IntentType,
+  ValidationResult,
 } from './eip712';
 
 // Intent Verification

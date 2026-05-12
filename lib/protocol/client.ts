@@ -39,8 +39,8 @@ export type {
 
 // Verify Contract types - use available exports
 export type {
-  VerificationInput,
-  VerificationResponse,
+  VerifyRequest as VerificationInput,
+  VerifyResponse as VerificationResponse,
 } from './verify-contract';
 
 // ============================================================
@@ -106,7 +106,6 @@ export {
   type ClaimSafety,
   type ProofLedgerEntry,
   type ProofStatistics,
-  type SpoliationEvent,
 } from './auditEngine';
 
 // ============================================================

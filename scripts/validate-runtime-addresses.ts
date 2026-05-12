@@ -42,7 +42,7 @@ async function checkRecord(record: RuntimeAddressRecord): Promise<boolean> {
   }
 
   const code = await getCode(record.address);
-  const ok = code && code !== "0x" && code.length > 4;
+  const ok = Boolean(code && code !== "0x" && code.length > 4);
   const bytes = ok ? Math.floor((code.length - 2) / 2) : 0;
   const status = ok ? "LIVE  " : "DEAD  ";
   console.log(

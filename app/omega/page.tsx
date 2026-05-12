@@ -135,7 +135,7 @@ export default function OmegaUnifiedCommandCenter() {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
   const timeRef = useRef(0);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef(0);
 
   // Initialize particle
