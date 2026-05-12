@@ -753,6 +753,7 @@ export interface MimecastEvent {
   id: string;
   timestamp: string;
   actor: string;
+  action?: string;
   actionType: string;
   target: string;
   sourceIP: string;
@@ -2008,7 +2009,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ══��════════════════════════════════════════════════════
     // MODIFIERS
-    // ═══════════════════════════════════════════════════════
+    // ══════════════════════════════════════════════════════��
     
     modifier notExcluded(address user) {
         require(!isExcluded[user], "CSSS: USER EXCLUDED FOR LIFE");

@@ -43,45 +43,55 @@ export {
 
 // Receipt System
 export {
-  generateReceipt,
+  createReceipt,
   getReceipt,
+  generateReceiptHash,
   type ReceiptV1,
-  type ReceiptProof,
+  type ReceiptV2,
+  type AdmissionStatus,
+  type CreateReceiptInput,
 } from './receipt';
 
 // Topology Authority
 export {
   enforceTopology,
-  TopologyAuthority,
-  VALID_ROUTES,
-  type TopologyRoute,
-  type TopologySignal,
-  type TopologyResult,
+  ValoraiplusTopologyAuthority,
+  topologyAuthority,
+  type SovereignRoute,
+  type TopologyReasonCode,
+  type RuntimeSignal,
+  type TopologyDecision,
 } from './topology-authority';
 
 // Verify Contract (REV_33)
 export {
   verifySignal,
-  type SignalInput,
-  type VerificationOutput,
+  type RuntimeSignal as VerifyRuntimeSignal,
+  type PolicyDecision,
+  type VerifyRequest,
+  type VerifyResponse,
 } from './verify-contract';
 
 // Audit Engine
 export {
-  recordSpoliationAttempt,
-  getSpoliationLog,
+  SYSTEM_AUDIT_REGISTRY,
   computeValidationScore,
-  type SpoliationEvent,
+  computeProtocolSignals,
+  generateAuditSummary,
+  generateDefensibleOutput,
+  softenClaim,
   type AuditRecord,
+  type ProofVector,
+  type ValidationScores,
 } from './auditEngine';
 
 // Proof Ledger
 export {
-  anchorProof,
-  getProof,
-  verifyProofChain,
-  type ProofEntry,
-  type ProofChain,
+  createProofVector,
+  buildProofVector,
+  computeProofScore,
+  getLedger,
+  appendToLedger,
 } from './proofLedger';
 
 // Verification Pipeline
@@ -92,42 +102,55 @@ export {
 
 // Invariant Engine
 export {
-  enforceInvariant,
-  checkInvariant,
+  enforceInvariants,
+  validateInvariant,
+  runAdmissionPipeline,
+  createRuntimeClaim,
   type InvariantRule,
   type InvariantResult,
+  type RuntimeClaim,
+  type AdmissionPipelineResult,
 } from './invariantEngine';
 
 // Reason Codes
 export {
-  REASON_CODES,
+  REASON_CODE_REGISTRY,
   getReasonCode,
-  getReasonSeverity,
+  getReasonCodesByCategory,
+  type ReasonCode,
+  type ReasonCategory,
 } from './reasonCodes';
 
 // Trace Graph
 export {
-  buildTraceGraph,
+  constructTraceGraph,
+  TraceGraphBuilder,
   type TraceNode,
   type TraceGraph,
 } from './traceGraph';
 
 // Replay Validator
 export {
-  validateReplay,
-  type ReplayResult,
+  validateReplayConsistency,
+  performReplayValidation,
+  type ReplaySnapshot,
+  type ReplayValidationResult,
 } from './replayValidator';
 
 // Governance Kernel
 export {
-  evaluateGovernance,
+  GovernanceKernel,
+  getGovernanceKernel,
   type GovernanceDecision,
+  type GovernanceMode,
 } from './governanceKernel';
 
 // Export Policy
 export {
-  checkExportEligibility,
-  type ExportDecision,
+  evaluateExportEligibility,
+  findBestPolicy,
+  type ExportEligibility,
+  type ExportPolicy,
 } from './exportPolicy';
 
 // Runtime Topology

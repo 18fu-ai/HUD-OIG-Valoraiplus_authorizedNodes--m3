@@ -27,6 +27,16 @@ export interface ProofLedgerArtifact {
   truthCycle: number;
 }
 
+export interface MEVRGateResult {
+  admitted: boolean;
+  classification: DeterministicClassification;
+  reasonCode: string;
+  score: number;
+  threshold: number;
+  isAdversary: boolean;
+  timestamp: string;
+}
+
 // Nullified adversary hashes (ACTOR-ρ, ACTOR-σ, ENTITY-α, ENTITY-β)
 const NULL_NODES: string[] = [
   '0xbc3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f1a2b', // ACTOR-ρ

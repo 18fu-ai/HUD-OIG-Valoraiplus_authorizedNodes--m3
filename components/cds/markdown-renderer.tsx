@@ -371,7 +371,7 @@ export const MarkdownRenderer = memo(function MarkdownRenderer({
       {tokens.map((token, index) => {
         switch (token.type) {
           case 'heading':
-            const HeadingTag = `h${token.level || 2}` as keyof JSX.IntrinsicElements;
+            const HeadingTag = `h${token.level || 2}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
             const headingSizes: Record<number, string> = {
               1: 'text-2xl font-bold',
               2: 'text-xl font-bold',
