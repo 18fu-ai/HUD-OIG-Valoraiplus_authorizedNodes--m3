@@ -121,12 +121,12 @@ export default function ReconMonitorPage() {
   ]
 
   const adversarialNodes: AdversarialNode[] = [
-    { name: "William Landrum", designation: "NODE_W_L", violation: "Mandated reporter felony W&I 15630", status: "criminal_high", publicRecords: "not_found" },
-    { name: "Joseph Zanghi", designation: "NODE_J_Z", violation: "Obstruction - 1,247 SMTP 550 rejections", status: "criminal_high", publicRecords: "not_found" },
-    { name: "SF Housing Authority", designation: "SFHA", violation: "Vicarious liability - bio-hazards", status: "criminal_high", publicRecords: "found" },
-    { name: "Swords to Plowshares", designation: "STP", violation: "Institutional retaliation node", status: "criminal_high", publicRecords: "not_found" },
+    { name: "ACTOR-\u03BB\u03B1", designation: "NODE_W_L", violation: "Mandated reporter felony W&I 15630", status: "criminal_high", publicRecords: "not_found" },
+    { name: "ACTOR-\u03B6\u03B1", designation: "NODE_J_Z", violation: "Obstruction - 1,247 SMTP 550 rejections", status: "criminal_high", publicRecords: "not_found" },
+    { name: "ORG-\u03C3\u03B7", designation: "SFHA", violation: "Vicarious liability - bio-hazards", status: "criminal_high", publicRecords: "found" },
+    { name: "ORG-\u03C3\u03C4\u03C0", designation: "STP", violation: "Institutional retaliation node", status: "criminal_high", publicRecords: "not_found" },
     { name: "Department 12", designation: "DEPT_12", violation: "Failed overreach - N.E.W.T. terminal seizure attempt", status: "nullified", publicRecords: "not_found" },
-    { name: "Kobe Low 6 / Ghani", designation: "SECONDARY", violation: "Secondary suppression vectors", status: "criminal_high", publicRecords: "not_found" },
+    { name: "SECONDARY-\u03B3", designation: "SECONDARY", violation: "Secondary suppression vectors", status: "criminal_high", publicRecords: "not_found" },
   ]
 
   const liveBeacons: LiveBeacon[] = [

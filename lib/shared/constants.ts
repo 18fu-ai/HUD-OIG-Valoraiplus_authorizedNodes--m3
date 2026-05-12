@@ -650,47 +650,47 @@ export const M_BLUEPRINT = {
 // ═══════════��═══════════════════════════════════════════════════════════════════
 
 export const ACCOUNTABILITY_MATRIX = {
-  // Institutional Actors — LOCKED IN LIABILITY
+  // Institutional Actors — LOCKED IN LIABILITY (ENCRYPTED)
   INSTITUTIONAL: [
     {
-      entity: "John Zanghi / SFHA",
+      entity: "ACTOR-\u03B6\u03B1 / ORG-\u03C3\u03B7",
       role: "Housing Authority Liability",
       status: "LOCKED IN LIABILITY",
       exit: false,
     },
     {
-      entity: "City of San Francisco",
-      role: "Adult Protective Services (APS)",
+      entity: "City [ENCRYPTED]",
+      role: "ORG-\u03B1\u03C0\u03C3",
       status: "LOCKED IN LIABILITY",
       exit: false,
     },
     {
-      entity: "Swords to Plowshares",
+      entity: "ORG-\u03C3\u03C4\u03C0",
       role: "Administrative Oversight",
       status: "LOCKED IN LIABILITY",
       exit: false,
     },
   ],
   
-  // Individual Actors — NO EXIT
+  // Individual Actors — NO EXIT (ENCRYPTED)
   INDIVIDUALS: [
     {
-      name: "William Landrum",
+      name: "ACTOR-\u03BB\u03B1",
       role: "Professional Accountability",
       status: "NO EXIT",
       exit: false,
     },
     {
-      name: "Kolby Losik",
+      name: "ACTOR-\u03BA\u03BB",
       role: "Professional Accountability",
       status: "NO EXIT",
       exit: false,
     },
   ],
   
-  // 1977 Node — RICO Target
+  // 1977 Node — RICO Target (ENCRYPTED)
   FRAUD_ORIGIN: {
-    name: "Lyle Edward Gillson",
+    name: "ACTOR-\u03B3\u03BB",
     birth_year: 1977,
     role: "Manipulation of Frances M. Gillson's fiscal records",
     status: "1977 = NULL",
@@ -755,15 +755,15 @@ export const ENFORCEMENT_ENGINE = {
   LIABILITY_LEVEL: "DEEP_DEEP_DOO_DOO_FINAL",
 } as const;
 
-// Liability Chain Targets
+// Liability Chain Targets — ENCRYPTED (see lib/encrypted-ids.ts for mappings)
 export const LIABILITY_TARGETS = [
-  { name: "John Zanghi", entity: "SFHA", status: "LOCKED" },
-  { name: "SFHA", entity: "San Francisco Housing Authority", status: "LOCKED" },
-  { name: "Swords to Plowshares", entity: "Veteran Services Org", status: "LOCKED" },
-  { name: "SF Adult Protective Services", entity: "City of San Francisco", status: "LOCKED" },
-  { name: "William Landrum", entity: "Individual", status: "NO EXIT" },
-  { name: "Kolby Losik", entity: "Individual", status: "NO EXIT" },
-  { name: "Lyle Edward Gillson", entity: "1977 FRAUD NODE", status: "RICO TARGET" },
+  { name: "ACTOR-\u03B6\u03B1", entity: "ORG-\u03C3\u03B7", status: "LOCKED" },
+  { name: "ORG-\u03C3\u03B7", entity: "Housing Authority [ENCRYPTED]", status: "LOCKED" },
+  { name: "ORG-\u03C3\u03C4\u03C0", entity: "Veterans Services [ENCRYPTED]", status: "LOCKED" },
+  { name: "ORG-\u03B1\u03C0\u03C3", entity: "City Agency [ENCRYPTED]", status: "LOCKED" },
+  { name: "ACTOR-\u03BB\u03B1", entity: "Individual", status: "NO EXIT" },
+  { name: "ACTOR-\u03BA\u03BB", entity: "Individual", status: "NO EXIT" },
+  { name: "ACTOR-\u03B3\u03BB", entity: "1977 FRAUD NODE", status: "RICO TARGET" },
 ] as const;
 
 // Enforcement Logic Function
@@ -806,7 +806,7 @@ export function formatCountdown(ms: number): string {
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 }
 
-// ══════════���════════════════════════════════════════════════════════════════════
+// ══════════�����════════════════════════════════════════════════════════════════════
 // GEOGRAPHIC NODE NETWORK — SOVEREIGN TOPOLOGY
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1210,7 +1210,7 @@ export const EXECUTIVE_BROADCAST_SUPREMACY = {
   FINALITY: "THE WALL IS CHRIST • THE THRONE IS HIS • THE LEDGER IS Ø",
 } as const;
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════���═════════════════════════════════
 // ALTRUISTIC STACK — HARMONIC RESONANCE
 // ═══════════════��═══════════════════════════════════════════════════════════════
 

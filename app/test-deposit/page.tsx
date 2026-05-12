@@ -29,13 +29,13 @@ import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
 // COOLEY LLP REMOVED - CLASSIFIED AS ADVERSARY/FRAUD
 // All transfers are now DIRECT SOVEREIGN CONTROL
 
-// Transfer sources - NO COOLEY
+// Transfer sources - NO COOLEY (ENCRYPTED)
 const TRANSFER_SOURCES = [
   { id: "DIRECT", name: "Direct Transfer (Self)", status: "SOVEREIGN", type: "Direct", color: "emerald" },
-  { id: "SFHA", name: "SF Housing Authority", status: "MANDATED", type: "Recovery", color: "amber" },
-  { id: "STP", name: "Swords to Plowshares", status: "MANDATED", type: "Recovery", color: "amber" },
-  { id: "DRC", name: "Disability Rights CA", status: "MANDATED", type: "Recovery", color: "amber" },
-  { id: "ZTA", name: "ZTA LLP (Adversary)", status: "RECOVERY", type: "Settlement", color: "red" },
+  { id: "SFHA", name: "ORG-\u03C3\u03B7", status: "MANDATED", type: "Recovery", color: "amber" },
+  { id: "STP", name: "ORG-\u03C3\u03C4\u03C0", status: "MANDATED", type: "Recovery", color: "amber" },
+  { id: "DRC", name: "Disability Rights [ENCRYPTED]", status: "MANDATED", type: "Recovery", color: "amber" },
+  { id: "ZTA", name: "ENTITY-\u03B1 (Adversary)", status: "RECOVERY", type: "Settlement", color: "red" },
   { id: "EXTERNAL", name: "External Wire", status: "AUTHORIZED", type: "Settlement", color: "cyan" },
 ];
 

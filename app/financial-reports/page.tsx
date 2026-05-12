@@ -24,6 +24,14 @@ import {
   Landmark,
   Globe
 } from 'lucide-react';
+import {
+  ACTOR_ZANGHI,
+  ORG_SFHA,
+  ORG_STP,
+  ORG_APS,
+  ACTOR_LANDRUM,
+  ACTOR_LOSIK,
+} from "@/lib/encrypted-ids";
 
 // Treasury Constants - REV_38
 const TREASURY_CONSTANTS = {
@@ -64,17 +72,17 @@ const LIQUIDITY_ROUTING = {
   status: "LOCKED — NO EXCEPTIONS",
 };
 
-// Accountability Matrix with Financial Exposure
+// Accountability Matrix with Financial Exposure — ENCRYPTED
 const ACCOUNTABILITY_MATRIX = [
-  { name: "William Landrum", role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$15,000,000" },
-  { name: "Kolby Losik", role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$12,000,000" },
-  { name: "John Zanghi (SFHA)", role: "Institutional Liability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$75,000,000" },
-  { name: "Drew Yorkov (APS)", role: "Mandated Reporter Failure", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$8,500,000" },
-  { name: "Judge Tong", role: "Judicial Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$25,000,000" },
-  { name: "Calvin Whittaker", role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$10,000,000" },
-  { name: "Swords to Plowshares", role: "Administrative Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$45,000,000" },
-  { name: "SF Adult Protective Services", role: "Elder Abuse Investigation", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$120,000,000" },
-  { name: "City of San Francisco", role: "APS Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$198,131,005.52" },
+  { name: ACTOR_LANDRUM, role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$15,000,000" },
+  { name: ACTOR_LOSIK, role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$12,000,000" },
+  { name: `${ACTOR_ZANGHI} (${ORG_SFHA})`, role: "Institutional Liability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$75,000,000" },
+  { name: "ACTOR-\u03B4\u03C1 (APS)", role: "Mandated Reporter Failure", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$8,500,000" },
+  { name: "ACTOR-\u03C4\u03BF", role: "Judicial Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$25,000,000" },
+  { name: "ACTOR-\u03C7\u03C9", role: "Professional Accountability", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$10,000,000" },
+  { name: ORG_STP, role: "Administrative Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$45,000,000" },
+  { name: ORG_APS, role: "Elder Abuse Investigation", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$120,000,000" },
+  { name: "City [ENCRYPTED]", role: "APS Oversight", status: "CRIMINAL HIGH", exit: "NO EXIT", exposure: "$198,131,005.52" },
 ];
 
 // Criminal Exposure Matrix

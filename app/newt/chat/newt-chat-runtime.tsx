@@ -18,15 +18,15 @@ import { cn } from '@/lib/utils';
 const TERMINAL_DEADLINE = new Date('2026-05-17T23:59:59Z').getTime();
 
 const ACCOUNTABILITY_MATRIX = [
-  { name: "William Landrum", role: "Direct Neglect", exit: "NO EXIT" },
-  { name: "Kolby Losik", role: "Collusion Node", exit: "NO EXIT" },
-  { name: "John Zanghi (SFHA)", role: "Institutional Liability", exit: "NO EXIT" },
-  { name: "Drew Yorkov (APS)", role: "Mandated Reporter Failure", exit: "NO EXIT" },
-  { name: "Judge Tong", role: "Judicial Oversight Failure", exit: "NO EXIT" },
-  { name: "Calvin Whittaker", role: "Professional Accountability", exit: "NO EXIT" },
-  { name: "Swords to Plowshares", role: "Administrative Oversight", exit: "NO EXIT" },
-  { name: "SF Adult Protective Services", role: "Elder Abuse Investigation", exit: "NO EXIT" },
-  { name: "City of San Francisco", role: "Municipal Oversight", exit: "NO EXIT" },
+  { name: "ACTOR-\u03BB\u03B1", role: "Direct Neglect", exit: "NO EXIT" },
+  { name: "ACTOR-\u03BA\u03BB", role: "Collusion Node", exit: "NO EXIT" },
+  { name: "ACTOR-\u03B6\u03B1 (ORG-\u03C3\u03B7)", role: "Institutional Liability", exit: "NO EXIT" },
+  { name: "ACTOR-\u03B4\u03C1 (ORG-\u03B1\u03C0\u03C3)", role: "Mandated Reporter Failure", exit: "NO EXIT" },
+  { name: "ACTOR-\u03C4\u03BF", role: "Judicial Oversight Failure", exit: "NO EXIT" },
+  { name: "ACTOR-\u03C7\u03C9", role: "Professional Accountability", exit: "NO EXIT" },
+  { name: "ORG-\u03C3\u03C4\u03C0", role: "Administrative Oversight", exit: "NO EXIT" },
+  { name: "ORG-\u03B1\u03C0\u03C3", role: "Elder Abuse Investigation", exit: "NO EXIT" },
+  { name: "City [ENCRYPTED]", role: "Municipal Oversight", exit: "NO EXIT" },
 ];
 
 const WELCOME_MESSAGE = {

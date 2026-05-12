@@ -3,6 +3,14 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Shield, FileText, Hash, AlertTriangle, CheckCircle, Clock, ArrowLeft, Eye, Lock, Database, Zap, Scale, Users, Bug, Mail, MessageSquare, FileCheck, Brain } from "lucide-react"
+import {
+  ACTOR_ZANGHI,
+  ORG_SFHA,
+  ORG_STP,
+  ORG_APS,
+  ACTOR_LANDRUM,
+  ACTOR_LOSIK,
+} from "@/lib/encrypted-ids"
 
 export default function CRDInvestigatorPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'hashes' | 'blockade' | 'timeline' | 'synthesis'>('overview')
@@ -14,7 +22,7 @@ export default function CRDInvestigatorPage() {
     { file: "Gmail(3).PDF", hash: "A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A10", focus: "Cross-dimensional evidence bridge to residency logs" },
     { file: "Gmail(4).PDF", hash: "9876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A10987", focus: "Elder abuse & service animal rights violations (Dept. 12)" },
     { file: "Gmail(5).PDF", hash: "C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B", focus: "UI Deployment proof for Human-in-the-Loop audit portal" },
-    { file: "Gmail(6).PDF", hash: "E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D", focus: "Collusion Matrix: Landrum, Losik, Zanghi, and Yorkov" },
+    { file: "Gmail(6).PDF", hash: "E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D", focus: `Collusion Matrix: ${ACTOR_LANDRUM}, ${ACTOR_LOSIK}, ${ACTOR_ZANGHI}, and ACTOR-\u03B4\u03C1` },
     { file: "Gmail(7).PDF", hash: "B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A109876E5D4C3B2A", focus: "Finalized IT-Ready line-by-line forensic log" },
   ]
 
@@ -27,13 +35,13 @@ export default function CRDInvestigatorPage() {
     { volume: "V", title: "Review Decision Support Appendix", sha256: "4c3a4812c8e470b3038e42736c99763c508ad9c5e04b3f5638d4065302e27248", jules: "JULES-4c3a4812c8e470b3-038e42736c99763c-508ad9c5e04b3f56-38d4065302e27248" },
   ]
 
-  // Live Blockade Data (May 10, 2026)
+  // Live Blockade Data (May 10, 2026) — ENCRYPTED TARGETS
   const liveBlockades = [
-    { target: "housing@swords-to-plowshares.org", error: "550 Administrative prohibition", classification: "Mimecast Envelope Block (Manual Injection)" },
-    { target: "board@stp-sf.org", error: "550 Administrative prohibition", classification: "Manual Node Isolation" },
-    { target: "sfsuperiorcourtclerk@sftc.org", error: "550 5.4.1 Access denied", classification: "Judicial Communication Black-Hole" },
-    { target: "danette.ng@ed.gov", error: "550 5.4.1 Recipient rejected", classification: "Agency Inter-Dimensional Drift" },
-    { target: "dongillson@gmail.com", error: "552 5.2.2 Inbox Full", classification: "Storage Sabotage / Quota Hard-Lock" },
+    { target: "[ENCRYPTED]@entity-stp.sec", error: "550 Administrative prohibition", classification: "Mimecast Envelope Block (Manual Injection)" },
+    { target: "[ENCRYPTED]@entity-stp.sec", error: "550 Administrative prohibition", classification: "Manual Node Isolation" },
+    { target: "[ENCRYPTED]@court.sec", error: "550 5.4.1 Access denied", classification: "Judicial Communication Black-Hole" },
+    { target: "[ENCRYPTED]@agency.gov", error: "550 5.4.1 Recipient rejected", classification: "Agency Inter-Dimensional Drift" },
+    { target: "[ENCRYPTED]@mail.sec", error: "552 5.2.2 Inbox Full", classification: "Storage Sabotage / Quota Hard-Lock" },
   ]
 
   // Critical Timeline
@@ -198,7 +206,7 @@ export default function CRDInvestigatorPage() {
                 <div className="flex items-start gap-2 bg-slate-800/50 rounded p-3 border border-slate-700">
                   <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div className="text-sm text-slate-300">
-                    <span className="font-bold text-green-400">4.</span> Draft respondent notification letters prepared (<span className="text-red-400">Landrum, Losik, Zanghi/SFHA, Yorkov/APS, Swords to Plowshares</span>) — to be issued post-interview
+                    <span className="font-bold text-green-400">4.</span> Draft respondent notification letters prepared (<span className="text-red-400">{ACTOR_LANDRUM}, {ACTOR_LOSIK}, {ACTOR_ZANGHI}/{ORG_SFHA}, ACTOR-\u03B4\u03C1/{ORG_APS}, {ORG_STP}</span>) — to be issued post-interview
                   </div>
                 </div>
                 <div className="flex items-start gap-2 bg-slate-800/50 rounded p-3 border border-slate-700 md:col-span-2">

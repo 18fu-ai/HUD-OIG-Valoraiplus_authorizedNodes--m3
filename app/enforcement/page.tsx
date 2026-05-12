@@ -14,19 +14,43 @@ import {
   Activity
 } from "lucide-react";
 import Link from "next/link";
+import {
+  ACTOR_ZANGHI,
+  ACTOR_ZANGHI_ROLE,
+  ACTOR_ZANGHI_STATUS,
+  ORG_SFHA,
+  ORG_SFHA_FULL,
+  ORG_SFHA_STATUS,
+  ORG_STP,
+  ORG_STP_FULL,
+  ORG_STP_STATUS,
+  ORG_APS,
+  ORG_APS_FULL,
+  ORG_APS_STATUS,
+  ACTOR_LANDRUM,
+  ACTOR_LANDRUM_ROLE,
+  ACTOR_LANDRUM_STATUS,
+  ACTOR_LOSIK,
+  ACTOR_LOSIK_ROLE,
+  ACTOR_LOSIK_STATUS,
+  ACTOR_GILLSON,
+  ACTOR_GILLSON_ROLE,
+  ACTOR_GILLSON_STATUS,
+  ACTOR_GILLSON_NODE,
+} from "@/lib/encrypted-ids";
 
 // Terminal Deadline: May 17, 2026 23:59:59 UTC
 const FINALITY_TIMESTAMP = 1747526399000;
 
-// Liability Targets
+// Liability Targets - ENCRYPTED
 const LIABILITY_TARGETS = [
-  { name: "John Zanghi", entity: "SFHA", status: "LOCKED", role: "Housing Authority" },
-  { name: "SFHA", entity: "San Francisco Housing Authority", status: "LOCKED", role: "Institutional" },
-  { name: "Swords to Plowshares", entity: "Veteran Services", status: "LOCKED", role: "Administrative" },
-  { name: "SF Adult Protective Services", entity: "City of SF", status: "LOCKED", role: "Oversight Failure" },
-  { name: "William Landrum", entity: "Individual", status: "NO EXIT", role: "Professional" },
-  { name: "Kolby Losik", entity: "Individual", status: "NO EXIT", role: "Professional" },
-  { name: "Lyle Edward Gillson", entity: "1977 FRAUD NODE", status: "RICO TARGET", role: "Origin Fraud" },
+  { name: ACTOR_ZANGHI, entity: ORG_SFHA, status: ACTOR_ZANGHI_STATUS, role: ACTOR_ZANGHI_ROLE },
+  { name: ORG_SFHA, entity: ORG_SFHA_FULL, status: ORG_SFHA_STATUS, role: "Institutional" },
+  { name: ORG_STP, entity: ORG_STP_FULL, status: ORG_STP_STATUS, role: "Administrative" },
+  { name: ORG_APS, entity: ORG_APS_FULL, status: ORG_APS_STATUS, role: "Oversight Failure" },
+  { name: ACTOR_LANDRUM, entity: "Individual", status: ACTOR_LANDRUM_STATUS, role: ACTOR_LANDRUM_ROLE },
+  { name: ACTOR_LOSIK, entity: "Individual", status: ACTOR_LOSIK_STATUS, role: ACTOR_LOSIK_ROLE },
+  { name: ACTOR_GILLSON, entity: ACTOR_GILLSON_NODE, status: ACTOR_GILLSON_STATUS, role: ACTOR_GILLSON_ROLE },
 ];
 
 // Protocol Status
