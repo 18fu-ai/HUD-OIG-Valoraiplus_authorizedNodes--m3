@@ -119,7 +119,7 @@ async function main() {
       
       // Add 50% buffer to gas price for faster confirmation
       const gasPrice = feeData.gasPrice 
-        ? (feeData.gasPrice * 150n) / 100n 
+        ? (feeData.gasPrice * BigInt(150)) / BigInt(100)
         : undefined;
 
       console.log(`  Nonce: ${nonce}`);
