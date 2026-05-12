@@ -16,7 +16,8 @@
     "db:readiness": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/db-readiness.ts",
     "smoke:test": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/smoke-test.ts",
     "release:gate": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/release-gate.ts",
-    "nonce:reconcile": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/deploy-remaining-tokens.ts"
+    "nonce:reconcile": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/deploy-remaining-tokens.ts",
+    "get:code": "npx ts-node --project tsconfig.scripts.json --transpile-only scripts/get-code.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.170",
