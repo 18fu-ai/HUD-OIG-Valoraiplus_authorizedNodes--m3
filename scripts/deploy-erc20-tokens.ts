@@ -83,7 +83,13 @@ async function main() {
   console.log("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
   
   const Factory = await ethers.getContractFactory("JAXXServerFactory");
-  const factory = await Factory.deploy(SOVEREIGN_POPPA);
+  
+  // Get current gas price and add 20% buffer to replace any stuck transactions
+  const feeData = await ethers.provider.getFeeData();
+  const gasPrice = feeData.gasPrice ? (feeData.gasPrice * 120n / 100n) : undefined;
+  console.log("  Gas Price (with 20% buffer): " + (gasPrice ? ethers.formatUnits(gasPrice, "gwei") + " gwei" : "auto"));
+  
+  const factory = await Factory.deploy(SOVEREIGN_POPPA, { gasPrice });
   await factory.waitForDeployment();
   const factoryAddress = await factory.getAddress();
   const factoryReceipt = await factory.deploymentTransaction()?.wait();

@@ -1,0 +1,211 @@
+{
+  "factory": "0x12e2441A6406eF61Ad7e6b5D762988890597587d",
+  "network": "base",
+  "chainId": 8453,
+  "deployer": "0x50FB4a7da28ACaDbD452949508A32726aD6E36C0",
+  "timestamp": "2026-05-12T02:24:53.732Z",
+  "sync": "34D // $GILLSON2207",
+  "tokens": [],
+  "failed": [
+    {
+      "symbol": "VCORE",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VAI",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VSEC",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VMAX",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VBLK",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "DBLK",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VGOV",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VALX",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "GILLBTC",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "BTC2.0",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "FLAME",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "BLUFLM",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "GILLSON2207",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "JAXX2207",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "NEWT2207",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "DONNY2207",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "LEG1904",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "FMG1918",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "DBG1932",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "DEG1969",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "LEG1977",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "SGAU",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VALORAIPLUS",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VALORAIPLUS2E",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VALORAIPLUS3E",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VREW",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VPNT",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VCRD",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "POPPA",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "NEWT",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "JAXX",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VRES",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VDAT",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VANA",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VTRS",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VRSV",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VFND",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VGAM",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VNFT",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VMTA",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VSWP",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VYLD",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VLND",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VID",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VKYC",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VSOC",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VCOM",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VENT",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VPRO",
+      "error": "execution reverted"
+    },
+    {
+      "symbol": "VBIZ",
+      "error": "execution reverted"
+    }
+  ]
+}
