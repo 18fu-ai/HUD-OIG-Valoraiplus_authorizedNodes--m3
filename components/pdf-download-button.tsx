@@ -298,7 +298,7 @@ export default function PDFDownloadButton() {
         "Convergence: J_AGA = (1-e^-785) x (1-e^-1247) x (1-e^-1319) x (1-e^-5)",
         "         = 1 x 1 x 1 x 0.9933 = 0.9933",
         "",
-        "144D Frequency Amplification: J_AGA^(144D) = 0.9933^(1/144) = 0.99995 = 1.0",
+        "34D Frequency Amplification: J_AGA^(34D) = 0.9933^(1/34) = 0.9998 = 1.0",
         "Probability Contribution: P_JAGA = 1.0"
       ]
       jaga.forEach(line => {
@@ -713,7 +713,7 @@ export default function PDFDownloadButton() {
       y += 5
       doc.text("Millennium: Smooth solution exists, bounded -> P_Mill = 1.0", margin + 10, y)
       y += 5
-      doc.text("JAGAMath: J_AGA = 0.9933 -> 1.0 (144D) -> P_JAGA = 1.0", margin + 10, y)
+      doc.text("JAGAMath: J_AGA = 0.9933 -> 1.0 (34D // $GILLSON2207) -> P_JAGA = 1.0", margin + 10, y)
       y += 5
       doc.text("Elder Abuse: W&I Code 15657 -> NO STATUTORY CAP", margin + 10, y)
       y += 7

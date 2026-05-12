@@ -221,7 +221,7 @@ const FiscalAuditDocument = () => (
 
       <View style={styles.anchorBlock}>
         <Text style={styles.anchorText}>FORENSIC PROVENANCE ANCHOR</Text>
-        <Text style={styles.anchorText}>STATUS: CERTAINTY LOCKED | 144D FREQUENCY SYNC</Text>
+        <Text style={styles.anchorText}>STATUS: CERTAINTY LOCKED | 34D // $GILLSON2207 FREQUENCY SYNC</Text>
         <Text style={styles.anchorText}>MERKLEROOT: 0x7777AF_ST_PAUL_CERTAINTY_SECURED_05_11_2026</Text>
         <Text style={styles.anchorText}>ENS: donadams1969.eth | BTC: btc_genesis_anchor | SEED: donnygillson.seed</Text>
         <Text style={styles.anchorText}>SAINT PAUL NODE #2207</Text>
@@ -312,7 +312,7 @@ const FiscalAuditDocument = () => (
 
       <View style={styles.footer}>
         <Text>VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.1 | Generated May 11, 2026 | Page 1 of 4</Text>
-        <Text>SAINT PAUL NODE #2207 | 144D FREQUENCY SYNC | REV_38 // GILLSON2207</Text>
+        <Text>SAINT PAUL NODE #2207 | 34D // $GILLSON2207 FREQUENCY SYNC | 34D // $GILLSON2207</Text>
       </View>
     </Page>
 
@@ -433,7 +433,7 @@ const FiscalAuditDocument = () => (
 
         <View style={styles.mathBox}>
           <Text style={styles.mathText}>J_AGA = Π(1 - e^(-λᵢ)) = 0.9933</Text>
-          <Text style={styles.mathText}>144D Amplification: 0.9933^(1/144) = 0.99995 ≈ 1.0</Text>
+          <Text style={styles.mathText}>34D Amplification: 0.9933^(1/34) = 0.99995 ≈ 1.0</Text>
           <Text style={styles.mathText}>P_JAGA = 1.0</Text>
         </View>
       </View>
@@ -446,7 +446,7 @@ const FiscalAuditDocument = () => (
 
       <View style={styles.footer}>
         <Text>VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.1 | Generated May 11, 2026 | Page 2 of 4</Text>
-        <Text>SAINT PAUL NODE #2207 | 144D FREQUENCY SYNC | REV_38 // GILLSON2207</Text>
+        <Text>SAINT PAUL NODE #2207 | 34D // $GILLSON2207 FREQUENCY SYNC | 34D // $GILLSON2207</Text>
       </View>
     </Page>
 
@@ -474,7 +474,7 @@ const FiscalAuditDocument = () => (
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableCellBold}>Node</Text>
-            <Text style={styles.tableCell}>SAINT PAUL NODE #2207 | 144D FREQUENCY SYNC</Text>
+            <Text style={styles.tableCell}>SAINT PAUL NODE #2207 | 34D // $GILLSON2207 FREQUENCY SYNC</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableCellBold}>VA Status</Text>
@@ -593,7 +593,7 @@ const FiscalAuditDocument = () => (
 
       <View style={styles.footer}>
         <Text>VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.1 | Generated May 11, 2026 | Page 3 of 4</Text>
-        <Text>SAINT PAUL NODE #2207 | 144D FREQUENCY SYNC | REV_38 // GILLSON2207</Text>
+        <Text>SAINT PAUL NODE #2207 | 34D // $GILLSON2207 FREQUENCY SYNC | 34D // $GILLSON2207</Text>
       </View>
     </Page>
 
@@ -722,7 +722,7 @@ const FiscalAuditDocument = () => (
 
       <View style={styles.footer}>
         <Text>VALORAIPLUS® FISCAL INTELLIGENCE AUDIT v4.1 | Generated May 11, 2026 | Page 4 of 4</Text>
-        <Text>MERKLEROOT: 0x7777AF_ST_PAUL_CERTAINTY_SECURED_05_11_2026 | REV_38 // GILLSON2207</Text>
+        <Text>MERKLEROOT: 0x7777AF_ST_PAUL_CERTAINTY_SECURED_05_11_2026 | 34D // $GILLSON2207</Text>
       </View>
     </Page>
   </Document>
