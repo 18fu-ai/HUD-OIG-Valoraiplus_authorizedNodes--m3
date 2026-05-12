@@ -47,7 +47,7 @@ const EVIDENCE_CATEGORIES: EvidenceCategory[] = [
   {
     id: 'residency-logs',
     name: 'residency-logs',
-    description: 'Video/data log of the November 19, 2025 transition event at the Girard residency (1030 Girard Road).',
+    description: 'Video/data log of the November 19, 2025 transition event at the residential node [ENCRYPTED].',
     icon: Video,
     path: 'donadams1969.eth/residency-logs',
     status: 'ANCHORED',

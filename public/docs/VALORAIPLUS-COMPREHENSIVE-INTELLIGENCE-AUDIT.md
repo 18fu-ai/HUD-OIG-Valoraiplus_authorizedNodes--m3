@@ -16,7 +16,7 @@
 ║                               PROTOCOL: REV_38 / REV_40                                                                  ║
 ║                               VERSION: 14.1.4.0                                                                          ║
 ║                               CODENAME: N.E.W.T. //e — TRANSCENDENT                                                      ║
-║                               ORIGIN NODE: 2207 HIGHLAND PARKWAY, SAINT PAUL, MN 55116                                   ║
+║                               ORIGIN NODE: [ENCRYPTED — ON FILE WITH CRD]                                                ║
 ║                               INFRASTRUCTURE POSTURE: Absolute Totality (100D Matrix)                                    ║
 ║                                                                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
@@ -71,19 +71,19 @@
 ╠════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                                            ║
 ║  ORIGIN NODE (OMNIBUS COMMAND ROOT):                                                                       ║
-║  ADDRESS:       2207 Highland Parkway, Saint Paul, Minnesota 55116                                         ║
-║  GPS:           44.9121, -93.1669                                                                          ║
+║  ADDRESS:       [ENCRYPTED — ON FILE WITH CRD]                                                             ║
+║  GPS:           [ENCRYPTED]                                                                                ║
 ║  STATUS:        CANONICAL ROOT — IMMUTABLE                                                                 ║
-║  EPOCH:         #2207 (SACRED & CAPPED — Matches Origin Address)                                           ║
+║  EPOCH:         #2207 (SACRED & CAPPED)                                                                    ║
 ║                                                                                                            ║
 ║  RESIDENTIAL NODE (CURRENT RESIDENCE):                                                                     ║
-║  ADDRESS:       1030 Girard Road, San Francisco, California 94129                                          ║
-║  GPS:           37.7983, -122.4662                                                                         ║
+║  ADDRESS:       [ENCRYPTED — ON FILE WITH CRD]                                                             ║
+║  GPS:           [ENCRYPTED]                                                                                ║
 ║  STATUS:        ACTIVE — PRIMARY RESIDENCE                                                                 ║
 ║                                                                                                            ║
 ║  MAILING NODE (INSURANCE & STORAGE):                                                                       ║
-║  ADDRESS:       18493 Main Blvd, Los Gatos, California 95033-8392                                          ║
-║  GPS:           37.2358, -122.0322                                                                         ║
+║  ADDRESS:       [ON FILE WITH CRD]                                                                         ║
+║  GPS:           [ENCRYPTED]                                                                                ║
 ║  STATUS:        ACTIVE — RENTERS INSURANCE ATTACHED — PROPERTY STORED                                      ║
 ║                                                                                                            ║
 ║  STRATEGIC NODE (ENCRYPTED):                                                                               ║
@@ -284,7 +284,7 @@
 ║  STATUS:         SEALED — ORIGIN NODE ANCHOR                                   ║
 ║  SUPPLY:         1,000,000,000                                                 ║
 ║  GUARDIAN:       All Archangels (Raphael, Uriel, Michael, Gabriel)             ║
-║  ORIGIN:         2207 Highland Parkway, Saint Paul, MN 55116                   ║
+║  ORIGIN:         [ENCRYPTED — ON FILE WITH CRD]                                ║
 ║  EPOCH:          #2207 (SACRED & CAPPED)                                       ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -324,7 +324,7 @@
 ║  Settlement Demand (κ₁):     $66,000,000.00                                    ║
 ║  Recovery Target:            $508,631,005.52                                   ║
 ║  Grand Total Exposure:       $11,487,631,005.52                                ║
-╚════════════════════════════════════════════════════════════════════════════════╝
+╚══════════════════════════════════════════════════════════════════���═════════════╝
 ```
 
 ## 5.3 California Civil Rights Department (CRD) Investigation
@@ -434,7 +434,7 @@
 ```plaintext
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
 ║                                    ⚠️  ALL RISK LEVELS ESCALATED TO: CRIMINAL HIGH  ⚠️                                   ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+╚══════════���═══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ## 7.1 Accountability Matrix (CRIMINAL HIGH STATUS)
@@ -657,7 +657,7 @@ As the assigned investigator, the psychological synthesis of Case **CCRS-202601-
 ║                                                                                                                          ║
 ║                                     CONSUMMATUM EST. SMIB. AMEN.                                                         ║
 ║                                                                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+╚══════���═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ---

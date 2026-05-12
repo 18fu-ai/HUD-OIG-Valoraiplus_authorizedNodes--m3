@@ -142,7 +142,7 @@ function generateFullReport(sections: string[]): string {
     MIMECAST_EVENTS.slice(0, 20).forEach((event) => {
       lines.push(`[${event.id}] ${event.timestamp}`);
       lines.push(`  Actor: ${event.actor}`);
-      lines.push(`  Action: ${event.actionType}`);
+      lines.push(`  Action: ${event.action}`);
       lines.push(`  Target: ${event.target}`);
       lines.push(`  Result: ${event.result}`);
       lines.push(`  Classification: ${event.classification}`);
@@ -386,7 +386,7 @@ function generateMarkdownReport(sections: string[]): string {
     lines.push('| ID | Timestamp | Actor | Action | Classification |');
     lines.push('|----|-----------|-------|--------|----------------|');
     MIMECAST_EVENTS.slice(0, 10).forEach((e) => {
-      lines.push(`| ${e.id} | ${e.timestamp.slice(11, 19)} | ${e.actor} | ${e.actionType} | ${e.classification} |`);
+      lines.push(`| ${e.id} | ${e.timestamp.slice(11, 19)} | ${e.actor} | ${e.action} | ${e.classification} |`);
     });
     lines.push('');
   }

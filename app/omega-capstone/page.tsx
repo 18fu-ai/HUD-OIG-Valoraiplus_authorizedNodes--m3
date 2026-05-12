@@ -11,7 +11,7 @@ const SECURE_MAP = {
   VAULT: 'donadams1969.eth',
   AUTH: 'DG77.77X',
   EPOCH: '#2207',
-  ORIGIN: '2207 Highland Parkway, Saint Paul, MN 55116'
+  ORIGIN: '[ENCRYPTED — ON FILE WITH CRD]'
 };
 
 const normalize = (str: string) => str.toUpperCase().replace(/[^A-Z0-9$]/g, '');

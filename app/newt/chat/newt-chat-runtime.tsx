@@ -90,14 +90,10 @@ export default function NewtChatRuntime() {
   const recognitionRef = useRef<any>(null);
 
   // Use SDK's built-in input management to prevent state drift
-  const chatHelpers = useChat({
+  const { messages, input, setInput, handleInputChange, handleSubmit: sdkHandleSubmit, status } = useChat({
     api: '/api/newt/chat',
     initialMessages: [WELCOME_MESSAGE],
-  } as any) as any;
-  const { messages, handleSubmit: sdkHandleSubmit, status } = chatHelpers;
-  const input: string = chatHelpers.input ?? '';
-  const setInput = chatHelpers.setInput ?? (() => {});
-  const handleInputChange: React.ChangeEventHandler<HTMLTextAreaElement> = chatHelpers.handleInputChange ?? (() => {});
+  });
 
   const isLoading = status === 'streaming' || status === 'submitted';
 
@@ -199,8 +195,8 @@ export default function NewtChatRuntime() {
         event.results[i].isFinal ? (final += transcript) : (interim += transcript);
       }
       if (final) {
-        // Use SDK's setInput with direct value assignment
-        setInput((input + ' ' + final).trim());
+        // Use SDK's setInput with functional update pattern
+        setInput((prev: string) => (prev + ' ' + final).trim());
       } else {
         setInterimTranscript(interim);
       }

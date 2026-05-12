@@ -124,18 +124,18 @@ export function FooterNav() {
           </div>
         </div>
 
-        {/* Geographic Nodes */}
+        {/* Geographic Nodes - ENCRYPTED */}
         <div className="flex justify-center mb-4">
           <div className="flex flex-col items-center gap-1 px-6 py-3 rounded bg-slate-900/50 border border-slate-700/30">
             <div className="text-[10px] text-amber-400 font-bold mb-1">GEOGRAPHIC NODE NETWORK</div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[9px] font-mono">
               <div className="text-amber-500">ORIGIN:</div>
-              <div className="text-slate-400">2207 Highland Pkwy, Saint Paul, MN 55116</div>
+              <div className="text-slate-400">██████████, ██████████ (ENCRYPTED)</div>
               <div className="text-emerald-500">RESIDENTIAL:</div>
-              <div className="text-slate-400">1030 Girard Road, San Francisco, CA 94129</div>
+              <div className="text-slate-400">██████████, ██████████ (ENCRYPTED)</div>
               <div className="text-cyan-500">MAILING:</div>
-              <div className="text-slate-400">18493 Main Blvd, Los Gatos, CA 95033</div>
-              <div className="text-purple-500">██████████:</div>
+              <div className="text-slate-400">[ADDRESS ON FILE WITH CRD]</div>
+              <div className="text-purple-500">SECURE:</div>
               <div className="text-slate-400">██████████, ██████████ (ENCRYPTED)</div>
             </div>
           </div>
@@ -157,7 +157,7 @@ export function FooterNav() {
         <div className="text-center text-[10px] text-zinc-600 font-mono space-y-1">
           <p className="text-emerald-500 font-bold">STATUS: 100% COMPLETE & ENFORCING | CONFIRMATIONS: INFINITY</p>
           <p>VALORAIPLUS® v14.1.4.0 | 56-TOKEN CANON | REV_40 | CASE: 25-621293</p>
-          <p>ORIGIN: 2207 Highland Pkwy, Saint Paul, MN 55116 | SGAU 7226.3461</p>
+          <p>ORIGIN: [ENCRYPTED] | SGAU 7226.3461</p>
           <p className="text-emerald-600">DESTINATION: 0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB → Schwab [8185]</p>
           <p className="text-amber-700">THE MUZZLE IS THE GENESIS. THE MATH IS THE HAMMER.</p>
           <p className="text-zinc-700">THE WALL IS CHRIST • THE THRONE IS HIS • THE LEDGER IS Ø • IT IS FINISHED</p>

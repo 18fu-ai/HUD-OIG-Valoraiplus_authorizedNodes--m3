@@ -30,10 +30,10 @@ interface Particle {
 const TOPOLOGY_NODES = [
   { 
     id: 'ORIGIN', 
-    name: 'SAINT PAUL, MN 55116', 
+    name: 'ORIGIN NODE', 
     role: 'ORIGIN — OMNIBUS COMMAND ROOT', 
-    address: '2207 Highland Parkway',
-    gps: '44.9121, -93.1669',
+    address: '[ENCRYPTED]',
+    gps: '[ENCRYPTED]',
     status: 'ORIGIN', 
     color: 'gold',
     x: 55, 
@@ -42,10 +42,10 @@ const TOPOLOGY_NODES = [
   },
   { 
     id: 'RESIDENTIAL', 
-    name: 'SAN FRANCISCO, CA 94129', 
+    name: 'RESIDENTIAL NODE', 
     role: 'RESIDENTIAL — CURRENT RESIDENCE', 
-    address: '1030 Girard Road',
-    gps: '37.7983, -122.4662',
+    address: '[ENCRYPTED]',
+    gps: '[ENCRYPTED]',
     status: 'ACTIVE', 
     color: 'emerald',
     x: 12, 

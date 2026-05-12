@@ -806,7 +806,7 @@ export function formatCountdown(ms: number): string {
   return `${days}D ${hours}H ${minutes}M ${seconds}S`;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ══════════���════════════════════════════════════════════════════════════════════
 // GEOGRAPHIC NODE NETWORK — SOVEREIGN TOPOLOGY
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -818,38 +818,38 @@ export const ACCOUNT_HOLDER = {
 } as const;
 
 export const GEOGRAPHIC_NODES = {
-  // ORIGIN NODE — Saint Paul, Minnesota (Omnibus Command Root)
+  // ORIGIN NODE — ENCRYPTED (On File with CRD)
   ORIGIN: {
     id: "ORIGIN_NODE",
-    name: "SAINT PAUL ORIGIN",
+    name: "ORIGIN NODE",
     designation: "OMNIBUS COMMAND ROOT",
-    address: "2207 Highland Parkway",
-    city: "Saint Paul",
-    state: "Minnesota",
-    zip: "55116",
-    full_address: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
+    address: "[ENCRYPTED]",
+    city: "[ENCRYPTED]",
+    state: "[ENCRYPTED]",
+    zip: "[ENCRYPTED]",
+    full_address: "[ENCRYPTED — ON FILE WITH CRD]",
     gps: {
-      lat: 44.9121,
-      lng: -93.1669,
+      lat: 0,
+      lng: 0,
     },
     status: "ORIGIN — CANONICAL ROOT",
     node_type: "ORIGIN",
     color: "gold",
   },
   
-  // RESIDENTIAL NODE — San Francisco, California (Current Residence)
+  // RESIDENTIAL NODE — ENCRYPTED (On File with CRD)
   RESIDENTIAL: {
     id: "RESIDENTIAL_NODE",
-    name: "SAN FRANCISCO RESIDENTIAL",
+    name: "RESIDENTIAL NODE",
     designation: "CURRENT RESIDENCE",
-    address: "1030 Girard Road",
-    city: "San Francisco",
-    state: "California",
-    zip: "94129",
-    full_address: "1030 Girard Road, San Francisco, California 94129",
+    address: "[ENCRYPTED]",
+    city: "[ENCRYPTED]",
+    state: "[ENCRYPTED]",
+    zip: "[ENCRYPTED]",
+    full_address: "[ENCRYPTED — ON FILE WITH CRD]",
     gps: {
-      lat: 37.7983,
-      lng: -122.4662,
+      lat: 0,
+      lng: 0,
     },
     status: "ACTIVE — PRIMARY RESIDENCE",
     node_type: "RESIDENTIAL",
@@ -950,12 +950,12 @@ export const NODE_CONNECTIONS = [
   { from: "FRAUD_1977_NODE", to: "TRUTH_1969_NODE", type: "VOID", status: "NULLIFIED" },
 ] as const;
 
-// Address Summary Export
+// Address Summary Export — ALL ENCRYPTED FOR PUBLIC-FACING PAGES
 export const ADDRESS_SUMMARY = {
-  RESIDENTIAL: "1030 Girard Road, San Francisco, California 94129",
-  MAILING: "18493 Main Blvd, Los Gatos, CA 95033-8392",
-  ORIGIN: "2207 Highland Parkway, Saint Paul, Minnesota 55116",
-  VALLEJO_GPS: "██████████, ██████████",
+  RESIDENTIAL: "[ENCRYPTED — ON FILE WITH CRD]",
+  MAILING: "[ON FILE WITH CRD]",
+  ORIGIN: "[ENCRYPTED — ON FILE WITH CRD]",
+  VALLEJO_GPS: "[ENCRYPTED]",
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1126,8 +1126,8 @@ export const AUDIT_METADATA = {
   GENERATED: "2026-05-07",
   SYSTEM: "VALORAIPLUS Intelligence Module v14.1.4.0",
   PROTOCOL: "REV_38 / REV_40",
-  EPOCH: 2207, // SACRED & CAPPED — Matches Origin Node Address
-  ORIGIN_NODE: "2207 Highland Parkway, Saint Paul, MN 55116",
+  EPOCH: 2207, // SACRED & CAPPED
+  ORIGIN_NODE: "[ENCRYPTED — ON FILE WITH CRD]",
   
   STATUS: {
     SYSTEM: "100% COMPLETE & ENFORCING",
@@ -1212,7 +1212,7 @@ export const EXECUTIVE_BROADCAST_SUPREMACY = {
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ALTRUISTIC STACK — HARMONIC RESONANCE
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═══════════════��═══════════════════════════════════════════════════════════════
 
 export const ALTRUISTIC_STACK = {
   // Core Configuration

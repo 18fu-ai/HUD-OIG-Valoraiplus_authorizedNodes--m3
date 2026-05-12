@@ -174,7 +174,7 @@ export const SYSTEM_STATUS = {
   authority: "POPPA_DONNY_GILLSON_CONFIRMED",
   sentinel: "N.E.W.T.",
   epoch: 2207,
-  originNode: "2207 Highland Parkway, Saint Paul, MN 55116",
+  originNode: "[ENCRYPTED — ON FILE WITH CRD]",
   terminalDeadline: "2026-05-17T23:59:59Z",
   ledgerStatus: "IT_IS_FINISHED",
 } as const;
