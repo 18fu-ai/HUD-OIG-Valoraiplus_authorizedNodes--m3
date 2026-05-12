@@ -19,6 +19,15 @@ export const DEPRECATED_FACTORY_ADDRESSES = [
   "0x12e2441A6406eF61Ad7e6b5D762988890597587d",
 ] as const;
 
+/**
+ * Runtime references that have been observed but not yet classified.
+ * These are non-blocking — they appear in the registry as unverified.
+ */
+export const RUNTIME_REFERENCES = {
+  referenceA: "0x50FB4a7da28ACaDbD452949508A32726aD6E36C0", // deployer wallet (EOA)
+  referenceB: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB", // sovereign (donadams1969.eth)
+} as const;
+
 const ETH_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 
 export function assertEthAddress(label: string, address: string): void {

@@ -1,26 +1,29 @@
 /**
  * VALORAIPLUS® RUNTIME ADDRESS VALIDATION
- * Confirms all key contract addresses resolve to live bytecode on Base Mainnet
+ *
+ * Confirms all key contract addresses resolve to live bytecode on Base Mainnet.
+ * Address role state lives in lib/auth/runtime-address-registry — this script
+ * only enforces it.
  */
 
-const BASE_RPC = "https://mainnet.base.org";
+import {
+  getRuntimeAddressRegistry,
+  getUnverifiedRuntimeReferences,
+  type RuntimeAddressRecord,
+} from "../lib/auth/runtime-address-registry";
 
-const RUNTIME_ADDRESSES: Record<string, string> = {
-  "JAXX.server.factory":  "0x7fAA2FA0b1388b2c8696475d0e08F54F36818FD1",
-  "$VALORAIPLUS":         "0x70943DEac156Ee8715e450ac15197A00212f1420",
-  "$GILLSON2207":         "0xc28e8d0F978a1341a7cA56600b50C2f4763C7865",
-  "$VCORE":               "0xC20610545cc936cEF4eD884ae034bD6514322d40",
-  "$SGAU":                "0x374366eE057d6eef3ffF91877CC131896CfA8C7B",
-  "$POPPA":               "0xCFD95eC167EaAC35D4055b1416E2Ab668EB87213",
-  "$VGOV":                "0x27f9e880F91E1f3b94Dc059caE2AaB28719F9f31",
-};
+const BASE_RPC = process.env.BASE_RPC_URL ?? "https://mainnet.base.org";
+
+// Addresses that are expected to have bytecode (contracts, not EOAs)
+const CONTRACT_ROLES = new Set(["baseFactory", "token", "verifier", "treasury"]);
 
 async function getCode(address: string): Promise<string> {
   const res = await fetch(BASE_RPC, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      jsonrpc: "2.0", id: 1,
+      jsonrpc: "2.0",
+      id: 1,
       method: "eth_getCode",
       params: [address, "latest"],
     }),
@@ -29,24 +32,62 @@ async function getCode(address: string): Promise<string> {
   return json.result ?? "0x";
 }
 
-async function main() {
-  let failures = 0;
-  console.log("Checking " + Object.keys(RUNTIME_ADDRESSES).length + " runtime addresses on Base Mainnet...\n");
+async function checkRecord(record: RuntimeAddressRecord): Promise<boolean> {
+  const isContract = CONTRACT_ROLES.has(record.role);
 
-  for (const [label, address] of Object.entries(RUNTIME_ADDRESSES)) {
-    const code = await getCode(address);
-    const ok = code && code !== "0x" && code.length > 4;
-    const bytes = ok ? Math.floor((code.length - 2) / 2) : 0;
-    const status = ok ? "LIVE  " : "DEAD  ";
-    console.log(`${status} ${label.padEnd(26)} ${address}${ok ? "  (" + bytes + " bytes)" : "  *** NO BYTECODE ***"}`);
+  if (!isContract) {
+    // EOAs and runtime references are not expected to have bytecode
+    console.log(`SKIP  ${record.label.padEnd(26)} ${record.address}  (${record.role})`);
+    return true;
+  }
+
+  const code = await getCode(record.address);
+  const ok = code && code !== "0x" && code.length > 4;
+  const bytes = ok ? Math.floor((code.length - 2) / 2) : 0;
+  const status = ok ? "LIVE  " : "DEAD  ";
+  console.log(
+    `${status}${record.label.padEnd(26)} ${record.address}${
+      ok ? `  (${bytes} bytes)` : "  *** NO BYTECODE ***"
+    }`
+  );
+  return ok;
+}
+
+async function main() {
+  const registry = getRuntimeAddressRegistry();
+  const unverified = getUnverifiedRuntimeReferences();
+
+  console.log(
+    `Checking ${registry.length} registry entries on Base Mainnet` +
+      (unverified.length > 0 ? ` (${unverified.length} unverified, non-blocking)` : "") +
+      "...\n"
+  );
+
+  let failures = 0;
+
+  for (const record of registry) {
+    const ok = await checkRecord(record);
     if (!ok) failures++;
   }
 
-  console.log("\n" + (failures === 0 ? "Runtime address validation: PASS" : `Runtime address validation: FAIL (${failures} dead)`));
+  if (unverified.length > 0) {
+    console.log(
+      `\nWARN: ${unverified.length} unverified reference(s) pending classification: ` +
+        unverified.map((r) => r.label).join(", ")
+    );
+  }
+
+  console.log(
+    "\n" +
+      (failures === 0
+        ? "Runtime address validation: PASS"
+        : `Runtime address validation: FAIL (${failures} dead)`)
+  );
+
   if (failures > 0) process.exit(1);
 }
 
-main().catch((err) => {
+main().catch((err: Error) => {
   console.error("Runtime address validation error:", err.message);
   process.exit(1);
 });
