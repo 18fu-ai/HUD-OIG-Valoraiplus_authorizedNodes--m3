@@ -8,6 +8,7 @@
  */
 
 import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { Send, Loader2, Shield, Brain, Mic, MicOff, Timer, Lock, Download, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -89,13 +90,28 @@ export default function NewtChatRuntime() {
 
   const recognitionRef = useRef<any>(null);
 
-  // Use SDK's built-in input management to prevent state drift
-  const { messages, input, setInput, handleInputChange, handleSubmit: sdkHandleSubmit, status } = useChat({
-    api: '/api/newt/chat',
-    initialMessages: [WELCOME_MESSAGE],
+  // AI SDK 6: Use local state for input
+  const [input, setInput] = useState('');
+
+  // AI SDK 6: useChat with DefaultChatTransport
+  // Note: initialMessages is not supported in AI SDK 6, so we handle welcome message in UI
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({ api: '/api/newt/chat' }),
   });
+  
+  // Combine welcome message with actual messages
+  const allMessages = [WELCOME_MESSAGE, ...messages];
 
   const isLoading = status === 'streaming' || status === 'submitted';
+
+  // Helper to extract text from UIMessage parts
+  const getMessageText = (msg: { parts?: Array<{ type: string; text?: string }> }) => {
+    if (!msg.parts || !Array.isArray(msg.parts)) return '';
+    return msg.parts
+      .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+      .map((p) => p.text)
+      .join('');
+  };
 
   // Lightweight particle background (optimized)
   useEffect(() => {
@@ -274,8 +290,9 @@ export default function NewtChatRuntime() {
     }
 
     setInterimTranscript('');
-    // Use SDK's handleSubmit which manages input state automatically
-    sdkHandleSubmit(e);
+    // AI SDK 6: Use sendMessage with local input state
+    sendMessage({ text: input });
+    setInput('');
   };
 
   // Auto-scroll
@@ -346,7 +363,7 @@ export default function NewtChatRuntime() {
       {/* Messages Area */}
       <main className="flex-1 relative z-10 overflow-y-auto p-6">
         <div className="max-w-4xl mx-auto space-y-8">
-          {messages.map((msg) => (
+          {allMessages.map((msg) => (
             <Card
               key={msg.id}
               className={cn(
@@ -375,7 +392,10 @@ export default function NewtChatRuntime() {
                       {msg.role === 'user' ? 'POPPA' : 'N.E.W.T. REV_34'}
                     </div>
                     <div className="text-sm text-slate-200 whitespace-pre-wrap leading-relaxed">
-                      {msg.content}
+                      {/* AI SDK 6: Handle both parts (UIMessage) and content (legacy) */}
+                      {('parts' in msg && Array.isArray(msg.parts)) 
+                        ? getMessageText(msg as { parts: Array<{ type: string; text?: string }> })
+                        : (msg as { content?: string }).content || ''}
                     </div>
                   </div>
                 </div>
@@ -404,7 +424,7 @@ export default function NewtChatRuntime() {
               <textarea
                 ref={inputRef}
                 value={input}
-                onChange={handleInputChange}
+                onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();

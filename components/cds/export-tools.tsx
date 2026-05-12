@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 
 interface ExportData {
-  type: 'transcript' | 'report' | 'forensic' | 'contract' | 'dashboard';
+  type: string;
   title: string;
   timestamp: string;
   content: unknown;

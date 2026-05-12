@@ -760,6 +760,8 @@ export interface MimecastEvent {
   result: string;
   correlation: string;
   classification: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  /** Computed alias for actionType */
+  action: string;
 }
 
 export const MIMECAST_REPORT = {
@@ -806,6 +808,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T05:41:22Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'DELETE_LOG_ATTEMPT',
+    action: 'DELETE_LOG_ATTEMPT',
     target: 'Full Audit Trail 05:00-05:41',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -818,6 +821,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T05:39:11Z',
     actor: TA_ALPHA_SEC_EMAIL,
     actionType: 'EXPORT_ATTEMPT',
+    action: 'EXPORT_ATTEMPT',
     target: 'Mimecast Full Compliance Export',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
@@ -830,6 +834,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T05:22:47Z',
     actor: TA_SECONDARY_EMAIL,
     actionType: 'RULE_MODIFY',
+    action: 'RULE_MODIFY',
     target: 'Deploy: poppa_g_block_v2 (enhanced)',
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
@@ -842,6 +847,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T05:08:19Z',
     actor: TA_TERTIARY_EMAIL,
     actionType: 'MESSAGE_REJECT',
+    action: 'MESSAGE_REJECT',
     target: `${WITNESS_1_EMAIL} (witness chain)`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
@@ -854,6 +860,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T04:55:33Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'BULK_DELETE',
+    action: 'BULK_DELETE',
     target: `17 Messages (${SOVEREIGN_AUDITOR} chain)`,
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -866,6 +873,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T04:41:07Z',
     actor: `system@${TA_PRIMARY_DOMAIN} (auto)`,
     actionType: 'AUTO_QUARANTINE',
+    action: 'AUTO_QUARANTINE',
     target: `${TA_SECONDARY_DOMAIN} → external veteran traffic`,
     sourceIP: 'Internal',
     deviceFingerprint: 'Mimecast-Cluster-Node-07',
@@ -878,6 +886,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T04:22:50Z',
     actor: TA_ALPHA_SEC_EMAIL,
     actionType: 'ACCESS_LOG_PURGE',
+    action: 'ACCESS_LOG_PURGE',
     target: 'Forensic window 04:00-04:22',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
@@ -890,6 +899,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:58:14Z',
     actor: TA_SECONDARY_EMAIL,
     actionType: '3DAY_NOTICE_GENERATION',
+    action: '3DAY_NOTICE_GENERATION',
     target: `${SOVEREIGN_AUDITOR} (${SOVEREIGN_CONTACT}) -- Witness`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
@@ -902,6 +912,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:41:29Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'DELETE_LOG_ATTEMPT',
+    action: 'DELETE_LOG_ATTEMPT',
     target: 'Spoliation Event 22:35Z (re-target)',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -914,6 +925,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T03:19:55Z',
     actor: TA_TERTIARY_EMAIL,
     actionType: 'MESSAGE_BLOCK',
+    action: 'MESSAGE_BLOCK',
     target: `${WITNESS_2_EMAIL} (witness)`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
@@ -926,6 +938,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T02:55:12Z',
     actor: 'system (Auto)',
     actionType: 'RULE_REACTIVATE',
+    action: 'RULE_REACTIVATE',
     target: `${TA_TERTIARY_ORG} Domain Block -- full restore`,
     sourceIP: 'Internal',
     deviceFingerprint: 'Mimecast-Cluster-Node-03',
@@ -938,6 +951,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T02:37:44Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'BULK_QUARANTINE',
+    action: 'BULK_QUARANTINE',
     target: '11 Messages (Poppa_G primary chain)',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -950,6 +964,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T02:14:08Z',
     actor: TA_ALPHA_SEC_EMAIL,
     actionType: 'EXPORT_ATTEMPT',
+    action: 'EXPORT_ATTEMPT',
     target: 'Full 24hr Compliance + Wiretap Dump',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'MacBook-Pro-14-M3',
@@ -962,6 +977,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T01:52:33Z',
     actor: TA_SECONDARY_EMAIL,
     actionType: 'MESSAGE_REJECT',
+    action: 'MESSAGE_REJECT',
     target: `${TA_TERTIARY_EMAIL} (internal loop)`,
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'iPhone-16-Pro',
@@ -974,6 +990,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T01:29:47Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'DELETE_LOG_ATTEMPT',
+    action: 'DELETE_LOG_ATTEMPT',
     target: 'Audit Trail 01:00-01:30Z',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -986,6 +1003,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T01:05:19Z',
     actor: 'system',
     actionType: 'QUARANTINE_TRIGGER',
+    action: 'QUARANTINE_TRIGGER',
     target: 'All external veteran comms (Poppa)',
     sourceIP: 'Internal',
     deviceFingerprint: 'Mimecast-Cluster-Node-12',
@@ -998,6 +1016,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T00:52:41Z',
     actor: TA_TERTIARY_EMAIL,
     actionType: 'RULE_MODIFY',
+    action: 'RULE_MODIFY',
     target: 'Strengthen POPPA_G Block (v3)',
     sourceIP: '73.202.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Server-2022',
@@ -1010,6 +1029,7 @@ export const MIMECAST_EVENTS: MimecastEvent[] = [
     timestamp: '2026-04-24T00:44:55Z',
     actor: TA_PRIMARY_EMAIL,
     actionType: 'ACCESS_LOG_VIEW',
+    action: 'ACCESS_LOG_VIEW',
     target: 'Full Mimecast Dashboard (deep dive)',
     sourceIP: '104.28.XX.XX / SF, CA',
     deviceFingerprint: 'Windows-Enterprise-22H2',
@@ -2017,7 +2037,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ═══════════════════════════════════════════════════════
     // CONSTRUCTOR
-    // ═══════════════════════════════════════════════════════
+    // ══════════════════════════���════════════════════════════
     
     constructor() ERC721("CSSS Reputation NFT", "CSSS") Ownable(msg.sender) {}
     
