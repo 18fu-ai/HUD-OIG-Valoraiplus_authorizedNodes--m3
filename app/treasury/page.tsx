@@ -25,6 +25,9 @@ import {
   Home
 } from 'lucide-react';
 import { ConnectedBrokerageAccount } from '@/components/connected-brokerage-account';
+import { SendReceiveSwap } from '@/components/wallet/send-receive-swap';
+import { AddNewCoins } from '@/components/wallet/add-new-coins';
+import { VACNEligibilityVerifier } from '@/components/wallet/vacn-eligibility-verifier';
 
 // ============================================================
 // NR PROTOCOL: NON-REVOCABLE TREASURY & BILLING GOVERNANCE
@@ -725,6 +728,81 @@ export default function TreasuryNRProtocol() {
 
         {/* ── PRIMARY CONNECTED BROKERAGE ACCOUNT ─────────────── */}
         <ConnectedBrokerageAccount />
+
+        {/* ── SEND/RECEIVE/SWAP WALLET MANAGEMENT ────────────── */}
+        <div className="mt-8">
+          <SendReceiveSwap
+            linkedWallets={[
+              {
+                id: 'vault-primary',
+                name: 'Primary Treasury',
+                address: '0x50FB4a7da28ACaDbD452949508A32726aD6E36C0',
+                balance: '1,000,000,000',
+                token: 'VALOR',
+              },
+              {
+                id: 'vault-evidence',
+                name: 'Evidence Vault',
+                address: '0x7777AF...878811',
+                balance: '4,654',
+                token: 'FORENSIC',
+              },
+              {
+                id: 'vault-vacn',
+                name: 'VACN Treasury',
+                address: '0x7777VACN',
+                balance: '0',
+                token: 'VACN',
+              },
+            ]}
+          />
+        </div>
+
+        {/* ── ADD NEW COINS / TOKEN DEPLOYMENT ────────────────– */}
+        <div className="mt-8">
+          <AddNewCoins
+            deployedTokens={[
+              {
+                contractAddress: '0x50FB4a7da28ACaDbD452949508A32726aD6E36C0',
+                name: 'VALORAIPLUS Governance',
+                symbol: 'VALOR',
+                supply: '1,000,000,000',
+                decimals: 18,
+                deployedAt: '2026-05-01T00:00:00Z',
+                network: 'Base Mainnet',
+              },
+              {
+                contractAddress: '0x7777AF...878811',
+                name: 'Forensic Evidence',
+                symbol: 'FORENSIC',
+                supply: '4,654',
+                decimals: 0,
+                deployedAt: '2026-05-02T00:00:00Z',
+                network: 'Base Mainnet',
+              },
+              {
+                contractAddress: '0x2207...',
+                name: 'Saint Paul Origin',
+                symbol: 'STPAUL',
+                supply: '2,207',
+                decimals: 0,
+                deployedAt: '2026-05-03T00:00:00Z',
+                network: 'Base Mainnet',
+              },
+            ]}
+          />
+        </div>
+
+        {/* ── VACN VIETNAM VETERANS CHILDREN BENEFIT ────────── */}
+        <div className="mt-8">
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-2">Vietnam Veterans Children Benefit ($VACN)</h2>
+            <p className="text-muted-foreground">
+              Automatic token distribution for children of Vietnam-era veterans (1966-1972)
+            </p>
+          </div>
+          <VACNEligibilityVerifier />
+        </div>
 
         {/* ── PROTOCOL SEAL ────────────────────────────────────── */}
         <Card className="border-emerald-500/50 bg-emerald-500/10">
