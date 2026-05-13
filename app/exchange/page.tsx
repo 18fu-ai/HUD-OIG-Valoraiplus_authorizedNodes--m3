@@ -12,6 +12,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useOrderExecution } from "@/lib/hooks/use-order-execution";
+import { PortfolioAnalytics } from "@/components/trading/portfolio-analytics";
+import { InstitutionalCompliance } from "@/components/trading/institutional-compliance";
+import { SecurityLayer } from "@/components/trading/security-layer";
 import { 
   ArrowRightLeft, 
   ExternalLink, 
@@ -116,6 +120,18 @@ export default function ExchangePage() {
   const [tradeType, setTradeType] = useState<"buy" | "sell">("buy");
   const [amount, setAmount] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const { status: orderStatus, result: orderResult, error: orderError, auditHash, executeOrder, reset: resetOrder } = useOrderExecution();
+
+  const handleTrade = async () => {
+    if (!amount || parseFloat(amount) <= 0) return;
+    await executeOrder({
+      asset: selectedPair.base,
+      amount,
+      price: selectedPair.price,
+      side: tradeType,
+      walletAddress: "0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB",
+    });
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -303,15 +319,39 @@ export default function ExchangePage() {
                 ))}
               </div>
 
-              {/* Trade Button */}
+              {/* Trade Button — Live Multi-Sig Execution */}
               <Button
-                className={`w-full py-6 text-lg font-bold ${
+                className={`w-full py-6 text-lg font-bold transition-all ${
                   tradeType === 'buy' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'
                 }`}
-                disabled={!amount || parseFloat(amount) <= 0}
+                disabled={!amount || parseFloat(amount) <= 0 || orderStatus === 'encoding' || orderStatus === 'awaiting_signature' || orderStatus === 'submitted'}
+                onClick={handleTrade}
               >
-                {tradeType === 'buy' ? 'BUY' : 'SELL'} {selectedPair.base}
+                {orderStatus === 'encoding' && 'ENCODING CALLDATA...'}
+                {orderStatus === 'awaiting_signature' && 'AWAITING MULTI-SIG...'}
+                {orderStatus === 'submitted' && 'SUBMITTING TO CHAIN...'}
+                {(orderStatus === 'idle' || orderStatus === 'confirmed' || orderStatus === 'failed') && `${tradeType === 'buy' ? 'BUY' : 'SELL'} ${selectedPair.base}`}
               </Button>
+
+              {/* Order execution result */}
+              {orderStatus === 'confirmed' && orderResult && (
+                <div className="p-3 border border-emerald-900/50 bg-emerald-500/5 rounded-lg text-xs space-y-1">
+                  <p className="text-emerald-400 font-bold">ORDER SUBMITTED TO MULTI-SIG</p>
+                  <p className="text-zinc-400 font-mono break-all">TX: {orderResult.txHash}</p>
+                  <p className="text-zinc-500 font-mono break-all">Hex: {orderResult.hexData.slice(0, 40)}...</p>
+                  <p className="text-zinc-600 font-mono">Audit: {auditHash}</p>
+                  <div className="flex gap-2 mt-2">
+                    <a href={orderResult.etherscanUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">View on Basescan</a>
+                    <button onClick={resetOrder} className="text-zinc-500 hover:text-zinc-300">New Order</button>
+                  </div>
+                </div>
+              )}
+              {orderStatus === 'failed' && orderError && (
+                <div className="p-3 border border-red-900/50 bg-red-500/5 rounded-lg text-xs">
+                  <p className="text-red-400 font-bold">ORDER FAILED: {orderError}</p>
+                  <button onClick={resetOrder} className="text-zinc-500 hover:text-zinc-300 mt-1">Retry</button>
+                </div>
+              )}
 
               {/* Liquidity Notice */}
               <div className="p-3 border border-amber-900/50 bg-amber-500/5 rounded-lg">
@@ -480,6 +520,15 @@ export default function ExchangePage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* PRODUCTION LAYER 2: PORTFOLIO ANALYTICS */}
+        <PortfolioAnalytics />
+
+        {/* PRODUCTION LAYERS 3 + 4: COMPLIANCE & SECURITY — side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <InstitutionalCompliance />
+          <SecurityLayer />
+        </div>
 
         {/* Navigation */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
