@@ -16,6 +16,8 @@ import { useOrderExecution } from "@/lib/hooks/use-order-execution";
 import { PortfolioAnalytics } from "@/components/trading/portfolio-analytics";
 import { InstitutionalCompliance } from "@/components/trading/institutional-compliance";
 import { SecurityLayer } from "@/components/trading/security-layer";
+import { LiveBalanceDisplay } from "@/components/wallet/live-balance-display";
+import { AtomicClockTicker } from "@/components/wallet/atomic-clock-ticker";
 import { 
   ArrowRightLeft, 
   ExternalLink, 
@@ -521,7 +523,22 @@ export default function ExchangePage() {
           </CardContent>
         </Card>
 
-        {/* PRODUCTION LAYER 2: PORTFOLIO ANALYTICS */}
+      {/* Live Balance Feed & Atomic Clock */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+        <div className="lg:col-span-2">
+          <LiveBalanceDisplay
+            walletAddress="0xb103666AB91ceb4Cbb9e1FC21B81f1ec93601BeB"
+            updateIntervalMs={1000}
+            showChart={true}
+            compact={false}
+          />
+        </div>
+        <div>
+          <AtomicClockTicker showMilliseconds={true} compact={false} />
+        </div>
+      </div>
+
+      {/* PRODUCTION LAYER 2: PORTFOLIO ANALYTICS */}
         <PortfolioAnalytics />
 
         {/* PRODUCTION LAYERS 3 + 4: COMPLIANCE & SECURITY — side by side on desktop */}
