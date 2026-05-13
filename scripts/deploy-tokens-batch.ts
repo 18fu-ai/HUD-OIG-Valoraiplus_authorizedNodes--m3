@@ -39,9 +39,9 @@ const TOKEN_CANON = [
   { name: "Donny 2207", symbol: "DONNY2207", category: "PROTECTED", protected: true },
   { name: "LEG 1904", symbol: "LEG1904", category: "PROTECTED", protected: true },
   { name: "FMG 1918", symbol: "FMG1918", category: "PROTECTED", protected: true },
-  { name: "DBG 1932", symbol: "DBG1932", category: "PROTECTED", protected: true },
+  { name: "DBG 1943", symbol: "DBG1943", category: "PROTECTED", protected: true },
   { name: "DEG 1969", symbol: "DEG1969", category: "PROTECTED", protected: true },
-  { name: "LEG 1977", symbol: "LEG1977", category: "PROTECTED", protected: true },
+  // LEG1977 BANNED — REMOVED FROM DEPLOYMENT
   
   // STABLECOIN tokens
   { name: "SGAU Stable", symbol: "SGAU", category: "STABLECOIN", protected: false },

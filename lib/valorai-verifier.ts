@@ -50,9 +50,9 @@ export const DYNASTY_TOKENS: TokenData[] = [
   { ticker: 'DONNY2207', price: 1.0, peg: 'USD', cap: '$19.69B', capValue: 19.69e9, anchorId: 'SG-VN-04', status: 'ACTIVE', description: 'Primary Identity Anchor' },
   { ticker: 'LEG1904', price: 1.0, peg: 'USD', cap: '$1.904B', capValue: 1.904e9, anchorId: 'AN-CE-05', status: 'ACTIVE', description: 'Legacy Ancestral Proof (G1)' },
   { ticker: 'FMG1918', price: 1.0, peg: 'USD', cap: '$1.918B', capValue: 1.918e9, anchorId: 'FM-G-06', status: 'ACTIVE', description: 'Sheriff/Minnesota Node (G2)' },
-  { ticker: 'DBG1932', price: 1.0, peg: 'USD', cap: '$1.932B', capValue: 1.932e9, anchorId: 'DB-G-07', status: 'ACTIVE', description: 'Administrative Line (G3)' },
+  { ticker: 'DBG1943', price: 1.0, peg: 'USD', cap: '$1.943B', capValue: 1.943e9, anchorId: 'DB-G-07', status: 'ACTIVE', description: 'Administrative Line (G3)' },
   { ticker: 'DEG1969', price: 1.0, peg: 'USD', cap: '$19.69B', capValue: 19.69e9, anchorId: 'DE-G-08', status: 'ACTIVE', description: 'Sovereign Birth Block (G4)' },
-  { ticker: 'LEG1977', price: 1.0, peg: 'USD', cap: '$1.977B', capValue: 1.977e9, anchorId: 'LE-G-09', status: 'FROZEN', description: 'Operational Lock-Down (G5)' },
+  { ticker: 'LEG1977', price: 0.0, peg: 'USD', cap: 'BANNED', capValue: 0, anchorId: 'NULL', status: 'FROZEN', description: 'BANNED — NULL ADDRESS' },
 ];
 
 // VALORAIPLUS ECOSYSTEM TOKENS
