@@ -81,7 +81,6 @@ export {
   buildProofVector,
   computeProofScore,
   computeConfidenceScore,
-  computeValidationScore,
   determineValidationStatus,
   generateValidationScores,
   createProofLedgerEntry,
