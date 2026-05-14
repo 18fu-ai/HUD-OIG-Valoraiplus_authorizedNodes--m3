@@ -95,13 +95,6 @@ export {
   initializeLedger,
   generateProofLedgerFromClaims,
   exportLedgerAsJSON,
-  type ProofVector,
-  type ValidationScores,
-  type ValidationStatus,
-  type ProofLedgerEntry,
-  type RuntimeClaim,
-  type InvariantState,
-  type AdmissionStatus,
 } from './proofLedger';
 
 // Verification Pipeline
