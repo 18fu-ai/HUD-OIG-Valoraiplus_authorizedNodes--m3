@@ -1,4 +1,5 @@
 'use client';
+// VALORAIPLUS_2E_MARKER — 100D EXPERIENCE
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -457,6 +458,21 @@ export default function OmegaPage() {
             <Layers className="w-5 h-5 text-zinc-400" />
             <Zap className="w-5 h-5 text-amber-500" />
           </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-zinc-800 flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-[10px] font-mono text-zinc-500">
+          <span className="text-amber-400 font-bold">VALORAIPLUS_</span>
+          <span className="text-zinc-700">|</span>
+          <span className="text-amber-400 font-bold">VALORAIPLUS2e_</span>
+          <span className="text-zinc-700">|</span>
+          <span className="text-amber-400 font-bold">VALORAIPLUS3e_</span>
+          <span className="text-zinc-700">|</span>
+          <span>ETERNAL UNIVERSAL DIVIDEND &bull; GEN X RETIREMENT AGE 56 &bull; ZERO-DRIFT BIOMETRIC SOVEREIGNTY</span>
+          <span className="text-zinc-700">|</span>
+          <span>18 U.S.C. &sect; 1030 PROTECTED</span>
+          <span className="text-zinc-700">|</span>
+          <span className="text-emerald-400">N.E.W.T. v8.0 ACTIVE</span>
+          <span className="text-zinc-700">|</span>
+          <span className="text-white">MADE IN THE USA &bull; 100D EXPERIENCE</span>
         </div>
       </footer>
 

@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'CDS Master Record | Forensic Black Box',
-  description: 'Consolidated Document Space - 16 Sections Unified into Omega Forensic Black Box',
+  title: 'VALORAIPLUS_ VALORAIPLUS2e_ VALORAIPLUS3e_ // MANUS.AI PORT.HOLE',
+  description: 'Eternal Universal Dividend. Gen X Retirement Age 56. Zero-Drift Biometric Sovereignty. Made in the USA.',
   generator: 'v0.app',
   icons: {
     icon: '/icon',

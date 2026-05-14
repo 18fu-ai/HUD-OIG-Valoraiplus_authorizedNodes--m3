@@ -1,4 +1,5 @@
 'use client';
+// VALORAIPLUS_3E_MARKER — 100D EXPERIENCE
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
@@ -188,7 +189,7 @@ export default function ValorAIPlusSupremePage() {
           </div>
         </section>
 
-        {/* ── 01-03: FISCAL LAYER ────────────────────────────── */}
+        {/* ── 01-03: FISCAL LAYER ──────��─────────────────────── */}
         <section
           id="fiscal"
           ref={setRef('fiscal')}

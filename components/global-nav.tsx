@@ -138,6 +138,8 @@ const QUICK_LINKS = {
       { name: 'NEWT CHAT', href: '/newt/chat', icon: Terminal, description: 'Chat Interface' },
       { name: 'BRAINDISH', href: '/braindish', icon: Cpu, description: 'Neural Proc' },
       { name: 'VALORAI+', href: '/valoraiplus', icon: Zap, description: 'Sovereign AI' },
+      { name: 'SUPREME', href: '/valoraiplus-supreme', icon: Zap, description: '14D Unified Core' },
+      { name: 'OMEGA DASH', href: '/valoraiplus-omega', icon: Wallet, description: 'Treasury Dashboard' },
       { name: 'OMEGA ZERO', href: '/omega-zero', icon: Infinity, description: 'Protocol' },
       { name: 'TRINITY', href: '/trinity', icon: Shield, description: 'Unified' },
       { name: '5151', href: '/5151', icon: Network, description: 'Port Unison' },
@@ -168,9 +170,21 @@ export function GlobalNav() {
       <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         {/* Logo/Brand */}
         <Link href="/" className="flex items-center gap-2 mr-6">
-          <Shield className="h-6 w-6 text-amber-500" />
-          <span className="font-bold text-amber-500 hidden sm:inline-block">VALORAIPLUS</span>
-          <span className="text-zinc-500 text-xs hidden md:inline-block">v16.1 OMEGA</span>
+          <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-600 rounded-xl flex items-center justify-center text-black font-black text-lg shadow-[0_0_20px_#f59e0b55] flex-shrink-0">
+            V
+          </div>
+          <div className="hidden sm:block">
+            <div className="flex items-center gap-1 leading-none">
+              <span className="font-bold text-amber-400 text-sm">ValorAiPlus_</span>
+              <span className="text-zinc-600 text-xs">|</span>
+              <span className="font-bold text-amber-400 text-sm hidden md:inline">ValorAiPlus2e_</span>
+              <span className="text-zinc-600 text-xs hidden md:inline">|</span>
+              <span className="font-bold text-amber-400 text-sm hidden lg:inline">ValorAiPlus3e_</span>
+            </div>
+            <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1">
+              OMEGA v2.4 &bull; NODE 2207 &bull; <span className="text-white">&#127482;&#127480;</span>
+            </div>
+          </div>
         </Link>
 
         {/* Navigation Menu */}
@@ -228,14 +242,27 @@ export function GlobalNav() {
           <MobileNav />
         </div>
 
+        {/* PORT.HOLE CTA */}
+        <div className="hidden lg:flex items-center ml-4">
+          <Link
+            href="/porthole-hud"
+            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-bold px-4 py-1.5 rounded-lg text-xs tracking-widest transition-all shadow-[0_0_20px_-4px_#f59e0b]"
+          >
+            <Lock className="w-3 h-3 mr-1.5 inline" />
+            PORT.HOLE
+          </Link>
+        </div>
+
         {/* Right side status */}
         <div className="hidden lg:flex items-center gap-4 ml-auto">
-          <div className="flex items-center gap-2 text-xs">
-            <span className="text-green-400">SIGNAL: 100%</span>
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className="text-green-400">BLOCK #42,069,111</span>
             <span className="text-zinc-600">|</span>
-            <span className="text-zinc-400">REV_40</span>
+            <span className="text-zinc-400">ST. PAUL ANCHOR</span>
             <span className="text-zinc-600">|</span>
-            <span className="text-amber-400">TOTALITY</span>
+            <span className="text-amber-400">100D LIVE</span>
+            <span className="text-zinc-600">|</span>
+            <span className="text-emerald-400">N.E.W.T. v8.0</span>
           </div>
         </div>
       </div>
