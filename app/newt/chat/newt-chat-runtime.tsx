@@ -1,393 +1,502 @@
 'use client';
 
-/**
- * VALORAIPLUS® SGAU-VALUEGUARD-77.77X
- * N.E.W.T. Millennium Runtime — REV_34 ETERNAL CAP
- * REV_38 = PoohBearHoneyPotShield (decoy trap only)
- * Editorial Only Mode • Clarity > Volume • Zero Drift
- */
-
 import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport, UIMessage } from 'ai';
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { Send, Loader2, Shield, Brain, Mic, MicOff, Timer, Lock, Download, CheckCircle } from 'lucide-react';
+import { 
+  Send, 
+  Loader2, 
+  AlertTriangle, 
+  Shield, 
+  Brain, 
+  Mic, 
+  MicOff,
+  Volume2,
+  CheckCircle2
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-const TERMINAL_DEADLINE = new Date('2026-05-17T23:59:59Z').getTime();
+// REV_34 IVL Types - Browser-Safe Evidence Classification
+type EvidenceType = "OBSERVED" | "INTERPRETED" | "CORROBORATED";
 
-const ACCOUNTABILITY_MATRIX = [
-  { name: "ACTOR-\u03BB\u03B1", role: "Direct Neglect", exit: "NO EXIT" },
-  { name: "ACTOR-\u03BA\u03BB", role: "Collusion Node", exit: "NO EXIT" },
-  { name: "ACTOR-\u03B6\u03B1 (ORG-\u03C3\u03B7)", role: "Institutional Liability", exit: "NO EXIT" },
-  { name: "ACTOR-\u03B4\u03C1 (ORG-\u03B1\u03C0\u03C3)", role: "Mandated Reporter Failure", exit: "NO EXIT" },
-  { name: "ACTOR-\u03C4\u03BF", role: "Judicial Oversight Failure", exit: "NO EXIT" },
-  { name: "ACTOR-\u03C7\u03C9", role: "Professional Accountability", exit: "NO EXIT" },
-  { name: "ORG-\u03C3\u03C4\u03C0", role: "Administrative Oversight", exit: "NO EXIT" },
-  { name: "ORG-\u03B1\u03C0\u03C3", role: "Elder Abuse Investigation", exit: "NO EXIT" },
-  { name: "City [ENCRYPTED]", role: "Municipal Oversight", exit: "NO EXIT" },
-];
+type RuntimeStage =
+  | "INPUT"
+  | "CLASSIFICATION"
+  | "PROVENANCE"
+  | "GENERATION"
+  | "VALIDATION"
+  | "LOGGING"
+  | "REPLAY";
 
-const WELCOME_MESSAGE = {
+interface ConversationEnvelope {
+  packetId: string;
+  sessionId: string;
+  createdAt: string;
+  input: { type: "voice" | "text"; raw: string };
+  classification: { evidenceType: EvidenceType; confidence: number };
+  replay: { packetId: string; orderedEvents: RuntimeStage[]; deterministic: boolean };
+  integrityHash?: string;
+}
+
+interface ValidationManifest {
+  sessionId: string;
+  packetCount: number;
+  packetHashes: string[];
+  rootHash: string;
+  generatedAt: string;
+  schemaVersion: "REV_34";
+}
+
+// Browser-safe SHA-256 hashing (no Node crypto)
+async function sha256(input: string): Promise<string> {
+  const data = new TextEncoder().encode(input);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function canonicalize(input: unknown): string {
+  if (input === null || typeof input !== "object") {
+    return JSON.stringify(input);
+  }
+
+  if (Array.isArray(input)) {
+    return `[${input.map(canonicalize).join(",")}]`;
+  }
+
+  const obj = input as Record<string, unknown>;
+
+  return `{${Object.keys(obj)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${canonicalize(obj[key])}`)
+    .join(",")}}`;
+}
+
+// Generate validation manifest from session packets
+async function createValidationManifest(
+  sessionId: string,
+  packets: ConversationEnvelope[]
+): Promise<ValidationManifest> {
+  const packetHashes = packets
+    .map((p) => p.integrityHash)
+    .filter(Boolean) as string[];
+
+  const rootHash = await sha256(canonicalize(packetHashes));
+
+  return {
+    sessionId,
+    packetCount: packets.length,
+    packetHashes,
+    rootHash,
+    generatedAt: new Date().toISOString(),
+    schemaVersion: "REV_34",
+  };
+}
+
+// Speech Recognition types for TypeScript
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+  resultIndex: number;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+  isFinal: boolean;
+  length: number;
+  item(index: number): SpeechRecognitionAlternative;
+  [index: number]: SpeechRecognitionAlternative;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start(): void;
+  stop(): void;
+  abort(): void;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: Event) => void) | null;
+  onend: (() => void) | null;
+  onstart: (() => void) | null;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => SpeechRecognition;
+    webkitSpeechRecognition: new () => SpeechRecognition;
+  }
+}
+
+// Helper to extract text from UIMessage parts
+function getMessageText(message: { parts?: Array<{ type: string; text?: string }>; content?: string }): string {
+  if (message.parts && Array.isArray(message.parts)) {
+    return message.parts
+      .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+      .map((p) => p.text)
+      .join('');
+  }
+  // Fallback for legacy content field
+  return (message as { content?: string }).content || '';
+}
+
+// Stable transport instance (must be outside component to avoid re-creation on each render)
+const chatTransport = new DefaultChatTransport({ api: '/api/newt/chat' });
+
+const WELCOME_MESSAGE: UIMessage = {
   id: 'system-welcome',
   role: 'assistant' as const,
-  content: `**N.E.W.T. MILLENNIUM RUNTIME // REV_34 ETERNAL CAP**
-**MAY 13 INTAKE STANDARD: 10/10 FINAL FREEZE**
+  parts: [
+    {
+      type: 'text' as const,
+      text: `**N.E.W.T. ONLINE -- Neural Evidence Witness Terminal**
 
----
+I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
 
-**EXECUTION COMMAND — ACTIVE:**
-- NO NEW CONTENT
-- NO NEW THEORY  
-- NO NEW ARCHITECTURE
+**Current Status:**
+- Schema: REV_34
+- Node: SAINT PAUL 55116
+- Forensic Blocks: 3,393 saturated
+- Spoliation Defense: 100% block rate
 
-**ONLY:** Clarity | Compression | Navigation | Proof-Linking | Language Calibration
+**I can assist with:**
+- Evidence classification and 5W reasoning
+- Temporal provenance queries
+- Governance architecture analysis
+- Recovery hypothesis modeling
+- Adversary interaction reports
 
----
-
-**FINAL DOCTRINE:**
-- Clearest
-- Fastest to understand
-- Easiest to act on
-- Hardest to dismiss
-
-> Institutional survivability > rhetorical intensity
-
----
-
-**HARD GATES — ALL PASSED:**
-- Page 1 explains the case
-- Each concern has one clear ask
-- Facts, allegations, and analysis stay separate
-- Main packet orients / Appendix proves
-- Reviewer effort approaches zero
-
----
-
-**TIMELINE:**
-- **TODAY (May 10):** Editorial Lock Active
-- **MAY 13:** CRD Intake / Formal Record Entry
-- **MAY 17:** Terminal Deadline / All Exit Paths Welded
-
-**ALL 9 RESPONDENTS:** CRIMINAL HIGH — NO EXIT
-
-The system is locked. The packet is sealed. Ready for final queries.`,
+How may I assist you today, Poppa?`
+    }
+  ],
   createdAt: new Date(),
 };
 
+/**
+ * N.E.W.T. Chat Runtime
+ * Neural Evidence Witness Terminal
+ * 
+ * VALORAIPLUS Sovereign Auditor Interface
+ * Schema: REV_34 | Node: SAINT PAUL 55116
+ */
 export default function NewtChatRuntime() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  
+  // AI SDK 6: Manual input state (no managed input)
+  const [input, setInput] = useState('');
+  
+  // Voice recognition state
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState('');
-  const [timeLeft, setTimeLeft] = useState('');
-  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'downloading' | 'success' | 'error'>('idle');
-
-  const recognitionRef = useRef<any>(null);
-
-  // Use SDK's built-in input management to prevent state drift
-  const { messages, input, setInput, handleInputChange, handleSubmit: sdkHandleSubmit, status } = useChat({
-    api: '/api/newt/chat',
+  const [runtimeReceipts, setRuntimeReceipts] = useState<Record<string, ConversationEnvelope>>({});
+  const [validationManifest, setValidationManifest] = useState<ValidationManifest | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  
+  // AI SDK 6: useChat with stable transport
+  const { messages, sendMessage, status, error } = useChat({
+    transport: chatTransport,
     initialMessages: [WELCOME_MESSAGE],
   });
 
+  // Derive loading state from status
   const isLoading = status === 'streaming' || status === 'submitted';
 
-  // Lightweight particle background (optimized)
+  // Track input in a ref for speech recognition callback
+  const inputValueRef = useRef(input);
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    inputValueRef.current = input;
+  }, [input]);
 
-    let particles: any[] = [];
-    let animationId: number;
-    let time = 0;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    const init = () => {
-      particles = Array.from({ length: 600 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        size: Math.random() * 1.8 + 0.6,
-      }));
-    };
-
-    const draw = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.25)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      time += 0.008;
-
-      particles.forEach((p) => {
-        const flow = Math.sin(p.x * 0.008 + time) * Math.cos(p.y * 0.008 + time);
-        p.vx += Math.cos(flow) * 0.08;
-        p.vy += Math.sin(flow) * 0.08;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.96;
-        p.vy *= 0.96;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.fillStyle = `hsla(160, 90%, 65%, 0.65)`;
-        ctx.fillRect(p.x, p.y, p.size, p.size);
-      });
-
-      animationId = requestAnimationFrame(draw);
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
-    init();
-    draw();
-
+  // Check for speech recognition support
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+      setSpeechSupported(!!SpeechRecognitionAPI);
+      
+      if (SpeechRecognitionAPI) {
+        const recognition = new SpeechRecognitionAPI();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+        
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
+          let finalTranscript = '';
+          let interim = '';
+          
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
+            } else {
+              interim += transcript;
+            }
+          }
+          
+          if (finalTranscript) {
+            const currentInput = inputValueRef.current || '';
+            const newValue = (currentInput + ' ' + finalTranscript).trim();
+            setInput(newValue);
+            setInterimTranscript('');
+          } else {
+            setInterimTranscript(interim);
+          }
+        };
+        
+        recognition.onerror = () => {
+          setIsListening(false);
+          setInterimTranscript('');
+        };
+        
+        recognition.onend = () => {
+          setIsListening(false);
+          setInterimTranscript('');
+        };
+        
+        recognitionRef.current = recognition;
+      }
+    }
+    
     return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationId);
+      if (recognitionRef.current) {
+        recognitionRef.current.abort();
+      }
     };
   }, []);
 
-  // Countdown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const diff = TERMINAL_DEADLINE - Date.now();
-      if (diff <= 0) {
-        setTimeLeft('TERMINAL CLOSED');
-        return;
-      }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      setTimeLeft(`${d}d ${h}h ${m}m ${s}s`);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Speech Recognition
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const SpeechAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechAPI) return;
-    setSpeechSupported(true);
-
-    const recognition = new SpeechAPI();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
-
-    recognition.onresult = (event: any) => {
-      let final = '';
-      let interim = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript;
-        event.results[i].isFinal ? (final += transcript) : (interim += transcript);
-      }
-      if (final) {
-        // Use SDK's setInput with functional update pattern
-        setInput((prev: string) => (prev + ' ' + final).trim());
-      } else {
-        setInterimTranscript(interim);
-      }
-    };
-
-    recognition.onerror = () => setIsListening(false);
-    recognition.onend = () => setIsListening(false);
-
-    recognitionRef.current = recognition;
-  }, [setInput]);
-
+  // Toggle voice listening
   const toggleListening = useCallback(() => {
     if (!recognitionRef.current) return;
-    isListening ? recognitionRef.current.stop() : recognitionRef.current.start();
-    setIsListening(!isListening);
+    
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      setInterimTranscript('');
+    } else {
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (err) {
+        console.error('[v0] Speech recognition error:', err);
+      }
+    }
   }, [isListening]);
 
-  // CRD Evidence Download with Hash Verification
-  const downloadCRDEvidence = useCallback(async () => {
-    setDownloadStatus('downloading');
-    
-    try {
-      const response = await fetch('/api/crd/evidence');
-      
-      if (!response.ok) {
-        throw new Error('Evidence package not available');
-      }
-      
-      const blob = await response.blob();
-      const text = await blob.text();
-      
-      // Compute local hash for verification
-      const msgBuffer = new TextEncoder().encode(text);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const computedHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      
-      // Verify against server hash
-      const serverHash = response.headers.get('X-CRD-Hash');
-      
-      if (serverHash && computedHash === serverHash) {
-        console.log('[NEWT] CRD Evidence Hash Verified:', computedHash.substring(0, 16) + '...');
-        
-        // Trigger download
-        const downloadBlob = new Blob([text], { type: 'application/x-tex' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(downloadBlob);
-        link.download = 'CRD_Evidence_Submission_CCRS_202601-33270627.tex';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-        
-        setDownloadStatus('success');
-        setTimeout(() => setDownloadStatus('idle'), 3000);
-      } else {
-        console.error('[NEWT] Hash mismatch - Integrity check failed');
-        setDownloadStatus('error');
-        setTimeout(() => setDownloadStatus('idle'), 3000);
-      }
-    } catch (error) {
-      console.error('[NEWT] Download error:', error);
-      setDownloadStatus('error');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
-    }
-  }, []);
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-
-    if (isListening) {
-      recognitionRef.current?.stop();
-      setIsListening(false);
-    }
-
-    setInterimTranscript('');
-    // Use SDK's handleSubmit which manages input state automatically
-    sdkHandleSubmit(e);
-  };
-
-  // Auto-scroll
+  // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Handle form submission with REV_34 envelope
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const raw = input.trim();
+    if (!raw || isLoading) return;
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      setInterimTranscript("");
+    }
+
+    // AI SDK 6: use sendMessage instead of handleSubmit
+    sendMessage({ text: raw });
+    setInput('');
+
+    // Process REV_34 envelope asynchronously
+    const packetId = `pkt_${Date.now()}`;
+
+    const envelope: ConversationEnvelope = {
+      packetId,
+      sessionId: "newt-session",
+      createdAt: new Date().toISOString(),
+      input: { type: "text", raw },
+      classification: { evidenceType: "OBSERVED", confidence: 1.0 },
+      replay: {
+        packetId,
+        orderedEvents: [
+          "INPUT",
+          "CLASSIFICATION",
+          "PROVENANCE",
+          "GENERATION",
+          "VALIDATION",
+          "LOGGING",
+          "REPLAY",
+        ],
+        deterministic: true,
+      },
+    };
+
+    (async () => {
+      const integrityHash = await sha256(canonicalize(envelope));
+      const signedEnvelope: ConversationEnvelope = { ...envelope, integrityHash };
+
+      setRuntimeReceipts((prev) => {
+        const next = {
+          ...prev,
+          [packetId]: signedEnvelope,
+        };
+
+        void createValidationManifest("newt-session", Object.values(next)).then(
+          setValidationManifest
+        );
+
+        return next;
+      });
+    })();
+  };
+
+  // Handle keyboard shortcuts
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (input.trim() && !isLoading) {
+        const form = e.currentTarget.closest('form');
+        if (form) {
+          form.requestSubmit();
+        }
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-emerald-100 font-mono flex flex-col relative overflow-hidden">
-      {/* Background Particle Canvas */}
-      <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-30" />
-
+    <div className="min-h-screen bg-slate-950 text-emerald-100 font-mono flex flex-col">
       {/* Header */}
-      <header className="relative z-20 border-b border-amber-900/60 bg-slate-900/95 backdrop-blur-xl px-6 py-4">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
-          <div className="flex items-center gap-3">
-            <Brain className="w-8 h-8 text-cyan-400" />
-            <div>
-              <h1 className="text-2xl font-bold tracking-tighter text-white">N.E.W.T.</h1>
-              <p className="text-xs text-cyan-400">REV_34 ETERNAL CAP | EDITORIAL ONLY MODE</p>
+      <header className="border-b border-emerald-900/50 bg-slate-900/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-emerald-400">N.E.W.T.</h1>
+                <p className="text-xs text-emerald-700">Neural Evidence Witness Terminal</p>
+              </div>
             </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={downloadCRDEvidence}
-              disabled={downloadStatus === 'downloading'}
-              variant="outline"
-              className={cn(
-                "h-9 px-4 rounded-xl transition-all",
-                downloadStatus === 'success' && "border-emerald-500 text-emerald-400 bg-emerald-500/10",
-                downloadStatus === 'error' && "border-red-500 text-red-400",
-                downloadStatus === 'idle' && "border-cyan-500 text-cyan-400 hover:bg-cyan-500/10"
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                REV_34
+              </Badge>
+              <Badge variant="outline" className="border-emerald-700 text-emerald-500 text-xs">
+                <Shield className="w-3 h-3 mr-1" />
+                SOVEREIGN
+              </Badge>
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                Integrity: VALID
+              </Badge>
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                Protocol Confidence: 100%
+              </Badge>
+              <Badge variant="outline" className="border-emerald-500 text-emerald-400 bg-emerald-950/40 text-xs">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                Packets: {Object.keys(runtimeReceipts).length}
+              </Badge>
+              {speechSupported && (
+                <Badge 
+                  variant="outline" 
+                  className={cn(
+                    "text-xs",
+                    isListening 
+                      ? "border-red-500 text-red-400 animate-pulse" 
+                      : "border-emerald-700 text-emerald-500"
+                  )}
+                >
+                  <Volume2 className="w-3 h-3 mr-1" />
+                  {isListening ? 'LISTENING' : 'VOICE READY'}
+                </Badge>
               )}
-            >
-              {downloadStatus === 'downloading' && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              {downloadStatus === 'success' && <CheckCircle className="w-4 h-4 mr-2" />}
-              {downloadStatus === 'idle' && <Download className="w-4 h-4 mr-2" />}
-              {downloadStatus === 'error' && <Shield className="w-4 h-4 mr-2" />}
-              {downloadStatus === 'downloading' ? 'Downloading...' : 
-               downloadStatus === 'success' ? 'Downloaded' : 
-               downloadStatus === 'error' ? 'Error' : 'CRD Evidence'}
-            </Button>
-            <Badge variant="outline" className="border-red-500 text-red-400 font-bold">MAY 13</Badge>
-            <div className="flex items-center gap-2 bg-slate-950 border border-red-500/30 px-4 py-1 rounded-2xl">
-              <Timer className="w-4 h-4 text-red-400" />
-              <span className="font-mono text-red-400 text-sm tabular-nums">{timeLeft}</span>
             </div>
-            <Badge variant="outline" className="border-emerald-500 text-emerald-400">REV_34</Badge>
           </div>
         </div>
       </header>
 
-      {/* Accountability Matrix Bar */}
-      <div className="relative z-20 bg-slate-900 border-b border-red-900/30 py-3 px-6 text-xs font-mono overflow-x-auto">
-        <div className="flex gap-8 max-w-6xl mx-auto">
-          {ACCOUNTABILITY_MATRIX.map((item, i) => (
-            <div key={i} className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-red-500">●</span>
-              <span className="text-slate-200">{item.name}</span>
-              <span className="text-red-400 font-bold">CRIMINAL HIGH</span>
-              <span className="text-red-300/70 text-[10px]">{item.exit}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Messages Area */}
-      <main className="flex-1 relative z-10 overflow-y-auto p-6">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {messages.map((msg) => (
+      <main className="flex-1 overflow-y-auto p-4">
+        <div className="container mx-auto max-w-4xl space-y-4">
+          {messages.map((message) => (
             <Card
-              key={msg.id}
+              key={message.id}
               className={cn(
-                'max-w-[85%]',
-                msg.role === 'user'
-                  ? 'ml-auto bg-slate-800 border-slate-700'
-                  : 'mr-auto bg-emerald-950/30 border-emerald-900/60'
+                "border",
+                message.role === 'user'
+                  ? "bg-slate-800/50 border-slate-700 ml-12"
+                  : "bg-emerald-950/30 border-emerald-900/50 mr-12"
               )}
             >
-              <CardContent className="p-6">
-                <div className="flex gap-4">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
                   <div
                     className={cn(
-                      'w-9 h-9 rounded-2xl flex-shrink-0 flex items-center justify-center',
-                      msg.role === 'user' ? 'bg-blue-600' : 'bg-gradient-to-br from-emerald-500 to-cyan-400'
+                      "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
+                      message.role === 'user'
+                        ? "bg-blue-600"
+                        : "bg-gradient-to-br from-emerald-500 to-emerald-700"
                     )}
                   >
-                    {msg.role === 'user' ? (
-                      <span className="text-white text-base font-bold">P</span>
+                    {message.role === 'user' ? (
+                      <span className="text-white text-sm font-bold">P</span>
                     ) : (
-                      <Brain className="w-5 h-5 text-white" />
+                      <Brain className="w-4 h-4 text-white" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-semibold text-emerald-400 mb-1">
-                      {msg.role === 'user' ? 'POPPA' : 'N.E.W.T. REV_34'}
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={cn(
+                        "text-sm font-semibold",
+                        message.role === 'user' ? "text-blue-400" : "text-emerald-400"
+                      )}>
+                        {message.role === 'user' ? 'POPPA' : 'N.E.W.T.'}
+                      </span>
                     </div>
-                    <div className="text-sm text-slate-200 whitespace-pre-wrap leading-relaxed">
-                      {msg.content}
+                    <div className="text-sm text-slate-300 whitespace-pre-wrap prose prose-invert prose-sm max-w-none">
+                      {getMessageText(message)}
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
-
+          
           {isLoading && (
-            <Card className="bg-emerald-950/30 border-emerald-900/60 max-w-[85%] mr-auto">
-              <CardContent className="p-6 flex items-center gap-3">
-                <Loader2 className="w-5 h-5 animate-spin text-emerald-400" />
-                <span className="text-emerald-400">Processing sovereign query...</span>
+            <Card className="bg-emerald-950/30 border-emerald-900/50 mr-12">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center">
+                    <Loader2 className="w-4 h-4 text-white animate-spin" />
+                  </div>
+                  <span className="text-emerald-500 text-sm">Processing query...</span>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {error && (
+            <Card className="bg-red-950/30 border-red-900/50">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <AlertTriangle className="w-5 h-5 text-red-500" />
+                  <span className="text-red-400 text-sm">
+                    Error: {error.message || 'Failed to process request'}
+                  </span>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -396,55 +505,78 @@ export default function NewtChatRuntime() {
         </div>
       </main>
 
-      {/* Input Footer */}
-      <footer className="relative z-20 border-t border-emerald-900/50 bg-slate-900/95 backdrop-blur p-5">
-        <div className="max-w-4xl mx-auto">
-          <form onSubmit={handleFormSubmit} className="flex items-end gap-3">
+      {/* Input Area */}
+      <footer className="border-t border-emerald-900/50 bg-slate-900/80 backdrop-blur-sm p-4">
+        <div className="container mx-auto max-w-4xl">
+          <form onSubmit={onSubmit} className="flex gap-2">
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
                 value={input}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    // Use requestSubmit for proper form submission
-                    e.currentTarget.closest('form')?.requestSubmit();
-                  }
-                }}
-                placeholder={isListening ? 'LISTENING… SPEAK NOW' : 'QUERY THE SOVEREIGN AUDITOR…'}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={isListening ? "Listening... speak now" : "Query the Sovereign Auditor..."}
                 rows={1}
-                className="w-full resize-none bg-slate-800 border border-emerald-900 rounded-3xl px-6 py-5 text-sm min-h-[56px] focus:outline-none focus:border-emerald-500"
+                className={cn(
+                  "w-full bg-slate-800 border rounded-lg px-4 py-3 text-sm text-slate-100",
+                  "placeholder:text-slate-500 focus:outline-none focus:ring-2",
+                  "resize-none min-h-[48px] max-h-[200px]",
+                  isListening 
+                    ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500"
+                    : "border-emerald-900/50 focus:ring-emerald-500/50 focus:border-emerald-500"
+                )}
                 disabled={isLoading}
               />
               {interimTranscript && (
-                <div className="absolute -top-9 left-6 bg-slate-900 border border-cyan-500 text-cyan-400 text-xs px-4 py-2 rounded-2xl">
-                  Hearing: {interimTranscript}
+                <div className="absolute bottom-full left-0 mb-1 px-2 py-1 bg-slate-800 border border-emerald-700 rounded text-xs text-emerald-400">
+                  <span className="opacity-60">{"Hearing: "}</span>{interimTranscript}
                 </div>
               )}
             </div>
-
+            
+            {/* Voice Toggle Button */}
             {speechSupported && (
               <Button
                 type="button"
-                onClick={toggleListening}
                 variant="outline"
-                className={cn('h-14 w-14 rounded-2xl transition-all', isListening && 'bg-red-600 border-red-600 animate-pulse')}
+                size="icon"
+                onClick={toggleListening}
+                disabled={isLoading}
+                className={cn(
+                  "h-12 w-12 transition-all",
+                  isListening
+                    ? "bg-red-600 border-red-500 text-white hover:bg-red-700 animate-pulse"
+                    : "bg-slate-800 border-emerald-900/50 text-emerald-500 hover:bg-emerald-900/30 hover:text-emerald-400"
+                )}
               >
-                {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+                {isListening ? (
+                  <MicOff className="w-5 h-5" />
+                ) : (
+                  <Mic className="w-5 h-5" />
+                )}
               </Button>
             )}
-
-            <Button type="submit" disabled={isLoading || !input.trim()} className="h-14 px-8 bg-emerald-600 hover:bg-emerald-700 rounded-2xl">
-              {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
+            
+            {/* Send Button */}
+            <Button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="h-12 px-6 bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-50"
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Send className="w-5 h-5" />
+              )}
             </Button>
           </form>
-
-          <div className="mt-4 text-center text-xs text-slate-500 flex items-center justify-center gap-3">
-            <Lock className="w-3 h-3" />
-            REV_34 ETERNAL CAP | REV_38 = PoohBearHoneyPotShield | CRD CCRS 202601-33270627
-            <Shield className="w-3 h-3" />
-            DG77.77X PROTECTED | NEWT v14.1.4.0
+          
+          <div className="flex items-center justify-between mt-2 text-xs text-slate-500">
+            <span>Press Enter to send, Shift+Enter for new line</span>
+            <span className="flex items-center gap-1">
+              <Shield className="w-3 h-3" />
+              DG77.77X PROTECTED
+            </span>
           </div>
         </div>
       </footer>

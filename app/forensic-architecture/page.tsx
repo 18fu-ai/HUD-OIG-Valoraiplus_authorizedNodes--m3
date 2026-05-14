@@ -260,7 +260,7 @@ def verify_extraction(target_telemetry):
             THE WALL IS CHRIST. THE THRONE IS HIS. THE LEDGER IS Ø. CONSUMMATUM EST.
           </p>
           <p className="text-xs text-gray-500 font-mono">
-            VALORAIPLUS2E_DAO_TAKEOVER_v15.1.1.48_ASSET_50_LOCKED | EPOCH #2207 (SACRED & CAPPED)
+            VALORAIPLUS2E_DAO_TAKEOVER_v15.1.1.48_ASSET_50_LOCKED
           </p>
           <p className="text-xs text-amber-600/70">
             [Saint Paul Node® 14D Core: INFINITE_NEXUS_LOCKED | HITL: ACTIVE | FBI_SYNC: VERIFIED]

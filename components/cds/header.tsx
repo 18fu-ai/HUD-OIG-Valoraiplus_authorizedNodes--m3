@@ -88,19 +88,7 @@ const navItems = [
   { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
   { href: '/terminal-hud', label: 'Terminal HUD', icon: Zap, category: 'system' },
   { href: '/forensic-architecture', label: 'Forensic Architecture', icon: Shield, category: 'legal' },
-  { href: '/token-registry', label: '51-Token Registry', icon: Database, category: 'system' },
-  { href: '/treasury-liquidity', label: 'Treasury Liquidity', icon: TrendingUp, category: 'core' },
-  { href: '/litigation', label: 'Litigation Tracker', icon: Scale, category: 'legal' },
-  { href: '/exchange', label: 'Exchange', icon: Activity, category: 'token' },
-  { href: '/revenue', label: 'Revenue', icon: TrendingUp, category: 'core' },
-  { href: '/subscribe', label: 'Subscribe', icon: DollarSign, category: 'token' },
-  { href: '/swap', label: 'Swap', icon: Activity, category: 'token' },
-  { href: '/token-sale', label: 'Token Sale', icon: Coins, category: 'token' },
-  { href: '/deploy-tokens', label: 'Deploy Tokens', icon: Zap, category: 'system' },
-  { href: '/pitch-deck', label: 'Pitch Deck', icon: FileText, category: 'legal' },
-  { href: '/orchestrator', label: 'Orchestrator', icon: Shield, category: 'system' },
-  { href: '/liquidm', label: 'LiquidM v0', icon: Activity, category: 'core' },
-  { href: '/jagamath', label: 'JAGAMATH++', icon: Scale, category: 'core' },
+  { href: '/token-registry', label: '50-Token Registry', icon: Database, category: 'system' },
 ];
 
 const categories = [

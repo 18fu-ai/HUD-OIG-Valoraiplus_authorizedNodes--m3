@@ -113,44 +113,6 @@ export const INST_LEGAL_ORG = 'Legal Services';
 export const INST_ACADEMIC = 'INST-005';
 export const INST_ACADEMIC_ORG = 'Academic Institution';
 
-// --- LOCKED THREAT ACTORS (RICO TARGETS) ---
-
-/** John Zanghi - SFHA Housing Authority */
-export const ACTOR_ZANGHI = 'ACTOR-\u03B6\u03B1';
-export const ACTOR_ZANGHI_ROLE = 'Housing Authority';
-export const ACTOR_ZANGHI_STATUS = 'LOCKED';
-
-/** SFHA - San Francisco Housing Authority */
-export const ORG_SFHA = 'ORG-\u03C3\u03B7';
-export const ORG_SFHA_FULL = 'Housing Authority [ENCRYPTED]';
-export const ORG_SFHA_STATUS = 'LOCKED';
-
-/** Swords to Plowshares - Veteran Services */
-export const ORG_STP = 'ORG-\u03C3\u03C4\u03C0';
-export const ORG_STP_FULL = 'Veterans Services Org [ENCRYPTED]';
-export const ORG_STP_STATUS = 'LOCKED';
-
-/** SF Adult Protective Services */
-export const ORG_APS = 'ORG-\u03B1\u03C0\u03C3';
-export const ORG_APS_FULL = 'City Oversight Agency [ENCRYPTED]';
-export const ORG_APS_STATUS = 'OVERSIGHT FAILURE';
-
-/** William Landrum - Professional */
-export const ACTOR_LANDRUM = 'ACTOR-\u03BB\u03B1';
-export const ACTOR_LANDRUM_ROLE = 'Professional';
-export const ACTOR_LANDRUM_STATUS = 'NO EXIT';
-
-/** Kolby Losik - Professional */
-export const ACTOR_LOSIK = 'ACTOR-\u03BA\u03BB';
-export const ACTOR_LOSIK_ROLE = 'Professional';
-export const ACTOR_LOSIK_STATUS = 'NO EXIT';
-
-/** Lyle Edward Gillson - 1977 FRAUD NODE */
-export const ACTOR_GILLSON = 'ACTOR-\u03B3\u03BB';
-export const ACTOR_GILLSON_ROLE = 'Origin Fraud';
-export const ACTOR_GILLSON_STATUS = 'RICO TARGET';
-export const ACTOR_GILLSON_NODE = '1977 FRAUD NODE';
-
 // --- HELPER: Decode map (for internal audit only, never rendered) ---
 
 export const ENCRYPTED_ID_VERSION = '1.0.0';

@@ -36,9 +36,9 @@ export default function AuthMatrixPage() {
 
   const authSources = [
     { id: "DIRECT", name: "Direct (Self)", status: "SOVEREIGN", limit: "NO LIMIT", type: "TRUSTED", icon: UserCheck },
-    { id: "SFHA", name: "ORG-\u03C3\u03B7", status: "MANDATED", limit: "SETTLEMENT", type: "TRUSTED", icon: Building2 },
-    { id: "STP", name: "ORG-\u03C3\u03C4\u03C0", status: "MANDATED", limit: "RECOVERY", type: "TRUSTED", icon: Gavel },
-    { id: "DRC", name: "Disability Rights [ENCRYPTED]", status: "MANDATED", limit: "RECOVERY", type: "TRUSTED", icon: Scale },
+    { id: "SFHA", name: "SF Housing Authority", status: "MANDATED", limit: "SETTLEMENT", type: "TRUSTED", icon: Building2 },
+    { id: "STP", name: "Swords to Plowshares", status: "MANDATED", limit: "RECOVERY", type: "TRUSTED", icon: Gavel },
+    { id: "DRC", name: "Disability Rights CA", status: "MANDATED", limit: "RECOVERY", type: "TRUSTED", icon: Scale },
     { id: "WIRE", name: "External Wire", status: "AUTHORIZED", limit: "VERIFIED", type: "TRUSTED", icon: Zap }
   ];
 

@@ -130,8 +130,6 @@ function CinemaContent() {
   const [truthCycle, setTruthCycle] = useState(0);
   const [latchedSections, setLatchedSections] = useState<number[]>([]);
   const [currentTime, setCurrentTime] = useState('');
-  const [isSealed, setIsSealed] = useState(false);
-  const [sealTimestamp, setSealTimestamp] = useState<string | null>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -171,14 +169,6 @@ function CinemaContent() {
       setLatchedSections(prev => [...prev, sectionId]);
     }
   }, [latchedSections]);
-
-  const handleSealProjectCinema = useCallback(() => {
-    if (latchedSections.length === PRESENTATION_SECTIONS.length && !isSealed) {
-      const timestamp = new Date().toISOString();
-      setSealTimestamp(timestamp);
-      setIsSealed(true);
-    }
-  }, [latchedSections, isSealed]);
 
   const currentExhibit = PRESENTATION_SECTIONS[currentSection];
   const progress = ((currentSection + 1) / PRESENTATION_SECTIONS.length) * 100;
@@ -468,38 +458,13 @@ function CinemaContent() {
             </Card>
 
             {/* Seal Button */}
-            {isSealed ? (
-              <div className="space-y-2">
-                <div className="w-full p-4 rounded-lg bg-emerald-500/20 border-2 border-emerald-500/60">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                    <span className="font-mono text-sm font-bold text-emerald-400">PROJECT CINEMA SEALED</span>
-                  </div>
-                  <p className="font-mono text-[10px] text-emerald-400/80 text-center">
-                    FINALITY: {CONTRACT_METADATA.finality}
-                  </p>
-                  {sealTimestamp && (
-                    <p className="font-mono text-[10px] text-muted-foreground text-center mt-1">
-                      Sealed: {new Date(sealTimestamp).toLocaleString()}
-                    </p>
-                  )}
-                </div>
-                <div className="p-3 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/40 text-center">
-                  <p className="font-mono text-xs text-fuchsia-400">
-                    DG77.77X LOCKED. SMIB. AMEN.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <Button
-                className="w-full font-mono bg-fuchsia-600 hover:bg-fuchsia-700"
-                disabled={latchedSections.length !== PRESENTATION_SECTIONS.length}
-                onClick={handleSealProjectCinema}
-              >
-                <Lock className="w-4 h-4 mr-2" />
-                SEAL PROJECT CINEMA
-              </Button>
-            )}
+            <Button
+              className="w-full font-mono bg-fuchsia-600 hover:bg-fuchsia-700"
+              disabled={latchedSections.length !== PRESENTATION_SECTIONS.length}
+            >
+              <Lock className="w-4 h-4 mr-2" />
+              SEAL PROJECT CINEMA
+            </Button>
           </div>
         </div>
 
