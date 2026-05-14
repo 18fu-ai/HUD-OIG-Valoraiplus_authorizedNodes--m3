@@ -77,62 +77,105 @@ export {
 
 // Proof Ledger
 export {
-  anchorProof,
-  getProof,
-  verifyProofChain,
-  type ProofEntry,
-  type ProofChain,
+  createProofVector,
+  buildProofVector,
+  computeProofScore,
+  computeConfidenceScore,
+  computeValidationScore,
+  determineValidationStatus,
+  generateValidationScores,
+  createProofLedgerEntry,
+  appendToLedger,
+  getLedger,
+  getLedgerByStatus,
+  getLedgerByInvariantState,
+  getExportEligibleEntries,
+  getLedgerStatistics,
+  clearLedger,
+  initializeLedger,
+  generateProofLedgerFromClaims,
+  exportLedgerAsJSON,
+  type ProofVector,
+  type ValidationScores,
+  type ValidationStatus,
+  type ProofLedgerEntry,
+  type RuntimeClaim,
+  type InvariantState,
+  type AdmissionStatus,
 } from './proofLedger';
 
 // Verification Pipeline
 export {
-  runVerificationPipeline,
   type PipelineResult,
 } from './verificationPipeline';
 
 // Invariant Engine
 export {
-  enforceInvariant,
-  checkInvariant,
+  enforceInvariants,
+  enforceRuntimeClaim,
+  validateInvariant,
+  validateClaimBatch,
+  getExportableClaims,
+  classifyInvariantState,
+  createRuntimeClaim,
+  runAdmissionPipeline,
+  extractViolations,
+  generatePolicyExport,
   type InvariantRule,
   type InvariantResult,
+  type RuntimeClaimEnforcement,
+  type EnforcementResult,
+  type AdmissionPipelineResult,
+  type ViolationRecord,
+  type ViolationLedger,
+  type SingleInvariantValidation,
+  type InvariantId,
+  type PolicyExport,
 } from './invariantEngine';
 
 // Reason Codes
 export {
-  REASON_CODES,
   getReasonCode,
-  getReasonSeverity,
+  getReasonCodesByCategory,
+  getReasonCodesBySeverity,
+  assignReasonCodes,
+  formatReasonAssignment,
+  REASON_CODE_REGISTRY,
+  ADMISSION_CODES,
+  REJECTION_CODES,
+  WARNING_CODES,
+  QUARANTINE_CODES,
+  ESCALATION_CODES,
+  type ReasonCode,
+  type ReasonCategory,
+  type ReasonSeverity,
+  type ReasonAssignment,
 } from './reasonCodes';
 
 // Trace Graph
 export {
-  buildTraceGraph,
   type TraceNode,
   type TraceGraph,
 } from './traceGraph';
 
 // Replay Validator
 export {
-  validateReplay,
   type ReplayResult,
 } from './replayValidator';
 
 // Governance Kernel
 export {
-  evaluateGovernance,
   type GovernanceDecision,
 } from './governanceKernel';
 
 // Export Policy
 export {
-  checkExportEligibility,
   type ExportDecision,
+  type ExportEligibility,
 } from './exportPolicy';
 
 // Runtime Topology
 export {
-  routeClaim,
   type ClaimRoute,
 } from './runtimeTopology';
 
@@ -150,7 +193,6 @@ export {
 
 // EIP-712 Signing
 export {
-  createTypedData,
   validateIntentPayload,
   type IntentType,
   type TypedDataPayload,
@@ -174,7 +216,6 @@ export {
 // Event Indexer
 export {
   indexEvent,
-  getEvents,
   type IndexedEvent,
 } from './eventIndexer';
 
