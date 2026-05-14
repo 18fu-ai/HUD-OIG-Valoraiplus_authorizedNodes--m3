@@ -91,22 +91,20 @@ export class SovereignAPIClient {
     this.socket = new WebSocket(wsUrl);
     
     this.socket.onopen = () => {
-      console.log('[WS] Connected to Sovereign Nexus');
       this.socket?.send(JSON.stringify({ type: 'auth', token: this.apiSecret }));
     };
     
     this.socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log('[WS] Event:', data);
       onMessage?.(data);
     };
     
     this.socket.onerror = (error) => {
-      console.error('[WS] Error:', error);
+      console.error('WebSocket error:', error);
     };
     
     this.socket.onclose = () => {
-      console.log('[WS] Disconnected from Nexus');
+      // Connection closed
     };
     
     return this.socket;
