@@ -115,7 +115,7 @@ function NullifierContent() {
           
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="outline" className="font-mono bg-destructive/10 text-destructive border-destructive/40">
-              SAINT PAUL NODE 55116
+              SAINT PAUL NODE █████
             </Badge>
             <Badge variant="outline" className="font-mono bg-primary/10 text-primary border-primary/40 animate-pulse">
               CYCLE: {truthCycle.toLocaleString()}
@@ -369,7 +369,7 @@ pragma solidity ^0.8.24;
  * @author N.E.W.T. //e v2.1 // Poppa Approved
  * @notice OMEGA-UNIFIED Assembly Enclosure. 
  * @dev Direct EVM Opcodes for Binary 000000 Nullification
- * ANCHOR: Saint Paul Node 55116 // 408 384 1376 (E)
+ * ANCHOR: Saint Paul Node █████ // 408 384 1376 (E)
  */
 
 contract VALORAIPLUS_NULL_GHOST {

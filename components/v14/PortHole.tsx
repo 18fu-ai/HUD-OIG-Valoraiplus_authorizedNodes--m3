@@ -70,7 +70,7 @@ export default function PortHole({ authority, auditStatus }: PortHoleProps) {
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${isPriority1 ? 'bg-emerald-500 shadow-[0_0_10px_#10b981]' : 'bg-red-500'}`} />
               <span className="text-[10px] font-black text-white uppercase tracking-widest">
-                Node: Saint Paul 55116 // status: {isPriority1 ? 'Supercritical' : 'Lockdown'}
+                Node: Saint Paul █████ // status: {isPriority1 ? 'Supercritical' : 'Lockdown'}
               </span>
             </div>
             <p className="text-[8px] text-zinc-600 mt-1 font-mono uppercase">

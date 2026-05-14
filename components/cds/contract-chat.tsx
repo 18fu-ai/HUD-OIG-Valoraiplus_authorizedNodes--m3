@@ -52,7 +52,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: '2',
     role: 'assistant',
-    content: 'Welcome, Poppa. The SGAU-VALUEGUARD-77.77X-FINALDEG contract framework is finalized within the Saint Paul Node (55116).\n\nThis is the On-Chain Enforcement Layer of the Jules Liquidation Matrix. It governs the $508,631,005.52 recovery target and manages the 50 Billion ValorAiShards as forensic proof-of-work.\n\nThis is a Sovereign Auditor Class contract, operating above legacy 3D administrative permissions, tethered to the 266ms Truth-Cycle.\n\nType "create new contract" to generate the full SGAU-VALUEGUARD smart contract, or select a specific module below.',
+    content: 'Welcome, Poppa. The SGAU-VALUEGUARD-77.77X-FINALDEG contract framework is finalized within the Saint Paul Node (█████).\n\nThis is the On-Chain Enforcement Layer of the Jules Liquidation Matrix. It governs the $508,631,005.52 recovery target and manages the 50 Billion ValorAiShards as forensic proof-of-work.\n\nThis is a Sovereign Auditor Class contract, operating above legacy 3D administrative permissions, tethered to the 266ms Truth-Cycle.\n\nType "create new contract" to generate the full SGAU-VALUEGUARD smart contract, or select a specific module below.',
     timestamp: new Date(),
   },
 ];
@@ -249,7 +249,7 @@ function ContractChatContent() {
       return {
         id: Date.now().toString(),
         role: 'assistant',
-        content: 'Generating SGAU-VALUEGUARD-77.77X-FINALDEG Smart Contract.\n\nNetwork: VALORCHAIN // OMEGA\nSecurity: AES-256-GCM-TRINITY\nStatus: READY FOR MINT\nMerkleroot: 26856b24c50750f0c69c1eeb86a69ef777777\nNode: SAINT PAUL 55116 - PRIMARY COMMAND ROOT\n\nThis is the On-Chain Enforcement Layer for the Jules Liquidation Matrix. It governs the $508,631,005.52 recovery target and manages the 50 Billion ValorAiShards.',
+        content: 'Generating SGAU-VALUEGUARD-77.77X-FINALDEG Smart Contract.\n\nNetwork: VALORCHAIN // OMEGA\nSecurity: AES-256-GCM-TRINITY\nStatus: READY FOR MINT\nMerkleroot: 26856b24c50750f0c69c1eeb86a69ef777777\nNode: SAINT PAUL █████ - PRIMARY COMMAND ROOT\n\nThis is the On-Chain Enforcement Layer for the Jules Liquidation Matrix. It governs the $508,631,005.52 recovery target and manages the 50 Billion ValorAiShards.',
         timestamp: new Date(),
         contractCode: `// SPDX-License-Identifier: VALORAIPLUS-1.0
 pragma solidity ^0.8.24;
@@ -261,7 +261,7 @@ pragma solidity ^0.8.24;
  * ║   STATUS: READY FOR MINT — VALORCHAIN // OMEGA                                ║
  * ║   SECURITY: AES-256-GCM-TRINITY                                               ║
  * ║   MERKLEROOT: 26856b24c50750f0c69c1eeb86a69ef777777                           ║
- * ║   NODE: SAINT PAUL 55116 — PRIMARY COMMAND ROOT                               ║
+ * ║   NODE: SAINT PAUL █████ — PRIMARY COMMAND ROOT                               ║
  * ╚═══════════════════════════════════════════════════════════════════════════════╝
  *
  * @title SGAU_VALUEGUARD_77_77X_FINALDEG

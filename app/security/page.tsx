@@ -15,7 +15,7 @@ const SECURITY_SYSTEM = {
   securityLevel: 100,
   status: 'ENFORCING',
   merkleroot: '26856b24c50750f0c69c1eeb86a69ef777777',
-  node: 'SAINT PAUL 55116 — SECURITY COMMAND ROOT',
+  node: 'SAINT PAUL █████ — SECURITY COMMAND ROOT',
   truthCycle: '266ms',
   swarmAgents: '200,000,000,000',
   shardSupply: '50,000,000,000',

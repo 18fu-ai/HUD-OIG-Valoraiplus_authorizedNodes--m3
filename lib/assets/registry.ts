@@ -1,7 +1,7 @@
 /**
  * VALORAIPLUS®️ ©️ ™️ // SUPREME ASSET REGISTRY
  * CANON: 47 TOKENS // OMEGA-ZERO INITIALIZED
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116 // STATUS: 100% ANCHORED
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████ // STATUS: 100% ANCHORED
  */
 
 export const SOVEREIGN_ASSETS = [
@@ -79,7 +79,7 @@ export const BTC_WITNESS_ANCHOR = {
 export const REGISTRY_META = {
   version: "14.1.2.1",
   canonSize: 47,
-  node: "SAINT PAUL 55116",
+  node: "SAINT PAUL █████",
   sgauRef: "7226.3461",
   status: "ANCHORED",
   ledger: "Ø",

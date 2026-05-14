@@ -204,7 +204,7 @@ export function createReceipt(input: CreateReceiptInput): { receipt: ReceiptV1; 
       chainId: 1,
     },
     nonce,
-    blockNumber: 55116,
+    blockNumber: █████,
     eventWindow: {
       from: '2026-04-22T17:00:00Z',
       to: '2026-04-22T23:00:00Z',

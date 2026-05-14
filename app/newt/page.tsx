@@ -180,7 +180,7 @@ export default function NEWTPage() {
             <Badge variant="destructive" className="font-black">
               TRUTH-CYCLE: 266ms x PERPETUAL GROOVE
             </Badge>
-            <div className="text-[10px] text-emerald-700 mt-1 font-bold">NODE: SAINT PAUL 55116</div>
+            <div className="text-[10px] text-emerald-700 mt-1 font-bold">NODE: SAINT PAUL █████</div>
           </div>
         </div>
 

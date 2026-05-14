@@ -66,7 +66,7 @@ export default function Route69Page() {
               <p>Route 69 serves as the forensic corroboration bridge for signals that:</p>
               <ul className="list-disc list-inside space-y-1 text-zinc-400">
                 <li>Contain type: FORENSIC_CORROBORATION</li>
-                <li>Lack sovereign lineage (SAINT_PAUL_55116_SOVEREIGN)</li>
+                <li>Lack sovereign lineage (SAINT_PAUL_█████_SOVEREIGN)</li>
                 <li>Require evidence validation before sovereign latch</li>
               </ul>
               <p className="text-amber-400 text-xs mt-4">

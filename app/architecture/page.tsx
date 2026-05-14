@@ -33,7 +33,7 @@ const PROTOCOL_VERSION = '1.4.100D';
 const PROTOCOL_MODE = 'OMEGA-UNIFIED';
 const MERKLEROOT = '26856b24c50750f0c69c1eeb86a69ef7777771';
 const TRUTH_CYCLE_MS = 266;
-const NODE = 'Saint Paul 55116';
+const NODE = 'Saint Paul █████';
 const ENCLOSED_SYSTEM = '144,000D';
 
 // Mathematical Formula

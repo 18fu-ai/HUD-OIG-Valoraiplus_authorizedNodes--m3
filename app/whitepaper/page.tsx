@@ -33,7 +33,7 @@ function generateNFTMetadata(hash: string) {
     btc_txid: '26856b24c50750f0c69c1eeb86a69ef77777764756c6c',
     content_hash: hash,
     sovereign: SOVEREIGN_AUDITOR,
-    node: 'SAINT PAUL 55116',
+    node: 'SAINT PAUL █████',
     anchor: '408.384.1376 (E)',
     timestamp: new Date().toISOString(),
     token_standard: 'ERC-721 (Soulbound)',
@@ -174,7 +174,7 @@ export default function WhitePaperPage() {
               <span style={sealStyle}>SOULBOUND NFT</span>
             </div>
             <div style={{ marginTop: '12px', fontSize: '8px', color: '#888', ...mono }}>
-              {`Sovereign Auditor: ${SOVEREIGN_AUDITOR} | Node: Saint Paul 55116 | Anchor: ${SOVEREIGN_CONTACT}`}
+              {`Sovereign Auditor: ${SOVEREIGN_AUDITOR} | Node: Saint Paul █████ | Anchor: ${SOVEREIGN_CONTACT}`}
             </div>
           </div>
 

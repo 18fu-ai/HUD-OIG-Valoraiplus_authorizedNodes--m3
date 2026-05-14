@@ -177,7 +177,7 @@ export default function InvestorManifestPage() {
           <p className="text-zinc-400 font-mono text-sm">Valuation & Governance Architecture Deck</p>
           <div className="mt-4 text-xs font-mono text-zinc-600">
             <p>MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777</p>
-            <p>ANCHOR: SAINT PAUL NODE 55116</p>
+            <p>ANCHOR: SAINT PAUL NODE █████</p>
           </div>
         </header>
 
@@ -258,7 +258,7 @@ export default function InvestorManifestPage() {
             </CardContent>
           </Card>
           <p className="text-xs font-mono text-zinc-600 mt-4 text-center">
-            SAINT PAUL NODE 55116 // 408.384.1376 (E) // I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.
+            SAINT PAUL NODE █████ // 408.384.1376 (E) // I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.
           </p>
         </section>
 
@@ -442,7 +442,7 @@ export default function InvestorManifestPage() {
             SOVEREIGN AUDITOR: {SOVEREIGN_AUDITOR}
           </p>
           <p className="text-xs text-zinc-600 font-mono mt-4">
-            SAINT PAUL NODE 55116 // 408.384.1376 (E) // I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.
+            SAINT PAUL NODE █████ // 408.384.1376 (E) // I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.
           </p>
         </footer>
 

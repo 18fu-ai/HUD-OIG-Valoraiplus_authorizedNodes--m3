@@ -113,7 +113,7 @@ const SEALED_STATE: Route71State = {
       technical: 'LOCKED'
     },
     merkleroot_SIM: '26856b24c50750f0c69c1eeb86a69ef777777',
-    node_SIM: 'SAINT PAUL 55116',
+    node_SIM: 'SAINT PAUL █████',
     confirmations_SIM: 'INFINITY',
     grooveMode_SIM: 'PERPETUAL'
   },

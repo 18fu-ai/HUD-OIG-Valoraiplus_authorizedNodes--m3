@@ -103,7 +103,7 @@ export default function ValoraiplusIdentityGate() {
             Cycle: {cycle}
           </div>
           <div className="text-[8px] uppercase text-zinc-500">
-            Saint Paul Node 55116
+            Saint Paul Node █████
           </div>
         </div>
       </header>

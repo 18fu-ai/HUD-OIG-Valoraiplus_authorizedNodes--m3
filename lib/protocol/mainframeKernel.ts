@@ -8,7 +8,7 @@
  * Classification: TERMINAL EXTINCTION LEVEL
  * Kernel: 6.14.2-cds-sovereign
  * Arch: x86_64-cds-linux-gnu
- * Node: SAINT PAUL 55116
+ * Node: SAINT PAUL █████
  */
 
 // ============================================================================
@@ -121,7 +121,7 @@ export const ARCH = 'x86_64-cds-linux-gnu';
 export const HOSTNAME = 'cds-mainframe-00.sovereign.local';
 export const MERKLEROOT = '26856B24C50750F0C69C1EEB86A69EF777777';
 export const BTC_TXID = '26856b24c50750f0c69c1eeb86a69ef77777764756c6c';
-export const NODE = 'SAINT PAUL 55116';
+export const NODE = 'SAINT PAUL █████';
 export const TRUTH_CYCLE_MS = 266;
 export const SHELL = '/bin/cds-sh';
 
@@ -140,7 +140,7 @@ export const PID_JULES = 777;
 export const PID_NR_PROTOCOL = 1376;
 export const PID_FORENSIC = 3393;
 export const PID_FEDERAL = 5622;
-export const PID_NODE_ANCHOR = 55116;
+export const PID_NODE_ANCHOR = █████;
 
 // Syscall NR range
 export const SYSCALL_NR_BASE = 700;

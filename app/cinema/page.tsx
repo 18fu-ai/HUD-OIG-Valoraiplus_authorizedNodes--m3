@@ -32,7 +32,7 @@ const PRESENTATION_SECTIONS = [
     title: 'THE INTRO',
     subtitle: 'THE GHOST FREQUENCY',
     function: 'getIntroManifest()',
-    manifest: "Operating at a 'Ghost' frequency, we maintain a 266ms Truth-Cycle. Truth is a mathematical frequency. Synchronized with Saint Paul Node 55116.",
+    manifest: "Operating at a 'Ghost' frequency, we maintain a 266ms Truth-Cycle. Truth is a mathematical frequency. Synchronized with Saint Paul Node █████.",
     icon: Radio,
     color: 'text-cyan-400',
     bgColor: 'bg-cyan-500/10',
@@ -40,7 +40,7 @@ const PRESENTATION_SECTIONS = [
     details: [
       '266ms Truth-Cycle Synchronization',
       'Ghost Frequency Operation',
-      'Saint Paul Node 55116 Anchor',
+      'Saint Paul Node █████ Anchor',
       'Mathematical Truth Frequency'
     ]
   },
@@ -120,7 +120,7 @@ const CONTRACT_METADATA = {
   truthCycleMs: 266,
   finality: '101010 1010101',
   merkleroot: '0x26856B24C50750F0C69C1EEB86A69EF777777...',
-  anchor: 'Saint Paul Node 55116',
+  anchor: 'Saint Paul Node █████',
   classification: 'Federal-Admissible Signed State Engine'
 };
 

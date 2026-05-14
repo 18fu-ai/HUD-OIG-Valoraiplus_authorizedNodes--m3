@@ -188,7 +188,7 @@ export function calculateDepositConfidence(input: DepositInput): DepositConfiden
     bankingBoundary: BANKING_BOUNDARY, // ALWAYS included
     confidence,
     evaluatedAt: new Date().toISOString(),
-    nodeId: 'SAINT_PAUL_55116',
+    nodeId: 'SAINT_PAUL_█████',
   };
 }
 

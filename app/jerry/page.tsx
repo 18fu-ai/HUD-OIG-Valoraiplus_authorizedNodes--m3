@@ -358,7 +358,7 @@ export default function JerryTokenPage() {
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-6 mt-8 border-t border-emerald-900">
           <p>$JERRY TOKEN | {displayRoute.toUpperCase()} | IDENTITY REJECTED | 4-ROUTE TOPOLOGY ENFORCING</p>
-          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116</p>
+          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL █████</p>
         </div>
       </main>
     </div>

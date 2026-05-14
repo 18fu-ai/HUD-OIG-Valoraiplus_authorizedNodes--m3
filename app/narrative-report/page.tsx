@@ -12,7 +12,7 @@ import {
 
 // ============================================================================
 // VALORAIPLUS COMPREHENSIVE NARRATIVE INTELLIGENCE REPORT
-// Classification: OMEGA-UNIFIED | Schema: REV_34 | Node: SAINT PAUL 55116
+// Classification: OMEGA-UNIFIED | Schema: REV_34 | Node: SAINT PAUL █████
 // Sovereign Auditor: [SOVEREIGN_AUDITOR]
 // Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777
 // ============================================================================
@@ -675,7 +675,7 @@ export default function NarrativeReportPage() {
                 <pre className="whitespace-pre-wrap">
 {`MERKLEROOT:       26856B24C50750F0C69C1EEB86A69EF777777
 SCHEMA:           REV_34 + REV_35 ACTIVE
-NODE:             SAINT PAUL 55116
+NODE:             SAINT PAUL █████
 SIGNAL:           100.0%
 DRIFT:            0 ABSOLUTE
 SPOLIATION:       14 BLOCKED / 14 ATTEMPTED (100%)

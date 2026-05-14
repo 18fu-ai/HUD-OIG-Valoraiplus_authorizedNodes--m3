@@ -55,7 +55,7 @@ function stableStringify(value: unknown): string {
 
 export class ValoraiplusTopologyAuthority {
   enforceTopology(signal: RuntimeSignal): TopologyDecision {
-    const isSovereign = signal.lineage === "SAINT_PAUL_55116_SOVEREIGN";
+    const isSovereign = signal.lineage === "SAINT_PAUL_█████_SOVEREIGN";
     const isForensic = signal.type === "FORENSIC_CORROBORATION";
     const isReserve = signal.reserve === true;
 

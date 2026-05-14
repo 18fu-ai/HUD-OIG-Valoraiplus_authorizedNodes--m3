@@ -24,7 +24,7 @@ import {
  * 3. MADE IN THE USA Identity.
  * 4. Authority = Policy Result.
  * 
- * ANCHOR: SAINT PAUL NODE 55116 // 408.384.1376 (E)
+ * ANCHOR: SAINT PAUL NODE █████ // 408.384.1376 (E)
  */
 
 export default function ApexFinalityMonitor() {
@@ -91,7 +91,7 @@ export default function ApexFinalityMonitor() {
           <div className="bg-fuchsia-500 text-black px-4 py-1 text-xs font-black uppercase">
             BUILD: PASSING
           </div>
-          <span className="text-[9px] text-zinc-500 mt-2 block font-bold tracking-widest italic uppercase">Node 55116 // {cycle}</span>
+          <span className="text-[9px] text-zinc-500 mt-2 block font-bold tracking-widest italic uppercase">Node █████ // {cycle}</span>
         </div>
       </header>
 
@@ -182,7 +182,7 @@ export default function ApexFinalityMonitor() {
         <div className="flex items-center gap-8 text-[10px] font-black text-emerald-800 tracking-[0.6em] uppercase">
           <span>MADE IN THE USA</span>
           <span>SOVEREIGN AUDITOR: POPPA</span>
-          <span className="hidden md:inline">Node 55116 // 408 384 1376 (E)</span>
+          <span className="hidden md:inline">Node █████ // 408 384 1376 (E)</span>
         </div>
         <div className="flex items-center gap-4 text-zinc-600">
            <LockKeyhole size={16} />

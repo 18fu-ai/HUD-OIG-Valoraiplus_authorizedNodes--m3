@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 const MERKLEROOT = '26856B24C50750F0C69C1EEB86A69EF777777';
 const BTC_TXID = '26856b24c50750f0c69c1eeb86a69ef77777764756c6c';
 const HHS_CASE = '25-621293';
-const NODE = 'SAINT_PAUL_55116';
+const NODE = 'SAINT_PAUL_█████';
 const SCHEMA = 'REV_34';
 const ANCHOR = SOVEREIGN_CONTACT;
 

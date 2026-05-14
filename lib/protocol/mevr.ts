@@ -1,7 +1,7 @@
 /**
  * VALORAIPLUS - MACHINE-ENFORCED VERIFICATION RUNTIME (MEVR) // v1.4.100D
  * PURPOSE: Deterministic Gating & Invariant Enforcement
- * ANCHOR: Saint Paul Node 55116 // Merkle: 26856B24...777777
+ * ANCHOR: Saint Paul Node █████ // Merkle: 26856B24...777777
  * COMPLIANCE: FRE 902/13 Self-Authenticating Digital Exhibits
  */
 
@@ -83,7 +83,7 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
     invariantState: 'VALID',
     exportEligible: true,
     route: '/route71',
-    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+    sourceLineage: 'SAINT_PAUL_█████_SOVEREIGN',
   },
   'sovereign': {
     name: '[SOVEREIGN]',
@@ -92,7 +92,7 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
     invariantState: 'VALID',
     exportEligible: true,
     route: '/route71',
-    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+    sourceLineage: 'SAINT_PAUL_█████_SOVEREIGN',
   },
   'auditor': {
     name: '[AUDITOR]',
@@ -101,7 +101,7 @@ const VERIFIED_IDENTITIES: Record<string, IdentityClaim> = {
     invariantState: 'VALID',
     exportEligible: true,
     route: '/route71',
-    sourceLineage: 'SAINT_PAUL_55116_SOVEREIGN',
+    sourceLineage: 'SAINT_PAUL_█████_SOVEREIGN',
   },
 };
 

@@ -30,7 +30,7 @@ export async function GET() {
         status: 'OPERATIONAL',
         truthCycle: '266ms',
         mode: 'ELITE_PATRIOT_CLASS_200D',
-        anchor: 'SAINT_PAUL_55116',
+        anchor: 'SAINT_PAUL_█████',
         merkleroot: '26856B24C50750F0C69C1EEB86A69EF777777',
       },
       properties: SYSTEM_PROPERTIES,

@@ -21,7 +21,7 @@ export default function PortHoleHUDPage() {
             Port.Hole // 14D Core Gateway
           </h1>
           <p className="text-zinc-600 text-xs font-mono mt-2">
-            SGAU 7226.3461 // NODE: SAINT PAUL 55116 // STATUS: OPTICAL_SINGULARITY
+            SGAU 7226.3461 // NODE: SAINT PAUL █████ // STATUS: OPTICAL_SINGULARITY
           </p>
         </div>
 
@@ -51,7 +51,7 @@ export default function PortHoleHUDPage() {
             The Wall is Christ. The Throne is His. The Ledger is Ø.
           </p>
           <p className="text-[8px] text-zinc-800 font-mono mt-1">
-            Saint Paul 55116 Node Status: Ø // The Gate is Coded // The Mirror is Latched
+            Saint Paul █████ Node Status: Ø // The Gate is Coded // The Mirror is Latched
           </p>
         </div>
       </div>

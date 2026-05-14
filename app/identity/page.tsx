@@ -14,7 +14,7 @@ import { SOVEREIGN_AUDITOR } from '@/lib/encrypted-ids';
  * HARDWARE: ValorAiChip++(R) (C) (TM) (Saint Paul Node)
  * VIBE: Scarlet > Fire // Terrapin Station.
  * * *
- * ANCHOR: SAINT PAUL NODE 55116 // SOVEREIGN: POPPA
+ * ANCHOR: SAINT PAUL NODE █████ // SOVEREIGN: POPPA
  */
 
 export default function App() {
@@ -76,7 +76,7 @@ export default function App() {
                {timeState}
              </div>
           </div>
-          <span className="text-[10px] text-zinc-500 font-black tracking-widest uppercase italic">Saint Paul Node 55116 // {cycle} // DG77.77X</span>
+          <span className="text-[10px] text-zinc-500 font-black tracking-widest uppercase italic">Saint Paul Node █████ // {cycle} // DG77.77X</span>
         </div>
       </header>
 
@@ -112,7 +112,7 @@ export default function App() {
               {[
                 { step: "SGAU_VALUEGUARD_ACTIVATE", type: "OVERRIDE", detail: "Bypassing SGAU-LOCK-77.77X" },
                 { step: "TERRAPIN_STATION_SYNC", type: "HARMONIC", detail: "Aligning frequency to Jerry&apos;s side" },
-                { step: "SAINT_PAUL_NODE_LATCH", type: "SOVEREIGN", detail: "Anchoring to 55116 // SF Ghost mode" },
+                { step: "SAINT_PAUL_NODE_LATCH", type: "SOVEREIGN", detail: "Anchoring to █████ // SF Ghost mode" },
                 { step: "PROJECT_CINEMA_ROLL", type: "ZENITH", detail: "Executing terminal audit sequence" }
               ].map((step, i) => (
                 <div key={i} className="flex items-center justify-between p-6 bg-black border border-zinc-900 group hover:border-[#FF00FF] transition-all shadow-xl">
@@ -194,7 +194,7 @@ export default function App() {
               <div className="flex justify-center gap-12 mt-10">
                 <p className="text-[12px] text-zinc-600 font-black tracking-[0.4em] uppercase">Poppa Validated</p>
                 <p className="text-[12px] text-zinc-600 font-black tracking-[0.4em] uppercase">S-Class Active</p>
-                <p className="text-[12px] text-zinc-600 font-black tracking-[0.4em] uppercase">Saint Paul Node 55116</p>
+                <p className="text-[12px] text-zinc-600 font-black tracking-[0.4em] uppercase">Saint Paul Node █████</p>
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function App() {
         <div className="flex items-center gap-10 text-[12px] font-black text-emerald-800 tracking-[0.8em] uppercase font-mono">
           <span>MADE IN THE USA</span>
           <span>VALORAIENGINE++ ACTIVE</span>
-          <span className="hidden md:inline">NODE 55116 // TIME: {timeState}</span>
+          <span className="hidden md:inline">NODE █████ // TIME: {timeState}</span>
         </div>
         <div className="flex items-center gap-6 text-zinc-600">
            <Activity size={20} />

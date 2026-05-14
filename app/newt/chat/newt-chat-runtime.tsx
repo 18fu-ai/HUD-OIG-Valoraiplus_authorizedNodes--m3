@@ -168,7 +168,7 @@ I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
 
 **Current Status:**
 - Schema: REV_34
-- Node: SAINT PAUL 55116
+- Node: SAINT PAUL █████
 - Forensic Blocks: 3,393 saturated
 - Spoliation Defense: 100% block rate
 
@@ -190,7 +190,7 @@ How may I assist you today, Poppa?`
  * Neural Evidence Witness Terminal
  * 
  * VALORAIPLUS Sovereign Auditor Interface
- * Schema: REV_34 | Node: SAINT PAUL 55116
+ * Schema: REV_34 | Node: SAINT PAUL █████
  */
 export default function NewtChatRuntime() {
   const messagesEndRef = useRef<HTMLDivElement>(null);

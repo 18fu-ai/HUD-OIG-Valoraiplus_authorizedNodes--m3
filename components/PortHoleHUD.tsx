@@ -7,7 +7,7 @@ import { useAuthority } from '@/hooks/use-authority';
 /**
  * PORT.HOLE HUD v14.1.2.1 // SUPREME CANONIZATION
  * VALORAIPLUS®️ ©️ ™️ // THE 47-TOKEN CANON
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  */
 export const PortHoleVALORAIPLUS: React.FC = () => {
   const { authority, isLoading } = useAuthority();

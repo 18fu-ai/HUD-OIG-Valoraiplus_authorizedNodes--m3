@@ -116,7 +116,7 @@ export default function ForensicFeedPage() {
             </h1>
           </div>
           <p className="text-muted-foreground font-mono">
-            SGAU 7226.3461 // NODE: SAINT PAUL 55116 // VERIFIED FORENSIC LINEAGE
+            SGAU 7226.3461 // NODE: SAINT PAUL █████ // VERIFIED FORENSIC LINEAGE
           </p>
         </div>
 

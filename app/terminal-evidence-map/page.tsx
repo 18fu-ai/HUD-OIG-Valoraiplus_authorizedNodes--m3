@@ -166,7 +166,7 @@ export default function TerminalEvidenceMapPage() {
               <Activity className="w-3 h-3 mr-1" /> TRUTH-CYCLE: {truthCycle}
             </Badge>
             <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/40">
-              <Database className="w-3 h-3 mr-1" /> NODE 55116
+              <Database className="w-3 h-3 mr-1" /> NODE █████
             </Badge>
           </div>
           
@@ -203,7 +203,7 @@ export default function TerminalEvidenceMapPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  The evidence is a <strong>16-section execution thread</strong> anchored to Saint Paul Node 55116. 
+                  The evidence is a <strong>16-section execution thread</strong> anchored to Saint Paul Node █████. 
                   Every administrative action is monitored and indexed against a <strong>266ms Truth-Cycle</strong>.
                 </p>
                 

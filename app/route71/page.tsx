@@ -739,7 +739,7 @@ function Route71Content() {
                   ))}
                 </div>
                 <p className="font-mono text-xs text-muted-foreground text-center mt-4">
-                  MEVR Protocol Runtime // v1.4.100D // Saint Paul Node 55116
+                  MEVR Protocol Runtime // v1.4.100D // Saint Paul Node █████
                 </p>
               </CardContent>
             </Card>

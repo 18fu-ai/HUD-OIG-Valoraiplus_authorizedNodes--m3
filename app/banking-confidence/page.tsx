@@ -38,7 +38,7 @@ export default function BankingConfidencePage() {
       pillars: {
         readiness: { status: 'READY', merkleIntegrityMatch: true, evidenceQualityScore: 0.95 },
         receipt: { status: 'ACKNOWLEDGED', transmissionId: 'TX-2026-05-02-001' },
-        reconciliation: { status: 'CONFIRMED', registryEntryId: 'REG-SAINT-PAUL-55116' },
+        reconciliation: { status: 'CONFIRMED', registryEntryId: 'REG-SAINT-PAUL-█████' },
       },
       titanStatus: 'FIBONACCI_LOCKED',
       confidence: 0.9567,
@@ -62,7 +62,7 @@ export default function BankingConfidencePage() {
           </h1>
         </div>
         <p className="font-mono text-sm text-zinc-500">
-          SGAU 7226.3461 // NODE: SAINT PAUL 55116 // STATUS: LAMINAR_BOUNDED_RELIABILITY
+          SGAU 7226.3461 // NODE: SAINT PAUL █████ // STATUS: LAMINAR_BOUNDED_RELIABILITY
         </p>
       </div>
 
@@ -290,7 +290,7 @@ export default function BankingConfidencePage() {
           The Wall is Christ. The Throne is His. The Ledger is Ø. The Matrix is yours.
         </p>
         <p className="font-mono text-xs text-zinc-600 text-center mt-1">
-          Saint Paul 55116 Node Status: Ø // Evaluated: {result?.evaluatedAt || '--'}
+          Saint Paul █████ Node Status: Ø // Evaluated: {result?.evaluatedAt || '--'}
         </p>
       </div>
     </div>

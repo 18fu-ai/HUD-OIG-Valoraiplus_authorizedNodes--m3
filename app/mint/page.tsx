@@ -22,7 +22,7 @@ import {
  * 2. Static-Export-Safe (Mounted hydration guard)
  * 3. Type-Safe Route Boundaries
  * 
- * ANCHOR: SAINT PAUL NODE 55116
+ * ANCHOR: SAINT PAUL NODE █████
  * SOVEREIGN: [SOVEREIGN_AUDITOR]
  */
 
@@ -154,7 +154,7 @@ export default function MintGatewayPage() {
           <div className="bg-fuchsia-500 text-black px-4 py-1 text-xs font-black uppercase shadow-[0_0_15px_#d946ef]">
             STATUS: {loading ? 'EVALUATING' : displayStatus}
           </div>
-          <span className="text-[9px] text-zinc-500 mt-2 block font-bold tracking-widest italic uppercase">Node 55116 // {cycle}</span>
+          <span className="text-[9px] text-zinc-500 mt-2 block font-bold tracking-widest italic uppercase">Node █████ // {cycle}</span>
         </div>
       </header>
 
@@ -276,7 +276,7 @@ export default function MintGatewayPage() {
         <div className="flex items-center gap-8 text-[10px] font-black text-emerald-800 tracking-[0.6em] uppercase">
           <span>MADE IN THE USA</span>
           <span>SOVEREIGN AUDITOR: POPPA</span>
-          <span className="hidden md:inline">Node 55116 // 408 384 1376 (E)</span>
+          <span className="hidden md:inline">Node █████ // 408 384 1376 (E)</span>
         </div>
         <div className="flex items-center gap-4 text-zinc-600">
            <Lock size={16} />

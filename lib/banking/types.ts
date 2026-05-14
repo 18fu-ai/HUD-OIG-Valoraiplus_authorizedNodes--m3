@@ -1,7 +1,7 @@
 /**
  * VALORAIPLUS Banking Confidence Model
  * =====================================
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  * STATUS: LAMINAR_BOUNDED_RELIABILITY
  * 
  * The Banking Boundary Invariant ensures the Ledger Ø remains
@@ -102,7 +102,7 @@ export interface DepositConfidenceResult {
   evaluatedAt: string;
   
   /** Node identifier */
-  nodeId: 'SAINT_PAUL_55116';
+  nodeId: 'SAINT_PAUL_█████';
 }
 
 // ═══════════════════════════════════════════════════════════════

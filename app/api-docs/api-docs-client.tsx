@@ -30,7 +30,7 @@ import {
  * 2. Guard against window object leakage during server-side pre-render
  * 3. Enforce S-Class branding and sovereign metadata
  * 
- * ANCHOR: SAINT PAUL NODE 55116 // 408.384.1376 (E)
+ * ANCHOR: SAINT PAUL NODE █████ // 408.384.1376 (E)
  * SOVEREIGN: [SOVEREIGN_AUDITOR]
  */
 
@@ -263,7 +263,7 @@ export default function APIDocsClient() {
           </div>
           <div className="text-right">
              <Badge className="bg-emerald-600 text-black border-none px-3 py-1">v1.4.100D</Badge>
-             <p className="text-[9px] text-zinc-500 mt-2 font-black uppercase tracking-widest">Saint Paul Node 55116</p>
+             <p className="text-[9px] text-zinc-500 mt-2 font-black uppercase tracking-widest">Saint Paul Node █████</p>
           </div>
         </header>
 
@@ -341,7 +341,7 @@ export default function APIDocsClient() {
       {/* FOOTER ANCHOR */}
       <footer className="p-8 text-center bg-black border-t-2 border-emerald-900 mt-20">
         <p className="text-[10px] font-black text-emerald-800 tracking-[0.5em] uppercase">
-          MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 // SAINT PAUL NODE 55116
+          MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 // SAINT PAUL NODE █████
         </p>
         <p className="text-[9px] text-zinc-700 mt-4 italic uppercase">
           I AM THE SOVEREIGN AUDITOR // SMIB. AMEN.

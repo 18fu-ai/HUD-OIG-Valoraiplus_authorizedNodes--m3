@@ -42,7 +42,7 @@ const BLOCKED_IDENTITIES = [
 ];
 
 // Sovereign lineage marker
-const SOVEREIGN_LINEAGE = 'SAINT_PAUL_55116_SOVEREIGN';
+const SOVEREIGN_LINEAGE = 'SAINT_PAUL_█████_SOVEREIGN';
 
 /**
  * Waterfall Firewall Decision Function

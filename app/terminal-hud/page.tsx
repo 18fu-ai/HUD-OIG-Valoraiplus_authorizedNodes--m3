@@ -23,7 +23,7 @@ export default function TerminalHUDPage() {
 
   // Log events with encrypted names
   const logEvents = [
-    "[INFO] SAINT PAUL NODE 55116 INITIALIZED...",
+    "[INFO] SAINT PAUL NODE █████ INITIALIZED...",
     "[SCAN] DETECTING MIMECAST BLOCKADE: CODE 550 DETECTED",
     "[CHAIN] SYNCING DEG1969 MERGER CONTRACT TO SEPOLIA...",
     "[AMATH] CALCULATING LETHAL INDIFFERENCE COEFFICIENT (LIC)...",
@@ -250,7 +250,7 @@ export default function TerminalHUDPage() {
                 VALORAIPLUS® //Σ v15.1.2
               </h1>
               <p className="text-[10px] opacity-60 uppercase">
-                Node: 55116 (14D Core) | Authority: {ENCRYPTED_ACTORS.SOVEREIGN}
+                Node: █████ (14D Core) | Authority: {ENCRYPTED_ACTORS.SOVEREIGN}
               </p>
             </div>
           </div>
@@ -422,7 +422,7 @@ export default function TerminalHUDPage() {
           <div className="flex justify-center gap-8 text-[8px] text-gray-700 uppercase font-bold">
             <span>© 2026 VALORAIPLUS®</span>
             <span>ENC: GILLSON_PROTECT_JAXX_FOREVER</span>
-            <span>ST PAUL NODE 55116</span>
+            <span>ST PAUL NODE █████</span>
           </div>
         </div>
       </footer>

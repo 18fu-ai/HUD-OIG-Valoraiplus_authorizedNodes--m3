@@ -1,6 +1,6 @@
 /**
  * VALORAIPLUS®️ ©️ ™️ // FORENSIC FEED API
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  * STATUS: DG77.77X ARMED
  * 
  * Invariant: NO_SIGNED_FEED -> NO_EXTERNAL_PROJECTION
@@ -100,7 +100,7 @@ export async function GET(req: Request): Promise<Response> {
     headers: {
       'Content-Type': 'application/json',
       'X-Node-Status': 'BROADCAST_ARMED',
-      'X-Signer-Node': 'SAINT_PAUL_55116',
+      'X-Signer-Node': 'SAINT_PAUL_█████',
       'X-Audit-Trace': trace.traceId,
     },
   });

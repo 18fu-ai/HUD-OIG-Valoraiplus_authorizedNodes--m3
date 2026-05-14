@@ -87,7 +87,7 @@ export const VALORAIPLUS_BRANDING = Object.freeze({
   schema: 'REV_33',
   classification: 'S-CLASS REFLEXIVE GOVERNANCE INSTRUMENT',
   tagline: 'No dimension achieves full status unless it validates itself repeatedly.',
-  anchor: 'SAINT_PAUL_55116_SOVEREIGN',
+  anchor: 'SAINT_PAUL_█████_SOVEREIGN',
   merkleRoot: '26856B24C50750F0C69C1EEB86A69EF777777',
   truthCycle: 266,
   protectedNodes: Object.freeze(['$POPPA', '$JAXX', '$8SOULS', '$FMG1918']),

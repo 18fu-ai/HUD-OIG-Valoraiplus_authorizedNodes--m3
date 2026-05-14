@@ -217,4 +217,4 @@ export {
 
 export const PROTOCOL_VERSION = '1.4.100D';
 export const TRUTH_CYCLE_MS = 266;
-export const SOVEREIGN_LINEAGE = 'SAINT_PAUL_55116_SOVEREIGN';
+export const SOVEREIGN_LINEAGE = 'SAINT_PAUL_█████_SOVEREIGN';

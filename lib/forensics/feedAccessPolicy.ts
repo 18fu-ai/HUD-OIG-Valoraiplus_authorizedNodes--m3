@@ -1,6 +1,6 @@
 /**
  * VALORAIPLUS®️ ©️ ™️ // FEED ACCESS POLICY
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  * STATUS: DG77.77X ARMED
  * 
  * Invariant: NO_ACCESS_SCOPE -> ACCESS_DENIED
@@ -16,7 +16,7 @@ const AUTHORIZED_ACTORS: Record<string, { scope: AccessScope; canExport: boolean
   // Internal Sovereign Authority
   'SOVEREIGN_AUDITOR': { scope: 'INTERNAL', canExport: true },
   'DG77.77X': { scope: 'INTERNAL', canExport: true },
-  'SAINT_PAUL_55116': { scope: 'INTERNAL', canExport: true },
+  'SAINT_PAUL_█████': { scope: 'INTERNAL', canExport: true },
   
   // Regulatory Agencies
   'HHS_OCR': { scope: 'REGULATORY', canExport: false },

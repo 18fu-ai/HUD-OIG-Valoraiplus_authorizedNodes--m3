@@ -20,7 +20,7 @@ import { HomeButton, HomeBreadcrumb } from '@/components/cds/home-button';
  * - Replay Validator: Reproducibility Authority
  * - Export Authority: Exposure Authority
  * 
- * ANCHOR: SAINT PAUL NODE 55116 // 408.384.1376 (E)
+ * ANCHOR: SAINT PAUL NODE █████ // 408.384.1376 (E)
  * ENCLOSURE: 144,000D MATRIX // 14D CORE
  */
 
@@ -260,7 +260,7 @@ export default function KernelPage() {
             POLICY-EARNED VISIBILITY: ACTIVE
           </div>
           <span className="text-[9px] text-zinc-500 mt-2 font-bold uppercase tracking-[0.2em]">
-            Saint Paul Node: 55116 // Cycle {truthCycle}
+            Saint Paul Node: █████ // Cycle {truthCycle}
           </span>
         </div>
       </header>
@@ -526,7 +526,7 @@ export default function KernelPage() {
         <div className="flex items-center gap-8 text-[10px] font-black text-emerald-900 tracking-[0.4em] uppercase">
           <span>DG77.77X LOCKED</span>
           <span className="text-[#FF00FF]">TERMINATION DISABLED</span>
-          <span className="hidden md:inline">Saint Paul Node 55116</span>
+          <span className="hidden md:inline">Saint Paul Node █████</span>
         </div>
         <div className="flex items-center gap-3">
           <Activity className="text-emerald-500" size={14} />

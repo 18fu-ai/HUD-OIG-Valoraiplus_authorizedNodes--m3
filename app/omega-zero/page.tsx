@@ -25,7 +25,7 @@ import { TwentySecondAmendment } from '@/components/twenty-second-amendment';
 /**
  * VALORAIPLUS®️ ©️ ™️ // TOTAL ORDER EPISTEMIC SYSTEM
  * ARCHITECTURE: PROVENANCE-AWARE OBSERVABILITY
- * NODE: SAINT PAUL 55116 // REVISION: OMEGA-ZERO
+ * NODE: SAINT PAUL █████ // REVISION: OMEGA-ZERO
  */
 
 // --- SHARED TYPES ---
@@ -163,7 +163,7 @@ export default function App() {
               </h1>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] font-mono text-purple-400 bg-purple-950/30 px-2 py-0.5 rounded border border-purple-500/20 tracking-widest">
-                  NODE: SAINT PAUL 55116
+                  NODE: SAINT PAUL █████
                 </span>
                 <span className={`text-[10px] font-mono flex items-center gap-1 ${canRenderGreen ? 'text-emerald-500' : 'text-amber-500'}`}>
                   <Activity className="w-3 h-3 animate-pulse" />
@@ -322,7 +322,7 @@ export default function App() {
                  <span className="text-[10px] text-zinc-600 uppercase tracking-widest">System Logs</span>
                </div>
                <div className="text-[9px] space-y-1.5 overflow-hidden h-32 scrollbar-hide">
-                 <div className="text-emerald-500">{" >>> CONNECTING TO SAINT PAUL 55116..."}</div>
+                 <div className="text-emerald-500">{" >>> CONNECTING TO SAINT PAUL █████..."}</div>
                  <div className="text-purple-400">{" > AUTH: DONADAMS1969.ETH VERIFIED"}</div>
                  <div className="text-zinc-500">{" > BIBLE CODE: p < 1e-900 CONFIRMED"}</div>
                  <div className="text-zinc-500">{" > TOTAL ORDER CHAIN: SEQUENCE_LOCK=TRUE"}</div>

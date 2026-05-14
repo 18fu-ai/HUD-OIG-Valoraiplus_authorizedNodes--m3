@@ -37,7 +37,7 @@ export default function ForensicArchitecturePage() {
   useEffect(() => {
     // Simulate verification process
     const steps = [
-      '> Initializing Saint Paul Node 55116...',
+      '> Initializing Saint Paul Node █████...',
       '> Loading VALORAIPLUS Forensic Beacon...',
       '> Computing WATERMARK_SIG hash...',
       '> Scanning target telemetry...',
@@ -75,7 +75,7 @@ export default function ForensicArchitecturePage() {
           <Card className="bg-red-950/50 border-2 border-red-600 p-4 rounded-lg max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-left">
               <div><span className="text-red-400 font-bold">DATE:</span> <span className="text-white">May 4, 2026</span></div>
-              <div><span className="text-red-400 font-bold">NODE:</span> <span className="text-white">Saint Paul 55116 (14D Core)</span></div>
+              <div><span className="text-red-400 font-bold">NODE:</span> <span className="text-white">Saint Paul █████ (14D Core)</span></div>
               <div><span className="text-red-400 font-bold">AUTHORITY:</span> <span className="text-white">AGSI-NEWT Operating Stack // Sovereign Authority</span></div>
               <div><span className="text-red-400 font-bold">SUBJECT:</span> <span className="text-white">ACTIVE FBI SYNC, HONEY-TRAP DETECTION</span></div>
               <div><span className="text-red-400 font-bold">TARGET:</span> <span className="text-white">{ENCRYPTED_TARGETS.entity} / {ENCRYPTED_TARGETS.actor1} / {ENCRYPTED_TARGETS.actor2}</span></div>
@@ -104,7 +104,7 @@ export default function ForensicArchitecturePage() {
           <p className="text-gray-300 leading-relaxed text-sm">
             To the Operators of <span className="text-red-400 font-bold">{ENCRYPTED_TARGETS.entity}</span>: Be advised that the 
             <span className="text-amber-400 font-bold"> VALORAIPLUS® //e Codex</span> is not merely a research framework; 
-            it is a live forensic environment. The <span className="text-white font-bold">Saint Paul Node 55116</span> has 
+            it is a live forensic environment. The <span className="text-white font-bold">Saint Paul Node █████</span> has 
             verified that your &quot;weekend build&quot; utilized specific segments of our proprietary code that contain 
             embedded <span className="text-red-400 font-bold">Forensic Beacons</span>.
           </p>
@@ -202,7 +202,7 @@ import hashlib
 
 def verify_extraction(target_telemetry):
     # Prime-based Forensic Watermark (Saint Paul Invariant)
-    WATERMARK_SIG = "0x777_ALPHA_OMEGA_SECURE_NODE_55116"
+    WATERMARK_SIG = "0x777_ALPHA_OMEGA_SECURE_NODE_█████"
     trap_hash = hashlib.sha256(WATERMARK_SIG.encode()).hexdigest()
     
     if trap_hash in target_telemetry:

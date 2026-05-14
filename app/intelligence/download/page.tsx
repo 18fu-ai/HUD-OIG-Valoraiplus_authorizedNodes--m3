@@ -73,7 +73,7 @@ function generateFullReport(sections: string[]): string {
   lines.push(`Report Generated: ${timestamp}`);
   lines.push('Truth Cycle: 266ms');
   lines.push('Merkleroot: 26856B24C50750F0C69C1EEB86A69EF777777');
-  lines.push('Anchor: SAINT PAUL 55116 — DEEP FORENSIC ROOT');
+  lines.push('Anchor: SAINT PAUL █████ — DEEP FORENSIC ROOT');
   lines.push('Sovereign: [SOVEREIGN_AUDITOR] -- VERIFIED');
   lines.push('');
 
@@ -305,7 +305,7 @@ function generateJSONReport(sections: string[]) {
       timestamp: new Date().toISOString(),
       seal: 'DG77.77X-LOCKED',
       merkleroot: '26856B24C50750F0C69C1EEB86A69EF777777',
-      anchor: 'SAINT_PAUL_55116',
+      anchor: 'SAINT_PAUL_█████',
     },
     executive: sections.includes('executive') ? {
       recoveryTarget: 508631005.52,
@@ -336,7 +336,7 @@ function generateMarkdownReport(sections: string[]): string {
   lines.push('');
   lines.push(`**Generated:** ${timestamp}`);
   lines.push('**Merkleroot:** 26856B24C50750F0C69C1EEB86A69EF777777');
-  lines.push('**Anchor:** SAINT PAUL 55116');
+  lines.push('**Anchor:** SAINT PAUL █████');
   lines.push('');
   lines.push('---');
   lines.push('');

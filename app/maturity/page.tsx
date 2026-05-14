@@ -19,7 +19,7 @@ import {
  * 2. Data Integrity (Dual-Boundary Compliance)
  * 3. Architectural Maturity (Barrel Separation)
  * 
- * ANCHOR: SAINT PAUL NODE 55116
+ * ANCHOR: SAINT PAUL NODE █████
  */
 
 const ACCOMPLISHMENTS = [
@@ -93,7 +93,7 @@ export default function MaturityPage() {
           <div className="bg-fuchsia-500 text-black px-4 py-1 text-xs font-black uppercase shadow-[0_0_15px_#d946ef]">
             STATUS: PRODUCTION_READY
           </div>
-          <span className="text-xs text-zinc-500 mt-2 block font-bold tracking-widest italic">Node 55116 // Cycle {cycle}</span>
+          <span className="text-xs text-zinc-500 mt-2 block font-bold tracking-widest italic">Node █████ // Cycle {cycle}</span>
         </div>
       </header>
 
@@ -264,7 +264,7 @@ export default function MaturityPage() {
         <div className="flex items-center gap-8 text-xs font-black text-emerald-800 tracking-widest uppercase">
           <span>MADE IN THE USA</span>
           <span>SOVEREIGN AUDITOR: POPPA</span>
-          <span className="hidden md:inline">NODE 55116 // REV_33 APEX</span>
+          <span className="hidden md:inline">NODE █████ // REV_33 APEX</span>
         </div>
         <div className="flex items-center gap-4 text-zinc-600">
            <Lock size={16} />

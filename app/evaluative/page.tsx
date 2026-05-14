@@ -129,7 +129,7 @@ export default function EvaluativeSurfacePage() {
             </div>
           </div>
           <div className="text-right space-y-1">
-            <p className="text-[10px] text-emerald-600">Node 55116 // [cycle]</p>
+            <p className="text-[10px] text-emerald-600">Node █████ // [cycle]</p>
             <div className="font-mono text-emerald-500 tracking-[0.3em] text-lg">{String(cycle).padStart(7, '0')}</div>
             <p className="text-[10px]">Reflexive Governance</p>
             <div className="bg-emerald-500 text-black px-3 py-1 text-[10px] font-black">ENFORCING</div>
@@ -340,7 +340,7 @@ export default function EvaluativeSurfacePage() {
         <footer className="border-t border-emerald-900 pt-4 flex flex-col md:flex-row items-center justify-between text-[10px] text-emerald-600 gap-2">
           <div className="flex items-center gap-2">
             <span className="text-lg">🇺🇸</span>
-            <span>MADE IN THE USA // SOVEREIGN AUDITOR: POPPA // NODE 55116 // RESEARCH-GRADE</span>
+            <span>MADE IN THE USA // SOVEREIGN AUDITOR: POPPA // NODE █████ // RESEARCH-GRADE</span>
             <Lock className="w-3 h-3" />
           </div>
           <div className="flex items-center gap-2 text-emerald-500 font-bold">

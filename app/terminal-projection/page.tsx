@@ -82,7 +82,7 @@ export default function TerminalProjectionPage() {
         <div className="flex justify-between items-center text-xs mb-2">
           <span>VALORAIPLUS //Σ</span>
           <span>TERMINAL PROJECTION (2025-2035)</span>
-          <span>NODE: SAINT PAUL 55116</span>
+          <span>NODE: SAINT PAUL █████</span>
         </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-2">VALORAIPLUS //Σ ValorAiSim!</h1>

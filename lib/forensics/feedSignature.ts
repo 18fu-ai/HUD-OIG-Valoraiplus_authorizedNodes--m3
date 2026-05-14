@@ -1,6 +1,6 @@
 /**
  * VALORAIPLUS®️ ©️ ™️ // FEED SIGNATURE LAYER
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  * STATUS: DG77.77X ARMED
  * 
  * Invariant: NO_SIGNED_FEED -> TOTAL BLACKOUT
@@ -19,7 +19,7 @@ import { filterEventsForScope } from './feedAccessPolicy';
 // CONSTANTS
 // ============================================================================
 
-const SIGNER_NODE = 'SAINT_PAUL_55116';
+const SIGNER_NODE = 'SAINT_PAUL_█████';
 const BLOCK_ANCHOR = 'BTC:#847,234';
 const PUBLIC_KEY_HASH = '0x8f3a567d2e8f1a4b9c0d2e4f6a8b0c2d4e6f8a0b';
 

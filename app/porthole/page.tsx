@@ -23,9 +23,9 @@ const mockMarketData = [
 ];
 
 const forensicLogData = [
-  { timestamp: '11:11:00ms', node: 'Saint Paul 55116', activity: 'Sentinel pulse. 144,000 validators verified.' },
-  { timestamp: '11:11:01ms', node: 'Saint Paul 55116', activity: 'Sovereign asset registry check. No anomalies detected.' },
-  { timestamp: '11:11:02ms', node: 'Saint Paul 55116', activity: 'Federal oversight report v14.2 generated.' },
+  { timestamp: '11:11:00ms', node: 'Saint Paul █████', activity: 'Sentinel pulse. 144,000 validators verified.' },
+  { timestamp: '11:11:01ms', node: 'Saint Paul █████', activity: 'Sovereign asset registry check. No anomalies detected.' },
+  { timestamp: '11:11:02ms', node: 'Saint Paul █████', activity: 'Federal oversight report v14.2 generated.' },
 ];
 
 const billingEquation = {

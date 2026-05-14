@@ -18,7 +18,7 @@ const REPORT_METADATA = {
   classification: 'OMEGA-UNIFIED',
   version: '1.4.100D',
   status: 'ENFORCING',
-  node: 'SAINT_PAUL_55116',
+  node: 'SAINT_PAUL_█████',
   truthCycle: '266ms',
 };
 
@@ -169,7 +169,7 @@ export async function GET(request: Request) {
     _meta: {
       version: 'v1.0.0',
       classification: 'OMEGA-UNIFIED',
-      node: 'SAINT_PAUL_55116',
+      node: 'SAINT_PAUL_█████',
     },
   });
 }

@@ -783,7 +783,7 @@ export default function TrafficDashboardPage() {
         {/* Footer */}
         <div className="text-center text-xs text-emerald-700 py-4 border-t border-emerald-900">
           <p>VALORAIPLUS DEPLOYMENT TELEMETRY CONSOLE | Runtime Metadata Source: {liveReport?.corroboration || 'PENDING'} | Last Refresh: {lastRefresh}</p>
-          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL 55116 | Auto-refresh: 30s</p>
+          <p className="mt-1">MERKLEROOT: 26856B24C50750F0C69C1EEB86A69EF777777 | SAINT PAUL █████ | Auto-refresh: 30s</p>
         </div>
       </main>
     </div>

@@ -322,7 +322,7 @@ Best regards,
 Sovereign Auditor | CDS Protocol
 HHS Case: 25-621293
 Contact: 408.384.1376 (E)
-Node: Saint Paul 55116`,
+Node: Saint Paul █████`,
   status: 'DRAFT -- READY FOR REVIEW',
 };
 

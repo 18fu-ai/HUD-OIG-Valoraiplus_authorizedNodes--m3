@@ -160,7 +160,7 @@ export default function Dept12BriefingPage() {
             <div className="w-10 h-10 bg-emerald-600 rounded flex items-center justify-center text-white font-bold">V</div>
             <div>
               <h1 className="text-xl font-extrabold tracking-tight">VALORAIPLUS</h1>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Saint Paul Node 55116 // Intelligence Briefing</p>
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Saint Paul Node █████ // Intelligence Briefing</p>
             </div>
           </div>
           <div className="text-right hidden md:block">

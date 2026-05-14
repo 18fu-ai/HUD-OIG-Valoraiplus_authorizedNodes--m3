@@ -297,7 +297,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">NODE</span>
-                    <span className="text-foreground">SAINT PAUL 55116</span>
+                    <span className="text-foreground">SAINT PAUL █████</span>
                   </div>
                   <div className="flex justify-between text-xs font-mono">
                     <span className="text-muted-foreground">CONFIRMATIONS</span>

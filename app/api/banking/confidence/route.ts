@@ -1,7 +1,7 @@
 /**
  * VALORAIPLUS Banking Confidence API
  * ===================================
- * SGAU 7226.3461 // NODE: SAINT PAUL 55116
+ * SGAU 7226.3461 // NODE: SAINT PAUL █████
  * 
  * Stateless API for calculating Deposit Confidence with
  * Banking Boundary enforcement.
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       },
     }, {
       headers: {
-        'X-Node-Id': 'SAINT_PAUL_55116',
+        'X-Node-Id': 'SAINT_PAUL_█████',
         'X-Titan-Status': result.titanStatus,
         'X-Banking-Boundary': 'ENFORCED',
       },
@@ -83,7 +83,7 @@ export async function GET() {
   // Return the Banking Boundary Invariant and system status
   return NextResponse.json({
     system: 'VALORAIPLUS Banking Confidence Model',
-    node: 'SAINT_PAUL_55116',
+    node: 'SAINT_PAUL_█████',
     status: 'LAMINAR_BOUNDED_RELIABILITY',
     bankingBoundary: BANKING_BOUNDARY,
     doctrine: {
@@ -103,7 +103,7 @@ export async function GET() {
     },
   }, {
     headers: {
-      'X-Node-Id': 'SAINT_PAUL_55116',
+      'X-Node-Id': 'SAINT_PAUL_█████',
       'X-Banking-Boundary': 'ENFORCED',
     },
   });
