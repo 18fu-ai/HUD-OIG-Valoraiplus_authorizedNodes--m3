@@ -2246,6 +2246,6 @@ export const MAINFRAME = {
     { pid: 1376, name: 'nr-protocol', desc: 'NR Protocol (6 mandates)' },
     { pid: 3393, name: 'forensic-indexer', desc: 'Forensic Indexer (3,393 exhibits)' },
     { pid: 5622, name: 'federal-counter', desc: 'Federal Counter (5,622 counts)' },
-    { pid: █████, name: 'node-anchor', desc: 'Node Anchor (SAINT PAUL)' },
+    { pid: 55116, name: 'node-anchor', desc: 'Node Anchor (SAINT PAUL)' },
   ],
 };

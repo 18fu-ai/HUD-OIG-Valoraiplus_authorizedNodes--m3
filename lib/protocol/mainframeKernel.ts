@@ -140,7 +140,7 @@ export const PID_JULES = 777;
 export const PID_NR_PROTOCOL = 1376;
 export const PID_FORENSIC = 3393;
 export const PID_FEDERAL = 5622;
-export const PID_NODE_ANCHOR = █████;
+export const PID_NODE_ANCHOR = 55116;
 
 // Syscall NR range
 export const SYSCALL_NR_BASE = 700;

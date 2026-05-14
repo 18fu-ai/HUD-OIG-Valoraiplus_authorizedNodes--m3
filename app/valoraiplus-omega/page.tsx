@@ -2,6 +2,7 @@
 // VALORAIPLUS_2E_MARKER — 100D EXPERIENCE
 
 import React, { useState, useEffect } from 'react';
+import { HardwareStatus } from '@/components/cds/hardware-status';
 import {
   Shield,
   Lock,
@@ -423,6 +424,9 @@ export default function OmegaPage() {
                 </div>
               </div>
             </div>
+
+            {/* Bare-Metal Hardware Anchor Widget */}
+            <HardwareStatus />
           </div>
         </div>
       </main>

@@ -46,7 +46,7 @@ const PROCESS_TABLE = [
   { pid: 1376, ppid: 77, user: 'cds', state: 'S', cpu: '0.3', mem: '1.8', vsz: 192000, rss: 49152, tty: '?', cmd: '/opt/cds/bin/nr-protocol --mandates=6 --billing=ZERO', classification: 'TERMINAL' },
   { pid: 3393, ppid: 77, user: 'cds', state: 'S', cpu: '3.1', mem: '14.2', vsz: 3072000, rss: 786432, tty: '?', cmd: '/opt/cds/bin/forensic-indexer --exhibits=3393 --blocks=SAT', classification: 'TERMINAL' },
   { pid: 5622, ppid: 144, user: 'cds', state: 'S', cpu: '0.5', mem: '2.8', vsz: 320000, rss: 81920, tty: '?', cmd: '/opt/cds/bin/federal-counter --counts=5622 --years=112125', classification: 'TERMINAL' },
-  { pid: █████, ppid: 1, user: 'root', state: 'S', cpu: '0.1', mem: '0.8', vsz: 96000, rss: 24576, tty: '?', cmd: '/opt/cds/bin/node-anchor --loc=SAINT_PAUL --zip=█████', classification: 'TERMINAL' },
+  { pid: 55116, ppid: 1, user: 'root', state: 'S', cpu: '0.1', mem: '0.8', vsz: 96000, rss: 24576, tty: '?', cmd: '/opt/cds/bin/node-anchor --loc=SAINT_PAUL --zip=55116', classification: 'TERMINAL' },
 ];
 
 // Filesystem Hierarchy

@@ -64,7 +64,7 @@ export async function GET() {
         { pid: 1376, ppid: 77, user: 'cds', state: 'S', cpu: 0.3, mem: 1.8, cmd: '/opt/cds/bin/nr-protocol --mandates=6' },
         { pid: 3393, ppid: 77, user: 'cds', state: 'S', cpu: 3.1, mem: 14.2, cmd: '/opt/cds/bin/forensic-indexer --exhibits=3393' },
         { pid: 5622, ppid: 144, user: 'cds', state: 'S', cpu: 0.5, mem: 2.8, cmd: '/opt/cds/bin/federal-counter --counts=5622' },
-        { pid: █████, ppid: 1, user: 'root', state: 'S', cpu: 0.1, mem: 0.8, cmd: '/opt/cds/bin/node-anchor --loc=SAINT_PAUL' },
+        { pid: 55116, ppid: 1, user: 'root', state: 'S', cpu: 0.1, mem: 0.8, cmd: '/opt/cds/bin/node-anchor --loc=SAINT_PAUL' },
       ],
     },
     kernelModules: {
