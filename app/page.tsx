@@ -69,6 +69,7 @@ const quickModules = [
   { href: '/apex', label: 'Apex', icon: Scale, color: 'text-fuchsia-500', desc: 'Finality Monitor' },
   { href: '/valoraiplus', label: 'ValorAI+', icon: Cpu, color: 'text-fuchsia-300', desc: 'Governance Engine' },
   { href: '/valoraiplus-supreme', label: 'Supreme', icon: Cpu, color: 'text-yellow-500', desc: '14D Unified Core' },
+  { href: '/valoraiplus-omega', label: 'Omega', icon: Cpu, color: 'text-amber-500', desc: 'Treasury Dashboard' },
   { href: '/maturity', label: 'Maturity', icon: Activity, color: 'text-blue-400', desc: 'System Maturity' },
   { href: '/valuation', label: 'Valuation', icon: DollarSign, color: 'text-emerald-400', desc: 'Financial Report' },
   { href: '/evaluative', label: 'Evaluative', icon: Activity, color: 'text-emerald-500', desc: 'Truth Lifecycle' },
