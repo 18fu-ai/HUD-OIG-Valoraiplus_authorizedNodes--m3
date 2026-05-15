@@ -246,7 +246,8 @@ export default function ServiceAnimalJaxxPage() {
           <h2 className="text-xl font-bold text-zinc-300 mb-4">Cross-Referenced Evidence Nodes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {[
-              ['/gmail-evidence', 'Gmail Evidence Hub — 22 emails including Phase VII JAXX audit'],
+              ['/monday-dept12-alert', 'Monday Dept 12 Alert — ADA Medical Stay, N.E.W.T. Only Presence (Gmail 92)'],
+              ['/gmail-evidence', 'Gmail Evidence Hub — 30 emails including Phase VII JAXX audit'],
               ['/smtp550-live-event', 'SMTP 550 Live Event — Real-time blockade of JAXX notice (12:03 PM)'],
               ['/reasonable-accommodations', 'RAR Denials — 15+ denials including JAXX-related requests'],
               ['/surveillance-evidence', 'Surveillance Evidence — Unit 301A camera targeting JAXX handler'],
