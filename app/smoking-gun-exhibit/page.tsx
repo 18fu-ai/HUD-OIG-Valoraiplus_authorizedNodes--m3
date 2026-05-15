@@ -294,6 +294,25 @@ export default function SmokingGunExhibitPage() {
           </div>
         </div>
 
+        {/* EVIDENCE ACCESS */}
+        <div className="border-2 border-emerald-600 bg-emerald-950/20 rounded-lg p-6 mb-8">
+          <h2 className="text-emerald-400 font-black text-sm tracking-widest uppercase mb-3">
+            Evidence Access — Hardware-Verified Repository
+          </h2>
+          <p className="text-sm text-zinc-300 mb-4">
+            All high-fidelity evidence of the surveillance, the SMTP 550 blockade, and the signatory fraud 
+            can be found in the hardware-verified repository:
+          </p>
+          <a
+            href="https://v0-valoraicoder-migration.vercel.app/judicial-handshake"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-lg text-sm transition-colors"
+          >
+            ACCESS VERIFIED EVIDENCE PORTAL
+          </a>
+        </div>
+
         {/* Footer Nav */}
         <div className="border-t border-zinc-800 pt-8">
           <div className="text-[10px] font-mono text-zinc-600 tracking-widest uppercase mb-4">Navigate Evidence Nodes</div>

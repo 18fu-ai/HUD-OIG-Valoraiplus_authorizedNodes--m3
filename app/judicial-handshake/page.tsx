@@ -173,6 +173,33 @@ export default function JudicialHandshakePortal() {
           </pre>
         </div>
 
+        {/* EVIDENCE ACCESS — EXTERNAL VERIFIED REPOSITORY */}
+        <div className="border-2 border-emerald-600 bg-emerald-950/20 rounded-lg p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <StatusPulse color="bg-emerald-500" />
+            <h2 className="text-emerald-400 font-black text-sm tracking-widest uppercase">
+              Evidence Access — Hardware-Verified Repository
+            </h2>
+          </div>
+          <p className="text-sm text-zinc-300 mb-4">
+            All high-fidelity evidence of the surveillance, the SMTP 550 blockade, and the signatory fraud 
+            can be found in the hardware-verified repository:
+          </p>
+          <a
+            href="https://v0-valoraicoder-migration.vercel.app/judicial-handshake"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-lg text-sm transition-colors shadow-[0_0_25px_-5px_#10b981]"
+          >
+            <ExternalLink size={16} />
+            ACCESS VERIFIED EVIDENCE PORTAL
+            <ArrowRight size={16} />
+          </a>
+          <p className="text-zinc-500 text-[10px] mt-3 font-mono">
+            https://v0-valoraicoder-migration.vercel.app/judicial-handshake
+          </p>
+        </div>
+
         {/* VERIFICATION MATRIX */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {Object.entries(HANDSHAKE_DATA).map(([key, val]) => (
