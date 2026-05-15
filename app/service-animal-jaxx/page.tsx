@@ -61,7 +61,7 @@ export default function ServiceAnimalJaxxPage() {
               </div>
               <div>
                 <p className="text-xs text-zinc-400 font-mono uppercase">Handler</p>
-                <p className="text-white">Donald Gillson — 100% P&T Disabled U.S. Navy Veteran</p>
+                <p className="text-white">Donald Gillson — 100% P&amp;T Disabled U.S. Navy Veteran</p>
               </div>
             </div>
             <div>
@@ -109,7 +109,7 @@ export default function ServiceAnimalJaxxPage() {
           </div>
           <div className="mt-4 p-3 bg-black/40 border border-red-700 rounded text-xs font-mono">
             <span className="text-red-400 font-bold">STATUTORY IMPACT:</span>{' '}
-            <span className="text-zinc-300">CA Civil Code §1942.5 retaliatory eviction / CA PC §600.2 service animal endangerment / ADA interference with medical device / 18 U.S.C. §242 deprivation of rights under color of law</span>
+            <span className="text-zinc-300">CA Civil Code 1942.5 retaliatory eviction / CA PC 600.2 service animal endangerment / ADA interference with medical device / 18 U.S.C. 242 deprivation of rights under color of law</span>
           </div>
         </section>
 
@@ -126,7 +126,7 @@ export default function ServiceAnimalJaxxPage() {
                 severity: 'CRITICAL',
                 color: 'border-red-500 text-red-400',
                 event: 'Initial Multi-Agency Alert — Biohazard Exposure Notice',
-                desc: 'Donald served formal notice to Kolby Losik and STP leadership documenting life-safety hazards in Unit 301A. Notice explicitly stated: "Expose my service animal JAXX to rodent-borne pathogens... His exposure to rat-borne disease, pesticides, and contaminated flooring poses potential violations under the PAWS Act (38 U.S.C. §1714) and CA Penal Code §600.2 (Endangerment of Service Animal)." STP took no action.',
+                desc: 'Donald served formal notice to Kolby Losik and STP leadership documenting life-safety hazards in Unit 301A. Notice explicitly stated: "Expose my service animal JAXX to rodent-borne pathogens... His exposure to rat-borne disease, pesticides, and contaminated flooring poses potential violations under the PAWS Act (38 U.S.C. 1714) and CA Penal Code 600.2 (Endangerment of Service Animal)." STP took no action.',
               },
               {
                 date: 'Nov 24, 2025',
@@ -184,14 +184,14 @@ export default function ServiceAnimalJaxxPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { statute: 'PAWS Act', code: '38 U.S.C. §1714', violation: 'Endangerment of veteran\'s service animal through environmental biohazard and retaliatory actions', severity: 'FEDERAL' },
-              { statute: 'ADA Title II', code: '28 C.F.R. §35.136', violation: 'Denial of service animal access + failure to accommodate psychiatric disability through JAXX', severity: 'FEDERAL' },
-              { statute: 'Fair Housing Act', code: '42 U.S.C. §3604(f)(3)(B)', violation: 'Refusal to make reasonable accommodation for service animal; discriminatory eviction practices', severity: 'FEDERAL' },
-              { statute: '18 U.S.C. §242', code: 'Rights Deprivation Under Color of Law', violation: 'Travis AFB deployment on fabricated charges to separate veteran from service animal', severity: 'FEDERAL CRIMINAL' },
-              { statute: 'CA Civil Code §54.1', code: 'Unruh Civil Rights Act', violation: 'Denial of equal access for service animal handler; forced displacement from accessible unit', severity: 'STATE' },
-              { statute: 'CA Penal Code §600.2', code: 'CA PC §600.2(a)', violation: 'Endangerment of service animal through chemical exposure and biohazard neglect — JAXX skin irritation documented', severity: 'STATE CRIMINAL' },
-              { statute: '38 C.F.R. §14.632', code: 'VA Fiduciary Duties', violation: 'STP holds VA Power of Attorney for Gillson while simultaneously filing eviction + endangering JAXX', severity: 'FEDERAL' },
-              { statute: 'CA Civil Code §1942.5', code: 'Retaliatory Eviction', violation: 'Travis AFB deployment + eviction filing in direct retaliation for requesting JAXX and disability accommodations', severity: 'STATE' },
+              { statute: 'PAWS Act', code: '38 U.S.C. 1714', violation: 'Endangerment of veteran\'s service animal through environmental biohazard and retaliatory actions', severity: 'FEDERAL' },
+              { statute: 'ADA Title II', code: '28 C.F.R. 35.136', violation: 'Denial of service animal access + failure to accommodate psychiatric disability through JAXX', severity: 'FEDERAL' },
+              { statute: 'Fair Housing Act', code: '42 U.S.C. 3604(f)(3)(B)', violation: 'Refusal to make reasonable accommodation for service animal; discriminatory eviction practices', severity: 'FEDERAL' },
+              { statute: '18 U.S.C. 242', code: 'Rights Deprivation Under Color of Law', violation: 'Travis AFB deployment on fabricated charges to separate veteran from service animal', severity: 'FEDERAL CRIMINAL' },
+              { statute: 'CA Civil Code 54.1', code: 'Unruh Civil Rights Act', violation: 'Denial of equal access for service animal handler; forced displacement from accessible unit', severity: 'STATE' },
+              { statute: 'CA Penal Code 600.2', code: 'CA PC 600.2(a)', violation: 'Endangerment of service animal through chemical exposure and biohazard neglect — JAXX skin irritation documented', severity: 'STATE CRIMINAL' },
+              { statute: '38 C.F.R. 14.632', code: 'VA Fiduciary Duties', violation: 'STP holds VA Power of Attorney for Gillson while simultaneously filing eviction + endangering JAXX', severity: 'FEDERAL' },
+              { statute: 'CA Civil Code 1942.5', code: 'Retaliatory Eviction', violation: 'Travis AFB deployment + eviction filing in direct retaliation for requesting JAXX and disability accommodations', severity: 'STATE' },
             ].map((item, i) => (
               <div key={i} className="bg-red-900/20 border border-red-800 rounded p-4">
                 <div className="flex items-center justify-between mb-1">
@@ -227,13 +227,13 @@ export default function ServiceAnimalJaxxPage() {
           <h2 className="text-xl font-bold text-blue-400 mb-4">Federal Investigation Status — JAXX Endangerment</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {[
-              { agency: 'HHS-OCR', case: 'Case #25-621293', contact: 'Amy Horrell', status: 'ACTIVE', color: 'emerald' },
-              { agency: 'SF-HRC / CCRD', case: 'Ref: 202601-33270627', contact: 'Anna Moraga Archila', status: 'ACTIVE', color: 'emerald' },
-              { agency: 'HUD-OIG', case: 'Fraud/Retaliation Referral', contact: 'Office of Inspector General', status: 'INTAKE PENDING', color: 'amber' },
+              { agency: 'HHS-OCR', caseNum: 'Case #25-621293', contact: 'Amy Horrell', status: 'ACTIVE', color: 'emerald' },
+              { agency: 'SF-HRC / CCRD', caseNum: 'Ref: 202601-33270627', contact: 'Anna Moraga Archila', status: 'ACTIVE', color: 'emerald' },
+              { agency: 'HUD-OIG', caseNum: 'Fraud/Retaliation Referral', contact: 'Office of Inspector General', status: 'INTAKE PENDING', color: 'amber' },
             ].map((inv, i) => (
               <div key={i} className={`bg-${inv.color}-900/20 border border-${inv.color}-800 rounded p-4`}>
                 <p className={`font-bold text-${inv.color}-400 mb-1`}>{inv.agency}</p>
-                <p className="text-sm text-zinc-300">{inv.case}</p>
+                <p className="text-sm text-zinc-300">{inv.caseNum}</p>
                 <p className="text-xs text-zinc-400">{inv.contact}</p>
                 <p className={`text-xs font-bold text-${inv.color}-400 mt-2`}>STATUS: {inv.status}</p>
               </div>
