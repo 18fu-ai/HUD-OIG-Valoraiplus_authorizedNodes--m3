@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -19,32 +21,47 @@ import {
   Wallet, Landmark, Building2, DollarSign, Database, Infinity, Briefcase,
   BookOpen, Cpu, Fingerprint, GitBranch,
   Film, Compass, Globe, MonitorPlay,
-  ChevronDown, Send
+  ChevronDown, Send, AlertTriangle, ExternalLink, CheckCircle, Camera
 } from 'lucide-react';
 
-// Complete Quick Links Registry
+// Complete Quick Links Registry — DEPT 12 SUPREME PRIORITY
 const QUICK_LINKS = {
+  dept12: {
+    label: 'DEPT 12',
+    icon: Gavel,
+    color: 'text-red-500',
+    items: [
+      { name: 'HANDSHAKE',       href: '/judicial-handshake',          icon: CheckCircle,   description: 'Dept 12 Live Handshake' },
+      { name: 'ACTIVE CASE',     href: '/dept12-case',                 icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
+      { name: 'SMOKING GUN',     href: '/smoking-gun-exhibit',         icon: Camera,        description: 'Physical Exhibit — 3 Photos' },
+      { name: 'FED CONFLICT',    href: '/federal-conflict',            icon: Scale,         description: 'Swords to Plowshares COI' },
+      { name: 'D12 SIMULATION',  href: '/dept12-simulation',           icon: Activity,      description: 'Evidence Processing Simulation' },
+      { name: 'GMAIL EVIDENCE',  href: '/gmail-evidence',              icon: Mail,          description: '7 Sent Emails — May 15, 2026' },
+      { name: 'HHS-OCR',         href: '/hhs-ocr-update',              icon: Mail,          description: 'Case #25-621293 Fed Update' },
+      { name: 'SURVEILLANCE',    href: '/surveillance-evidence',       icon: Camera,        description: 'Unit 301A — Hallway Camera Docs' },
+      { name: 'COURT HUB',      href: '/dept12',                      icon: Gavel,         description: 'SF Superior Court Hub' },
+      { name: 'BRIEFING',       href: '/dept12-briefing',             icon: Shield,        description: 'Federal Brief' },
+      { name: 'SUPREME REPORT', href: '/supreme-intelligence-report', icon: FileSearch,    description: '30-Page Intel PDF' },
+      { name: 'COMPLIANCE',     href: '/compliance-intelligence',     icon: Scale,         description: 'HHS OCR / CCRA / Mimecast' },
+      { name: 'MIMECAST',       href: '/mimecast',                    icon: Mail,          description: '284K Emails / SMTP 550 Blockade' },
+      { name: 'CLAWBACK',       href: '/clawback',                    icon: Gavel,         description: '$11.487B Recovery Matrix' },
+      { name: 'VELOCITY',       href: '/velocity-doctrine',           icon: Zap,           description: '550 Doctrine' },
+      { name: 'TIMELINE',       href: '/timeline',                    icon: Clock,         description: '2,207+ Days Documented' },
+    ]
+  },
   portals: {
     label: 'Portals',
     icon: Home,
     color: 'text-cyan-400',
     items: [
-      { name: 'OMEGA RECOVERY', href: '/', icon: Home, description: 'Main System Entry' },
-      { name: 'UPLINK', href: '/uplink', icon: Zap, description: 'Millennium Σ-Integration' },
-      { name: 'PORTHOLE HUD', href: '/porthole-hud', icon: MonitorPlay, description: 'Real-Time HUD' },
-      { name: 'PORTHOLE', href: '/porthole', icon: Eye, description: 'Sovereign Portal' },
-      { name: 'MAINFRAME', href: '/mainframe', icon: Server, description: '14D Core' },
-      { name: 'PROD HUB', href: '/production-hub', icon: Server, description: 'Production Node' },
-      { name: 'TERMINAL HUD', href: '/terminal-hud', icon: Terminal, description: 'Command Terminal' },
-      { name: 'NEXUS', href: '/nexus', icon: Network, description: 'Neural Hub' },
-      { name: 'GATE', href: '/gate', icon: Lock, description: 'Access Control' },
-      { name: 'FORT', href: '/fort', icon: Shield, description: 'Defense Systems' },
-      { name: 'CYBER PIPELINE', href: '/cybersecurity-pipeline', icon: Lock, description: 'Security Audit' },
-      { name: 'APEX', href: '/apex', icon: Crown, description: 'Apex Control' },
-      { name: 'OMNIBUS', href: '/omnibus', icon: Activity, description: 'Omnibus Intel' },
-      { name: 'OMEGA-9B', href: '/omega-9b', icon: Cpu, description: 'Millennium Kernel' },
-      { name: 'OMEGA LAUNCH', href: '/omega-launch', icon: Zap, description: 'TX Verification' },
-      { name: 'TOTALITY', href: '/totality-explorer', icon: Infinity, description: 'System Explorer' },
+      { name: 'OMEGA RECOVERY', href: '/',                       icon: Home,        description: 'Main System Entry' },
+      { name: 'PORTHOLE HUD',   href: '/porthole-hud',           icon: MonitorPlay, description: 'Real-Time HUD' },
+      { name: 'MAINFRAME',      href: '/mainframe',              icon: Server,      description: '14D Core' },
+      { name: 'NEXUS',          href: '/nexus',                  icon: Network,     description: 'Neural Hub' },
+      { name: 'GATE',           href: '/gate',                   icon: Lock,        description: 'Access Control' },
+      { name: 'APEX',           href: '/apex',                   icon: Crown,       description: 'Apex Control' },
+      { name: 'OMEGA LAUNCH',   href: '/omega-launch',           icon: Zap,         description: 'TX Verification' },
+      { name: 'TOTALITY',       href: '/totality-explorer',      icon: Infinity,    description: 'System Explorer' },
     ]
   },
   intelligence: {
@@ -52,37 +69,10 @@ const QUICK_LINKS = {
     icon: Brain,
     color: 'text-amber-400',
     items: [
-      { name: 'REALTIME INTEL', href: '/realtime-intelligence', icon: Activity, description: 'Live Feed' },
-      { name: 'INTEL REPORT', href: '/intelligence-report', icon: FileSearch, description: 'Full Dossier' },
-      { name: 'INTEL DOWNLOAD', href: '/intelligence/download', icon: Database, description: 'Evidence Package' },
-      { name: 'INTEL HUB', href: '/intelligence', icon: Brain, description: 'Central Intel' },
-      { name: 'FORENSIC FEED', href: '/forensic-feed', icon: Radio, description: 'Live Data' },
-      { name: 'ARCHITECTURE', href: '/forensic-architecture', icon: Layers, description: 'System Map' },
-      { name: 'NARRATIVE', href: '/narrative-report', icon: FileSearch, description: 'Full Report' },
-      { name: 'MIMECAST', href: '/mimecast', icon: Mail, description: '284K Emails' },
-      { name: 'EVIDENCE MAP', href: '/terminal-evidence-map', icon: Map, description: 'Mapping' },
-      { name: 'PROJECTION', href: '/terminal-projection', icon: TrendingUp, description: 'Outcomes' },
-    ]
-  },
-  legal: {
-    label: 'Legal',
-    icon: Gavel,
-    color: 'text-red-400',
-    items: [
-      { name: 'CLAWBACK', href: '/clawback', icon: Gavel, description: '$11.487B Recovery' },
-      { name: 'VELOCITY', href: '/velocity-doctrine', icon: Zap, description: '550 Doctrine' },
-      { name: 'INVARIANTS', href: '/invariants', icon: Lock, description: 'Math Proofs' },
-      { name: 'AUDIT', href: '/audit', icon: FileSearch, description: 'Full Log' },
-      { name: 'AUTH AUDIT', href: '/auth-audit', icon: Fingerprint, description: 'User Query' },
-      { name: 'AUTH MATRIX', href: '/auth-matrix', icon: Shield, description: 'Transfer Auth' },
-      { name: 'NULLIFIER', href: '/nullifier', icon: XCircle, description: 'Debt Null' },
-      { name: 'CONTRACT', href: '/contract', icon: FileCode, description: 'Smart Contracts' },
-      { name: 'CONTRACT CHAT', href: '/contract/chat', icon: Terminal, description: 'AI Contract Chat' },
-      { name: 'DEPLOY', href: '/contract-deploy', icon: Zap, description: 'Testnet Deploy' },
-      { name: 'REPUTATION', href: '/reputation', icon: Crown, description: 'Credit Standing' },
-      { name: 'POLICY', href: '/policy-engine', icon: Settings, description: 'Enforcement' },
-      { name: 'EVALUATIVE', href: '/evaluative', icon: Scale, description: 'Damages' },
-      { name: 'MATURITY', href: '/maturity', icon: Clock, description: 'Claim Status' },
+      { name: 'REALTIME INTEL', href: '/realtime-intelligence',  icon: Activity,   description: 'Live Feed' },
+      { name: 'INTEL REPORT',   href: '/intelligence-report',    icon: FileSearch, description: 'Full Dossier' },
+      { name: 'FORENSIC FEED',  href: '/forensic-feed',          icon: Radio,      description: 'Live Data' },
+      { name: 'EVIDENCE MAP',   href: '/terminal-evidence-map',  icon: Map,        description: 'Mapping' },
     ]
   },
   financial: {
@@ -90,51 +80,10 @@ const QUICK_LINKS = {
     icon: Wallet,
     color: 'text-green-400',
     items: [
-      { name: 'ACCOUNT 8185', href: '/account-8185', icon: Landmark, description: 'Primary Schwab' },
-      { name: 'TREASURY V50', href: '/treasury-v50', icon: Landmark, description: 'v50 System' },
-      { name: 'TREASURY', href: '/treasury', icon: Wallet, description: 'Assets' },
-      { name: 'DIRECT TRANSFER', href: '/test-deposit', icon: Send, description: 'Fund Transfer' },
-      { name: 'BANKING', href: '/banking-confidence', icon: Building2, description: 'Analysis' },
-      { name: 'VALUATION', href: '/valuation', icon: TrendingUp, description: '$1.12Q IP' },
-      { name: 'TOKEN REG', href: '/token-registry', icon: Database, description: '56 Tokens' },
-      { name: 'TOKEN', href: '/token', icon: DollarSign, description: 'Management' },
-      { name: 'MINT', href: '/mint', icon: Zap, description: 'Minting' },
-      { name: 'PERPETUAL', href: '/perpetual', icon: Infinity, description: 'Systems' },
-      { name: 'INVESTOR', href: '/investor', icon: Briefcase, description: 'Portal' },
-    ]
-  },
-  docs: {
-    label: 'Docs',
-    icon: BookOpen,
-    color: 'text-blue-400',
-    items: [
-      { name: 'WHITEPAPER', href: '/whitepaper', icon: BookOpen, description: 'System Doc' },
-      { name: 'API DOCS', href: '/api-docs', icon: FileCode, description: 'API Reference' },
-      { name: 'PROTOCOL', href: '/protocol', icon: GitBranch, description: 'REV_40 Spec' },
-      { name: 'KERNEL', href: '/kernel', icon: Cpu, description: 'N.E.W.T. Core' },
-      { name: 'STACK', href: '/stack', icon: Layers, description: 'Tech Stack' },
-      { name: 'IDENTITY', href: '/identity', icon: Fingerprint, description: 'ID Systems' },
-      { name: 'SECURITY', href: '/security', icon: Shield, description: 'Protocols' },
-      { name: 'ARCHITECTURE', href: '/architecture', icon: Layers, description: 'System Design' },
-      { name: 'REPORT', href: '/report', icon: FileSearch, description: 'Formal Report' },
-    ]
-  },
-  operations: {
-    label: 'Ops',
-    icon: Activity,
-    color: 'text-purple-400',
-    items: [
-      { name: 'DEPT 12', href: '/dept12-briefing', icon: Shield, description: 'Federal Brief' },
-      { name: 'DEPT 12 HUB', href: '/dept12', icon: Gavel, description: 'Court Hub' },
-      { name: 'CUD-26-682107', href: '/dept12-case', icon: FileSearch, description: 'Active Case Intel' },
-      { name: 'SUPREME REPORT', href: '/supreme-intelligence-report', icon: FileSearch, description: 'Intelligence PDF' },
-      { name: 'COMPLIANCE', href: '/compliance-intelligence', icon: Scale, description: 'HHS/CCRA/Mimecast' },
-      { name: 'STATUS', href: '/status', icon: Activity, description: 'System Status' },
-      { name: 'TRAFFIC', href: '/traffic', icon: Activity, description: 'Network' },
-      { name: 'TRAFFIC HUB', href: '/traffic-hub', icon: Globe, description: 'Totality Terminal' },
-      { name: 'TRANSMIT', href: '/transmit', icon: Radio, description: 'Broadcast' },
-      { name: 'AUTOMATION', href: '/automation', icon: Cpu, description: 'Auto Systems' },
-      { name: 'TIMELINE', href: '/timeline', icon: Clock, description: '2,207+ Days' },
+      { name: 'ACCOUNT 8185',    href: '/account-8185',          icon: Landmark,   description: 'Primary Schwab' },
+      { name: 'TREASURY',        href: '/treasury',              icon: Wallet,     description: 'Assets' },
+      { name: 'VALUATION',       href: '/valuation',             icon: TrendingUp, description: '$1.12Q IP' },
+      { name: 'MINT',            href: '/mint',                  icon: Zap,        description: 'Minting' },
     ]
   },
   ai: {
@@ -142,32 +91,10 @@ const QUICK_LINKS = {
     icon: Brain,
     color: 'text-pink-400',
     items: [
-      { name: 'NEWT', href: '/newt', icon: Brain, description: 'N.E.W.T. Core' },
-      { name: 'NEWT CHAT', href: '/newt/chat', icon: Terminal, description: 'Chat Interface' },
-      { name: 'BRAINDISH', href: '/braindish', icon: Cpu, description: 'Neural Proc' },
-      { name: 'VALORAI+', href: '/valoraiplus', icon: Zap, description: 'Sovereign AI' },
-      { name: 'SUPREME', href: '/valoraiplus-supreme', icon: Zap, description: '14D Unified Core' },
-      { name: 'OMEGA DASH', href: '/valoraiplus-omega', icon: Wallet, description: 'Treasury Dashboard' },
-      { name: 'OMEGA ZERO', href: '/omega-zero', icon: Infinity, description: 'Protocol' },
-      { name: 'TRINITY', href: '/trinity', icon: Shield, description: 'Unified' },
-      { name: '5151', href: '/5151', icon: Network, description: 'Port Unison' },
-    ]
-  },
-  media: {
-    label: 'Media',
-    icon: Film,
-    color: 'text-orange-400',
-    items: [
-      { name: 'CINEMA', href: '/cinema', icon: Film, description: 'Evidence Cinema' },
-      { name: 'JERRY', href: '/jerry', icon: MonitorPlay, description: 'Interface' },
-      { name: 'VOYAGER', href: '/voyager', icon: Compass, description: 'Navigator' },
-      { name: 'PATRIOT', href: '/patriot', icon: Shield, description: 'Memorial' },
-      { name: 'UHI', href: '/uhi', icon: Globe, description: 'Health Index' },
-      { name: 'ROUTE 66', href: '/route66', icon: Compass, description: 'Legacy Route' },
-      { name: 'ROUTE 69', href: '/route69', icon: Compass, description: 'Recovery' },
-      { name: 'ROUTE 70', href: '/route70', icon: Compass, description: 'Enforcement' },
-      { name: 'ROUTE 71', href: '/route71', icon: Compass, description: 'Standby' },
-      { name: 'ROUTE 81', href: '/route81', icon: Compass, description: 'Extended' },
+      { name: 'NEWT',            href: '/newt',                  icon: Brain,      description: 'N.E.W.T. Core' },
+      { name: 'VALORAI+',        href: '/valoraiplus',           icon: Zap,        description: 'Sovereign AI' },
+      { name: 'OMEGA DASH',      href: '/valoraiplus-omega',     icon: Wallet,     description: 'Treasury Dashboard' },
+      { name: 'TRINITY',         href: '/trinity',               icon: Shield,     description: 'Unified' },
     ]
   },
 };
@@ -180,19 +107,17 @@ export function GlobalNav() {
       <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         {/* Logo/Brand */}
         <Link href="/" className="flex items-center gap-2 mr-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-600 rounded-xl flex items-center justify-center text-black font-black text-lg shadow-[0_0_20px_#f59e0b55] flex-shrink-0">
+          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-700 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-[0_0_20px_#ef444455] flex-shrink-0">
             V
           </div>
           <div className="hidden sm:block">
             <div className="flex items-center gap-1 leading-none">
-              <span className="font-bold text-amber-400 text-sm">ValorAiPlus_</span>
+              <span className="font-bold text-slate-200 text-sm">ValorAiPlus_</span>
               <span className="text-zinc-600 text-xs">|</span>
-              <span className="font-bold text-amber-400 text-sm hidden md:inline">ValorAiPlus2e_</span>
-              <span className="text-zinc-600 text-xs hidden md:inline">|</span>
-              <span className="font-bold text-amber-400 text-sm hidden lg:inline">ValorAiPlus3e_</span>
+              <span className="font-black text-red-500 text-sm tracking-tighter hidden md:inline">DEPT 12</span>
             </div>
-            <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1">
-              OMEGA v2.4 &bull; NODE 2207 &bull; <span className="text-white">&#127482;&#127480;</span>
+            <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1 uppercase">
+              NODE 2207 &bull; AUTHORIZED &bull; <span className="text-white">US</span>
             </div>
           </div>
         </Link>
@@ -202,17 +127,45 @@ export function GlobalNav() {
           <NavigationMenuList>
             {Object.entries(QUICK_LINKS).map(([key, category]) => {
               const CategoryIcon = category.icon;
+              const isDept12 = key === 'dept12';
               return (
                 <NavigationMenuItem key={key}>
                   <NavigationMenuTrigger className={cn(
-                    "bg-transparent hover:bg-zinc-900 data-[state=open]:bg-zinc-900",
-                    category.color
+                    "bg-transparent data-[state=open]:bg-zinc-900 transition-colors",
+                    isDept12
+                      ? "hover:bg-red-950/40 data-[state=open]:bg-red-950/40 text-red-500 font-black border border-red-900 rounded-md px-3"
+                      : `hover:bg-zinc-900 ${category.color}`
                   )}>
+                    {isDept12 && (
+                      <span className="relative flex h-2 w-2 mr-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                      </span>
+                    )}
                     <CategoryIcon className="w-4 h-4 mr-1" />
                     {category.label}
+                    {isDept12 && (
+                      <span className="ml-2 text-[9px] bg-red-500 text-white font-black px-1.5 py-0.5 rounded tracking-widest">
+                        ACTIVE
+                      </span>
+                    )}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-1 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-zinc-950 border-zinc-800">
+                    <ul className={cn(
+                      "grid gap-1 p-2 bg-zinc-950",
+                      isDept12
+                        ? "w-[420px] md:w-[560px] md:grid-cols-2 border-2 border-red-900 rounded-lg shadow-[0_0_30px_-10px_#ef4444]"
+                        : "w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px] border-zinc-800"
+                    )}>
+                      {isDept12 && (
+                        <li className="col-span-2 mb-1">
+                          <div className="bg-red-950/50 border border-red-800 rounded-md px-4 py-3">
+                            <p className="text-red-500 font-black text-xs tracking-widest flex items-center gap-2">DEPARTMENT 12 — ACTIVE LITIGATION</p>
+                            <p className="text-zinc-400 text-[10px] font-mono mt-1">Case No. CUD-26-682107 &bull; SF Superior Court &bull; Access Code: 16535884</p>
+                            <p className="text-zinc-500 text-[9px] font-mono uppercase tracking-tighter mt-0.5">Signatory Fraud &amp; Surveillance Evidence Portal Activated</p>
+                          </div>
+                        </li>
+                      )}
                       {category.items.map((item) => {
                         const ItemIcon = item.icon;
                         const isActive = pathname === item.href;
@@ -224,14 +177,15 @@ export function GlobalNav() {
                                 className={cn(
                                   "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors",
                                   "hover:bg-zinc-800 hover:text-white focus:bg-zinc-800",
+                                  isDept12 && "hover:bg-red-900/40 border border-transparent hover:border-red-800",
                                   isActive ? "bg-zinc-800 text-white" : "text-zinc-400"
                                 )}
                               >
                                 <div className="flex items-center gap-2">
                                   <ItemIcon className={cn("w-4 h-4", category.color)} />
-                                  <div className="text-sm font-medium leading-none">{item.name}</div>
+                                  <div className="text-sm font-bold leading-none uppercase tracking-tighter">{item.name}</div>
                                 </div>
-                                <p className="line-clamp-1 text-xs leading-snug text-zinc-500 mt-1">
+                                <p className="line-clamp-1 text-[10px] text-zinc-500 mt-1 uppercase font-mono italic">
                                   {item.description}
                                 </p>
                               </Link>
@@ -247,32 +201,24 @@ export function GlobalNav() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile Menu Button */}
-        <div className="flex lg:hidden ml-auto">
-          <MobileNav />
-        </div>
-
-        {/* PORT.HOLE CTA */}
-        <div className="hidden lg:flex items-center ml-4">
+        {/* Global Action HUD */}
+        <div className="flex items-center ml-auto gap-3">
+          <div className="hidden xl:flex items-center gap-3 text-[10px] font-mono text-zinc-500 border-x border-zinc-800 px-4">
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+              <span className="text-emerald-500">HANDSHAKE_LIVE</span>
+            </div>
+            <span className="text-zinc-700">|</span>
+            <span>ST. PAUL ANCHOR</span>
+          </div>
           <Link
-            href="/porthole-hud"
-            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-bold px-4 py-1.5 rounded-lg text-xs tracking-widest transition-all shadow-[0_0_20px_-4px_#f59e0b]"
+            href="/dept12-case"
+            className="hidden lg:inline-flex bg-gradient-to-r from-red-600 to-orange-700 hover:from-red-500 hover:to-orange-600 text-white font-black px-4 py-2 rounded-lg text-[10px] tracking-widest transition-all shadow-[0_0_20px_-4px_#ef4444]"
           >
-            <Lock className="w-3 h-3 mr-1.5 inline" />
-            PORT.HOLE
+            LITIGATION HUD
           </Link>
-        </div>
-
-        {/* Right side status */}
-        <div className="hidden lg:flex items-center gap-4 ml-auto">
-          <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="text-green-400">BLOCK #42,069,111</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-zinc-400">ST. PAUL ANCHOR</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-amber-400">100D LIVE</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-emerald-400">N.E.W.T. v8.0</span>
+          <div className="flex lg:hidden">
+            <MobileNav />
           </div>
         </div>
       </div>
@@ -304,11 +250,30 @@ function MobileNav() {
           <div className="absolute right-0 top-full mt-2 w-[90vw] max-w-md bg-zinc-950 border border-zinc-800 rounded-lg shadow-xl z-50 max-h-[80vh] overflow-y-auto">
             {Object.entries(QUICK_LINKS).map(([key, category]) => {
               const CategoryIcon = category.icon;
+              const isDept12 = key === 'dept12';
               return (
-                <div key={key} className="border-b border-zinc-800 last:border-b-0">
-                  <div className={cn("px-4 py-2 flex items-center gap-2 bg-zinc-900", category.color)}>
+                <div key={key} className={cn(
+                  "border-b last:border-b-0",
+                  isDept12 ? "border-red-900 bg-red-950/20" : "border-zinc-800"
+                )}>
+                  <div className={cn(
+                    "px-4 py-2 flex items-center gap-2",
+                    isDept12 ? "bg-red-950/40" : "bg-zinc-900",
+                    category.color
+                  )}>
+                    {isDept12 && (
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                      </span>
+                    )}
                     <CategoryIcon className="w-4 h-4" />
                     <span className="font-semibold text-sm">{category.label}</span>
+                    {isDept12 && (
+                      <span className="ml-auto text-[9px] bg-red-500 text-white font-black px-1.5 py-0.5 rounded tracking-widest">
+                        ACTIVE
+                      </span>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-1 p-2">
                     {category.items.map((item) => {
@@ -322,6 +287,7 @@ function MobileNav() {
                           className={cn(
                             "flex items-center gap-2 px-3 py-2 rounded text-xs",
                             "hover:bg-zinc-800 transition-colors",
+                            isDept12 && "hover:bg-red-950/60",
                             isActive ? "bg-zinc-800 text-white" : "text-zinc-400"
                           )}
                         >
