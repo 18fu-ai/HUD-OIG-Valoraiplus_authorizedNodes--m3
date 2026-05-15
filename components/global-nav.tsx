@@ -33,6 +33,7 @@ const QUICK_LINKS = {
     items: [
       { name: 'HANDSHAKE',      href: '/judicial-handshake',          icon: CheckCircle,   description: 'Dept 12 Live Handshake' },
       { name: 'ACTIVE CASE',    href: '/dept12-case',                 icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
+      { name: 'GMAIL EVIDENCE', href: '/gmail-evidence',              icon: Mail,          description: '7 Sent Emails — May 15, 2026' },
       { name: 'HHS-OCR',        href: '/hhs-ocr-update',              icon: Mail,          description: 'Case #25-621293 Fed Update' },
       { name: 'SURVEILLANCE',   href: '/surveillance-evidence',       icon: Camera,        description: 'Unit 301A — Hallway Camera Docs' },
       { name: 'COURT HUB',      href: '/dept12',                      icon: Gavel,         description: 'SF Superior Court Hub' },
