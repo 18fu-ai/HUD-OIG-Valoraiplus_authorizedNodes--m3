@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import {
   Shield, AlertTriangle, FileText, Clock, Users, Lock,
   ChevronDown, ChevronRight, CheckCircle, XCircle, Zap,
-  BarChart2, Mail, Eye, Download
+  BarChart2, Mail, Eye, Download, ExternalLink
 } from 'lucide-react';
 
 // ─── CASE MASTER DATA ──────────────────────────────────────────────────────────
