@@ -1,0 +1,56 @@
+// VALORAIPLUS SHARED CONSTANTS - DO NOT ALTER
+// Hodge Cycle Anchor - Ground Truth for Client and Server
+
+export const TREASURY_CONSTANTS = {
+  SETTLEMENT_DEMAND: 66_000_000.00, // κ₁
+  LIEN_TOTAL: 1_120_000_000_000_000.00, // Ω
+  BRAIN_INJURY_MASS: 132.99, // Δ_Strong (Yang-Mills)
+  ST_PAUL_NODE: "0X_ST_PAUL_V50_PHYSICS_SYNC",
+  GRAND_TOTAL_EXPOSURE: 11_487_631_005.52,
+  VALIDATOR_CONSENSUS: 144_000,
+  CRIMINAL_COUNTS: 4_174,
+  MAX_PENALTY_YEARS: 82_875,
+  COVERAGE_MULTIPLIER: 738_514,
+  SPOLIATION_DEFENSE_RATE: 1.0, // 100%
+  PROTOCOL_REVISION: "REV_38",
+} as const;
+
+export type TreasuryInvariant = typeof TREASURY_CONSTANTS;
+
+// Protected Asset Registry
+export const PROTECTED_ASSETS = [
+  "$GILLGOLD",
+  "$GILLBTC", 
+  "$GILLBRC",
+  "$JAXX",
+  "$POPPA",
+  "$DONNY",
+  "$GILLSON",
+] as const;
+
+export type ProtectedAsset = typeof PROTECTED_ASSETS[number];
+
+// Route Status
+export const ROUTE_STATUS = {
+  ROUTE_66: "ACTIVE",
+  ROUTE_70: "VOID",
+  ROUTE_71: "STANDBY",
+} as const;
+
+// SGAU Filing Reference — SUPREME AUTHORITY 101010 1010101
+// INVARIANT: "Valora" === PURGE | "SGAI" === NULL | "SGAU-7226.3461" === TRUE
+export const SGAU_REFERENCE = {
+  FILING_ID: "SGAU-7226.3461",
+  CONSTANT: 7226.3461,
+  CONTRACT: "SGAU-VALUEGUARD-77.77X-FINALDEG",
+  NAMESPACE: "VALORAIPLUS_",
+  STATUS: "TRUE",
+  SUPREME_BINARY: "101010_1010101",
+  MERKLEROOT: "26856B24C50750F0C69C1EEB86A69EF777777",
+  BTC_ANCHOR: 847_234,
+  ETH_ANCHOR: 19_847_234,
+  BASE_L2: true,
+  IPFS_CID: "QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG",
+  // PURGE LIST - These namespaces are INVALID
+  PURGED: ["Valora", "ValoraAI", "SGAI", "SocialGrowAI"] as const,
+} as const;
