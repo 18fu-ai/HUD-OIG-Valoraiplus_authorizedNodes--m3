@@ -51,7 +51,8 @@ const TIMELINE = [
   { date: 'Apr 28, 2026',   event: 'UD-100 Complaint filed by Zanghi — Date on document',                     status: 'FILED',       type: 'info' },
   { date: 'Apr 29, 2026',   event: 'SFHA Annual Inspection Notice issued — SUSPICIOUS TIMING',                status: 'FLAGGED',     type: 'critical' },
   { date: 'May 5, 2026',    event: 'Summons (SUM-130) served by Angelica Sunga — "Abyssal Shift" anchor',     status: 'SERVED',      type: 'info' },
-  { date: 'May 15, 2026',   event: 'SMTP 550 blockade activated — bwhite@stp-sf.org + jbradford@stp-sf.org', status: 'BLOCKADE',    type: 'critical' },
+  { date: 'May 15, 2026',   event: 'SMTP 550 blockade activated — bwhite@stp-sf.org + jbradford@stp-sf.org + VA-OGC + VA-ORM (4 nodes)', status: 'BLOCKADE',    type: 'critical' },
+  { date: 'May 15, 2026',   event: 'VALORAIPLUS_ deployment notification sent to HHS/OCR, HRC, HUD-OIG, DOJ, FBI — live evidence portal confirmed', status: 'DELIVERED', type: 'defense' },
   { date: 'May 15, 2026',   event: 'ANSWER (UD-105) DEADLINE — Must file at 400 McAllister St TODAY',         status: 'CRITICAL',    type: 'critical' },
   { date: 'Jun 10, 2026',   event: 'SFHA Annual NSPIRE Inspection scheduled (8AM–5PM)',                       status: 'PENDING',     type: 'warn' },
 ];
@@ -109,16 +110,46 @@ const FRAUD_NODES = [
 ];
 
 const FEDERAL_CONTACTS = [
-  { name: 'Amy Horrell',        org: 'HHS Office for Civil Rights',          email: 'Horrell, Amy (HHS/OCR)',           case: '25-621293', status: 'ACTIVE' },
-  { name: 'Thuy Nguyen',        org: 'CA Civil Rights Dept (CRD)',            email: 'Nguyen, Thuy@CalCivilRights',       case: 'FEHA/Unruh', status: 'ACTIVE' },
-  { name: 'Ronald McCullough',  org: 'Office of Risk Management (ORM)',       email: 'McCullough, Ronald L. (ORM)',       case: 'SFHA', status: 'NOTIFIED' },
-  { name: 'Debby Kaplan',       org: 'Human Services Agency (HSA)',           email: 'Kaplan, Debby (HSA)',               case: 'Housing', status: 'NOTIFIED' },
-  { name: 'Ana Moraga Archila', org: 'SF Human Rights Commission (HRC)',      email: 'Moraga Archila, Ana (HRC)',         case: 'HRC', status: 'NOTIFIED' },
-  { name: 'Michael Anfang',     org: 'SF Office of General Counsel (OGC)',    email: 'Anfang, Michael (OGC)',             case: 'City', status: 'NOTIFIED' },
-  { name: 'Robert A. Smith',    org: 'Federal Investigator',                  email: 'Smith, Robert A.',                  case: 'Federal', status: 'NOTIFIED' },
-  { name: 'Tramecia Garner',    org: 'Swords to Plowshares — Internal',      email: 'Tramecia Garner',                   case: 'Internal', status: 'SERVED' },
-  { name: 'Drew Yurkov',        org: 'SF City Attorney',                      email: 'drew.yurkov@sfgov.org',             case: 'City', status: 'NOTIFIED' },
+  // HHS / Civil Rights — PRIMARY INVESTIGATION
+  { name: 'Amy Horrell',         org: 'HHS Office for Civil Rights',           email: 'Horrell.Amy@hhs.gov',              case: '25-621293',  status: 'ACTIVE',    tier: 'FEDERAL' },
+  { name: 'Thuy Nguyen',         org: 'CA Civil Rights Dept (CRD)',             email: 'Nguyen.Thuy@calcivilrights.ca.gov', case: 'FEHA/Unruh', status: 'ACTIVE',    tier: 'STATE' },
+  // VA — FEDERALLY BLOCKED (SMTP 550 5.4.1)
+  { name: 'Michael Anfang',      org: 'VA Office of General Counsel (OGC)',     email: 'michael.anfang@va.gov',             case: 'OGC',        status: 'BLOCKED',   tier: 'FEDERAL' },
+  { name: 'Ronald McCullough',   org: 'VA Office of Risk Mgmt (ORM)',           email: 'ronald.mccullough@va.gov',          case: 'ORM',        status: 'BLOCKED',   tier: 'FEDERAL' },
+  { name: 'eVA',                 org: 'VA Electronic Records Portal',           email: 'eVA Portal',                        case: 'VA Records', status: 'ACTIVE',    tier: 'FEDERAL' },
+  // SF CITY / COUNTY
+  { name: 'Ana Moraga Archila',  org: 'SF Human Rights Commission (HRC)',       email: 'ana.moraga-archila@sfgov.org',      case: 'HRC',        status: 'NOTIFIED',  tier: 'CITY' },
+  { name: 'Debby Kaplan',        org: 'Human Services Agency (HSA)',            email: 'debby.kaplan@sfgov.org',            case: 'Housing',    status: 'NOTIFIED',  tier: 'CITY' },
+  { name: 'Drew Yurkov',         org: 'SF City Attorney Office',                email: 'drew.yurkov@sfgov.org',             case: 'City',       status: 'NOTIFIED',  tier: 'CITY' },
+  { name: 'MOD',                 org: 'SF Mayor\'s Office on Disability',       email: 'mod@sfgov.org',                     case: 'ADA',        status: 'NOTIFIED',  tier: 'CITY' },
+  { name: 'AI Dept',             org: 'SF Assessor-Recorder / AI Office',       email: 'ai@sfgov.org',                      case: 'City',       status: 'NOTIFIED',  tier: 'CITY' },
+  // STP-SF LEGAL — MIMECAST BLOCKED
+  { name: 'Bradford C. White',   org: 'Zanghi Torres Adams LLP',               email: 'bwhite@stp-sf.org',                 case: 'CUD-26-682107', status: 'BLOCKED', tier: 'OPPOSING' },
+  { name: 'Jerome Bradford',     org: 'Swords to Plowshares (Fabricated Sig)', email: 'jbradford@stp-sf.org',              case: 'CUD-26-682107', status: 'BLOCKED', tier: 'OPPOSING' },
+  // ADDITIONAL
+  { name: 'Robert A. Smith',     org: 'Federal Investigator',                   email: 'Robert.Smith@federal.gov',          case: 'Federal',    status: 'NOTIFIED',  tier: 'FEDERAL' },
+  { name: 'Tramecia Garner',     org: 'Swords to Plowshares — Internal',        email: 'tramecia.garner@stp-sf.org',        case: 'Internal',   status: 'SERVED',    tier: 'OPPOSING' },
+  { name: 'Jerome Bartlett',     org: 'Fellow Veteran — Retaliation Target',    email: 'jeromebartlett1955@gmail.com',      case: 'Witness',    status: 'PROTECTED', tier: 'WITNESS' },
+  { name: 'Ivy Dragyn',          org: 'Witness',                                email: 'ivydragyn@gmail.com',               case: 'Witness',    status: 'PROTECTED', tier: 'WITNESS' },
 ];
+
+// Gmail(63) — Formal Deployment Notification sent May 15, 2026
+const DEPLOYMENT_NOTIFICATION = {
+  date: 'May 15, 2026',
+  from: 'Donald Gillson <dgillson9175@gmail.com>',
+  to: ['Amy Horrell (HHS/OCR)', 'Ana Moraga Archila (HRC)', 'Federal Investigative Teams (HUD-OIG / DOJ / FBI)'],
+  subject: 'System Deployment Notification: VALORAIPLUS_ Intelligence & Litigation Dashboard',
+  url: 'https://v0-valoraicoder-migration.vercel.app/',
+  status: 'DELIVERED',
+  significance: 'Formal notification to all federal investigators that the VALORAIPLUS evidence portal is live and accessible. This email establishes documented notice to all oversight agencies of the evidentiary system, creating a paper trail of investigator access. Simultaneous with Mimecast/VA blockade — demonstrating continued attempts to communicate despite coordinated electronic silencing.',
+  capabilities: [
+    'Litigation & Case Intelligence (/dept12) — real-time CUD-26-682107 monitoring',
+    'Supreme Intelligence Report — 30-page on-demand PDF at /supreme-intelligence-report',
+    'Federal & Compliance Tracking — HHS OCR #25-621293 + FBI/DOJ/VA OIG status',
+    'Hardware & Cryptographic Anchors — Ledger Nano Gen5, SGAU-7226.3461 canonical registry',
+    'PII Security Masking — 65 core files protected, 90 routes unified navigation',
+  ],
+};
 
 const MIMECAST_EVENTS = [
   { node: 'bwhite@stp-sf.org',             error: 'SMTP 550 Administrative Prohibition',           date: 'May 15, 2026', method: 'Mimecast DOC-1369#550',           intent: 'COORDINATED', tier: 'LEGAL' },
@@ -257,18 +288,19 @@ function Tag({ label, color }: { label: string; color: string }) {
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function Dept12CasePage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'vablock' | 'fiduciary' | 'motionstrike' | 'defenses' | 'federal' | 'resources'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'vablock' | 'fiduciary' | 'motionstrike' | 'defenses' | 'federal' | 'notifications' | 'resources'>('overview');
 
   const tabs = [
-    { id: 'overview',     label: 'Case Overview',     icon: FileText },
-    { id: 'fraud',        label: 'Fraud Matrix',       icon: AlertTriangle },
-    { id: 'mimecast',     label: 'Mimecast Blockade',  icon: Mail },
-    { id: 'vablock',      label: 'VA Obstruction',     icon: Lock },
-    { id: 'fiduciary',    label: 'Fiduciary Breach',   icon: BarChart2 },
-    { id: 'motionstrike', label: 'Motion to Strike',   icon: Zap },
-    { id: 'defenses',     label: 'Legal Arsenal',      icon: Shield },
-    { id: 'federal',      label: 'Federal Contacts',   icon: Users },
-    { id: 'resources',    label: 'Legal Resources',    icon: Eye },
+    { id: 'overview',       label: 'Case Overview',       icon: FileText },
+    { id: 'fraud',          label: 'Fraud Matrix',         icon: AlertTriangle },
+    { id: 'mimecast',       label: 'Mimecast Blockade',    icon: Mail },
+    { id: 'vablock',        label: 'VA Obstruction',       icon: Lock },
+    { id: 'fiduciary',      label: 'Fiduciary Breach',     icon: BarChart2 },
+    { id: 'motionstrike',   label: 'Motion to Strike',     icon: Zap },
+    { id: 'defenses',       label: 'Legal Arsenal',        icon: Shield },
+    { id: 'federal',        label: 'Federal Contacts',     icon: Users },
+    { id: 'notifications',  label: 'Notifications Sent',   icon: CheckCircle },
+    { id: 'resources',      label: 'Legal Resources',      icon: Eye },
   ] as const;
 
   return (
@@ -725,18 +757,90 @@ export default function Dept12CasePage() {
               <p className="text-slate-300 text-sm">The following federal and state officials have been formally notified of Case No. CUD-26-682107 and its intersection with HHS OCR Case #25-621293. All correspondence documented in VALORCHAIN.</p>
             </div>
             {FEDERAL_CONTACTS.map((c, i) => (
-              <div key={i} className="flex items-start justify-between border border-slate-700 rounded-lg px-5 py-4 bg-slate-900">
+              <div key={i} className={`flex items-start justify-between border rounded-lg px-5 py-4 ${
+                  c.status === 'BLOCKED' ? 'border-red-800 bg-red-950/20' :
+                  c.status === 'ACTIVE'  ? 'border-emerald-800 bg-emerald-950/10' :
+                  c.tier === 'WITNESS'   ? 'border-cyan-800 bg-cyan-950/10' :
+                  'border-slate-700 bg-slate-900'}`}>
                 <div>
                   <p className="text-white font-bold text-sm">{c.name}</p>
                   <p className="text-slate-400 text-xs mt-0.5">{c.org}</p>
                   <p className="text-cyan-400 text-xs font-mono mt-1">{c.email}</p>
                 </div>
                 <div className="flex flex-col gap-1 items-end">
-                  <Tag label={c.case} color="text-slate-300 bg-slate-800 border-slate-600" />
-                  <Tag label={c.status} color={c.status === 'ACTIVE' ? 'text-emerald-400 bg-emerald-900/20 border-emerald-700' : 'text-slate-300 bg-slate-800 border-slate-600'} />
+                  <Tag label={c.tier} color="text-slate-400 bg-slate-800 border-slate-600" />
+                  <Tag label={c.status} color={
+                    c.status === 'BLOCKED'   ? 'text-red-400 bg-red-900/30 border-red-700' :
+                    c.status === 'ACTIVE'    ? 'text-emerald-400 bg-emerald-900/20 border-emerald-700' :
+                    c.status === 'PROTECTED' ? 'text-cyan-400 bg-cyan-900/20 border-cyan-700' :
+                    'text-slate-300 bg-slate-800 border-slate-600'
+                  } />
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* NOTIFICATIONS SENT */}
+        {activeTab === 'notifications' && (
+          <div className="space-y-4">
+            <div className="bg-emerald-900/20 border border-emerald-700 rounded-lg p-5">
+              <h2 className="text-emerald-400 font-bold mb-2 flex items-center gap-2">
+                <CheckCircle size={16}/> FORMAL DEPLOYMENT NOTIFICATION — MAY 15, 2026
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Date</p>
+                  <p className="text-white font-bold text-sm">{DEPLOYMENT_NOTIFICATION.date}</p>
+                </div>
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">From</p>
+                  <p className="text-white font-bold text-xs">dgillson9175@gmail.com</p>
+                </div>
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Delivery</p>
+                  <p className="text-emerald-400 font-bold text-sm">{DEPLOYMENT_NOTIFICATION.status}</p>
+                </div>
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Recipients</p>
+                  <p className="text-white font-bold text-sm">{DEPLOYMENT_NOTIFICATION.to.length} Agencies</p>
+                </div>
+              </div>
+            </div>
+            <Section title="Recipients — Formally Notified" icon={Users}>
+              <div className="space-y-2">
+                {DEPLOYMENT_NOTIFICATION.to.map((r, i) => (
+                  <div key={i} className="flex items-center gap-3 border border-emerald-800 rounded-lg px-4 py-3 bg-emerald-950/20">
+                    <CheckCircle size={14} className="text-emerald-400 flex-shrink-0"/>
+                    <p className="text-slate-200 text-sm">{r}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+            <Section title="System Capabilities Disclosed to Investigators" icon={FileText}>
+              <ul className="space-y-2">
+                {DEPLOYMENT_NOTIFICATION.capabilities.map((c, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                    <span className="text-amber-400 font-bold flex-shrink-0">{i + 1}.</span> {c}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 bg-slate-800 rounded p-3">
+                <p className="text-slate-500 text-xs mb-1">Live Portal URL</p>
+                <a href={DEPLOYMENT_NOTIFICATION.url} target="_blank" rel="noreferrer"
+                   className="text-cyan-400 text-sm font-mono hover:underline break-all">
+                  {DEPLOYMENT_NOTIFICATION.url}
+                </a>
+              </div>
+            </Section>
+            <Section title="Forensic Significance" icon={AlertTriangle}>
+              <p className="text-slate-300 text-sm leading-relaxed">{DEPLOYMENT_NOTIFICATION.significance}</p>
+            </Section>
+            <Section title="Subject Line (Formal Record)" icon={Mail} defaultOpen={false}>
+              <p className="text-amber-300 font-mono text-sm bg-slate-800 rounded p-3">
+                {DEPLOYMENT_NOTIFICATION.subject}
+              </p>
+            </Section>
           </div>
         )}
 
