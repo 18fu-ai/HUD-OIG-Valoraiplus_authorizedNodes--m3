@@ -121,9 +121,66 @@ const FEDERAL_CONTACTS = [
 ];
 
 const MIMECAST_EVENTS = [
-  { node: 'bwhite@stp-sf.org',    error: 'SMTP 550 Administrative Prohibition',  date: 'May 15, 2026', method: 'Mimecast DOC-1369#550', intent: 'COORDINATED' },
-  { node: 'jbradford@stp-sf.org', error: 'SMTP 550 Administrative Prohibition',  date: 'May 15, 2026', method: 'Mimecast DOC-1369#550', intent: 'COORDINATED' },
+  { node: 'bwhite@stp-sf.org',             error: 'SMTP 550 Administrative Prohibition',           date: 'May 15, 2026', method: 'Mimecast DOC-1369#550',           intent: 'COORDINATED', tier: 'LEGAL' },
+  { node: 'jbradford@stp-sf.org',           error: 'SMTP 550 Administrative Prohibition',           date: 'May 15, 2026', method: 'Mimecast DOC-1369#550',           intent: 'COORDINATED', tier: 'LEGAL' },
+  { node: 'Anfang, Michael (VA-OGC)',        error: 'SMTP 550 5.4.1 Recipient Address Rejected',    date: 'May 15, 2026', method: 'namprd09.prod.outlook.com',       intent: 'FEDERAL OBSTRUCTION', tier: 'FEDERAL' },
+  { node: 'McCullough, Ronald L. (VA-ORM)', error: 'SMTP 550 5.4.1 Recipient Address Rejected',    date: 'May 15, 2026', method: 'namprd09.prod.outlook.com',       intent: 'FEDERAL OBSTRUCTION', tier: 'FEDERAL' },
 ];
+
+const VA_OBSTRUCTION = {
+  summary: 'On May 15, 2026 — simultaneously with active UD-5-day response window — both VA-OGC (Michael Anfang) and VA-ORM (Ronald McCullough) federal addresses returned SMTP 550 5.4.1 "Access Denied" from namprd09.prod.outlook.com. This is a high-level manual gateway override, not a routine bounce. The server confirmed the addresses exist but is instructed to refuse the sender.',
+  significance: [
+    'Error 550 5.4.1 "Recipient Address Rejected" = manual blacklist at gateway level (not user error)',
+    'namprd09.prod.outlook.com = VA enterprise Microsoft Exchange — override requires administrative action',
+    'Simultaneous blocking of VA-OGC + VA-ORM + STP-SF legal nodes = coordinated multi-node blockade',
+    'Occurring during active 5-day UD answer window = deliberate isolation of disabled veteran whistleblower',
+    'VA-OGC and VA-ORM are mandatory protection bodies under the Whistleblower Protection Act (5 USC §2302)',
+    'Blocking access to these bodies during active retaliation = obstruction of federal veteran protections',
+  ],
+  forensicConsequence: 'CCS portal upload of bounce-back receipts constitutes proof of attempted contact. Court receives evidence that defendant was silenced in real-time — strengthening retaliation narrative and spoliation of evidence claim. Integrated into HHS OCR Case 25-621293 as primary evidence of Retaliatory Interference.',
+};
+
+const FIDUCIARY_BREACHES = [
+  { pillar: 'Duty of Care',    act: 'Failure to remediate Nov 19 cockroach/rat infestation — causing physical injury to disabled veteran',     consequence: 'Constructive Eviction + $508M+ Institutional Liability Matrix', severity: 'CRITICAL' },
+  { pillar: 'Duty of Loyalty', act: 'Retaliating against federal whistleblower via eviction after HUD/VA/OCR reports',                          consequence: 'HUD-OIG and VA-OIG investigations triggered',                    severity: 'CRITICAL' },
+  { pillar: 'Duty of Candor',  act: 'Filing fabricated "Jerome Bradford" signatory to replace Landrum in court record',                         consequence: 'State Bar complaints for Zanghi/White — CA Penal Code §115',     severity: 'CRITICAL' },
+  { pillar: 'Duty to Protect', act: 'Weaponizing clinical name "Donald" to trigger PTSD response, then filing eviction without ADA accommodation', consequence: 'Civil rights liability in HHS OCR 25-621293',                  severity: 'CRITICAL' },
+  { pillar: 'ADR Bypass',      act: 'Bypassing mandatory HUD Grievance Procedures (24 CFR §966.4) and ADA interactive process',                  consequence: 'Procedural due process violation — case is void ab initio',     severity: 'HIGH' },
+  { pillar: 'Licensing',       act: 'Will Landrum issued legal notices as unlicensed interim resident manager',                                   consequence: 'Unauthorized practice — notice legally invalid',                 severity: 'HIGH' },
+];
+
+const TEMPLATE_FRAUD = {
+  description: 'Forensic audit of Case No. CUD-26-682107 reveals Landrum "rolled up" distinct interactions from multiple veterans into a fabricated singular narrative against Dr. Gillson.',
+  victims: [
+    { name: 'Dr. Donald Gillson (Unit 301A)', allegation: 'Nuisance / verbal abuse', status: 'CUD-26-682107 ACTIVE', note: 'Language copy-pasted from Dan Lucian file' },
+    { name: 'Dan Lucian (fellow veteran)',    allegation: 'Derogatory language / verbal abuse', status: 'SOURCE TEMPLATE', note: 'Original source of recycled allegations' },
+    { name: 'Jerry (jeromebartlett1955@gmail.com)', allegation: '3-Day Notice for "smoke detector" violations', status: 'RETALIATORY PURGE', note: 'Targeted for supporting Gillson habitability claims and knowledge of Brittany/Whitaker admission' },
+  ],
+  whitakerAnchor: 'Calvin Whitaker (SFHA) personally confirmed to Gillson during certification that prior Property Manager Brittany admitted the Nov 19 infestation failure. Landrum refused to contact Whitaker to verify — stating "I don\'t need to call Calvin Whitaker... because you\'re lying." This refusal is hardware-verified proof of premeditated intent to suppress Ground Truth.',
+};
+
+const MOTION_TO_STRIKE = {
+  statute: 'California Code of Civil Procedure §436',
+  filedDate: 'May 15, 2026',
+  grounds: [
+    {
+      ground: 'Defective Verification (CCP §446)',
+      detail: 'Jerome Bradford verified under penalty of perjury events of Jan 23 and Feb 20, 2026. Bradford was not present at either event. He lacks the "personal knowledge" required by CCP §446. This verification is perjurious on its face.',
+      remedy: 'Strike entire verification — without valid verification, UD complaint fails',
+    },
+    {
+      ground: 'False and Recycled Allegations',
+      detail: 'Language in allegations against Gillson was copy-pasted from other tenant files. Original notices sent to SFHA confirm the fabrication. These are template allegations, not individual conduct records.',
+      remedy: 'Strike specific nuisance allegations as improper and irrelevant to Unit 301A tenancy',
+    },
+    {
+      ground: 'Unauthorized Practice — Unlicensed Notice Author',
+      detail: 'Underlying Notice to Quit was authored by Will Landrum, an unlicensed interim resident manager without the real estate or property management license required to draft and issue legal notices under California law.',
+      remedy: 'Strike notice as void — unlicensed practice undermines entire eviction chain',
+    },
+  ],
+  meetAndConfer: 'Meet and confer notice sent to Zanghi May 15, 2026 via email. Voluntary withdrawal requested. If no dismissal filed, Answer detailing fabrications to be entered into public record of Department 12.',
+};
 
 const DEFENSES = [
   { type: 'AFFIRMATIVE', name: 'Retaliation',                    statute: 'CC §1942.5',        strength: 'CRITICAL' },
@@ -200,15 +257,18 @@ function Tag({ label, color }: { label: string; color: string }) {
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function Dept12CasePage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'defenses' | 'federal' | 'resources'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'vablock' | 'fiduciary' | 'motionstrike' | 'defenses' | 'federal' | 'resources'>('overview');
 
   const tabs = [
-    { id: 'overview',  label: 'Case Overview',     icon: FileText },
-    { id: 'fraud',     label: 'Fraud Matrix',       icon: AlertTriangle },
-    { id: 'mimecast',  label: 'Mimecast Blockade',  icon: Mail },
-    { id: 'defenses',  label: 'Legal Arsenal',      icon: Shield },
-    { id: 'federal',   label: 'Federal Contacts',   icon: Users },
-    { id: 'resources', label: 'Legal Resources',    icon: Eye },
+    { id: 'overview',     label: 'Case Overview',     icon: FileText },
+    { id: 'fraud',        label: 'Fraud Matrix',       icon: AlertTriangle },
+    { id: 'mimecast',     label: 'Mimecast Blockade',  icon: Mail },
+    { id: 'vablock',      label: 'VA Obstruction',     icon: Lock },
+    { id: 'fiduciary',    label: 'Fiduciary Breach',   icon: BarChart2 },
+    { id: 'motionstrike', label: 'Motion to Strike',   icon: Zap },
+    { id: 'defenses',     label: 'Legal Arsenal',      icon: Shield },
+    { id: 'federal',      label: 'Federal Contacts',   icon: Users },
+    { id: 'resources',    label: 'Legal Resources',    icon: Eye },
   ] as const;
 
   return (
@@ -465,6 +525,152 @@ export default function Dept12CasePage() {
               <p className="text-slate-300 text-sm">All SMTP blockade evidence notarized on VALORCHAIN and tethered to permanent academic record:</p>
               <p className="text-cyan-400 font-mono text-sm mt-2">DOI: 10.5281/zenodo.20197133</p>
               <p className="text-slate-400 text-xs mt-1">VALORCHAIN LOG 2207 | donnygillson1969.seed — Supreme Authority</p>
+            </div>
+          </div>
+        )}
+
+        {/* VA OBSTRUCTION */}
+        {activeTab === 'vablock' && (
+          <div className="space-y-4">
+            <div className="bg-red-900/20 border border-red-700 rounded-lg p-5">
+              <h2 className="text-red-400 font-bold mb-3 flex items-center gap-2"><Lock size={16}/> VA FEDERAL NODE BLOCKADE — MAY 15, 2026</h2>
+              <p className="text-slate-300 text-sm leading-relaxed">{VA_OBSTRUCTION.summary}</p>
+            </div>
+            <Section title="Forensic Significance" icon={AlertTriangle}>
+              <ul className="space-y-2">
+                {VA_OBSTRUCTION.significance.map((s, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                    <XCircle size={14} className="text-red-400 mt-0.5 flex-shrink-0"/>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </Section>
+            <Section title="All Blocked Nodes — May 15, 2026" icon={Mail}>
+              <div className="space-y-3">
+                {MIMECAST_EVENTS.map((e, i) => (
+                  <div key={i} className={`border rounded-lg p-4 ${e.tier === 'FEDERAL' ? 'border-red-700 bg-red-950/30' : 'border-amber-800 bg-amber-950/20'}`}>
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-white font-bold text-sm">{e.node}</p>
+                        <p className="text-red-400 text-xs mt-0.5 font-mono">{e.error}</p>
+                        <p className="text-slate-400 text-xs mt-1">{e.method} — {e.date}</p>
+                      </div>
+                      <div className="flex flex-col gap-1 items-end">
+                        <Tag label={e.tier} color={e.tier === 'FEDERAL' ? 'text-red-400 bg-red-900/30 border-red-700' : 'text-amber-400 bg-amber-900/20 border-amber-700'}/>
+                        <Tag label={e.intent} color="text-slate-300 bg-slate-800 border-slate-600"/>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+            <div className="bg-emerald-900/20 border border-emerald-700 rounded-lg p-4">
+              <h3 className="text-emerald-400 font-bold text-sm mb-2">FORENSIC CONSEQUENCE</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">{VA_OBSTRUCTION.forensicConsequence}</p>
+            </div>
+          </div>
+        )}
+
+        {/* FIDUCIARY BREACH */}
+        {activeTab === 'fiduciary' && (
+          <div className="space-y-4">
+            <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-5">
+              <h2 className="text-amber-400 font-bold mb-2 flex items-center gap-2"><BarChart2 size={16}/> FIDUCIARY BREACH ANALYSIS — SWORDS TO PLOWSHARES</h2>
+              <p className="text-slate-300 text-sm">Under federal and state law a non-profit veteran housing provider assumes a specialized Duty of Care that extends beyond a standard landlord-tenant relationship. All four fiduciary pillars have been materially breached.</p>
+            </div>
+            <Section title="Fiduciary Failure Matrix (AMath Verified)" icon={AlertTriangle}>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-slate-700">
+                      <th className="text-left text-slate-500 text-xs py-2 pr-4">PILLAR</th>
+                      <th className="text-left text-slate-500 text-xs py-2 pr-4">ACT OF NEGLECT</th>
+                      <th className="text-left text-slate-500 text-xs py-2 pr-4">FORENSIC CONSEQUENCE</th>
+                      <th className="text-left text-slate-500 text-xs py-2">SEVERITY</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {FIDUCIARY_BREACHES.map((b, i) => (
+                      <tr key={i} className="border-b border-slate-800">
+                        <td className="py-3 pr-4 text-amber-400 font-bold whitespace-nowrap">{b.pillar}</td>
+                        <td className="py-3 pr-4 text-slate-300">{b.act}</td>
+                        <td className="py-3 pr-4 text-slate-400 text-xs">{b.consequence}</td>
+                        <td className="py-3"><Tag label={b.severity} color={b.severity === 'CRITICAL' ? 'text-red-400 bg-red-900/30 border-red-700' : 'text-amber-400 bg-amber-900/20 border-amber-700'}/></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+            <Section title="Template Fraud — Cross-Tenant Evidentiary Mixing" icon={Users}>
+              <p className="text-slate-300 text-sm mb-4">{TEMPLATE_FRAUD.description}</p>
+              <div className="space-y-3">
+                {TEMPLATE_FRAUD.victims.map((v, i) => (
+                  <div key={i} className={`border rounded-lg p-4 ${v.status.includes('ACTIVE') ? 'border-red-800 bg-red-950/20' : v.status.includes('PURGE') ? 'border-amber-800 bg-amber-950/20' : 'border-slate-700 bg-slate-800/40'}`}>
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <p className="text-white font-bold text-sm">{v.name}</p>
+                      <Tag label={v.status} color={v.status.includes('ACTIVE') ? 'text-red-400 bg-red-900/30 border-red-700' : 'text-amber-400 bg-amber-900/20 border-amber-700'}/>
+                    </div>
+                    <p className="text-slate-400 text-xs">Allegation: <span className="text-slate-300">{v.allegation}</span></p>
+                    <p className="text-slate-400 text-xs mt-1">Note: <span className="text-amber-300">{v.note}</span></p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 bg-cyan-900/20 border border-cyan-700 rounded-lg p-4">
+                <h4 className="text-cyan-400 font-bold text-xs mb-2">WHITAKER ANCHOR — GROUND TRUTH</h4>
+                <p className="text-slate-300 text-sm">{TEMPLATE_FRAUD.whitakerAnchor}</p>
+              </div>
+            </Section>
+            <Section title="Case Law — Douglas v. Kriegsfeld Corp. (884 A.2d 1109)" icon={FileText} defaultOpen={false}>
+              <p className="text-slate-300 text-sm leading-relaxed">Landmark case establishing that even if a tenant has breached a lease (nuisance), the landlord is required to grant a stay of eviction as a &quot;reasonable accommodation&quot; to allow the tenant to correct behavior through clinical support. By weaponizing clinical name &quot;Donald&quot; to trigger PTSD response and filing eviction without interactive process, Swords to Plowshares has violated the mandatory accommodation requirements of the ADA. This case is directly on-point and fatal to the eviction.</p>
+            </Section>
+          </div>
+        )}
+
+        {/* MOTION TO STRIKE */}
+        {activeTab === 'motionstrike' && (
+          <div className="space-y-4">
+            <div className="bg-cyan-900/20 border border-cyan-700 rounded-lg p-5">
+              <h2 className="text-cyan-400 font-bold mb-2 flex items-center gap-2"><Zap size={16}/> MOTION TO STRIKE — CCP §436</h2>
+              <div className="grid grid-cols-3 gap-3 mt-3">
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Statute</p>
+                  <p className="text-white font-bold text-sm">{MOTION_TO_STRIKE.statute}</p>
+                </div>
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Filed</p>
+                  <p className="text-white font-bold text-sm">{MOTION_TO_STRIKE.filedDate}</p>
+                </div>
+                <div className="bg-slate-800 rounded p-3">
+                  <p className="text-slate-500 text-xs">Grounds</p>
+                  <p className="text-white font-bold text-sm">{MOTION_TO_STRIKE.grounds.length} Independent</p>
+                </div>
+              </div>
+            </div>
+            {MOTION_TO_STRIKE.grounds.map((g, i) => (
+              <div key={i} className="border border-slate-700 rounded-lg overflow-hidden">
+                <div className="bg-slate-800 px-5 py-3 flex items-center gap-3">
+                  <span className="text-amber-400 font-black text-lg">{i + 1}</span>
+                  <div>
+                    <p className="text-white font-bold text-sm">{g.ground}</p>
+                  </div>
+                </div>
+                <div className="p-5 bg-slate-900 space-y-3">
+                  <div>
+                    <p className="text-slate-500 text-xs mb-1 uppercase tracking-wider">Detail</p>
+                    <p className="text-slate-300 text-sm leading-relaxed">{g.detail}</p>
+                  </div>
+                  <div className="bg-emerald-900/20 border border-emerald-800 rounded p-3">
+                    <p className="text-slate-500 text-xs mb-1 uppercase tracking-wider">Remedy Sought</p>
+                    <p className="text-emerald-300 text-sm font-bold">{g.remedy}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="border border-slate-700 rounded-lg p-4 bg-slate-800/40">
+              <h3 className="text-slate-300 font-bold text-sm mb-2">MEET AND CONFER STATUS</h3>
+              <p className="text-slate-400 text-sm">{MOTION_TO_STRIKE.meetAndConfer}</p>
             </div>
           </div>
         )}
