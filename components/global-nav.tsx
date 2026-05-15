@@ -77,7 +77,9 @@ const QUICK_LINKS = {
       { name: 'AUTH MATRIX', href: '/auth-matrix', icon: Shield, description: 'Transfer Auth' },
       { name: 'NULLIFIER', href: '/nullifier', icon: XCircle, description: 'Debt Null' },
       { name: 'CONTRACT', href: '/contract', icon: FileCode, description: 'Smart Contracts' },
+      { name: 'CONTRACT CHAT', href: '/contract/chat', icon: Terminal, description: 'AI Contract Chat' },
       { name: 'DEPLOY', href: '/contract-deploy', icon: Zap, description: 'Testnet Deploy' },
+      { name: 'REPUTATION', href: '/reputation', icon: Crown, description: 'Credit Standing' },
       { name: 'POLICY', href: '/policy-engine', icon: Settings, description: 'Enforcement' },
       { name: 'EVALUATIVE', href: '/evaluative', icon: Scale, description: 'Damages' },
       { name: 'MATURITY', href: '/maturity', icon: Clock, description: 'Claim Status' },
@@ -113,6 +115,8 @@ const QUICK_LINKS = {
       { name: 'STACK', href: '/stack', icon: Layers, description: 'Tech Stack' },
       { name: 'IDENTITY', href: '/identity', icon: Fingerprint, description: 'ID Systems' },
       { name: 'SECURITY', href: '/security', icon: Shield, description: 'Protocols' },
+      { name: 'ARCHITECTURE', href: '/architecture', icon: Layers, description: 'System Design' },
+      { name: 'REPORT', href: '/report', icon: FileSearch, description: 'Formal Report' },
     ]
   },
   operations: {
@@ -121,6 +125,7 @@ const QUICK_LINKS = {
     color: 'text-purple-400',
     items: [
       { name: 'DEPT 12', href: '/dept12-briefing', icon: Shield, description: 'Federal Brief' },
+      { name: 'DEPT 12 HUB', href: '/dept12', icon: Gavel, description: 'Court Hub' },
       { name: 'COMPLIANCE', href: '/compliance-intelligence', icon: Scale, description: 'HHS/CCRA/Mimecast' },
       { name: 'STATUS', href: '/status', icon: Activity, description: 'System Status' },
       { name: 'TRAFFIC', href: '/traffic', icon: Activity, description: 'Network' },
@@ -159,6 +164,8 @@ const QUICK_LINKS = {
       { name: 'ROUTE 66', href: '/route66', icon: Compass, description: 'Legacy Route' },
       { name: 'ROUTE 69', href: '/route69', icon: Compass, description: 'Recovery' },
       { name: 'ROUTE 70', href: '/route70', icon: Compass, description: 'Enforcement' },
+      { name: 'ROUTE 71', href: '/route71', icon: Compass, description: 'Standby' },
+      { name: 'ROUTE 81', href: '/route81', icon: Compass, description: 'Extended' },
     ]
   },
 };
