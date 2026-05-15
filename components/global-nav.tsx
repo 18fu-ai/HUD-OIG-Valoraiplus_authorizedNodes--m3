@@ -126,6 +126,7 @@ const QUICK_LINKS = {
     items: [
       { name: 'DEPT 12', href: '/dept12-briefing', icon: Shield, description: 'Federal Brief' },
       { name: 'DEPT 12 HUB', href: '/dept12', icon: Gavel, description: 'Court Hub' },
+      { name: 'CUD-26-682107', href: '/dept12-case', icon: FileSearch, description: 'Active Case Intel' },
       { name: 'SUPREME REPORT', href: '/supreme-intelligence-report', icon: FileSearch, description: 'Intelligence PDF' },
       { name: 'COMPLIANCE', href: '/compliance-intelligence', icon: Scale, description: 'HHS/CCRA/Mimecast' },
       { name: 'STATUS', href: '/status', icon: Activity, description: 'System Status' },
