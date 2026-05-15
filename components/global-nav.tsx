@@ -29,7 +29,7 @@ const QUICK_LINKS = {
   dept12: {
     label: 'DEPT 12',
     icon: Gavel,
-    color: 'text-red-400',
+    color: 'text-red-500',
     items: [
       { name: 'HANDSHAKE',      href: '/judicial-handshake',          icon: CheckCircle,   description: 'Dept 12 Live Handshake' },
       { name: 'ACTIVE CASE',    href: '/dept12-case',                 icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
@@ -102,14 +102,14 @@ export function GlobalNav() {
       <div className="container flex h-14 max-w-screen-2xl items-center px-4">
         {/* Logo/Brand */}
         <Link href="/" className="flex items-center gap-2 mr-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-600 rounded-xl flex items-center justify-center text-black font-black text-lg shadow-[0_0_20px_#f59e0b55] flex-shrink-0">
+          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-orange-700 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-[0_0_20px_#ef444455] flex-shrink-0">
             V
           </div>
           <div className="hidden sm:block">
             <div className="flex items-center gap-1 leading-none">
-              <span className="font-bold text-amber-400 text-sm">ValorAiPlus_</span>
+              <span className="font-bold text-slate-200 text-sm">ValorAiPlus_</span>
               <span className="text-zinc-600 text-xs">|</span>
-              <span className="font-bold text-red-400 text-sm hidden md:inline">DEPT 12</span>
+              <span className="font-black text-red-500 text-sm tracking-tighter hidden md:inline">DEPT 12</span>
             </div>
             <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1 uppercase">
               NODE 2207 &bull; AUTHORIZED &bull; <span className="text-white">US</span>
@@ -128,7 +128,7 @@ export function GlobalNav() {
                   <NavigationMenuTrigger className={cn(
                     "bg-transparent data-[state=open]:bg-zinc-900 transition-colors",
                     isDept12
-                      ? "hover:bg-red-950 data-[state=open]:bg-red-950 text-red-400 font-bold border border-red-800 rounded-md px-3"
+                      ? "hover:bg-red-950/40 data-[state=open]:bg-red-950/40 text-red-500 font-black border border-red-900 rounded-md px-3"
                       : `hover:bg-zinc-900 ${category.color}`
                   )}>
                     {isDept12 && (
@@ -149,20 +149,15 @@ export function GlobalNav() {
                     <ul className={cn(
                       "grid gap-1 p-2 bg-zinc-950",
                       isDept12
-                        ? "w-[420px] md:w-[560px] md:grid-cols-2 border border-red-900 rounded-lg"
+                        ? "w-[420px] md:w-[560px] md:grid-cols-2 border-2 border-red-900 rounded-lg shadow-[0_0_30px_-10px_#ef4444]"
                         : "w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px] border-zinc-800"
                     )}>
                       {isDept12 && (
                         <li className="col-span-2 mb-1">
                           <div className="bg-red-950/50 border border-red-800 rounded-md px-4 py-3">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                              </span>
-                              <p className="text-red-400 font-black text-xs tracking-widest">DEPARTMENT 12 — ACTIVE LITIGATION</p>
-                            </div>
-                            <p className="text-zinc-400 text-[11px]">Case No. CUD-26-682107 &bull; SF Superior Court &bull; Access Code: 16535884</p>
+                            <p className="text-red-500 font-black text-xs tracking-widest flex items-center gap-2">DEPARTMENT 12 — ACTIVE LITIGATION</p>
+                            <p className="text-zinc-400 text-[10px] font-mono mt-1">Case No. CUD-26-682107 &bull; SF Superior Court &bull; Access Code: 16535884</p>
+                            <p className="text-zinc-500 text-[9px] font-mono uppercase tracking-tighter mt-0.5">Signatory Fraud &amp; Surveillance Evidence Portal Activated</p>
                           </div>
                         </li>
                       )}
@@ -177,15 +172,15 @@ export function GlobalNav() {
                                 className={cn(
                                   "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors",
                                   "hover:bg-zinc-800 hover:text-white focus:bg-zinc-800",
-                                  isDept12 && "hover:bg-red-950/60",
+                                  isDept12 && "hover:bg-red-900/40 border border-transparent hover:border-red-800",
                                   isActive ? "bg-zinc-800 text-white" : "text-zinc-400"
                                 )}
                               >
                                 <div className="flex items-center gap-2">
                                   <ItemIcon className={cn("w-4 h-4", category.color)} />
-                                  <div className="text-sm font-medium leading-none">{item.name}</div>
+                                  <div className="text-sm font-bold leading-none uppercase tracking-tighter">{item.name}</div>
                                 </div>
-                                <p className="line-clamp-1 text-xs leading-snug text-zinc-500 mt-1">
+                                <p className="line-clamp-1 text-[10px] text-zinc-500 mt-1 uppercase font-mono italic">
                                   {item.description}
                                 </p>
                               </Link>
@@ -201,18 +196,19 @@ export function GlobalNav() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Right side — CTA + status */}
+        {/* Global Action HUD */}
         <div className="flex items-center ml-auto gap-3">
-          <div className="hidden md:flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-            <span className="text-green-500">ANCHOR LIVE</span>
+          <div className="hidden xl:flex items-center gap-3 text-[10px] font-mono text-zinc-500 border-x border-zinc-800 px-4">
+            <div className="flex items-center gap-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+              <span className="text-emerald-500">HANDSHAKE_LIVE</span>
+            </div>
             <span className="text-zinc-700">|</span>
-            <span className="text-zinc-400">ST. PAUL</span>
-            <span className="text-zinc-700">|</span>
-            <span className="text-emerald-400">N.E.W.T. v8.0</span>
+            <span>ST. PAUL ANCHOR</span>
           </div>
           <Link
-            href="/porthole-hud"
-            className="hidden lg:inline-flex bg-gradient-to-r from-red-600 to-orange-700 hover:from-red-500 hover:to-orange-600 text-white font-black px-4 py-1.5 rounded-lg text-[10px] tracking-widest transition-all shadow-[0_0_20px_-4px_#ef4444]"
+            href="/dept12-case"
+            className="hidden lg:inline-flex bg-gradient-to-r from-red-600 to-orange-700 hover:from-red-500 hover:to-orange-600 text-white font-black px-4 py-2 rounded-lg text-[10px] tracking-widest transition-all shadow-[0_0_20px_-4px_#ef4444]"
           >
             LITIGATION HUD
           </Link>
