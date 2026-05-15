@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -19,10 +21,10 @@ import {
   Wallet, Landmark, Building2, DollarSign, Database, Infinity, Briefcase,
   BookOpen, Cpu, Fingerprint, GitBranch,
   Film, Compass, Globe, MonitorPlay,
-  ChevronDown, Send, AlertTriangle, ExternalLink, CheckCircle
+  ChevronDown, Send, AlertTriangle, ExternalLink, CheckCircle, Camera
 } from 'lucide-react';
 
-// Complete Quick Links Registry — DEPT 12 FIRST (SUPREME PRIORITY)
+// Complete Quick Links Registry — DEPT 12 SUPREME PRIORITY
 const QUICK_LINKS = {
   dept12: {
     label: 'DEPT 12',
@@ -30,16 +32,16 @@ const QUICK_LINKS = {
     color: 'text-red-400',
     items: [
       { name: 'HANDSHAKE',      href: '/judicial-handshake',          icon: CheckCircle,   description: 'Dept 12 Live Handshake' },
-      { name: 'ACTIVE CASE',    href: '/dept12-case',                icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
-      { name: 'COURT HUB',      href: '/dept12',                     icon: Gavel,         description: 'SF Superior Court Hub' },
-      { name: 'BRIEFING',       href: '/dept12-briefing',            icon: Shield,        description: 'Federal Brief' },
-      { name: 'SUPREME REPORT', href: '/supreme-intelligence-report', icon: FileSearch,   description: '30-Page Intel PDF' },
-      { name: 'COMPLIANCE',     href: '/compliance-intelligence',    icon: Scale,         description: 'HHS OCR / CCRA / Mimecast' },
-      { name: 'MIMECAST',       href: '/mimecast',                   icon: Mail,          description: '284K Emails / SMTP 550 Blockade' },
-      { name: 'CLAWBACK',       href: '/clawback',                   icon: Gavel,         description: '$11.487B Recovery Matrix' },
-      { name: 'VELOCITY',       href: '/velocity-doctrine',          icon: Zap,           description: '550 Doctrine' },
-      { name: 'TIMELINE',       href: '/timeline',                   icon: Clock,         description: '2,207+ Days Documented' },
-      { name: 'NARRATIVE',      href: '/narrative-report',           icon: FileSearch,    description: 'Full Report' },
+      { name: 'ACTIVE CASE',    href: '/dept12-case',                 icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
+      { name: 'SURVEILLANCE',   href: '/surveillance-evidence',       icon: Camera,        description: 'Unit 301A — Hallway Camera Docs' },
+      { name: 'COURT HUB',      href: '/dept12',                      icon: Gavel,         description: 'SF Superior Court Hub' },
+      { name: 'BRIEFING',       href: '/dept12-briefing',             icon: Shield,        description: 'Federal Brief' },
+      { name: 'SUPREME REPORT', href: '/supreme-intelligence-report', icon: FileSearch,    description: '30-Page Intel PDF' },
+      { name: 'COMPLIANCE',     href: '/compliance-intelligence',     icon: Scale,         description: 'HHS OCR / CCRA / Mimecast' },
+      { name: 'MIMECAST',       href: '/mimecast',                    icon: Mail,          description: '284K Emails / SMTP 550 Blockade' },
+      { name: 'CLAWBACK',       href: '/clawback',                    icon: Gavel,         description: '$11.487B Recovery Matrix' },
+      { name: 'VELOCITY',       href: '/velocity-doctrine',           icon: Zap,           description: '550 Doctrine' },
+      { name: 'TIMELINE',       href: '/timeline',                    icon: Clock,         description: '2,207+ Days Documented' },
     ]
   },
   portals: {
@@ -47,22 +49,14 @@ const QUICK_LINKS = {
     icon: Home,
     color: 'text-cyan-400',
     items: [
-      { name: 'OMEGA RECOVERY', href: '/',                    icon: Home,       description: 'Main System Entry' },
-      { name: 'UPLINK',         href: '/uplink',              icon: Zap,        description: 'Millennium Σ-Integration' },
-      { name: 'PORTHOLE HUD',   href: '/porthole-hud',        icon: MonitorPlay, description: 'Real-Time HUD' },
-      { name: 'PORTHOLE',       href: '/porthole',            icon: Eye,        description: 'Sovereign Portal' },
-      { name: 'MAINFRAME',      href: '/mainframe',           icon: Server,     description: '14D Core' },
-      { name: 'PROD HUB',       href: '/production-hub',      icon: Server,     description: 'Production Node' },
-      { name: 'TERMINAL HUD',   href: '/terminal-hud',        icon: Terminal,   description: 'Command Terminal' },
-      { name: 'NEXUS',          href: '/nexus',               icon: Network,    description: 'Neural Hub' },
-      { name: 'GATE',           href: '/gate',                icon: Lock,       description: 'Access Control' },
-      { name: 'FORT',           href: '/fort',                icon: Shield,     description: 'Defense Systems' },
-      { name: 'CYBER PIPELINE', href: '/cybersecurity-pipeline', icon: Lock,   description: 'Security Audit' },
-      { name: 'APEX',           href: '/apex',                icon: Crown,      description: 'Apex Control' },
-      { name: 'OMNIBUS',        href: '/omnibus',             icon: Activity,   description: 'Omnibus Intel' },
-      { name: 'OMEGA-9B',       href: '/omega-9b',            icon: Cpu,        description: 'Millennium Kernel' },
-      { name: 'OMEGA LAUNCH',   href: '/omega-launch',        icon: Zap,        description: 'TX Verification' },
-      { name: 'TOTALITY',       href: '/totality-explorer',   icon: Infinity,   description: 'System Explorer' },
+      { name: 'OMEGA RECOVERY', href: '/',                       icon: Home,        description: 'Main System Entry' },
+      { name: 'PORTHOLE HUD',   href: '/porthole-hud',           icon: MonitorPlay, description: 'Real-Time HUD' },
+      { name: 'MAINFRAME',      href: '/mainframe',              icon: Server,      description: '14D Core' },
+      { name: 'NEXUS',          href: '/nexus',                  icon: Network,     description: 'Neural Hub' },
+      { name: 'GATE',           href: '/gate',                   icon: Lock,        description: 'Access Control' },
+      { name: 'APEX',           href: '/apex',                   icon: Crown,       description: 'Apex Control' },
+      { name: 'OMEGA LAUNCH',   href: '/omega-launch',           icon: Zap,         description: 'TX Verification' },
+      { name: 'TOTALITY',       href: '/totality-explorer',      icon: Infinity,    description: 'System Explorer' },
     ]
   },
   intelligence: {
@@ -70,33 +64,10 @@ const QUICK_LINKS = {
     icon: Brain,
     color: 'text-amber-400',
     items: [
-      { name: 'REALTIME INTEL', href: '/realtime-intelligence',   icon: Activity,   description: 'Live Feed' },
-      { name: 'INTEL REPORT',   href: '/intelligence-report',     icon: FileSearch, description: 'Full Dossier' },
-      { name: 'INTEL DOWNLOAD', href: '/intelligence/download',   icon: Database,   description: 'Evidence Package' },
-      { name: 'INTEL HUB',      href: '/intelligence',            icon: Brain,      description: 'Central Intel' },
-      { name: 'FORENSIC FEED',  href: '/forensic-feed',           icon: Radio,      description: 'Live Data' },
-      { name: 'FORENSIC ARCH',  href: '/forensic-architecture',   icon: Layers,     description: 'System Map' },
-      { name: 'EVIDENCE MAP',   href: '/terminal-evidence-map',   icon: Map,        description: 'Mapping' },
-      { name: 'PROJECTION',     href: '/terminal-projection',     icon: TrendingUp, description: 'Outcomes' },
-    ]
-  },
-  legal: {
-    label: 'Legal',
-    icon: Scale,
-    color: 'text-orange-400',
-    items: [
-      { name: 'INVARIANTS',   href: '/invariants',     icon: Lock,       description: 'Math Proofs' },
-      { name: 'AUDIT',        href: '/audit',          icon: FileSearch, description: 'Full Log' },
-      { name: 'AUTH AUDIT',   href: '/auth-audit',     icon: Fingerprint, description: 'User Query' },
-      { name: 'AUTH MATRIX',  href: '/auth-matrix',    icon: Shield,     description: 'Transfer Auth' },
-      { name: 'NULLIFIER',    href: '/nullifier',      icon: XCircle,    description: 'Debt Null' },
-      { name: 'CONTRACT',     href: '/contract',       icon: FileCode,   description: 'Smart Contracts' },
-      { name: 'CONTRACT CHAT',href: '/contract/chat',  icon: Terminal,   description: 'AI Contract Chat' },
-      { name: 'DEPLOY',       href: '/contract-deploy', icon: Zap,       description: 'Testnet Deploy' },
-      { name: 'REPUTATION',   href: '/reputation',     icon: Crown,      description: 'Credit Standing' },
-      { name: 'POLICY',       href: '/policy-engine',  icon: Settings,   description: 'Enforcement' },
-      { name: 'EVALUATIVE',   href: '/evaluative',     icon: Scale,      description: 'Damages' },
-      { name: 'MATURITY',     href: '/maturity',       icon: Clock,      description: 'Claim Status' },
+      { name: 'REALTIME INTEL', href: '/realtime-intelligence',  icon: Activity,   description: 'Live Feed' },
+      { name: 'INTEL REPORT',   href: '/intelligence-report',    icon: FileSearch, description: 'Full Dossier' },
+      { name: 'FORENSIC FEED',  href: '/forensic-feed',          icon: Radio,      description: 'Live Data' },
+      { name: 'EVIDENCE MAP',   href: '/terminal-evidence-map',  icon: Map,        description: 'Mapping' },
     ]
   },
   financial: {
@@ -104,45 +75,10 @@ const QUICK_LINKS = {
     icon: Wallet,
     color: 'text-green-400',
     items: [
-      { name: 'ACCOUNT 8185',   href: '/account-8185',       icon: Landmark,   description: 'Primary Schwab' },
-      { name: 'TREASURY V50',   href: '/treasury-v50',       icon: Landmark,   description: 'v50 System' },
-      { name: 'TREASURY',       href: '/treasury',           icon: Wallet,     description: 'Assets' },
-      { name: 'DIRECT TRANSFER',href: '/test-deposit',       icon: Send,       description: 'Fund Transfer' },
-      { name: 'BANKING',        href: '/banking-confidence', icon: Building2,  description: 'Analysis' },
-      { name: 'VALUATION',      href: '/valuation',          icon: TrendingUp, description: '$1.12Q IP' },
-      { name: 'TOKEN REG',      href: '/token-registry',     icon: Database,   description: '56 Tokens' },
-      { name: 'TOKEN',          href: '/token',              icon: DollarSign, description: 'Management' },
-      { name: 'MINT',           href: '/mint',               icon: Zap,        description: 'Minting' },
-      { name: 'PERPETUAL',      href: '/perpetual',          icon: Infinity,   description: 'Systems' },
-      { name: 'INVESTOR',       href: '/investor',           icon: Briefcase,  description: 'Portal' },
-    ]
-  },
-  docs: {
-    label: 'Docs',
-    icon: BookOpen,
-    color: 'text-blue-400',
-    items: [
-      { name: 'WHITEPAPER',  href: '/whitepaper',    icon: BookOpen,   description: 'System Doc' },
-      { name: 'API DOCS',    href: '/api-docs',       icon: FileCode,   description: 'API Reference' },
-      { name: 'PROTOCOL',    href: '/protocol',       icon: GitBranch,  description: 'REV_40 Spec' },
-      { name: 'KERNEL',      href: '/kernel',         icon: Cpu,        description: 'N.E.W.T. Core' },
-      { name: 'STACK',       href: '/stack',          icon: Layers,     description: 'Tech Stack' },
-      { name: 'IDENTITY',    href: '/identity',       icon: Fingerprint, description: 'ID Systems' },
-      { name: 'SECURITY',    href: '/security',       icon: Shield,     description: 'Protocols' },
-      { name: 'ARCHITECTURE',href: '/architecture',   icon: Layers,     description: 'System Design' },
-      { name: 'REPORT',      href: '/report',         icon: FileSearch, description: 'Formal Report' },
-    ]
-  },
-  operations: {
-    label: 'Ops',
-    icon: Activity,
-    color: 'text-purple-400',
-    items: [
-      { name: 'STATUS',      href: '/status',       icon: Activity, description: 'System Status' },
-      { name: 'TRAFFIC',     href: '/traffic',      icon: Activity, description: 'Network' },
-      { name: 'TRAFFIC HUB', href: '/traffic-hub',  icon: Globe,    description: 'Totality Terminal' },
-      { name: 'TRANSMIT',    href: '/transmit',     icon: Radio,    description: 'Broadcast' },
-      { name: 'AUTOMATION',  href: '/automation',   icon: Cpu,      description: 'Auto Systems' },
+      { name: 'ACCOUNT 8185',    href: '/account-8185',          icon: Landmark,   description: 'Primary Schwab' },
+      { name: 'TREASURY',        href: '/treasury',              icon: Wallet,     description: 'Assets' },
+      { name: 'VALUATION',       href: '/valuation',             icon: TrendingUp, description: '$1.12Q IP' },
+      { name: 'MINT',            href: '/mint',                  icon: Zap,        description: 'Minting' },
     ]
   },
   ai: {
@@ -150,32 +86,10 @@ const QUICK_LINKS = {
     icon: Brain,
     color: 'text-pink-400',
     items: [
-      { name: 'NEWT',       href: '/newt',              icon: Brain,    description: 'N.E.W.T. Core' },
-      { name: 'NEWT CHAT',  href: '/newt/chat',         icon: Terminal, description: 'Chat Interface' },
-      { name: 'BRAINDISH',  href: '/braindish',         icon: Cpu,      description: 'Neural Proc' },
-      { name: 'VALORAI+',   href: '/valoraiplus',       icon: Zap,      description: 'Sovereign AI' },
-      { name: 'SUPREME',    href: '/valoraiplus-supreme', icon: Zap,    description: '14D Unified Core' },
-      { name: 'OMEGA DASH', href: '/valoraiplus-omega', icon: Wallet,   description: 'Treasury Dashboard' },
-      { name: 'OMEGA ZERO', href: '/omega-zero',        icon: Infinity, description: 'Protocol' },
-      { name: 'TRINITY',    href: '/trinity',           icon: Shield,   description: 'Unified' },
-      { name: '5151',       href: '/5151',              icon: Network,  description: 'Port Unison' },
-    ]
-  },
-  media: {
-    label: 'Media',
-    icon: Film,
-    color: 'text-orange-400',
-    items: [
-      { name: 'CINEMA',   href: '/cinema',   icon: Film,       description: 'Evidence Cinema' },
-      { name: 'JERRY',    href: '/jerry',    icon: MonitorPlay, description: 'Interface' },
-      { name: 'VOYAGER',  href: '/voyager',  icon: Compass,    description: 'Navigator' },
-      { name: 'PATRIOT',  href: '/patriot',  icon: Shield,     description: 'Memorial' },
-      { name: 'UHI',      href: '/uhi',      icon: Globe,      description: 'Health Index' },
-      { name: 'ROUTE 66', href: '/route66',  icon: Compass,    description: 'Legacy Route' },
-      { name: 'ROUTE 69', href: '/route69',  icon: Compass,    description: 'Recovery' },
-      { name: 'ROUTE 70', href: '/route70',  icon: Compass,    description: 'Enforcement' },
-      { name: 'ROUTE 71', href: '/route71',  icon: Compass,    description: 'Standby' },
-      { name: 'ROUTE 81', href: '/route81',  icon: Compass,    description: 'Extended' },
+      { name: 'NEWT',            href: '/newt',                  icon: Brain,      description: 'N.E.W.T. Core' },
+      { name: 'VALORAI+',        href: '/valoraiplus',           icon: Zap,        description: 'Sovereign AI' },
+      { name: 'OMEGA DASH',      href: '/valoraiplus-omega',     icon: Wallet,     description: 'Treasury Dashboard' },
+      { name: 'TRINITY',         href: '/trinity',               icon: Shield,     description: 'Unified' },
     ]
   },
 };
@@ -195,12 +109,10 @@ export function GlobalNav() {
             <div className="flex items-center gap-1 leading-none">
               <span className="font-bold text-amber-400 text-sm">ValorAiPlus_</span>
               <span className="text-zinc-600 text-xs">|</span>
-              <span className="font-bold text-amber-400 text-sm hidden md:inline">ValorAiPlus2e_</span>
-              <span className="text-zinc-600 text-xs hidden md:inline">|</span>
-              <span className="font-bold text-amber-400 text-sm hidden lg:inline">ValorAiPlus3e_</span>
+              <span className="font-bold text-red-400 text-sm hidden md:inline">DEPT 12</span>
             </div>
-            <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1">
-              OMEGA v2.4 &bull; NODE 2207 &bull; <span className="text-white">&#127482;&#127480;</span>
+            <div className="text-[9px] font-mono text-emerald-400 tracking-widest flex items-center gap-1 uppercase">
+              NODE 2207 &bull; AUTHORIZED &bull; <span className="text-white">US</span>
             </div>
           </div>
         </Link>
@@ -289,32 +201,23 @@ export function GlobalNav() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile Menu Button */}
-        <div className="flex lg:hidden ml-auto">
-          <MobileNav />
-        </div>
-
-        {/* PORT.HOLE CTA */}
-        <div className="hidden lg:flex items-center ml-4">
+        {/* Right side — CTA + status */}
+        <div className="flex items-center ml-auto gap-3">
+          <div className="hidden md:flex items-center gap-2 text-[10px] font-mono text-zinc-500">
+            <span className="text-green-500">ANCHOR LIVE</span>
+            <span className="text-zinc-700">|</span>
+            <span className="text-zinc-400">ST. PAUL</span>
+            <span className="text-zinc-700">|</span>
+            <span className="text-emerald-400">N.E.W.T. v8.0</span>
+          </div>
           <Link
             href="/porthole-hud"
-            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-black font-bold px-4 py-1.5 rounded-lg text-xs tracking-widest transition-all shadow-[0_0_20px_-4px_#f59e0b]"
+            className="hidden lg:inline-flex bg-gradient-to-r from-red-600 to-orange-700 hover:from-red-500 hover:to-orange-600 text-white font-black px-4 py-1.5 rounded-lg text-[10px] tracking-widest transition-all shadow-[0_0_20px_-4px_#ef4444]"
           >
-            <Lock className="w-3 h-3 mr-1.5 inline" />
-            PORT.HOLE
+            LITIGATION HUD
           </Link>
-        </div>
-
-        {/* Right side status */}
-        <div className="hidden lg:flex items-center gap-4 ml-auto">
-          <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="text-green-400">BLOCK #42,069,111</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-zinc-400">ST. PAUL ANCHOR</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-amber-400">100D LIVE</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-emerald-400">N.E.W.T. v8.0</span>
+          <div className="flex lg:hidden">
+            <MobileNav />
           </div>
         </div>
       </div>
