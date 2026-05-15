@@ -29,6 +29,7 @@ const QUICK_LINKS = {
     icon: Gavel,
     color: 'text-red-400',
     items: [
+      { name: 'HANDSHAKE',      href: '/judicial-handshake',          icon: CheckCircle,   description: 'Dept 12 Live Handshake' },
       { name: 'ACTIVE CASE',    href: '/dept12-case',                icon: AlertTriangle, description: 'CUD-26-682107 Live Intel' },
       { name: 'COURT HUB',      href: '/dept12',                     icon: Gavel,         description: 'SF Superior Court Hub' },
       { name: 'BRIEFING',       href: '/dept12-briefing',            icon: Shield,        description: 'Federal Brief' },
