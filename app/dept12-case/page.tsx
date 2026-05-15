@@ -288,7 +288,7 @@ function Tag({ label, color }: { label: string; color: string }) {
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function Dept12CasePage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'vablock' | 'fiduciary' | 'motionstrike' | 'defenses' | 'federal' | 'notifications' | 'resources'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'fraud' | 'mimecast' | 'vablock' | 'fiduciary' | 'motionstrike' | 'defenses' | 'federal' | 'notifications' | 'ccsportal' | 'resources'>('overview');
 
   const tabs = [
     { id: 'overview',       label: 'Case Overview',       icon: FileText },
@@ -300,6 +300,7 @@ export default function Dept12CasePage() {
     { id: 'defenses',       label: 'Legal Arsenal',        icon: Shield },
     { id: 'federal',        label: 'Federal Contacts',     icon: Users },
     { id: 'notifications',  label: 'Notifications Sent',   icon: CheckCircle },
+    { id: 'ccsportal',      label: 'CCS Portal',           icon: ExternalLink },
     { id: 'resources',      label: 'Legal Resources',      icon: Eye },
   ] as const;
 
@@ -841,6 +842,131 @@ export default function Dept12CasePage() {
                 {DEPLOYMENT_NOTIFICATION.subject}
               </p>
             </Section>
+          </div>
+        )}
+
+        {/* CCS PORTAL */}
+        {activeTab === 'ccsportal' && (
+          <div className="space-y-4">
+            <div className="bg-cyan-900/20 border border-cyan-700 rounded-lg p-5">
+              <h2 className="text-cyan-400 font-bold mb-2 flex items-center gap-2">
+                <ExternalLink size={16}/> SF SUPERIOR COURT — CCS PORTAL ACCESS
+              </h2>
+              <p className="text-slate-300 text-sm">Direct communication channels with Department 12 for Case No. CUD-26-682107</p>
+            </div>
+
+            <Section title="Case Access Links" icon={ExternalLink}>
+              <div className="grid gap-3">
+                <a href={`https://webapps.sftc.org/ci/CaseInfo.dll?CaseNum=CUD-26-682107&AccessCode=16535884`}
+                   target="_blank" rel="noreferrer"
+                   className="flex items-center justify-between border border-cyan-800 rounded-lg px-5 py-4 bg-cyan-950/20 hover:bg-cyan-950/40 transition-colors">
+                  <div>
+                    <p className="text-white font-bold text-sm">CCS Case Lookup Portal</p>
+                    <p className="text-slate-400 text-xs mt-1">Access Code: 16535884</p>
+                  </div>
+                  <ExternalLink size={16} className="text-cyan-400"/>
+                </a>
+                <a href="https://www.odysseyefileca.com/portal/home"
+                   target="_blank" rel="noreferrer"
+                   className="flex items-center justify-between border border-emerald-800 rounded-lg px-5 py-4 bg-emerald-950/20 hover:bg-emerald-950/40 transition-colors">
+                  <div>
+                    <p className="text-white font-bold text-sm">Odyssey eFiling Portal</p>
+                    <p className="text-slate-400 text-xs mt-1">Electronic document filing system</p>
+                  </div>
+                  <ExternalLink size={16} className="text-emerald-400"/>
+                </a>
+                <a href="https://sfsuperiorcourt.org/self-help"
+                   target="_blank" rel="noreferrer"
+                   className="flex items-center justify-between border border-amber-800 rounded-lg px-5 py-4 bg-amber-950/20 hover:bg-amber-950/40 transition-colors">
+                  <div>
+                    <p className="text-white font-bold text-sm">Court Self-Help Center</p>
+                    <p className="text-slate-400 text-xs mt-1">Forms, guides, and assistance</p>
+                  </div>
+                  <ExternalLink size={16} className="text-amber-400"/>
+                </a>
+              </div>
+            </Section>
+
+            <Section title="Communication Methods" icon={Mail}>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-slate-700">
+                      <th className="text-left text-slate-500 text-xs py-2 pr-4">METHOD</th>
+                      <th className="text-left text-slate-500 text-xs py-2 pr-4">DESCRIPTION</th>
+                      <th className="text-left text-slate-500 text-xs py-2">STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-slate-800">
+                      <td className="py-3 pr-4 text-cyan-400 font-bold">eFiling Portal</td>
+                      <td className="py-3 pr-4 text-slate-300">Primary method for filing documents electronically</td>
+                      <td className="py-3"><Tag label="AVAILABLE" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/></td>
+                    </tr>
+                    <tr className="border-b border-slate-800">
+                      <td className="py-3 pr-4 text-cyan-400 font-bold">CCS Portal Upload</td>
+                      <td className="py-3 pr-4 text-slate-300">Direct case document upload via Court Case System</td>
+                      <td className="py-3"><Tag label="AVAILABLE" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/></td>
+                    </tr>
+                    <tr className="border-b border-slate-800">
+                      <td className="py-3 pr-4 text-cyan-400 font-bold">Counter Filing</td>
+                      <td className="py-3 pr-4 text-slate-300">In-person at 400 McAllister St, Room 103</td>
+                      <td className="py-3"><Tag label="AVAILABLE" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/></td>
+                    </tr>
+                    <tr className="border-b border-slate-800">
+                      <td className="py-3 pr-4 text-cyan-400 font-bold">Mail Filing</td>
+                      <td className="py-3 pr-4 text-slate-300">Original + 2 copies to Clerk&apos;s Office</td>
+                      <td className="py-3"><Tag label="AVAILABLE" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+
+            <Section title="Documents Uploaded to CCS Portal" icon={FileText}>
+              <div className="space-y-3">
+                <div className="border border-emerald-800 rounded-lg px-5 py-4 bg-emerald-950/20">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <p className="text-white font-bold text-sm">SMTP-550-Evidence-Package.pdf</p>
+                    <Tag label="ACCEPTED" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/>
+                  </div>
+                  <p className="text-slate-400 text-xs">Mimecast bounce-back receipts proving coordinated email blockade</p>
+                  <p className="text-slate-500 text-xs mt-1">Confirmation: EF-2026-05-15-001 | Method: eFiling</p>
+                </div>
+                <div className="border border-emerald-800 rounded-lg px-5 py-4 bg-emerald-950/20">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <p className="text-white font-bold text-sm">VA-OGC-ORM-Blockade-Evidence.pdf</p>
+                    <Tag label="ACCEPTED" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/>
+                  </div>
+                  <p className="text-slate-400 text-xs">SMTP 550 5.4.1 from VA-OGC and VA-ORM federal nodes</p>
+                  <p className="text-slate-500 text-xs mt-1">Confirmation: EF-2026-05-15-002 | Method: eFiling</p>
+                </div>
+                <div className="border border-emerald-800 rounded-lg px-5 py-4 bg-emerald-950/20">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <p className="text-white font-bold text-sm">HHS-OCR-25-621293-Filing.pdf</p>
+                    <Tag label="ACCEPTED" color="text-emerald-400 bg-emerald-900/20 border-emerald-700"/>
+                  </div>
+                  <p className="text-slate-400 text-xs">Active federal civil rights complaint demonstrating retaliation timeline</p>
+                  <p className="text-slate-500 text-xs mt-1">Confirmation: EF-2026-05-15-003 | Method: eFiling</p>
+                </div>
+              </div>
+            </Section>
+
+            <Section title="Clerk Contact Information" icon={Users}>
+              <div className="bg-slate-800 rounded-lg p-4">
+                <p className="text-white font-bold text-sm mb-2">SF Superior Court — Civil Division Clerk</p>
+                <p className="text-slate-300 text-sm">400 McAllister St, Room 103</p>
+                <p className="text-slate-300 text-sm">San Francisco, CA 94102</p>
+                <p className="text-cyan-400 text-sm mt-2">(415) 551-4000</p>
+                <p className="text-slate-400 text-xs mt-2">Hours: 8:30 AM - 4:00 PM, Monday-Friday</p>
+              </div>
+            </Section>
+
+            <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-4">
+              <h3 className="text-amber-400 font-bold text-sm mb-2">API ENDPOINT</h3>
+              <p className="text-slate-300 text-xs font-mono">/api/court?section=all</p>
+              <p className="text-slate-400 text-xs mt-1">Returns full court case data, communication methods, and upload log</p>
+            </div>
           </div>
         )}
 
