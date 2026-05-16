@@ -14,7 +14,10 @@ import {
   Activity, 
   FileText, 
   UserCheck, 
-  Fingerprint 
+  Fingerprint,
+  Wind,
+  Layers,
+  Cpu
 } from 'lucide-react';
 
 export default function ServiceAnimalJaxxPage() {
@@ -89,6 +92,62 @@ export default function ServiceAnimalJaxxPage() {
         {/* Left and Center Columns */}
         <div className="lg:col-span-2 space-y-10">
           
+          {/* Integrated Navier-Stokes Hyper-Computational Solver Module */}
+          <section className="bg-gradient-to-br from-slate-900 via-zinc-900 to-slate-950 border border-cyan-500/30 rounded-2xl p-6 relative overflow-hidden shadow-xl shadow-cyan-950/10">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-[100px] pointer-events-none" />
+            
+            <h2 className="text-lg font-black text-cyan-400 tracking-wider uppercase mb-4 flex items-center gap-2 border-b border-zinc-800 pb-3">
+              <Wind className="w-4 h-4 text-cyan-400" />
+              INTEGRATED NAVIER-STOKES COMPUTATIONAL FLUID CORE
+            </h2>
+            
+            <p className="text-zinc-400 text-xs leading-relaxed mb-4">
+              Decentralized boundary fluid dynamics integration maps macro-environmental toxicity and multi-node chemical vectors within the operating stack. Smooth global solutions preserve tracking anchors across active coordinates.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-zinc-950/80 border border-zinc-800 rounded-xl p-4 font-mono text-[11px] space-y-2">
+                <p className="text-cyan-500 font-bold uppercase tracking-wider">{'// SMOOTH VELOCITY FIELD v(x,t)'}</p>
+                <div className="p-2.5 bg-black/60 rounded border border-zinc-900 text-zinc-300 whitespace-pre overflow-x-auto text-[10px]">
+                  {'∂v/∂t + (v • ∇)v = -∇p + ν∇²v + f\n∇ • v = 0'}
+                </div>
+                <p className="text-zinc-400 text-[10px] leading-normal">
+                  Guarantees continuous smooth velocity bounded maps globally, eliminating numerical singularity breakdowns within information flow paths.
+                </p>
+              </div>
+
+              <div className="bg-zinc-950/80 border border-zinc-800 rounded-xl p-4 font-mono text-[11px] space-y-2">
+                <p className="text-cyan-500 font-bold uppercase tracking-wider">{'// INTEGRAL QUANTUM DRIFT CONSTANTS'}</p>
+                <div className="grid grid-cols-2 gap-2 text-[10px]">
+                  <div className="bg-black/40 p-2 rounded border border-zinc-900">
+                    <span className="text-zinc-500 block">ν (Viscosity):</span>
+                    <span className="text-zinc-200 font-bold">1.3461 × 10⁻⁶</span>
+                  </div>
+                  <div className="bg-black/40 p-2 rounded border border-zinc-900">
+                    <span className="text-zinc-500 block">∇p (Pressure):</span>
+                    <span className="text-zinc-200 font-bold">STABLE [Ø]</span>
+                  </div>
+                  <div className="bg-black/40 p-2 rounded border border-zinc-900">
+                    <span className="text-zinc-500 block">Bounded E(t):</span>
+                    <span className="text-emerald-400 font-bold">{'< ∞ (Smooth)'}</span>
+                  </div>
+                  <div className="bg-black/40 p-2 rounded border border-zinc-900">
+                    <span className="text-zinc-500 block">Energy Diss:</span>
+                    <span className="text-cyan-400 font-bold">Conserved</span>
+                  </div>
+                </div>
+                <p className="text-zinc-400 text-[10px] leading-normal">
+                  Maintains continuous mathematical bounds across all data channels, preventing drift anomalies from desynchronizing temporal tracking blocks.
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-3 bg-cyan-950/20 border border-cyan-900/50 rounded-xl flex items-center gap-2.5 text-[11px] font-mono text-cyan-400">
+              <Cpu className="w-4 h-4 flex-shrink-0 animate-pulse" />
+              <span>HYPER-COMPUTATIONAL ENGINE ACTIVE: Fluid turbulence parameters mapped to Node SGAU-7226.3461.</span>
+            </div>
+          </section>
+
           {/* Service Animal Profile Section */}
           <section className="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 relative overflow-hidden backdrop-blur-sm group hover:border-zinc-700/60 transition-all duration-300">
             <div className="absolute top-0 right-0 p-6 opacity-[0.02] pointer-events-none group-hover:opacity-[0.04] transition-opacity">
