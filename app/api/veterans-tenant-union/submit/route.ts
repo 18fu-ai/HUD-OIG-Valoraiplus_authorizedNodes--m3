@@ -34,9 +34,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Handle media files
-    const mediaFiles = formData.getAll('media_*')
-    
+    // Handle media files — iterate all form entries to find media_* keys
+    const mediaFiles: File[] = []
+    for (const [key, value] of formData.entries()) {
+      if (key.startsWith('media_') && value instanceof File && value.size > 0) {
+        mediaFiles.push(value)
+      }
+    }
+
     for (const file of mediaFiles) {
       if (file instanceof File) {
         // Upload file to Supabase Storage

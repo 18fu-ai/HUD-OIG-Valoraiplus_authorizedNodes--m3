@@ -8,29 +8,31 @@ interface MediaPlayerProps {
 
 export default function MediaPlayer({ mediaUrl, type, fileName }: MediaPlayerProps) {
   return (
-    <div className="w-full p-4">
+    <div className="w-full">
       {type === 'audio' && (
-        <div className="bg-slate-100 rounded-lg p-4">
-          <audio
-            controls
-            className="w-full"
-            title={fileName}
-          >
-            <source src={mediaUrl} type="audio/*" />
+        <div className="bg-muted rounded-lg p-4">
+          <p className="text-xs text-muted-foreground font-mono mb-2 truncate">{fileName}</p>
+          <audio controls className="w-full" src={mediaUrl}>
+            <track kind="captions" />
             Your browser does not support the audio element.
           </audio>
         </div>
       )}
 
       {type === 'video' && (
-        <video
-          controls
-          className="w-full h-48 bg-black rounded-lg"
-          title={fileName}
-        >
-          <source src={mediaUrl} type="video/*" />
-          Your browser does not support the video element.
-        </video>
+        <div className="rounded-lg overflow-hidden bg-black">
+          <video
+            controls
+            className="w-full max-h-64"
+            src={mediaUrl}
+          >
+            <track kind="captions" />
+            Your browser does not support the video element.
+          </video>
+          <div className="bg-muted px-3 py-2">
+            <p className="text-xs text-muted-foreground font-mono truncate">{fileName}</p>
+          </div>
+        </div>
       )}
     </div>
   )
