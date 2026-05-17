@@ -69,6 +69,16 @@ export default function VeteransTenantUnionLayout({
             >
               Evidence Locker
             </Link>
+            <Link
+              href="/veterans-tenant-union/court-compiler"
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                pathname === '/veterans-tenant-union/court-compiler'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+              }`}
+            >
+              Court PDF Compiler
+            </Link>
           </nav>
         </div>
       </header>
