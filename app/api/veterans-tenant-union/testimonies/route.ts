@@ -30,7 +30,13 @@ export async function GET() {
       )
     }
 
-    return NextResponse.json(testimonies)
+    // Map testimony_media to media for frontend compatibility
+    const mappedTestimonies = testimonies?.map((t) => ({
+      ...t,
+      media: t.testimony_media || [],
+    })) || []
+
+    return NextResponse.json(mappedTestimonies)
   } catch (error) {
     console.error('[v0] Get testimonies error:', error)
     return NextResponse.json(
