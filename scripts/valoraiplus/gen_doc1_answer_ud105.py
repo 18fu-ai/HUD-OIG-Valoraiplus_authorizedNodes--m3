@@ -60,63 +60,113 @@ def build():
 
     h(story, "II. AFFIRMATIVE DEFENSES", S)
     numbered_list(story, [
-        "<b>Void Verification — Jerome Bradford Signatory Fraud (CCP § 446; "
-        "Penal Code § 115):</b> The Complaint was verified by Jerome Bradford, "
-        "Interim Property Manager, who falsely represented himself as having "
-        "personal knowledge of the matters alleged. Mr. Bradford holds no "
-        "doctoral credential and has no documented authority to verify "
-        "pleadings on behalf of the corporate plaintiff. The verification is "
-        "void on its face.",
+        # ── Defense 1 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-01 — Void Verification / Bradford Signatory Fraud "
+        "(CCP § 446; Penal Code § 115):</b> The Complaint was verified by "
+        "Jerome Bradford, Interim Property Manager, who falsely represented "
+        "personal knowledge of the matters alleged. Bradford holds no "
+        "credential authorizing him to verify pleadings on behalf of the "
+        "corporate plaintiff. The verification is void on its face and the "
+        "entire complaint must be stricken.",
 
-        "<b>Retaliatory Eviction — 178-Day Interactive Process Default "
-        "(Cal. Civ. Code § 1942.5):</b> Plaintiff failed to respond to "
-        "Defendant's formal Reasonable Accommodation Request submitted "
-        "November 20, 2025 for 178 days. This action was filed within the "
-        "180-day protected window, creating a statutory presumption of "
+        # ── Defense 2 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-02 — Retaliatory Eviction / 178-Day Interactive Process "
+        "Default (Cal. Civ. Code § 1942.5):</b> Plaintiff failed to respond "
+        "to Defendant's formal Reasonable Accommodation Request for 178 days "
+        "(November 20, 2025 to May 19, 2026). This action was filed within "
+        "the 180-day protected window, creating a statutory presumption of "
         "retaliation under Cal. Civ. Code § 1942.5.",
 
-        "<b>SMTP 550 Obstruction — Systemic Email Blockade "
+        # ── Defense 3 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-03 — SMTP 550 Obstruction / Systemic Email Blockade "
         "(18 U.S.C. § 1512(c)):</b> Plaintiff's agents deployed a Mimecast "
-        "email gateway resulting in 1,247+ SMTP 550 rejection events "
-        "blocking Defendant's communications, including communications "
-        "to the Court Clerk. Token: [N7uA_6IQOCiwQL2ibFQZog.us448].",
+        "email gateway resulting in 1,247+ SMTP 550 rejection events blocking "
+        "Defendant's communications including communications to the Court "
+        "Clerk. Cryptographic token: N7uA_6IQOCiwQL2ibFQZog.us448. This "
+        "constitutes federal obstruction of justice.",
 
-        "<b>Retaliatory Eviction — Service Animal JAXX (PAWS Act; "
-        "FHA § 3604; ADA Title II):</b> Plaintiff's agents endangered "
-        "Defendant's federally protected service animal JAXX on six "
-        "documented occasions, constituting a pattern of discriminatory "
-        "housing practices.",
+        # ── Defense 4 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-04 — ADA Title II / FHA Disability Discrimination — "
+        "Service Animal JAXX (42 U.S.C. § 12132; 42 U.S.C. § 3604(f); "
+        "PAWS Act):</b> Plaintiff's agents endangered Defendant's federally "
+        "protected service animal JAXX on six documented occasions. "
+        "Refusal to accommodate a service animal constitutes per se "
+        "discrimination under both the ADA and the Fair Housing Act.",
 
-        "<b>Federal Conflict of Interest (38 C.F.R. § 14.632; "
-        "HUD 24 C.F.R. § 5.105):</b> Plaintiff operates federally funded "
-        "permanent supportive housing. Active federal investigations are "
-        "pending: HHS-OCR Case No. 25-621293 (Amy Horrell) and CCRD "
-        "Case No. 202601-33270627 (Anna Moraga Archila).",
+        # ── Defense 5 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-05 — Federal Conflict of Interest "
+        "(38 C.F.R. § 14.632; HUD 24 C.F.R. § 5.105):</b> Plaintiff "
+        "operates federally funded permanent supportive housing. Active "
+        "federal investigations are pending: HHS-OCR Case No. 25-621293 "
+        "(Amy Horrell) and CCRD Case No. 202601-33270627 (Anna Moraga "
+        "Archila). Plaintiff's eviction action violates federal program "
+        "requirements.",
 
-        "<b>Travis AFB Incident — Discharge of Retaliatory Instrument:</b> "
-        "Plaintiff's attempt to weaponize Defendant's military service "
-        "record backfired. Defendant's Travis AFB clearance is active "
-        "and documented.",
+        # ── Defense 6 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-06 — Travis AFB / Retaliatory Military Record "
+        "Exploitation (38 U.S.C. § 4311; USERRA):</b> Plaintiff's attempt "
+        "to weaponize Defendant's military service record constitutes "
+        "unlawful discrimination against a veteran. Defendant's Travis AFB "
+        "clearance and service record are active, documented, and protected "
+        "under USERRA.",
 
-        "<b>Breach of Warranty of Habitability — Biohazard "
-        "(Cal. Civ. Code § 1941):</b> The subject premises contained "
-        "documented mold, pest infestation, and biohazard conditions "
-        "constituting a breach of the implied warranty of habitability.",
+        # ── Defense 7 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-07 — Breach of Warranty of Habitability / Biohazard "
+        "Vector Infestation (Cal. Civ. Code § 1941):</b> The subject "
+        "premises contained documented cockroach vector infestation that "
+        "injured service animal JAXX's lower extremities and caused a "
+        "3.5-week constructive eviction block. This constitutes a breach "
+        "of the implied warranty of habitability and bars rent collection.",
 
-        "<b>HIPAA Double Standard — William Losik:</b> Plaintiff's agent "
-        "William Losik unlawfully disclosed Defendant's protected health "
-        "information while simultaneously demanding HIPAA compliance from "
-        "Defendant.",
+        # ── Defense 8 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-08 — HIPAA Violation / William Losik PHI Disclosure "
+        "(45 C.F.R. § 164.502):</b> Plaintiff's agent William Losik "
+        "unlawfully disclosed Defendant's protected health information "
+        "to third parties while simultaneously demanding HIPAA compliance "
+        "from Defendant, constituting a willful HIPAA violation.",
 
-        "<b>Judicial Estoppel — 1,062-Email Trap (Zanghi Admission):</b> "
-        "Plaintiff's counsel John Zanghi acknowledged receipt of 1,062 "
-        "documented emails, creating a binding judicial admission "
-        "inconsistent with Plaintiff's claim of no communication.",
+        # ── Defense 9 ───────────────────────────────────────────────────────
+        "<b>DEF-NODE-09 — Judicial Estoppel / 1,062-Email Trap — Zanghi "
+        "Admission (42 U.S.C. § 1983):</b> Plaintiff's counsel John Zanghi "
+        "acknowledged receipt of 1,062 documented emails, creating a binding "
+        "judicial admission directly contradicting Plaintiff's claim of "
+        "non-communication. Plaintiff is judicially estopped from asserting "
+        "Defendant failed to communicate.",
 
-        "<b>Obstruction of Court Access (18 U.S.C. § 1512(c); "
-        "CA Penal Code § 182.5):</b> Plaintiff's blockade extended to "
-        "the Court Clerk email (sfscclerk@sfgov.org), constituting "
-        "obstruction of Defendant's access to the judicial system.",
+        # ── Defense 10 ──────────────────────────────────────────────────────
+        "<b>DEF-NODE-10 — Breach of Covenant of Quiet Enjoyment "
+        "(Cal. Civ. Code § 1927):</b> Plaintiff's documented cockroach "
+        "vector infestation causing injury to service animal JAXX and "
+        "constituting a 3.5-week constructive eviction block constitutes "
+        "a material breach of the covenant of quiet enjoyment. This breach "
+        "creates an absolute statutory bar against rent collection and "
+        "extinguishes Plaintiff's right to possession.",
+
+        # ── Defense 11 ──────────────────────────────────────────────────────
+        "<b>DEF-NODE-11 — Federal Enclave Doctrine / Jurisdictional Bar "
+        "(U.S. Const. Art. I, § 8, cl. 17):</b> The subject property at "
+        "1030 Girard Road is located within the boundaries of the Presidio "
+        "of San Francisco, a federal enclave under exclusive federal "
+        "sovereignty. This state court lacks subject matter jurisdiction "
+        "over land disputes on the federal enclave, mandating immediate "
+        "dismissal with prejudice.",
+
+        # ── Defense 12 ──────────────────────────────────────────────────────
+        "<b>DEF-NODE-12 — Unruh Civil Rights Act Violation "
+        "(Cal. Civ. Code § 51):</b> Plaintiff's arbitrary refusal to "
+        "permit Defendant's authorized cognitive prosthetic assistant "
+        "constitutes discriminatory exclusion under the Unruh Civil Rights "
+        "Act, expanding coverage from housing protections into general "
+        "public accommodation civil rights violations.",
+
+        # ── Defense 13 ──────────────────────────────────────────────────────
+        "<b>DEF-NODE-13 — Illegal Lockout, Utility Disruption, and Tenant "
+        "Harassment (Cal. Civ. Code § 789.3):</b> Plaintiff's agents "
+        "intentionally withdrew clinical supportive housing care, tampered "
+        "with Defendant's access card, and conducted targeted physical "
+        "intimidation of Veterans Tenant Union members Jeffrey Wright and "
+        "Jerome Bartlett. This triggers statutory liquidated damages of "
+        "$100 per day per violation under Cal. Civ. Code § 789.3.",
     ], S)
     sp(story)
 
