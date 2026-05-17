@@ -94,6 +94,121 @@ esign_framework:
   statute: "E-SIGN Act (15 U.S.C. § 7001 et seq.)"
   ca_statute: "UETA (Cal. Civ. Code § 1633.1 et seq.)"
 
+filed_document_registry:
+  total_artifacts: 26
+  filing_date: "May 17, 2026"
+  documents:
+    - doc: 18
+      title: "Final Transmittal Notice"
+      file: "CUD-26-682107_Doc18_FinalTransmittalNotice.pdf"
+      status: "FILED"
+    - doc: 19
+      title: "Motion to Quash 3-Day Notice / Dismiss for CCP § 1162 Defect"
+      file: "CUD-26-682107_Doc19_MotionToQuash3DayNotice.pdf"
+      authority: "CCP §§ 1162, 1166, 1167; Cal. Civ. Code § 1942.5"
+      status: "FILED"
+    - doc: 20
+      title: "Pre-Hearing Procedural Briefing Notice"
+      file: "CUD-26-682107_Doc20_PreHearingProceduralBriefingNotice.pdf"
+      authority: "CCP § 128.7; 2 C.F.R. § 200.435"
+      status: "FILED"
+    - doc: 21
+      title: "Declaration and Exhibit Packet (Exhibits A–F)"
+      file: "CUD-26-682107_Doc21_DeclarationAndExhibitPacket.pdf"
+      exhibits: ["A: POS 3-Day Notice", "B: RAR Nov 20 2025", "C: SMTP 550 Token",
+                 "D: HUD-VASH Agreement", "E: Tri-Agency Confirmations", "F: State Bar Referral"]
+      status: "FILED"
+    - doc: 22
+      title: "Notice of Transmittal of Master Evidentiary Record"
+      file: "CUD-26-682107_Doc22_NoticeOfTransmittalMasterRecord.pdf"
+      sha256: "0x441BABCB59A6D18E92DE1A35193D64B182D6BBA9169D60F24C125FC74550B0FE"
+      status: "FILED"
+    - doc: 23
+      title: "Supplemental Forensic Notice and Cease Adverse Action"
+      file: "CUD-26-682107_Doc23_SupplementalForensicNoticeAndCeaseAdverseAction.pdf"
+      status: "FILED"
+    - doc: 24
+      title: "Notice of Actual Service by Alternative Means"
+      file: "CUD-26-682107_Doc24_NoticeOfActualServiceByAlternativeMeans.pdf"
+      authority: "CCP § 1010.6; Cal. Rules of Court, Rule 2.251"
+      status: "FILED"
+    - doc: 25
+      title: "Master Cryptographic Verification Index"
+      file: "CUD-26-682107_Doc25_MasterCryptographicVerificationIndex.pdf"
+      authority: "Cal. Evid. Code §§ 1552, 1553; Fed. R. Evid. 901(b)(9)"
+      status: "FILED"
+    - doc: 26
+      title: "Supplemental Notice — Video Evidence Habitability Record"
+      file: "CUD-26-682107_Doc26_SupplementalNoticeVideoEvidenceHabitabilityRecord.pdf"
+      status: "FILED"
+    - doc: "26B"
+      title: "Forensic Medical Chemical Injury Video Analysis"
+      file: "CUD-26-682107_Doc26B_ForensicMedicalChemicalInjuryVideoAnalysis.pdf"
+      status: "FILED"
+    - doc: "FDL"
+      title: "Final Demand Letter to Counsel"
+      file: "CUD-26-682107_FinalDemandLetterToCounsel_May17_2026.pdf"
+      recipients: ["jzanghi@ztalaw.com", "bwhite@stp-sf.org"]
+      authority: "CCP § 128.7; Cal. Civ. Code § 1942.5(h)"
+      status: "FILED"
+
+five_threshold_defects:
+  - id: 1
+    title: "Fatal Service Defect"
+    authority: "CCP § 1162; Liebovich v. Shahrokhkhany (1997) 56 Cal.App.4th 511"
+    consequence: "Court lacks subject matter jurisdiction — mandatory dismissal"
+  - id: 2
+    title: "Verification Defect"
+    authority: "CCP § 2015.5"
+    consequence: "Complaint defaults on evidentiary posture — immediate dismissal"
+  - id: 3
+    title: "Federal Enclave Jurisdiction Bar"
+    authority: "U.S. Const. Art. I, § 8, cl. 17; 16 U.S.C. § 460bb"
+    consequence: "Any judgment void ab initio"
+  - id: 4
+    title: "Statutory Retaliation Presumption"
+    authority: "Cal. Civ. Code § 1942.5(a)"
+    consequence: "Full burden of proof shifts to Plaintiff"
+  - id: 5
+    title: "Federal Grant Compliance Bar"
+    authority: "2 C.F.R. § 200.435; HHS OCR No. 25-621293"
+    consequence: "Federal funding bar on litigation cost allocation"
+
+exhibits_a_through_f:
+  A: "Plaintiff's Proof of Service — 3-Day Notice (defective)"
+  B: "Reasonable Accommodation Request — November 20, 2025"
+  C: "SMTP 550 Mimecast Rejection — Token N7uA_6IQ0CiwQL2ibFQZog.us448"
+  D: "HUD-VASH Housing Agreement — Supportive Services Terms"
+  E: "Tri-Agency Active Enforcement Intake Confirmations (HHS/CRD/CalVCB)"
+  F: "State Bar Disciplinary Referral — Exhibit 2 Backdating"
+
+service_recipients:
+  - name: "John Nicholas Zanghi, Esq."
+    bar: "320531"
+    role: "Lead Counsel for Plaintiff"
+    email: "jzanghi@ztalaw.com"
+  - name: "Bradford Christopher White, Esq."
+    bar: "297746"
+    role: "Co-Counsel for Plaintiff"
+    email: "bwhite@stp-sf.org"
+  - name: "SF Superior Court, Dept. 12"
+    role: "Presiding Court"
+    method: "eCourt e-filing portal"
+  - name: "Amy Horrell"
+    role: "HHS OCR Region IX Federal Lead Investigator"
+    email: "Amy.Horrell@hhs.gov"
+  - name: "Anna Moraga Archila"
+    role: "CA Civil Rights Department State Lead Investigator"
+    email: "anna.1931@calcivilrights.gov"
+  - name: "HUD-OIG"
+    role: "Federal Grant Oversight"
+    email: "hotline@hudoig.gov"
+
+calvcb_case:
+  number: "A26-10224054"
+  agency: "California Victim Compensation Board"
+  status: "ACTIVE"
+
 affirmative_defenses:
   total: 13
   nodes:
