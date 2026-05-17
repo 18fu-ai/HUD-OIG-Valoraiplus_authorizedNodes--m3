@@ -9,8 +9,18 @@ court_geometry_rules:
   font_size: 12
   line_leading: 24
   lines_per_page: 28
-  left_margin_points: 108
+  left_margin_points: 108  # CRC Rule 2.100 — absolute 1.5-inch compliance lock
   right_margin_points: 56
+
+node_geometry:
+  font: "Times-Roman"
+  size: 12
+  line_grid_pts: 24
+  lines_per_page: 28
+  left_margin_in: 1.5
+  right_margin_in: 0.778
+  top_margin_in: 1.0
+  bottom_margin_in: 1.0
 
 litigant_identity_matrix:
   legal_name: "DONALD ERNEST GILLSON"
@@ -27,6 +37,7 @@ companion_case_tracking:
   jurisdiction: "San Francisco Superior Court"
   hearing_date: "May 19, 2026"
   hearing_time: "9:00 AM"
+  filing_date: "May 17, 2026"
   filing_deadline: "May 19, 2026 5:00 PM"
 
 evidence_anchors:
@@ -35,16 +46,20 @@ evidence_anchors:
   silence_days: 178
   silence_start: "January 26, 2026"
   silence_end: "May 19, 2026"
+  jaxx_service_animal: true
+  ucsf_records_filed: true
 
 federal_investigations:
   hhs_ocr:
     case_number: "25-621293"
     investigator: "Amy Horrell"
     email: "amy.horrell@hhs.gov"
+    basis: "ADA Title II / Section 504"
   ccrd:
     case_number: "202601-33270627"
     investigator: "Anna Moraga Archila"
     email: "anna.moraga@dfeh.ca.gov"
+    basis: "FEHA / Fair Housing"
 
 adverse_parties:
   property_manager: "Jerome Bradford"
@@ -58,3 +73,7 @@ adverse_parties:
 opposing_counsel_service:
   fax: "(415) 748-7687"
   firm: "Zanghi Law"
+
+esign_framework:
+  statute: "E-SIGN Act (15 U.S.C. § 7001 et seq.)"
+  ca_statute: "UETA (Cal. Civ. Code § 1633.1 et seq.)"
