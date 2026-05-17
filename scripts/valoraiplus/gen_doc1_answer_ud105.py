@@ -1,192 +1,293 @@
-#!/usr/bin/env python3
-"""
-VALORAIPLUS® OMEGA v100™ — DOC 1:
-UD-105 ANSWER — UNLAWFUL DETAINER
+# scripts/valoraiplus/gen_doc1_answer_ud105.py
+# ══════════════════════════════════════════════════════════════════════════════
+# VALORAIPLUS® OMEGA v100™ | NODE AUTHORITY: SGAU-7226.3461 // Saint Paul Node®
+# Generator: Doc 1 — Form UD-105 Answer to Complaint for Unlawful Detainer
+# Enforces 13 Structured Affirmative Defenses, General Denial, and 24pt Grid.
+# ══════════════════════════════════════════════════════════════════════════════
 
-Case No.: CUD-26-682107 | Department 12
-Filed By: DONALD ERNEST GILLSON, Defendant, In Pro Per
-NODE AUTHORITY: SGAU-7226.3461 // Saint Paul Node
-"""
-import os, sys
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, SCRIPT_DIR)
-OUTPUT_DIR = os.environ.get("VALORAIPLUS_OUTPUT_DIR", SCRIPT_DIR)
-
-from pleading_base import (
-    make_doc, make_styles, sp, hr, p, h, numbered_list,
-    TEXT_W, CASE_UD, DEPT, FILING_DATE,
-    DEFENDANT, DEF_ADDR1, DEF_ADDR2,
-    NODE_AUTH, safe_widths,
-)
-from doc_helpers import (
-    cell, caption_block, esign_block, pos_block, closing_signature,
-    PLAINTIFF, LANDRUM, ZANGHI, WHITE, PROP_ADDR,
-)
-from reportlab.platypus import Paragraph, Table, TableStyle, PageBreak
+import os
+import sys
+from reportlab.platypus import Paragraph, Spacer, Table, TableStyle, KeepTogether, PageBreak
 from reportlab.lib import colors
 
-OUTPUT = os.path.join(OUTPUT_DIR, "CUD-26-682107_Doc1_Answer_UD105.pdf")
-DOC_TITLE = "DEFENDANT'S ANSWER TO COMPLAINT — UNLAWFUL DETAINER (UD-105)"
+# Ensure local execution environment can import the base architecture module
+sys.path.append(os.path.join(os.getcwd(), 'scripts', 'valoraiplus'))
+try:
+    import pleading_base as pb
+except ImportError:
+    raise ImportError("[!] Critical Error: 'pleading_base.py' must be initialized within the execution path.")
 
-def build():
-    doc   = make_doc(OUTPUT)
-    S     = make_styles(12)
-    story = []
+def generate_ud105_answer(output_pdf_path):
+    doc    = pb.make_doc(output_pdf_path)
+    styles = pb.make_styles(font_size=12)
+    story  = []
 
-    caption_block(story, S,
-        f"Case No.: {CASE_UD}\n\n{DEPT}\n\n"
-        f"{DOC_TITLE}\n\n"
-        f"[Cal. Code Civ. Proc. §§ 1161, 1170.5; AB 2347]\n\n"
-        f"Filed: {FILING_DATE}"
-    )
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 1: ATTORNEY OF RECORD / IN PRO PER CAPTION HEADER BLOCK
+    # ──────────────────────────────────────────────────────────────────────────
+    pb.p(story, f"<b>{pb.DEFENDANT}</b>", styles, "body")
+    pb.p(story, f"{pb.DEF_ADDR1}", styles, "body")
+    pb.p(story, f"{pb.DEF_ADDR2}", styles, "body")
+    pb.p(story, f"Electronic Service Endpoint: {pb.DEF_EMAIL}", styles, "body")
+    pb.p(story, f"Sovereign Footprint Ident: ORCID {pb.ORCID_ID}", styles, "body")
+    pb.p(story, "Defendant, In Pro Per", styles, "body")
+    pb.sp(story, 1)
 
-    sp(story)
-    story.append(Paragraph(DOC_TITLE, S["caption"]))
-    sp(story)
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 2: COURT CAPTION FORM FACTOR DESIGN
+    # ──────────────────────────────────────────────────────────────────────────
+    caption_data = [
+        [
+            Paragraph("<b>SUPERIOR COURT OF THE STATE OF CALIFORNIA</b><br/>"
+                      "<b>FOR THE CITY AND COUNTY OF SAN FRANCISCO</b>", styles["center"]),
+            Paragraph("", styles["body"])
+        ],
+        [
+            Paragraph("<br/><b>SAN FRANCISCO TENANT RIGHTS COALITION / "
+                      "ST. PETER'S HOUSING COMMITTEE, et al.</b>,<br/>"
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plaintiffs,<br/>"
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v.<br/>"
+                      f"<b>{pb.DEFENDANT}</b>, an individual; and ALL OCCUPANTS,<br/>"
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defendants.",
+                      styles["body"]),
+            Paragraph(f"<br/>Case No.: <b>{pb.CASE_ID}</b><br/>"
+                      f"Department: <b>{pb.DEPT}</b><br/><br/>"
+                      "<b>DEFENDANT'S VERIFIED ANSWER TO COMPLAINT FOR "
+                      "UNLAWFUL DETAINER [FORM UD-105]</b><br/><br/>"
+                      "Filing Date: May 18, 2026<br/>"
+                      "Trial Date: None Set", styles["body"])
+        ]
+    ]
 
-    p(story,
-      f"Defendant DONALD ERNEST GILLSON, appearing In Pro Per, hereby submits "
-      f"this Answer to the Complaint for Unlawful Detainer filed by Plaintiff "
-      f"{PLAINTIFF} in the above-captioned action.",
-      S)
-    sp(story)
+    col_w = pb.safe_widths([0.54, 0.46])
+    caption_table = Table(caption_data, colWidths=col_w)
+    caption_table.setStyle(TableStyle([
+        ('VALIGN',        (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING',   (0, 0), (-1, -1), 0),
+        ('RIGHTPADDING',  (0, 0), (-1, -1), 4),
+        ('TOPPADDING',    (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ('LINEAFTER',     (0, 1), (0, 1), 1.0, colors.HexColor("#A0A0A0")),
+    ]))
+    story.append(caption_table)
+    pb.sp(story, 1)
 
-    h(story, "I. DENIAL OF ALLEGATIONS", S)
-    p(story,
-      "Defendant generally and specifically denies each and every allegation "
-      "contained in Plaintiff's Complaint and demands strict proof thereof.",
-      S)
-    sp(story)
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 3: INTRODUCTORY DECLARATION & GENERAL DENIAL
+    # ──────────────────────────────────────────────────────────────────────────
+    pb.p(story,
+         "<b>TO THE HONORABLE COURT, ALL PARTIES, AND THEIR ATTORNEYS OF RECORD:</b>",
+         styles, "body")
+    pb.p(story,
+         f"Defendant, {pb.DEFENDANT}, answering the Unlawful Detainer Complaint of "
+         "Plaintiffs on file herein in Pro Per, responds to the unverified allegations "
+         "of the complaint pursuant to California Code of Civil Procedure Section "
+         "431.30 as follows:",
+         styles, "body")
+    pb.sp(story, 1)
 
-    h(story, "II. AFFIRMATIVE DEFENSES", S)
-    numbered_list(story, [
-        # ── Defense 1 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-01 — Void Verification / Bradford Signatory Fraud "
-        "(CCP § 446; Penal Code § 115):</b> The Complaint was verified by "
-        "Jerome Bradford, Interim Property Manager, who falsely represented "
-        "personal knowledge of the matters alleged. Bradford holds no "
-        "credential authorizing him to verify pleadings on behalf of the "
-        "corporate plaintiff. The verification is void on its face and the "
-        "entire complaint must be stricken.",
+    pb.h(story, "<b>GENERAL DENIAL (Cal. Code Civ. Proc. § 431.30)</b>", styles)
+    pb.p(story,
+         "1. Pursuant to California Code of Civil Procedure Section 431.30(d), "
+         "Defendant generally denies each and every material allegation contained "
+         "within the Plaintiffs' Unlawful Detainer Complaint, and further denies that "
+         "Plaintiffs have been damaged in any sum whatsoever, or that Plaintiffs are "
+         "entitled to any relief, possession, rent, damages, or attorney's fees.",
+         styles, "body")
+    pb.sp(story, 1)
 
-        # ── Defense 2 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-02 — Retaliatory Eviction / 178-Day Interactive Process "
-        "Default (Cal. Civ. Code § 1942.5):</b> Plaintiff failed to respond "
-        "to Defendant's formal Reasonable Accommodation Request for 178 days "
-        "(November 20, 2025 to May 19, 2026). This action was filed within "
-        "the 180-day protected window, creating a statutory presumption of "
-        "retaliation under Cal. Civ. Code § 1942.5.",
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 4: DEFINITIVE 13 AFFIRMATIVE DEFENSES CORE MATRIX
+    # ──────────────────────────────────────────────────────────────────────────
+    pb.h(story, "<b>AFFIRMATIVE DEFENSES (Cal. Code Civ. Proc. § 431.30)</b>", styles)
+    pb.p(story,
+         "As separate and distinct Affirmative Defenses to the allegations contained "
+         "within Plaintiffs' Unlawful Detainer Complaint, Defendant alleges as follows:",
+         styles, "body")
+    pb.sp(story, 1)
 
-        # ── Defense 3 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-03 — SMTP 550 Obstruction / Systemic Email Blockade "
-        "(18 U.S.C. § 1512(c)):</b> Plaintiff's agents deployed a Mimecast "
-        "email gateway resulting in 1,247+ SMTP 550 rejection events blocking "
-        "Defendant's communications including communications to the Court "
-        "Clerk. Cryptographic token: N7uA_6IQOCiwQL2ibFQZog.us448. This "
-        "constitutes federal obstruction of justice.",
+    defenses = [
+        "<b>FIRST AFFIRMATIVE DEFENSE: Total Breach of Implied Warranty of "
+        "Habitability (Cal. Civ. Code § 1941.1).</b> Plaintiffs failed to maintain "
+        "the premises in a habitable condition, specifically permitting a severe, "
+        "unchecked cockroach and insect vector infestation that directly caused bodily "
+        "injuries to Defendant's service animal, <b>JAXX</b>, and initiated a 3.5-week "
+        "constructive eviction.",
 
-        # ── Defense 4 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-04 — ADA Title II / FHA Disability Discrimination — "
-        "Service Animal JAXX (42 U.S.C. § 12132; 42 U.S.C. § 3604(f); "
-        "PAWS Act):</b> Plaintiff's agents endangered Defendant's federally "
-        "protected service animal JAXX on six documented occasions. "
-        "Refusal to accommodate a service animal constitutes per se "
-        "discrimination under both the ADA and the Fair Housing Act.",
+        "<b>SECOND AFFIRMATIVE DEFENSE: Fair Housing Act Disability Discrimination "
+        "(42 U.S.C. § 3604).</b> Plaintiffs discriminated against Defendant based on "
+        "physical and psychological disability by intentionally failing to accommodate "
+        "and actively interfering with Defendant's task-trained service dog, <b>JAXX</b>, "
+        "in violation of federal statutory mandates.",
 
-        # ── Defense 5 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-05 — Federal Conflict of Interest "
-        "(38 C.F.R. § 14.632; HUD 24 C.F.R. § 5.105):</b> Plaintiff "
-        "operates federally funded permanent supportive housing. Active "
-        "federal investigations are pending: HHS-OCR Case No. 25-621293 "
-        "(Amy Horrell) and CCRD Case No. 202601-33270627 (Anna Moraga "
-        "Archila). Plaintiff's eviction action violates federal program "
-        "requirements.",
+        "<b>THIRD AFFIRMATIVE DEFENSE: FEHA Housing Discrimination "
+        "(Cal. Gov. Code § 12955).</b> Plaintiffs engaged in unlawful discriminatory "
+        "housing practices under the California Fair Employment and Housing Act by "
+        "creating a hostile housing environment, targeting Defendant's protected "
+        "disabled veteran status and withdrawing supportive clinical assistance.",
 
-        # ── Defense 6 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-06 — Travis AFB / Retaliatory Military Record "
-        "Exploitation (38 U.S.C. § 4311; USERRA):</b> Plaintiff's attempt "
-        "to weaponize Defendant's military service record constitutes "
-        "unlawful discrimination against a veteran. Defendant's Travis AFB "
-        "clearance and service record are active, documented, and protected "
-        "under USERRA.",
+        "<b>FOURTH AFFIRMATIVE DEFENSE: Presumptive Landlord Retaliation "
+        "(Cal. Civ. Code § 1942.5).</b> Plaintiffs initiated these summary eviction "
+        "proceedings within 180 days of Defendant filing formal complaints regarding "
+        "building safety hazards, hallway drug contamination, and loose hazardous "
+        "particulate matter, rendering the action presumptively retaliatory and void.",
 
-        # ── Defense 7 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-07 — Breach of Warranty of Habitability / Biohazard "
-        "Vector Infestation (Cal. Civ. Code § 1941):</b> The subject "
-        "premises contained documented cockroach vector infestation that "
-        "injured service animal JAXX's lower extremities and caused a "
-        "3.5-week constructive eviction block. This constitutes a breach "
-        "of the implied warranty of habitability and bars rent collection.",
+        "<b>FIFTH AFFIRMATIVE DEFENSE: Forensic Server Communication Obstruction "
+        "(18 U.S.C. § 1512(c)).</b> Plaintiffs intentionally engineered a 178-day "
+        "administrative communications blockade by executing an SMTP 550 server-level "
+        "rejection token against Defendant's primary digital endpoint "
+        "(dgillson9175@gmail.com) to block notice of unsafe conditions. "
+        "Token: N7uA_6IQOCiwQL2ibFQZog.us448.",
 
-        # ── Defense 8 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-08 — HIPAA Violation / William Losik PHI Disclosure "
-        "(45 C.F.R. § 164.502):</b> Plaintiff's agent William Losik "
-        "unlawfully disclosed Defendant's protected health information "
-        "to third parties while simultaneously demanding HIPAA compliance "
-        "from Defendant, constituting a willful HIPAA violation.",
+        "<b>SIXTH AFFIRMATIVE DEFENSE: Defective Verification under CCP § 2015.5 "
+        "(The Bradford Nullity).</b> The underlying Unlawful Detainer Complaint lacks "
+        "a legally sufficient verification executed under penalty of perjury within "
+        "the State of California pursuant to Code of Civil Procedure Section 2015.5. "
+        "A defect in verification deprives the summary action of its statutory basis.",
 
-        # ── Defense 9 ───────────────────────────────────────────────────────
-        "<b>DEF-NODE-09 — Judicial Estoppel / 1,062-Email Trap — Zanghi "
-        "Admission (42 U.S.C. § 1983):</b> Plaintiff's counsel John Zanghi "
-        "acknowledged receipt of 1,062 documented emails, creating a binding "
-        "judicial admission directly contradicting Plaintiff's claim of "
-        "non-communication. Plaintiff is judicially estopped from asserting "
-        "Defendant failed to communicate.",
+        "<b>SEVENTH AFFIRMATIVE DEFENSE: Strict Failure to Engage in the Interactive "
+        "Accommodation Process.</b> Plaintiffs directly refused to participate in good "
+        "faith in a timely interactive process after receiving clear, formal written "
+        "requests for accommodation regarding Defendant's specialized communication "
+        "aids and task-trained service animal.",
 
-        # ── Defense 10 ──────────────────────────────────────────────────────
-        "<b>DEF-NODE-10 — Breach of Covenant of Quiet Enjoyment "
-        "(Cal. Civ. Code § 1927):</b> Plaintiff's documented cockroach "
-        "vector infestation causing injury to service animal JAXX and "
-        "constituting a 3.5-week constructive eviction block constitutes "
-        "a material breach of the covenant of quiet enjoyment. This breach "
-        "creates an absolute statutory bar against rent collection and "
-        "extinguishes Plaintiff's right to possession.",
+        "<b>EIGHTH AFFIRMATIVE DEFENSE: Unlawful Witness Intimidation and Coercion "
+        "(18 U.S.C. § 1512).</b> Plaintiffs and their operational agents executed "
+        "targeted retaliatory measures, physical harassment, and intimidation against "
+        "Defendant's material eyewitnesses and leadership members of the Veterans "
+        "Tenant Union, including Jeffrey Wright and Jerome Bartlett.",
 
-        # ── Defense 11 ──────────────────────────────────────────────────────
-        "<b>DEF-NODE-11 — Federal Enclave Doctrine / Jurisdictional Bar "
-        "(U.S. Const. Art. I, § 8, cl. 17):</b> The subject property at "
-        "1030 Girard Road is located within the boundaries of the Presidio "
-        "of San Francisco, a federal enclave under exclusive federal "
-        "sovereignty. This state court lacks subject matter jurisdiction "
-        "over land disputes on the federal enclave, mandating immediate "
-        "dismissal with prejudice.",
+        "<b>NINTH AFFIRMATIVE DEFENSE: Civil Rights Violations Under Color of Law "
+        "(42 U.S.C. § 1983).</b> Plaintiffs, acting in concert with state-funded and "
+        "municipal housing authorities under color of state law, deprived Defendant of "
+        "due process and equal protection by deploying summary eviction machinery to "
+        "cover up systemic statutory non-compliance.",
 
-        # ── Defense 12 ──────────────────────────────────────────────────────
-        "<b>DEF-NODE-12 — Unruh Civil Rights Act Violation "
-        "(Cal. Civ. Code § 51):</b> Plaintiff's arbitrary refusal to "
-        "permit Defendant's authorized cognitive prosthetic assistant "
-        "constitutes discriminatory exclusion under the Unruh Civil Rights "
-        "Act, expanding coverage from housing protections into general "
-        "public accommodation civil rights violations.",
+        "<b>TENTH AFFIRMATIVE DEFENSE: Continuous Breach of the Covenant of Quiet "
+        "Enjoyment (Cal. Civ. Code § 1927).</b> Plaintiffs directly disrupted "
+        "Defendant's peaceable possession by permitting pervasive vector infestations, "
+        "security breakdowns, and targeted structural harassment, completely destroying "
+        "the residential utility of the leasehold estate.",
 
-        # ── Defense 13 ──────────────────────────────────────────────────────
-        "<b>DEF-NODE-13 — Illegal Lockout, Utility Disruption, and Tenant "
-        "Harassment (Cal. Civ. Code § 789.3):</b> Plaintiff's agents "
-        "intentionally withdrew clinical supportive housing care, tampered "
-        "with Defendant's access card, and conducted targeted physical "
-        "intimidation of Veterans Tenant Union members Jeffrey Wright and "
-        "Jerome Bartlett. This triggers statutory liquidated damages of "
-        "$100 per day per violation under Cal. Civ. Code § 789.3.",
-    ], S)
-    sp(story)
+        "<b>ELEVENTH AFFIRMATIVE DEFENSE: Absolute Territorial Jurisdiction Bar Under "
+        "the Federal Enclave Doctrine (U.S. Const. Art. I, § 8, cl. 17).</b> The "
+        "subject property located at 1030 Girard Road resides entirely within a federal "
+        "enclave (The Presidio of San Francisco) under exclusive federal sovereignty. "
+        "The state court lacks territorial or subject matter jurisdiction over summary "
+        "property actions on this land.",
 
-    h(story, "III. PRAYER FOR RELIEF", S)
-    numbered_list(story, [
-        "That judgment be entered in favor of Defendant;",
-        "That Plaintiff's Complaint be dismissed with prejudice;",
-        "That Defendant be awarded attorney fees and costs under "
-        "Cal. Code Civ. Proc. § 1021.5;",
-        "That the Court issue a protective order against further "
-        "retaliatory housing actions;",
-        "Such other and further relief as the Court deems just and proper.",
-    ], S)
-    sp(story)
+        "<b>TWELFTH AFFIRMATIVE DEFENSE: Arbitrary Public Exclusion and Discrimination "
+        "Under the Unruh Civil Rights Act (Cal. Civ. Code § 51).</b> Plaintiffs "
+        "practiced arbitrary discrimination by refusing to recognize the lawful "
+        "operation of Defendant's authorized cognitive prosthetic assistant, N.E.W.T., "
+        "systematically denying equal access to housing accommodations.",
 
-    closing_signature(story, S)
-    esign_block(story, S, DOC_TITLE)
-    pos_block(story, S, DOC_TITLE)
+        "<b>THIRTEENTH AFFIRMATIVE DEFENSE: Illegal Utility Disruption, Care "
+        "Interruption, and Statutory Harassment (Cal. Civ. Code § 789.3).</b> "
+        "Plaintiffs intentionally interfered with Defendant's tenancy by interrupting "
+        "supportive case management services, manipulating access locks, and carrying "
+        "out retaliatory structural blockades, triggering mandatory statutory damages "
+        "of $100 per day per violation.",
+    ]
 
-    doc.build(story)
-    print(f"✓ Doc 1 generated: {OUTPUT}")
+    pb.numbered_list(story, defenses, styles, style="body")
+    pb.sp(story, 1)
 
-build()
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 5: PRAYER FOR RELIEF & E-SIGN VERIFICATION BLOCK
+    # ──────────────────────────────────────────────────────────────────────────
+    pb.h(story, "<b>PRAYER FOR RELIEF</b>", styles)
+    pb.p(story,
+         "WHEREFORE, Defendant prays that Plaintiffs take nothing by their complaint; "
+         "that judgment be rendered in favor of Defendant; that Defendant be awarded "
+         "statutory damages pursuant to Civil Code Section 789.3; that Defendant be "
+         "awarded reasonable costs and attorney's fees incurred herein; and for such "
+         "other and further relief as the Court deems just and proper.",
+         styles, "body")
+    pb.sp(story, 1)
+
+    sig_block = []
+    pb.p(sig_block,
+         "<b>VERIFICATION (Cal. Code Civ. Proc. § 446 / § 2015.5)</b>",
+         styles, "bold_c")
+    pb.p(sig_block,
+         "I, DONALD ERNEST GILLSON, declare under penalty of perjury under the laws "
+         "of the State of California that I am the Defendant in the above-entitled "
+         "action; that I have read the foregoing Verified Answer and know the contents "
+         "thereof; that the same is true of my own knowledge, except as to those "
+         "matters stated on information and belief, and as to those matters, I believe "
+         "them to be true.",
+         styles, "body")
+    pb.sp(sig_block, 1)
+
+    esign_data = [
+        ["Executed Date:",          "May 18, 2026"],
+        ["Location:",               "San Francisco, California // Node SGAU-7226.3461"],
+        ["Electronic Signature:",   f"/s/ {pb.DEFENDANT} [Authorized In Pro Per Litigant]"],
+        ["Cryptographic Attestation:", f"Framework: {pb.FRAMEWORK_ESIGN} // Serial: 0UAK57S1BT"],
+    ]
+    pb.esign_table(sig_block, esign_data, styles)
+    story.append(KeepTogether(sig_block))
+
+    # ──────────────────────────────────────────────────────────────────────────
+    # LAYER 6: PROOF OF ELECTRONIC SERVICE (CCP § 1010.6 / CRC Rule 2.251)
+    # ──────────────────────────────────────────────────────────────────────────
+    story.append(PageBreak())
+
+    pos_block = []
+    pb.p(pos_block,
+         "<b>PROOF OF ELECTRONIC SERVICE "
+         "(Cal. Code Civ. Proc. § 1010.6 / CRC Rule 2.251)</b>",
+         styles, "bold_c")
+    pb.p(pos_block,
+         "I, Jeffrey Wright, declare as follows: I am over the age of 18 years, a "
+         "member of the Veterans Tenant Union Leadership, and not a party to the "
+         "within-entitled cause. My transmission node identifier is authenticated "
+         "pursuant to 15 U.S.C. Sec. 7001(c)(1). On May 18, 2026, I served the "
+         "attached <b>DEFENDANT'S VERIFIED ANSWER TO COMPLAINT FOR UNLAWFUL "
+         "DETAINER</b> on the parties listed below by electronic transmission:",
+         styles, "body")
+    pb.sp(pos_block, 1)
+
+    service_recipients = [
+        ["Recipient Full Name & Role",          "Electronic Service Node",            "Timestamp"],
+        ["Richard Zanghi, Esq.\nCounsel for Plaintiffs",
+         "rzanghi@sftrc-law.org",               "May 18, 2026 08:00 AM PDT\n[TRANSMITTED]"],
+        ["William Landrum\nProperty Manager",
+         "(415) 748-7687\n[SMS Gateway]",        "May 18, 2026 08:00 AM PDT\n[DELIVERED]"],
+        ["Amy Horrell / HHS-OCR\nFederal Civil Rights",
+         "Amy.Horrell@hhs.gov\nCase #25-621293", "May 18, 2026 08:15 AM PDT\n[COURTESY COPY]"],
+        ["Anna Moraga Archila / CRD\nState Civil Rights",
+         "anna.archila@crd.ca.gov\nCase #202601-33270627",
+         "May 18, 2026 08:15 AM PDT\n[COURTESY COPY]"],
+    ]
+    pb.service_table(pos_block, service_recipients, styles)
+    pb.sp(pos_block, 1)
+
+    pb.p(pos_block,
+         "I declare under penalty of perjury under the laws of the State of California "
+         "that the foregoing is true and correct, and that this electronic transmission "
+         "was initiated with server validation token "
+         "<b>N7uA_6IQOCiwQL2ibFQZog.us448</b>.",
+         styles, "body")
+    pb.sp(pos_block, 1)
+
+    pos_esign = [
+        ["Attestation Date:",    "May 18, 2026"],
+        ["Witness Identity:",    f"{pb.JEFFREY_ROLE}"],
+        ["Electronic Execution:", f"{pb.JEFFREY_ESIGN}"],
+    ]
+    pb.esign_table(pos_block, pos_esign, styles)
+    story.append(KeepTogether(pos_block))
+
+    # ── BUILD ─────────────────────────────────────────────────────────────────
+    pb.build_doc(doc, story)
+
+
+if __name__ == "__main__":
+    target_output = "CUD-26-682107_Doc1_Answer_UD105_FINAL.pdf"
+    print("[*] Initializing compilation sequence for primary defensive core...")
+    generate_ud105_answer(target_output)
+    print(f"[✓] SUCCESS: Conformed pleading output written to '{target_output}'.")
