@@ -57,9 +57,7 @@ def make_styles(font_size=12):
     TB  = "Times-Bold"
     TI  = "Times-Italic"
     sz  = font_size
-    
-    # Core Leading Hack: Fixed tightly to 24pt to keep text aligned on the 28-line grid
-    lh  = LINE_GRID_Y  
+    lh  = LINE_GRID_Y  # Fixed to 24pt to keep text aligned on the 28-line grid
 
     return {
         "caption": ParagraphStyle("caption", fontName=TB, fontSize=sz,
@@ -92,7 +90,7 @@ def make_styles(font_size=12):
                                       leading=15, alignment=TA_LEFT),
     }
 
-# ── Two-pass canvas for accurate "Page X of Y" footers ───────────────────────────
+# ── Two-pass canvas for accurate "Page X of Y" footers ───────────────────────
 class _TwoPassCanvas(_canvas_mod.Canvas):
     """
     Captures all page states on the first pass, then stamps every page
@@ -122,51 +120,44 @@ class _TwoPassCanvas(_canvas_mod.Canvas):
         self.setStrokeColor(colors.HexColor("#A0A0A0"))
         self.setLineWidth(1.0)
 
-        # Double vertical gutter rule compliance check (1.5" Gutter Buffer)
+        # Double vertical gutter rules
         self.line(RULE_INNER, BOT_MARGIN, RULE_INNER, h - TOP_MARGIN)
         self.line(RULE_OUTER, BOT_MARGIN, RULE_OUTER, h - TOP_MARGIN)
 
-        # Right-hand margin bounding line guideline
+        # Right-hand margin rule
         self.line(w - RIGHT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, h - TOP_MARGIN)
 
-        # Bottom horizontal text bounding boundary rule
+        # Bottom horizontal boundary rule
         self.line(LEFT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, BOT_MARGIN)
 
-        # 28-Line Left Gutter Numbering Index (Exact Vertical Line Spacing Registration)
+        # 28-line left gutter numbering index
         self.setFont("Times-Bold", 10)
         self.setFillColor(colors.HexColor("#333333"))
-        
-        start_y = h - TOP_MARGIN  # 1.0-inch top vertical line anchor row
-        
+        start_y = h - TOP_MARGIN
         for i in range(1, LINES_PER_PAGE + 1):
             y = start_y - ((i - 0.5) * LINE_GRID_Y)
             self.drawCentredString(RULE_INNER - 12, y - 3, str(i))
-            
-            # Non-printable subtle grid row markers to ensure absolute alignment
+            # Subtle non-printable grid row marker
             self.setStrokeColor(colors.HexColor("#F9F9F9"))
             self.setLineWidth(0.5)
             self.line(LEFT_MARGIN, y - 8, w - RIGHT_MARGIN, y - 8)
 
-        # Reset stroke color for primary layout lines
         self.setStrokeColor(colors.HexColor("#A0A0A0"))
         self.setLineWidth(1.0)
 
-        # Accurate Dynamic "Page X of Y" forensic footer stamp
+        # Accurate "Page X of Y" forensic footer
         self.setFont("Times-Roman", 10)
         self.setFillColor(colors.HexColor("#444444"))
-        page_num = self._pageNumber
-        
+        page_num    = self._pageNumber
         footer_text = f"Node Auth: {NODE_AUTH} | Case No. {CASE_ID}"
         page_string = f"Page {page_num} of {total_pages}"
-        
         self.drawString(LEFT_MARGIN, BOT_MARGIN - 24, footer_text)
         self.drawRightString(w - RIGHT_MARGIN, BOT_MARGIN - 24, page_string)
         self.restoreState()
 
 
-# Legacy Single-Pass Callback Handler (Kept for backwards compatibility)
+# ── Legacy single-pass callback (kept for backwards compatibility) ─────────────
 def draw_pleading_page(canv, doc):
-    """Legacy single-pass callback — used only if make_doc is bypassed."""
     canv.saveState()
     w, h = letter
     canv.setStrokeColor(colors.black)
@@ -182,6 +173,7 @@ def draw_pleading_page(canv, doc):
     canv.setFont("Times-Roman", 10)
     canv.drawCentredString(w / 2, BOT_MARGIN - 0.35 * inch, f"— {doc.page} —")
     canv.restoreState()
+
 
 # ── Document factory ──────────────────────────────────────────────────────────
 def make_doc(output_path):
@@ -201,7 +193,6 @@ def make_doc(output_path):
         leftPadding=0, rightPadding=0,
         topPadding=0,  bottomPadding=0,
     )
-    # No onPage callback — infrastructure is drawn by _TwoPassCanvas on second pass
     template = PageTemplate(id="pleading", frames=[frame])
     doc.addPageTemplates([template])
     return doc
@@ -211,37 +202,32 @@ def build_doc(doc, story):
     """
     Build the document using the two-pass canvas so every page receives
     an accurate 'Page X of Y' footer and all pleading paper infrastructure
-    (gutter rules, line numbers) is stamped correctly.
-    Signature blocks wrapped in KeepTogether will not orphan across pages.
+    is stamped correctly. Signature blocks wrapped in KeepTogether will
+    not orphan across pages.
     """
     doc.build(story, canvasmaker=_TwoPassCanvas)
 
-# ── Table geometry helpers ───────────────────────────────────────────────────
-CELL_PAD = 5   # points — left AND right padding per cell
 
-def safe_widths(fractions, n_cols=None):
+# ── Table geometry helpers ────────────────────────────────────────────────────
+CELL_PAD = 5  # points — left AND right padding per cell
+
+def safe_widths(fractions):
     """
-    Convert a list of fractional column widths (summing to 1.0) into
-    absolute point values that fit exactly within TEXT_W after accounting
-    for cell padding. Pass fractions as a list of floats, e.g.:
-        safe_widths([0.44, 0.56])   -> two columns
-        safe_widths([0.30, 0.50, 0.20]) -> three columns
-    The returned list sums to TEXT_W exactly.
+    Convert fractional column widths (summing to 1.0) into absolute point
+    values fitting within TEXT_W after cell padding.
     """
-    total_pad = 2 * CELL_PAD * len(fractions)   # left+right per column × ncols
-    usable    = TEXT_W - total_pad               # net drawable width
+    total_pad = 2 * CELL_PAD * len(fractions)
+    usable    = TEXT_W - total_pad
     cols      = [usable * f for f in fractions]
-    # distribute any rounding residual to the last column
-    diff = TEXT_W - total_pad - sum(cols)
+    diff      = TEXT_W - total_pad - sum(cols)
     cols[-1] += diff
     return cols
 
 
 def safe_widths_abs(abs_pts):
     """
-    Validate and clamp a list of absolute point column widths so they
-    never exceed TEXT_W in total (including padding). Scales proportionally
-    if the sum would overflow.
+    Clamp absolute point column widths so they never exceed TEXT_W in total.
+    Scales proportionally if overflow detected.
     """
     total_pad = 2 * CELL_PAD * len(abs_pts)
     usable    = TEXT_W - total_pad
@@ -254,10 +240,7 @@ def safe_widths_abs(abs_pts):
 
 # ── Shared story helpers ──────────────────────────────────────────────────────
 def sp(story, n=1):
-    """
-    Appends a vertical spacer calibrated directly to multiples of the 24pt line grid.
-    Prevents fractional paragraph tracking errors.
-    """
+    """Spacer calibrated to multiples of the 24pt line grid."""
     story.append(Spacer(1, n * LINE_GRID_Y))
 
 def hr(story):
@@ -272,18 +255,14 @@ def h(story, text, S):
 
 def numbered_list(story, items, S, style="body"):
     """
-    Render a numbered list with proper two-column table alignment.
-    Each item is a separate table so long items can split across pages.
-    Column widths use safe_widths to prevent margin bleeding.
+    Render a numbered list as two-column tables using safe_widths to
+    prevent margin bleeding. Each item is a separate table to allow
+    page-splitting on long entries.
     """
-    num_w, text_w = safe_widths([0.05, 0.95])   # Exact decimal column distribution
+    num_w, text_w = safe_widths([0.05, 0.95])
     for i, item in enumerate(items, 1):
-        row = [[
-            Paragraph(f"{i}.", S[style]),
-            Paragraph(item, S[style])
-        ]]
-        tbl = Table(row, colWidths=[num_w, text_w],
-                    splitByRow=True)   # allow tall cells to split across pages
+        row = [[Paragraph(f"{i}.", S[style]), Paragraph(item, S[style])]]
+        tbl = Table(row, colWidths=[num_w, text_w], splitByRow=True)
         tbl.setStyle(TableStyle([
             ("VALIGN",        (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING",   (0, 0), (-1, -1), 0),
@@ -292,23 +271,16 @@ def numbered_list(story, items, S, style="body"):
             ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
         ]))
         story.append(tbl)
-        # Append micro row spacer to stabilize row flow limits
         story.append(Spacer(1, 4))
 
 def esign_table(story, rows, S):
     """
-    Render a shaded E-SIGN attestation table.
-    All cell values are wrapped in Paragraph objects so long strings
-    wrap inside the cell boundary instead of overflowing the right edge.
+    Render a shaded E-SIGN attestation table with wrapped Paragraph cells.
     """
-    label_style = ParagraphStyle(
-        "esign_label", fontName="Times-Bold", fontSize=11, leading=15,
-        wordWrap="CJK",
-    )
-    value_style = ParagraphStyle(
-        "esign_value", fontName="Times-Roman", fontSize=11, leading=15,
-        wordWrap="CJK",
-    )
+    label_style = ParagraphStyle("esign_label", fontName="Times-Bold",
+                                  fontSize=11, leading=15, wordWrap="CJK")
+    value_style = ParagraphStyle("esign_value", fontName="Times-Roman",
+                                  fontSize=11, leading=15, wordWrap="CJK")
     para_rows = []
     for row in rows:
         label = row[0] if isinstance(row[0], Paragraph) else Paragraph(str(row[0]), label_style)
@@ -316,31 +288,25 @@ def esign_table(story, rows, S):
         para_rows.append([label, value])
     tbl = Table(para_rows, colWidths=safe_widths([0.26, 0.74]))
     tbl.setStyle(TableStyle([
-        ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("LEFTPADDING",   (0, 0), (-1, -1), 6),
-        ("RIGHTPADDING",  (0, 0), (-1, -1), 6),
-        ("TOPPADDING",    (0, 0), (-1, -1), 4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-        ("ROWBACKGROUNDS",(0, 0), (-1, -1), [colors.HexColor("#F9F9F9"), colors.white]),
-        ("BOX",           (0, 0), (-1, -1), 0.75, colors.HexColor("#888888")),
-        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#DDDDDD")),
+        ("VALIGN",         (0, 0), (-1, -1), "TOP"),
+        ("LEFTPADDING",    (0, 0), (-1, -1), 6),
+        ("RIGHTPADDING",   (0, 0), (-1, -1), 6),
+        ("TOPPADDING",     (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING",  (0, 0), (-1, -1), 4),
+        ("ROWBACKGROUNDS", (0, 0), (-1, -1), [colors.HexColor("#F9F9F9"), colors.white]),
+        ("BOX",            (0, 0), (-1, -1), 0.75, colors.HexColor("#888888")),
+        ("INNERGRID",      (0, 0), (-1, -1), 0.25, colors.HexColor("#DDDDDD")),
     ]))
     story.append(tbl)
 
 def service_table(story, rows, S):
     """
-    Render the Proof of Service recipients table.
-    All cell values are wrapped in Paragraph objects so long strings
-    wrap inside the cell boundary instead of overflowing the right edge.
+    Render the Proof of Service recipients table with wrapped Paragraph cells.
     """
-    hdr_style = ParagraphStyle(
-        "svc_hdr", fontName="Times-Bold", fontSize=10, leading=14,
-        textColor=colors.white, wordWrap="CJK",
-    )
-    cell_style = ParagraphStyle(
-        "svc_cell", fontName="Times-Roman", fontSize=10, leading=14,
-        wordWrap="CJK",
-    )
+    hdr_style  = ParagraphStyle("svc_hdr",  fontName="Times-Bold",  fontSize=10,
+                                 leading=14, textColor=colors.white, wordWrap="CJK")
+    cell_style = ParagraphStyle("svc_cell", fontName="Times-Roman", fontSize=10,
+                                 leading=14, wordWrap="CJK")
     para_rows = []
     for r_idx, row in enumerate(rows):
         st = hdr_style if r_idx == 0 else cell_style
@@ -350,35 +316,36 @@ def service_table(story, rows, S):
         ])
     tbl = Table(para_rows, colWidths=safe_widths([0.36, 0.34, 0.30]))
     tbl.setStyle(TableStyle([
-        ("BACKGROUND",    (0, 0), (-1, 0), colors.HexColor("#1A1A1A")),
-        ("FONTSIZE",      (0, 0), (-1, -1), 10),
-        ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("ROWBACKGROUNDS",(0, 1), (-1, -1), [colors.HexColor("#F5F5F5"), colors.white]),
-        ("BOX",           (0, 0), (-1, -1), 0.75, colors.black),
-        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#CCCCCC")),
-        ("LEFTPADDING",   (0, 0), (-1, -1), 5),
-        ("RIGHTPADDING",  (0, 0), (-1, -1), 5),
-        ("TOPPADDING",    (0, 0), (-1, -1), 4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+        ("BACKGROUND",     (0, 0), (-1, 0),  colors.HexColor("#1A1A1A")),
+        ("FONTSIZE",       (0, 0), (-1, -1), 10),
+        ("VALIGN",         (0, 0), (-1, -1), "TOP"),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.HexColor("#F5F5F5"), colors.white]),
+        ("BOX",            (0, 0), (-1, -1), 0.75, colors.black),
+        ("INNERGRID",      (0, 0), (-1, -1), 0.25, colors.HexColor("#CCCCCC")),
+        ("LEFTPADDING",    (0, 0), (-1, -1), 5),
+        ("RIGHTPADDING",   (0, 0), (-1, -1), 5),
+        ("TOPPADDING",     (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING",  (0, 0), (-1, -1), 4),
     ]))
     story.append(tbl)
 
+
 # ── Shared filing constants (config.yaml → fallback to hardcoded) ─────────────
-CASE_ID        = _cfg(['companion_case_tracking', 'case_number'],   "CUD-26-682107")
-CASE_UD        = CASE_ID
-DEPT           = _cfg(['companion_case_tracking', 'court_department'], "Department 12")
+CASE_ID        = _cfg(['companion_case_tracking', 'case_number'],       "CUD-26-682107")
+CASE_UD        = CASE_ID   # alias for backwards compatibility
+DEPT           = _cfg(['companion_case_tracking', 'court_department'],   "Department 12")
 FILING_DATE    = "May 17, 2026"
-DEFENDANT      = _cfg(['litigant_identity_matrix', 'legal_name'],   "DONALD ERNEST GILLSON")
+DEFENDANT      = _cfg(['litigant_identity_matrix', 'legal_name'],        "DONALD ERNEST GILLSON")
 DEF_ADDR1      = "1030 Girard Road, Suite 301A"
 DEF_ADDR2      = "San Francisco, California 94129"
 DEF_EMAIL      = _cfg(['litigant_identity_matrix', 'channels', 'primary'], "dgillson9175@gmail.com")
 DEF_ROLE       = "Defendant / Plaintiff, In Pro Per"
-NODE_AUTH      = _cfg(['system_specification', 'node_authority'],   "SGAU-7226.3461 // Saint Paul Node")
+NODE_AUTH      = _cfg(['system_specification', 'node_authority'],        "SGAU-7226.3461 // Saint Paul Node")
 FRAMEWORK_ESIGN= ("E-SIGN Act (15 U.S.C. Sec. 7001 et seq.) / "
                   "UETA (Cal. Civ. Code Sec. 1633.1 et seq.)")
 JEFFREY_ESIGN  = ("/s/ Jeffrey Wright [Electronic Signature — "
                   "E-SIGN Act / Digital Communications Act Compliant]")
-ORCID_ID       = _cfg(['litigant_identity_matrix', 'orcid_id'],     "0009-0007-0768-5486")
+ORCID_ID       = _cfg(['litigant_identity_matrix', 'orcid_id'],          "0009-0007-0768-5486")
 JEFFREY_ROLE   = ("Veterans Tenant Union Leadership Member and "
                   "Material Eyewitness — identity authenticated by "
                   "verified role pursuant to 15 U.S.C. Sec. 7001(c)(1); "
