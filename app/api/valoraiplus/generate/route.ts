@@ -60,9 +60,14 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    // Find the generated PDF
+    // Find the generated PDF — use _DocN_ pattern to handle CUD prefix variations
     const files = await fs.readdir(targetOutputDir)
-    const generatedPdf = files.find(f => f.endsWith('.pdf') && f.includes(docType.replace('doc', 'Doc')))
+    const docNumber = docType.replace('doc', '')
+    const targetPattern = `_Doc${docNumber}_`
+    const generatedPdf = files.find(f =>
+      f.endsWith('.pdf') &&
+      (f.includes(targetPattern) || f.toLowerCase().includes(`doc${docNumber}`))
+    )
 
     return NextResponse.json({
       success: true,

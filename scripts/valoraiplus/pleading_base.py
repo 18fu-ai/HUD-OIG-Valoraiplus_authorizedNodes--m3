@@ -27,6 +27,31 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT, TA_JUSTIFY
 from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame, Paragraph, Spacer, Table, TableStyle, HRFlowable, PageBreak, KeepTogether
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas as _canvas_mod
+import os
+import sys
+
+# ── Config loader — reads config/valoraiplus/config.yaml if available ─────────
+def load_executive_config():
+    try:
+        import yaml
+        config_path = os.path.join(os.getcwd(), 'config', 'valoraiplus', 'config.yaml')
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                return yaml.safe_load(f)
+    except ImportError:
+        pass  # yaml not installed — fall back to hardcoded constants
+    return {}
+
+SYSTEM_CONFIG = load_executive_config()
+
+def _cfg(keys, default=''):
+    """Safely traverse nested config dict using dot-notation key list."""
+    val = SYSTEM_CONFIG
+    for k in keys:
+        if not isinstance(val, dict):
+            return default
+        val = val.get(k, default)
+    return val if val != '' else default
 
 # ── Page geometry constants ───────────────────────────────────────────────────
 PAGE_W, PAGE_H = letter          # 8.5 × 11 inches
@@ -333,21 +358,21 @@ def service_table(story, rows, S):
     ]))
     story.append(tbl)
 
-# ── Shared filing constants ───────────────────────────────────────────────────
-CASE_UD        = "CUD-26-682107"
-DEPT           = "Department 12"
+# ── Shared filing constants (config.yaml → fallback to hardcoded) ─────────────
+CASE_UD        = _cfg(['companion_case_tracking', 'case_number'],   "CUD-26-682107")
+DEPT           = _cfg(['companion_case_tracking', 'court_department'], "Department 12")
 FILING_DATE    = "May 17, 2026"
-DEFENDANT      = "DONALD ERNEST GILLSON"
+DEFENDANT      = _cfg(['litigant_identity_matrix', 'legal_name'],   "DONALD ERNEST GILLSON")
 DEF_ADDR1      = "1030 Girard Road, Suite 301A"
 DEF_ADDR2      = "San Francisco, California 94129"
-DEF_EMAIL      = "dgillson9175@gmail.com"
+DEF_EMAIL      = _cfg(['litigant_identity_matrix', 'channels', 'primary'], "dgillson9175@gmail.com")
 DEF_ROLE       = "Defendant / Plaintiff, In Pro Per"
-NODE_AUTH      = "SGAU-7226.3461 // Saint Paul Node"
+NODE_AUTH      = _cfg(['system_specification', 'node_authority'],   "SGAU-7226.3461 // Saint Paul Node")
 FRAMEWORK_ESIGN= ("E-SIGN Act (15 U.S.C. Sec. 7001 et seq.) / "
                   "UETA (Cal. Civ. Code Sec. 1633.1 et seq.)")
 JEFFREY_ESIGN  = ("/s/ Jeffrey Wright [Electronic Signature — "
                   "E-SIGN Act / Digital Communications Act Compliant]")
-ORCID_ID       = "0009-0007-0768-5486"
+ORCID_ID       = _cfg(['litigant_identity_matrix', 'orcid_id'],     "0009-0007-0768-5486")
 JEFFREY_ROLE   = ("Veterans Tenant Union Leadership Member and "
                   "Material Eyewitness — identity authenticated by "
                   "verified role pursuant to 15 U.S.C. Sec. 7001(c)(1); "

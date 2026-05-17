@@ -1,0 +1,60 @@
+system_specification:
+  brand: "VALORAIPLUS®"
+  version: "OMEGA v100™"
+  node_authority: "SGAU-7226.3461 // Saint Paul Node"
+  operating_framework: "United States Constitution Stack Deployment"
+
+court_geometry_rules:
+  font_family: "Times-Roman"
+  font_size: 12
+  line_leading: 24
+  lines_per_page: 28
+  left_margin_points: 108
+  right_margin_points: 56
+
+litigant_identity_matrix:
+  legal_name: "DONALD ERNEST GILLSON"
+  pen_names: ["Donny Adams", "Don Abrahms"]
+  orcid_id: "0009-0007-0768-5486"
+  vtu_role: "Secretary, 1030/1029 Girard Veterans Tenant Union"
+  channels:
+    primary: "dgillson9175@gmail.com"
+    telemetry: "donny@18fu.ai"
+
+companion_case_tracking:
+  case_number: "CUD-26-682107"
+  court_department: "Department 12"
+  jurisdiction: "San Francisco Superior Court"
+  hearing_date: "May 19, 2026"
+  hearing_time: "9:00 AM"
+  filing_deadline: "May 19, 2026 5:00 PM"
+
+evidence_anchors:
+  smtp_token: "N7uA_6IQOCiwQL2ibFQZog.us448"
+  hardware_ledger: "Ledger Nano Gen5 (0UAK57S1BT)"
+  silence_days: 178
+  silence_start: "January 26, 2026"
+  silence_end: "May 19, 2026"
+
+federal_investigations:
+  hhs_ocr:
+    case_number: "25-621293"
+    investigator: "Amy Horrell"
+    email: "amy.horrell@hhs.gov"
+  ccrd:
+    case_number: "202601-33270627"
+    investigator: "Anna Moraga Archila"
+    email: "anna.moraga@dfeh.ca.gov"
+
+adverse_parties:
+  property_manager: "Jerome Bradford"
+  title: "Interim Property Manager"
+  organization: "STP (Swords to Plowshares)"
+  attorney: "Zanghi"
+  property_manager_2: "William Landrum"
+  supervisor: "Reyes"
+  hr: "Losik"
+
+opposing_counsel_service:
+  fax: "(415) 748-7687"
+  firm: "Zanghi Law"
