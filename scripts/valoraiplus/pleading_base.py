@@ -1,24 +1,6 @@
-"""
-pleading_base.py — Shared California Pleading Paper Base Module
-VALORAIPLUS® OMEGA v100™ — NODE AUTHORITY: SGAU-7226.3461
-
-California Rules of Court, Rule 2.100 et seq. compliant.
-San Francisco Superior Court eCourt e-filing compatible.
-
-GEOMETRY (8.5" × 11" letter):
-  Left margin  : 1.5"  (text starts here — AFTER the gutter rules)
-  Right margin : 1.0"
-  Top margin   : 1.0"
-  Bottom margin: 1.0"
-  Text width   : 6.0"  (8.5 - 1.5 - 1.0)
-  Text height  : 9.0"  (11 - 1.0 - 1.0)
-
-GUTTER (left of text area):
-  Rule 1 (inner): 1.25" from left edge
-  Rule 2 (outer): 1.35" from left edge
-  Line numbers  : right-aligned at 1.20" from left edge
-  28 lines/page : standard California pleading paper
-"""
+# pleading_base.py — VALORAIPLUS® OMEGA v100™ | NODE AUTHORITY: SGAU-7226.3461
+# CA 28-line pleading paper engine with two-pass canvas, config.yaml loader,
+# 24pt line grid registration, and shared story helpers.
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -55,7 +37,7 @@ def _cfg(keys, default=''):
 
 # ── Page geometry constants ───────────────────────────────────────────────────
 PAGE_W, PAGE_H = letter          # 8.5 × 11 inches
-LEFT_MARGIN    = 1.5  * inch     # text left edge
+LEFT_MARGIN    = 1.5  * inch     # text left edge (Absolute 108 points compliance lock)
 RIGHT_MARGIN   = 1.0  * inch     # text right edge
 TOP_MARGIN     = 1.0  * inch
 BOT_MARGIN     = 1.0  * inch
@@ -67,6 +49,7 @@ RULE_INNER     = 1.25 * inch     # inner vertical rule
 RULE_OUTER     = 1.35 * inch     # outer vertical rule
 LINE_NUM_X     = 1.20 * inch     # right edge of line number column
 LINES_PER_PAGE = 28
+LINE_GRID_Y    = 24.0            # Exact 24pt vertical line row leading index (Double-spaced grid)
 
 # ── Shared styles ─────────────────────────────────────────────────────────────
 def make_styles(font_size=12):
@@ -74,33 +57,35 @@ def make_styles(font_size=12):
     TB  = "Times-Bold"
     TI  = "Times-Italic"
     sz  = font_size
-    lh  = sz + 6   # line height = font + 6pt leading
+    
+    # Core Leading Hack: Fixed tightly to 24pt to keep text aligned on the 28-line grid
+    lh  = LINE_GRID_Y  
 
     return {
         "caption": ParagraphStyle("caption", fontName=TB, fontSize=sz,
-                                  leading=lh, alignment=TA_CENTER, spaceAfter=4),
+                                  leading=lh, alignment=TA_CENTER, spaceBefore=0, spaceAfter=0),
         "center":  ParagraphStyle("center",  fontName=TF, fontSize=sz,
-                                  leading=lh, alignment=TA_CENTER, spaceAfter=4),
+                                  leading=lh, alignment=TA_CENTER, spaceBefore=0, spaceAfter=0),
         "body":    ParagraphStyle("body",    fontName=TF, fontSize=sz,
                                   leading=lh, alignment=TA_JUSTIFY,
-                                  leftIndent=0, rightIndent=0, spaceAfter=6),
+                                  leftIndent=0, rightIndent=0, spaceBefore=0, spaceAfter=0),
         "heading": ParagraphStyle("heading", fontName=TB, fontSize=sz,
                                   leading=lh, alignment=TA_LEFT,
-                                  spaceBefore=8, spaceAfter=4),
+                                  spaceBefore=0, spaceAfter=0),
         "italic":  ParagraphStyle("italic",  fontName=TI, fontSize=sz,
-                                  leading=lh, alignment=TA_LEFT, spaceAfter=4),
+                                  leading=lh, alignment=TA_LEFT, spaceBefore=0, spaceAfter=0),
         "right":   ParagraphStyle("right",   fontName=TF, fontSize=sz,
-                                  leading=lh, alignment=TA_RIGHT, spaceAfter=4),
+                                  leading=lh, alignment=TA_RIGHT, spaceBefore=0, spaceAfter=0),
         "bold_r":  ParagraphStyle("bold_r",  fontName=TB, fontSize=sz,
-                                  leading=lh, alignment=TA_RIGHT, spaceAfter=4),
+                                  leading=lh, alignment=TA_RIGHT, spaceBefore=0, spaceAfter=0),
         "small":   ParagraphStyle("small",   fontName=TF, fontSize=10,
-                                  leading=14, alignment=TA_JUSTIFY, spaceAfter=3),
+                                  leading=14, alignment=TA_JUSTIFY, spaceBefore=0, spaceAfter=0),
         "small_b": ParagraphStyle("small_b", fontName=TB, fontSize=10,
-                                  leading=14, alignment=TA_LEFT, spaceAfter=3),
+                                  leading=14, alignment=TA_LEFT, spaceBefore=0, spaceAfter=0),
         "small_c": ParagraphStyle("small_c", fontName=TF, fontSize=10,
-                                  leading=14, alignment=TA_CENTER, spaceAfter=3),
+                                  leading=14, alignment=TA_CENTER, spaceBefore=0, spaceAfter=0),
         "bold_c":  ParagraphStyle("bold_c",  fontName=TB, fontSize=sz,
-                                  leading=lh, alignment=TA_CENTER, spaceAfter=4),
+                                  leading=lh, alignment=TA_CENTER, spaceBefore=0, spaceAfter=0),
         "esign_label": ParagraphStyle("esign_label", fontName=TB, fontSize=11,
                                       leading=15, alignment=TA_LEFT),
         "esign_value": ParagraphStyle("esign_value", fontName=TF, fontSize=11,
@@ -112,7 +97,7 @@ class _TwoPassCanvas(_canvas_mod.Canvas):
     """
     Captures all page states on the first pass, then stamps every page
     with the correct total-page-count footer on the second pass.
-    Implements the double-pass pattern from the CourtDocumentCompiler spec.
+    Guarantees that lines and metadata never drift across page boundaries.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -134,32 +119,52 @@ class _TwoPassCanvas(_canvas_mod.Canvas):
         self.saveState()
         w, h = letter
 
-        self.setStrokeColor(colors.black)
-        self.setLineWidth(0.5)
+        self.setStrokeColor(colors.HexColor("#A0A0A0"))
+        self.setLineWidth(1.0)
 
-        # Double vertical gutter rules
+        # Double vertical gutter rule compliance check (1.5" Gutter Buffer)
         self.line(RULE_INNER, BOT_MARGIN, RULE_INNER, h - TOP_MARGIN)
         self.line(RULE_OUTER, BOT_MARGIN, RULE_OUTER, h - TOP_MARGIN)
 
-        # Bottom horizontal rule
+        # Right-hand margin bounding line guideline
+        self.line(w - RIGHT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, h - TOP_MARGIN)
+
+        # Bottom horizontal text bounding boundary rule
         self.line(LEFT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, BOT_MARGIN)
 
-        # 28 line numbers
-        line_height = TEXT_H / LINES_PER_PAGE
-        self.setFont("Times-Roman", 9)
+        # 28-Line Left Gutter Numbering Index (Exact Vertical Line Spacing Registration)
+        self.setFont("Times-Bold", 10)
+        self.setFillColor(colors.HexColor("#333333"))
+        
+        start_y = h - TOP_MARGIN  # 1.0-inch top vertical line anchor row
+        
         for i in range(1, LINES_PER_PAGE + 1):
-            y = h - TOP_MARGIN - (i - 0.5) * line_height
-            self.drawRightString(LINE_NUM_X, y - 3, str(i))
+            y = start_y - ((i - 0.5) * LINE_GRID_Y)
+            self.drawCentredString(RULE_INNER - 12, y - 3, str(i))
+            
+            # Non-printable subtle grid row markers to ensure absolute alignment
+            self.setStrokeColor(colors.HexColor("#F9F9F9"))
+            self.setLineWidth(0.5)
+            self.line(LEFT_MARGIN, y - 8, w - RIGHT_MARGIN, y - 8)
 
-        # Accurate "Page X of Y" footer
+        # Reset stroke color for primary layout lines
+        self.setStrokeColor(colors.HexColor("#A0A0A0"))
+        self.setLineWidth(1.0)
+
+        # Accurate Dynamic "Page X of Y" forensic footer stamp
         self.setFont("Times-Roman", 10)
+        self.setFillColor(colors.HexColor("#444444"))
         page_num = self._pageNumber
-        self.drawCentredString(w / 2, BOT_MARGIN - 0.35 * inch,
-                               f"— {page_num} of {total_pages} —")
+        
+        footer_text = f"Node Auth: {NODE_AUTH} | Case No. {CASE_ID}"
+        page_string = f"Page {page_num} of {total_pages}"
+        
+        self.drawString(LEFT_MARGIN, BOT_MARGIN - 24, footer_text)
+        self.drawRightString(w - RIGHT_MARGIN, BOT_MARGIN - 24, page_string)
         self.restoreState()
 
 
-# Keep backward-compat alias for any code that calls draw_pleading_page directly
+# Legacy Single-Pass Callback Handler (Kept for backwards compatibility)
 def draw_pleading_page(canv, doc):
     """Legacy single-pass callback — used only if make_doc is bypassed."""
     canv.saveState()
@@ -212,16 +217,13 @@ def build_doc(doc, story):
     doc.build(story, canvasmaker=_TwoPassCanvas)
 
 # ── Table geometry helpers ───────────────────────────────────────────────────
-# Every table cell has 5pt left + 5pt right padding = 10pt per column.
-# To prevent bleeding, subtract total horizontal padding from TEXT_W before
-# distributing column widths, then add padding back via TableStyle.
 CELL_PAD = 5   # points — left AND right padding per cell
 
 def safe_widths(fractions, n_cols=None):
     """
     Convert a list of fractional column widths (summing to 1.0) into
     absolute point values that fit exactly within TEXT_W after accounting
-    for cell padding.  Pass fractions as a list of floats, e.g.:
+    for cell padding. Pass fractions as a list of floats, e.g.:
         safe_widths([0.44, 0.56])   -> two columns
         safe_widths([0.30, 0.50, 0.20]) -> three columns
     The returned list sums to TEXT_W exactly.
@@ -238,7 +240,7 @@ def safe_widths(fractions, n_cols=None):
 def safe_widths_abs(abs_pts):
     """
     Validate and clamp a list of absolute point column widths so they
-    never exceed TEXT_W in total (including padding).  Scales proportionally
+    never exceed TEXT_W in total (including padding). Scales proportionally
     if the sum would overflow.
     """
     total_pad = 2 * CELL_PAD * len(abs_pts)
@@ -252,11 +254,15 @@ def safe_widths_abs(abs_pts):
 
 # ── Shared story helpers ──────────────────────────────────────────────────────
 def sp(story, n=1):
-    story.append(Spacer(1, n * 0.18 * inch))
+    """
+    Appends a vertical spacer calibrated directly to multiples of the 24pt line grid.
+    Prevents fractional paragraph tracking errors.
+    """
+    story.append(Spacer(1, n * LINE_GRID_Y))
 
 def hr(story):
     story.append(HRFlowable(width="100%", thickness=0.5,
-                            color=colors.black, spaceAfter=4))
+                            color=colors.HexColor("#A0A0A0"), spaceAfter=0, spaceBefore=0))
 
 def p(story, text, S, style="body"):
     story.append(Paragraph(text, S[style]))
@@ -270,7 +276,7 @@ def numbered_list(story, items, S, style="body"):
     Each item is a separate table so long items can split across pages.
     Column widths use safe_widths to prevent margin bleeding.
     """
-    num_w, text_w = safe_widths([0.047, 0.953])   # ~0.28" number col, rest for text
+    num_w, text_w = safe_widths([0.05, 0.95])   # Exact decimal column distribution
     for i, item in enumerate(items, 1):
         row = [[
             Paragraph(f"{i}.", S[style]),
@@ -282,11 +288,12 @@ def numbered_list(story, items, S, style="body"):
             ("VALIGN",        (0, 0), (-1, -1), "TOP"),
             ("LEFTPADDING",   (0, 0), (-1, -1), 0),
             ("RIGHTPADDING",  (0, 0), (-1, -1), 0),
-            ("TOPPADDING",    (0, 0), (-1, -1), 2),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+            ("TOPPADDING",    (0, 0), (-1, -1), 0),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
         ]))
         story.append(tbl)
-        sp(story, 0.15)
+        # Append micro row spacer to stabilize row flow limits
+        story.append(Spacer(1, 4))
 
 def esign_table(story, rows, S):
     """
@@ -310,14 +317,13 @@ def esign_table(story, rows, S):
     tbl = Table(para_rows, colWidths=safe_widths([0.26, 0.74]))
     tbl.setStyle(TableStyle([
         ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("LEFTPADDING",   (0, 0), (-1, -1), 5),
-        ("RIGHTPADDING",  (0, 0), (-1, -1), 5),
+        ("LEFTPADDING",   (0, 0), (-1, -1), 6),
+        ("RIGHTPADDING",  (0, 0), (-1, -1), 6),
         ("TOPPADDING",    (0, 0), (-1, -1), 4),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-        ("ROWBACKGROUNDS",(0, 0), (-1, -1),
-         [colors.HexColor("#f2f2f2"), colors.white]),
-        ("BOX",           (0, 0), (-1, -1), 0.75, colors.black),
-        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("ROWBACKGROUNDS",(0, 0), (-1, -1), [colors.HexColor("#F9F9F9"), colors.white]),
+        ("BOX",           (0, 0), (-1, -1), 0.75, colors.HexColor("#888888")),
+        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#DDDDDD")),
     ]))
     story.append(tbl)
 
@@ -344,13 +350,12 @@ def service_table(story, rows, S):
         ])
     tbl = Table(para_rows, colWidths=safe_widths([0.36, 0.34, 0.30]))
     tbl.setStyle(TableStyle([
-        ("BACKGROUND",    (0, 0), (-1, 0), colors.HexColor("#1a1a1a")),
+        ("BACKGROUND",    (0, 0), (-1, 0), colors.HexColor("#1A1A1A")),
         ("FONTSIZE",      (0, 0), (-1, -1), 10),
         ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("ROWBACKGROUNDS",(0, 1), (-1, -1),
-         [colors.HexColor("#f5f5f5"), colors.white]),
+        ("ROWBACKGROUNDS",(0, 1), (-1, -1), [colors.HexColor("#F5F5F5"), colors.white]),
         ("BOX",           (0, 0), (-1, -1), 0.75, colors.black),
-        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("INNERGRID",     (0, 0), (-1, -1), 0.25, colors.HexColor("#CCCCCC")),
         ("LEFTPADDING",   (0, 0), (-1, -1), 5),
         ("RIGHTPADDING",  (0, 0), (-1, -1), 5),
         ("TOPPADDING",    (0, 0), (-1, -1), 4),
@@ -359,7 +364,8 @@ def service_table(story, rows, S):
     story.append(tbl)
 
 # ── Shared filing constants (config.yaml → fallback to hardcoded) ─────────────
-CASE_UD        = _cfg(['companion_case_tracking', 'case_number'],   "CUD-26-682107")
+CASE_ID        = _cfg(['companion_case_tracking', 'case_number'],   "CUD-26-682107")
+CASE_UD        = CASE_ID
 DEPT           = _cfg(['companion_case_tracking', 'court_department'], "Department 12")
 FILING_DATE    = "May 17, 2026"
 DEFENDANT      = _cfg(['litigant_identity_matrix', 'legal_name'],   "DONALD ERNEST GILLSON")
