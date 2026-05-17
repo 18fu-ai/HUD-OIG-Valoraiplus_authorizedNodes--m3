@@ -22,11 +22,27 @@ node_geometry:
   top_margin_in: 1.0
   bottom_margin_in: 1.0
 
+geographic_nodes:
+  origin:
+    display: "22XX Highland Pkwy, Saint Paul, MN 551XX"
+    masked: true
+  residential:
+    display: "10XX Girard Road, San Francisco, CA 941XX"
+    masked: true
+  mailing:
+    display: "[ADDRESS ON FILE WITH CRD]"
+    masked: true
+  financial:
+    display: "[ENCRYPTED]"
+    masked: true
+    reference: "Schwab [XXXX]"
+
 litigant_identity_matrix:
   legal_name: "DONALD ERNEST GILLSON"
   pen_names: ["Donny Adams", "Don Abrahms"]
   orcid_id: "0009-0007-0768-5486"
-  vtu_role: "Secretary, 1030/1029 Girard Veterans Tenant Union"
+  vtu_role: "Secretary, Veterans Tenant Union"
+  residential_masked: "10XX Girard Road, Suite XXX"
   channels:
     primary: "dgillson9175@gmail.com"
     telemetry: "donny@18fu.ai"
