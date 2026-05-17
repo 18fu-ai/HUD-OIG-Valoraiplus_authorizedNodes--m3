@@ -1,6 +1,9 @@
-# pleading_base.py — VALORAIPLUS® OMEGA v100™ | NODE AUTHORITY: SGAU-7226.3461
-# CA 28-line pleading paper engine with two-pass canvas, config.yaml loader,
-# 24pt line grid registration, and shared story helpers.
+# scripts/valoraiplus/pleading_base.py
+# ══════════════════════════════════════════════════════════════════════════════
+# VALORAIPLUS® OMEGA v100™ | NODE AUTHORITY: SGAU-7226.3461 // Saint Paul Node®
+# CA 28-Line Pleading Paper Engine with Two-Pass Canvas, config.yaml Loader,
+# 24pt Line Grid Registration, and Shared Story Helpers.
+# ══════════════════════════════════════════════════════════════════════════════
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -12,7 +15,7 @@ from reportlab.pdfgen import canvas as _canvas_mod
 import os
 import sys
 
-# ── Config loader — reads config/valoraiplus/config.yaml if available ─────────
+# ── Config Loader — Reads config/valoraiplus/config.yaml If Available ─────────
 def load_executive_config():
     try:
         import yaml
@@ -21,13 +24,13 @@ def load_executive_config():
             with open(config_path, 'r') as f:
                 return yaml.safe_load(f)
     except ImportError:
-        pass  # yaml not installed — fall back to hardcoded constants
+        pass  # yaml library not installed — fall back to hardcoded system defaults
     return {}
 
 SYSTEM_CONFIG = load_executive_config()
 
 def _cfg(keys, default=''):
-    """Safely traverse nested config dict using dot-notation key list."""
+    """Safely traverse nested configuration dictionary using a dot-notation key list."""
     val = SYSTEM_CONFIG
     for k in keys:
         if not isinstance(val, dict):
@@ -35,29 +38,29 @@ def _cfg(keys, default=''):
         val = val.get(k, default)
     return val if val != '' else default
 
-# ── Page geometry constants ───────────────────────────────────────────────────
-PAGE_W, PAGE_H = letter          # 8.5 × 11 inches
-LEFT_MARGIN    = 1.5  * inch     # text left edge (Absolute 108 points compliance lock)
-RIGHT_MARGIN   = 1.0  * inch     # text right edge
+# ── Page Geometry Constants — CRC Rule 2.100 Compliance Lock ──────────────────
+PAGE_W, PAGE_H = letter          # 8.5 × 11 inches standard layout medium
+LEFT_MARGIN    = 1.5  * inch     # Text left boundary (Absolute 108 points constraint)
+RIGHT_MARGIN   = 1.0  * inch     # Text right boundary (72 points)
 TOP_MARGIN     = 1.0  * inch
 BOT_MARGIN     = 1.0  * inch
-TEXT_W         = PAGE_W - LEFT_MARGIN - RIGHT_MARGIN   # 6.0 inches exactly
-TEXT_H         = PAGE_H - TOP_MARGIN - BOT_MARGIN      # 9.0 inches exactly
+TEXT_W         = PAGE_W - LEFT_MARGIN - RIGHT_MARGIN   # 6.0 inches exactly (432 points)
+TEXT_H         = PAGE_H - TOP_MARGIN - BOT_MARGIN      # 9.0 inches exactly (648 points)
 
-# Gutter rule positions (left of text area)
-RULE_INNER     = 1.25 * inch     # inner vertical rule
-RULE_OUTER     = 1.35 * inch     # outer vertical rule
-LINE_NUM_X     = 1.20 * inch     # right edge of line number column
+# Gutter rule alignment metrics (positioned within the left gutter buffer)
+RULE_INNER     = 1.25 * inch     # Inner vertical line boundary rule
+RULE_OUTER     = 1.35 * inch     # Outer vertical line boundary rule
+LINE_NUM_X     = 1.20 * inch     # Target coordinate anchor for alignment numbers
 LINES_PER_PAGE = 28
-LINE_GRID_Y    = 24.0            # Exact 24pt vertical line row leading index (Double-spaced grid)
+LINE_GRID_Y    = 24.0            # Exact 24pt double-spaced row height leading tracking
 
-# ── Shared styles ─────────────────────────────────────────────────────────────
+# ── Shared Style Framework Registration ───────────────────────────────────────
 def make_styles(font_size=12):
     TF  = "Times-Roman"
     TB  = "Times-Bold"
     TI  = "Times-Italic"
     sz  = font_size
-    lh  = LINE_GRID_Y  # Fixed to 24pt to keep text aligned on the 28-line grid
+    lh  = LINE_GRID_Y  # Core leading hack bound to grid metric to prevent vertical line drift
 
     return {
         "caption": ParagraphStyle("caption", fontName=TB, fontSize=sz,
@@ -90,12 +93,12 @@ def make_styles(font_size=12):
                                       leading=15, alignment=TA_LEFT),
     }
 
-# ── Two-pass canvas for accurate "Page X of Y" footers ───────────────────────
+# ── Two-Pass Canvas Pipeline For Total Page Count Calculations ─────────────────
 class _TwoPassCanvas(_canvas_mod.Canvas):
     """
-    Captures all page states on the first pass, then stamps every page
-    with the correct total-page-count footer on the second pass.
-    Guarantees that lines and metadata never drift across page boundaries.
+    First pass: Captures the flowable layout bounds and page configuration targets.
+    Second pass: Draws vertical infrastructure, alignment lines, and stamps footers
+    with an accurate total page tally to prevent text alignment boundaries from drifting.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -120,32 +123,34 @@ class _TwoPassCanvas(_canvas_mod.Canvas):
         self.setStrokeColor(colors.HexColor("#A0A0A0"))
         self.setLineWidth(1.0)
 
-        # Double vertical gutter rules
+        # Draw left double vertical bounding lines
         self.line(RULE_INNER, BOT_MARGIN, RULE_INNER, h - TOP_MARGIN)
         self.line(RULE_OUTER, BOT_MARGIN, RULE_OUTER, h - TOP_MARGIN)
 
-        # Right-hand margin rule
+        # Draw right vertical boundary line
         self.line(w - RIGHT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, h - TOP_MARGIN)
 
-        # Bottom horizontal boundary rule
+        # Draw bottom horizontal frame line
         self.line(LEFT_MARGIN, BOT_MARGIN, w - RIGHT_MARGIN, BOT_MARGIN)
 
-        # 28-line left gutter numbering index
+        # Draw left 28 numerical index digits inside gutter boundaries
         self.setFont("Times-Bold", 10)
         self.setFillColor(colors.HexColor("#333333"))
         start_y = h - TOP_MARGIN
+
         for i in range(1, LINES_PER_PAGE + 1):
             y = start_y - ((i - 0.5) * LINE_GRID_Y)
             self.drawCentredString(RULE_INNER - 12, y - 3, str(i))
-            # Subtle non-printable grid row marker
+            # Subtle row alignment markers to ensure absolute grid continuity
             self.setStrokeColor(colors.HexColor("#F9F9F9"))
             self.setLineWidth(0.5)
             self.line(LEFT_MARGIN, y - 8, w - RIGHT_MARGIN, y - 8)
 
+        # Reset rendering boundaries for primary text baseline blocks
         self.setStrokeColor(colors.HexColor("#A0A0A0"))
         self.setLineWidth(1.0)
 
-        # Accurate "Page X of Y" forensic footer
+        # Stamp accurate total page string over the forensic footer layer
         self.setFont("Times-Roman", 10)
         self.setFillColor(colors.HexColor("#444444"))
         page_num    = self._pageNumber
@@ -156,7 +161,7 @@ class _TwoPassCanvas(_canvas_mod.Canvas):
         self.restoreState()
 
 
-# ── Legacy single-pass callback (kept for backwards compatibility) ─────────────
+# ── Legacy Single-Pass Callback (Maintained for backwards safety overrides) ────
 def draw_pleading_page(canv, doc):
     canv.saveState()
     w, h = letter
@@ -175,9 +180,9 @@ def draw_pleading_page(canv, doc):
     canv.restoreState()
 
 
-# ── Document factory ──────────────────────────────────────────────────────────
+# ── Document Factory Initialization Methods ────────────────────────────────────
 def make_doc(output_path):
-    """Create a BaseDocTemplate with the correct pleading paper frame."""
+    """Instantiate a BaseDocTemplate calibrated to strict physical tracking boundaries."""
     doc = BaseDocTemplate(
         output_path,
         pagesize=letter,
@@ -199,36 +204,25 @@ def make_doc(output_path):
 
 
 def build_doc(doc, story):
-    """
-    Build the document using the two-pass canvas so every page receives
-    an accurate 'Page X of Y' footer and all pleading paper infrastructure
-    is stamped correctly. Signature blocks wrapped in KeepTogether will
-    not orphan across pages.
-    """
+    """Compile document story vectors through the Two-Pass layout rendering track."""
     doc.build(story, canvasmaker=_TwoPassCanvas)
 
 
-# ── Table geometry helpers ────────────────────────────────────────────────────
-CELL_PAD = 5  # points — left AND right padding per cell
+# ── Column Dimension Geometry Helpers ──────────────────────────────────────────
+CELL_PAD = 5  # Left and right vertical cell boundaries (expressed in points)
 
 def safe_widths(fractions):
-    """
-    Convert fractional column widths (summing to 1.0) into absolute point
-    values fitting within TEXT_W after cell padding.
-    """
+    """Convert absolute decimal fractions into specific cell point widths within TEXT_W bounds."""
     total_pad = 2 * CELL_PAD * len(fractions)
     usable    = TEXT_W - total_pad
     cols      = [usable * f for f in fractions]
     diff      = TEXT_W - total_pad - sum(cols)
-    cols[-1] += diff
+    cols[-1] += diff  # Injects fractional division rounding residual into the rightmost node
     return cols
 
 
 def safe_widths_abs(abs_pts):
-    """
-    Clamp absolute point column widths so they never exceed TEXT_W in total.
-    Scales proportionally if overflow detected.
-    """
+    """Verify and scale raw cell widths to guarantee absolute layout boundary retention."""
     total_pad = 2 * CELL_PAD * len(abs_pts)
     usable    = TEXT_W - total_pad
     raw_sum   = sum(abs_pts)
@@ -238,27 +232,26 @@ def safe_widths_abs(abs_pts):
     return [w * scale for w in abs_pts]
 
 
-# ── Shared story helpers ──────────────────────────────────────────────────────
+# ── Shared Story Layout Macro Helpers ───────────────────────────────────────────
 def sp(story, n=1):
-    """Spacer calibrated to multiples of the 24pt line grid."""
+    """Inject a clean vertical separator locked onto specific multi-grid metrics."""
     story.append(Spacer(1, n * LINE_GRID_Y))
 
 def hr(story):
+    """Draw a thin horizontal separation line across the usable width field."""
     story.append(HRFlowable(width="100%", thickness=0.5,
                             color=colors.HexColor("#A0A0A0"), spaceAfter=0, spaceBefore=0))
 
 def p(story, text, S, style="body"):
+    """Format and insert text content paragraphs."""
     story.append(Paragraph(text, S[style]))
 
 def h(story, text, S):
+    """Format and insert standard header blocks."""
     story.append(Paragraph(text, S["heading"]))
 
 def numbered_list(story, items, S, style="body"):
-    """
-    Render a numbered list as two-column tables using safe_widths to
-    prevent margin bleeding. Each item is a separate table to allow
-    page-splitting on long entries.
-    """
+    """Compile item lines sequentially into multi-column formatting frames."""
     num_w, text_w = safe_widths([0.05, 0.95])
     for i, item in enumerate(items, 1):
         row = [[Paragraph(f"{i}.", S[style]), Paragraph(item, S[style])]]
@@ -274,9 +267,7 @@ def numbered_list(story, items, S, style="body"):
         story.append(Spacer(1, 4))
 
 def esign_table(story, rows, S):
-    """
-    Render a shaded E-SIGN attestation table with wrapped Paragraph cells.
-    """
+    """Compile structured electronic attestation text into distinct shaded display table formats."""
     label_style = ParagraphStyle("esign_label", fontName="Times-Bold",
                                   fontSize=11, leading=15, wordWrap="CJK")
     value_style = ParagraphStyle("esign_value", fontName="Times-Roman",
@@ -300,9 +291,7 @@ def esign_table(story, rows, S):
     story.append(tbl)
 
 def service_table(story, rows, S):
-    """
-    Render the Proof of Service recipients table with wrapped Paragraph cells.
-    """
+    """Compile legal recipient proof data sequences directly into bordered tabular grids."""
     hdr_style  = ParagraphStyle("svc_hdr",  fontName="Times-Bold",  fontSize=10,
                                  leading=14, textColor=colors.white, wordWrap="CJK")
     cell_style = ParagraphStyle("svc_cell", fontName="Times-Roman", fontSize=10,
@@ -330,24 +319,24 @@ def service_table(story, rows, S):
     story.append(tbl)
 
 
-# ── Shared filing constants (config.yaml → fallback to hardcoded) ─────────────
-CASE_ID        = _cfg(['companion_case_tracking', 'case_number'],       "CUD-26-682107")
-CASE_UD        = CASE_ID   # alias for backwards compatibility
-DEPT           = _cfg(['companion_case_tracking', 'court_department'],   "Department 12")
-FILING_DATE    = "May 17, 2026"
-DEFENDANT      = _cfg(['litigant_identity_matrix', 'legal_name'],        "DONALD ERNEST GILLSON")
-DEF_ADDR1      = "1030 Girard Road, Suite 301A"
-DEF_ADDR2      = "San Francisco, California 94129"
-DEF_EMAIL      = _cfg(['litigant_identity_matrix', 'channels', 'primary'], "dgillson9175@gmail.com")
-DEF_ROLE       = "Defendant / Plaintiff, In Pro Per"
-NODE_AUTH      = _cfg(['system_specification', 'node_authority'],        "SGAU-7226.3461 // Saint Paul Node")
-FRAMEWORK_ESIGN= ("E-SIGN Act (15 U.S.C. Sec. 7001 et seq.) / "
-                  "UETA (Cal. Civ. Code Sec. 1633.1 et seq.)")
-JEFFREY_ESIGN  = ("/s/ Jeffrey Wright [Electronic Signature — "
-                  "E-SIGN Act / Digital Communications Act Compliant]")
-ORCID_ID       = _cfg(['litigant_identity_matrix', 'orcid_id'],          "0009-0007-0768-5486")
-JEFFREY_ROLE   = ("Veterans Tenant Union Leadership Member and "
-                  "Material Eyewitness — identity authenticated by "
-                  "verified role pursuant to 15 U.S.C. Sec. 7001(c)(1); "
-                  "no personal email required under the Digital "
-                  "Communications Act")
+# ── Configuration Mapping Node Overrides — Case Tracker Integrations ───────────
+CASE_ID         = _cfg(['companion_case_tracking', 'case_number'],          "CUD-26-682107")
+CASE_UD         = CASE_ID   # Legacy coordinate alias matching structural templates
+DEPT            = _cfg(['companion_case_tracking', 'court_department'],      "Department 12")
+FILING_DATE     = "May 17, 2026"
+DEFENDANT       = _cfg(['litigant_identity_matrix', 'legal_name'],           "DONALD ERNEST GILLSON")
+DEF_ADDR1       = "1030 Girard Road, Suite 301A"
+DEF_ADDR2       = "San Francisco, California 94129"
+DEF_EMAIL       = _cfg(['litigant_identity_matrix', 'channels', 'primary'],  "dgillson9175@gmail.com")
+DEF_ROLE        = "Defendant / Plaintiff, In Pro Per"
+NODE_AUTH       = _cfg(['system_specification', 'node_authority'],           "SGAU-7226.3461 // Saint Paul Node")
+FRAMEWORK_ESIGN = ("E-SIGN Act (15 U.S.C. Sec. 7001 et seq.) / "
+                   "UETA (Cal. Civ. Code Sec. 1633.1 et seq.)")
+JEFFREY_ESIGN   = ("/s/ Jeffrey Wright [Electronic Signature — "
+                   "E-SIGN Act / Digital Communications Act Compliant]")
+ORCID_ID        = _cfg(['litigant_identity_matrix', 'orcid_id'],             "0009-0007-0768-5486")
+JEFFREY_ROLE    = ("Veterans Tenant Union Leadership Member and "
+                   "Material Eyewitness — identity authenticated by "
+                   "verified role pursuant to 15 U.S.C. Sec. 7001(c)(1); "
+                   "no personal email required under the Digital "
+                   "Communications Act")
