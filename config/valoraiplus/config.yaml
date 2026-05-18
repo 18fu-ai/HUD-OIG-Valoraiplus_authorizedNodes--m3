@@ -22,11 +22,27 @@ node_geometry:
   top_margin_in: 1.0
   bottom_margin_in: 1.0
 
+geographic_nodes:
+  origin:
+    display: "22XX Highland Pkwy, Saint Paul, MN 551XX"
+    masked: true
+  residential:
+    display: "10XX Girard Road, San Francisco, CA 941XX"
+    masked: true
+  mailing:
+    display: "[ADDRESS ON FILE WITH CRD]"
+    masked: true
+  financial:
+    display: "[ENCRYPTED]"
+    masked: true
+    reference: "Schwab [XXXX]"
+
 litigant_identity_matrix:
   legal_name: "DONALD ERNEST GILLSON"
   pen_names: ["Donny Adams", "Don Abrahms"]
   orcid_id: "0009-0007-0768-5486"
-  vtu_role: "Secretary, 1030/1029 Girard Veterans Tenant Union"
+  vtu_role: "Secretary, Veterans Tenant Union"
+  residential_masked: "10XX Girard Road, Suite XXX"
   channels:
     primary: "dgillson9175@gmail.com"
     telemetry: "donny@18fu.ai"
@@ -77,6 +93,206 @@ opposing_counsel_service:
 esign_framework:
   statute: "E-SIGN Act (15 U.S.C. § 7001 et seq.)"
   ca_statute: "UETA (Cal. Civ. Code § 1633.1 et seq.)"
+
+filed_document_registry:
+  total_artifacts: 38
+  filing_date: "May 17, 2026"
+  documents:
+    - doc: 18
+      title: "Final Transmittal Notice"
+      file: "CUD-26-682107_Doc18_FinalTransmittalNotice.pdf"
+      status: "FILED"
+    - doc: 19
+      title: "Motion to Quash 3-Day Notice / Dismiss for CCP § 1162 Defect"
+      file: "CUD-26-682107_Doc19_MotionToQuash3DayNotice.pdf"
+      authority: "CCP §§ 1162, 1166, 1167; Cal. Civ. Code § 1942.5"
+      status: "FILED"
+    - doc: 20
+      title: "Pre-Hearing Procedural Briefing Notice"
+      file: "CUD-26-682107_Doc20_PreHearingProceduralBriefingNotice.pdf"
+      authority: "CCP § 128.7; 2 C.F.R. § 200.435"
+      status: "FILED"
+    - doc: 21
+      title: "Declaration and Exhibit Packet (Exhibits A–F)"
+      file: "CUD-26-682107_Doc21_DeclarationAndExhibitPacket.pdf"
+      exhibits: ["A: POS 3-Day Notice", "B: RAR Nov 20 2025", "C: SMTP 550 Token",
+                 "D: HUD-VASH Agreement", "E: Tri-Agency Confirmations", "F: State Bar Referral"]
+      status: "FILED"
+    - doc: 22
+      title: "Notice of Transmittal of Master Evidentiary Record"
+      file: "CUD-26-682107_Doc22_NoticeOfTransmittalMasterRecord.pdf"
+      sha256: "0x441BABCB59A6D18E92DE1A35193D64B182D6BBA9169D60F24C125FC74550B0FE"
+      status: "FILED"
+    - doc: 23
+      title: "Supplemental Forensic Notice and Cease Adverse Action"
+      file: "CUD-26-682107_Doc23_SupplementalForensicNoticeAndCeaseAdverseAction.pdf"
+      status: "FILED"
+    - doc: 24
+      title: "Notice of Actual Service by Alternative Means"
+      file: "CUD-26-682107_Doc24_NoticeOfActualServiceByAlternativeMeans.pdf"
+      authority: "CCP § 1010.6; Cal. Rules of Court, Rule 2.251"
+      status: "FILED"
+    - doc: 25
+      title: "Master Cryptographic Verification Index"
+      file: "CUD-26-682107_Doc25_MasterCryptographicVerificationIndex.pdf"
+      authority: "Cal. Evid. Code §§ 1552, 1553; Fed. R. Evid. 901(b)(9)"
+      status: "FILED"
+    - doc: 26
+      title: "Supplemental Notice — Video Evidence Habitability Record"
+      file: "CUD-26-682107_Doc26_SupplementalNoticeVideoEvidenceHabitabilityRecord.pdf"
+      status: "FILED"
+    - doc: "26B"
+      title: "Forensic Medical Chemical Injury Video Analysis"
+      file: "CUD-26-682107_Doc26B_ForensicMedicalChemicalInjuryVideoAnalysis.pdf"
+      status: "FILED"
+    - doc: "FDL"
+      title: "Final Demand Letter to Counsel"
+      file: "CUD-26-682107_FinalDemandLetterToCounsel_May17_2026.pdf"
+      recipients: ["jzanghi@ztalaw.com", "bwhite@stp-sf.org"]
+      authority: "CCP § 128.7; Cal. Civ. Code § 1942.5(h)"
+      status: "FILED"
+    # ── Doc 32–38: Expanded Evidentiary Suite ────────────────────────────────
+    - doc: 32
+      title: "Exhibit G — Video Transmittal and Habitability Evidence"
+      file: "CUD-26-682107_Doc32_ExhibitG_VideoTransmittal.pdf"
+      authority: "Cal. Health & Safety Code § 17920.3; Cal. Civ. Code §§ 1941.1, 1942.5(a)"
+      evidence_link: "https://drive.google.com/file/d/1SA-z9GInKvRVttUAv6B6-socvdzoKl1G/view"
+      status: "FILED"
+    - doc: 33
+      title: "Notice of Institutional Conflict of Interest"
+      file: "CUD-26-682107_Doc33_NoticeInstitutionalConflict.pdf"
+      authority: "Title 38 U.S.C.; 2 C.F.R. § 200.435"
+      description: "Documents STP's dual role as VA benefits fiduciary and adverse landlord"
+      status: "FILED"
+    - doc: 35
+      title: "Notice of Physical Trauma Evidence — Photographic Exhibits H-1 through H-5"
+      file: "CUD-26-682107_Doc35_NoticePhysicalTraumaEvidence.pdf"
+      authority: "Cal. Health & Safety Code § 17920.3; 42 U.S.C. §§ 3604, 12132"
+      exhibits:
+        - "H-1: Facial swelling, erythema, chemical burns"
+        - "H-2: Hand lacerations and hemorrhaging"
+        - "H-3: Service animal Jaxx — dermatological trauma, bite wounds"
+        - "H-4: ADA Service Dog Handler ID (ADA-23627741)"
+        - "H-5: Glue boards saturated with Blattella germanica; dead rodent"
+      status: "FILED"
+    - doc: 36
+      title: "Notice of BBS Complaints — Clinical Abandonment"
+      file: "CUD-26-682107_Doc36_NoticeBBSComplaintsClinicialAbandonment.pdf"
+      bbs_cases:
+        - number: "2002026002097"
+          subject: "Kolby Losik — mandated reporter failure, whistleblower suppression"
+        - number: "2002026002098"
+          subject: "Villalobos — clinical abandonment, fraudulent VA billing"
+      status: "FILED"
+    - doc: 37
+      title: "Proposed Cross-Complaint (Lodged)"
+      file: "CUD-26-682107_Doc37_ProposedCrossComplaint.pdf"
+      causes_of_action:
+        - "First: Elder and Dependent Adult Abuse (Cal. Welf. & Inst. Code §§ 15610.07, 15657)"
+        - "Second: Breach of Mandated Corporate Duty of Care"
+        - "Third: Intentional Infliction of Emotional Distress"
+        - "Fourth: Statutory Retaliation (Cal. Civ. Code § 1942.5)"
+      cross_defendants: ["Swords to Plowshares", "William Landrum", "Kolby Losik"]
+      status: "LODGED"
+    - doc: 38
+      title: "Notice of Lodging Proposed Cross-Complaint"
+      file: "CUD-26-682107_Doc38_NoticeOfLodging_ProposedCrossComplaint.pdf"
+      authority: "Cal. Code Civ. Proc. § 428.50(c)"
+      status: "FILED"
+    - doc: "NOC"
+      title: "Notice of Structural Conflict of Interest"
+      file: "VALORAIPLUS_NOTICE_OF_CONFLICT.pdf"
+      description: "Documents irreconcilable ethical conflict — STP as VA fiduciary prosecuting eviction"
+      status: "FILED"
+
+exhibits_h_series:
+  H-1:
+    file: "20251119_204850.jpg"
+    subject: "Defendant — severe facial swelling, erythema, chemical burns"
+  H-2:
+    files: ["20251128_162522.jpg", "20251128_162530.jpg"]
+    subject: "Defendant — hand lacerations, active hemorrhaging"
+  H-3:
+    files: ["20251118_124617.jpg", "20251118_125033.jpg", "20251118_125941.jpg"]
+    subject: "Service animal Jaxx — dermatological trauma, bite wounds, hair loss"
+  H-4:
+    file: "20251201_180520.jpg"
+    subject: "ADA Service Dog Handler ID — Jaxx / Donny Gillson (ADA-23627741)"
+  H-5:
+    files: ["20251128_153752.jpg", "20251128_153755.jpg", "20260226_202747.jpg"]
+    subject: "Glue boards with Blattella germanica; dead rodent in living space"
+
+bbs_regulatory_dockets:
+  - case: "2002026002097"
+    subject: "Kolby Losik"
+    filed: "01/02/2026"
+    allegations: "Mandated reporter failure, whistleblower suppression"
+  - case: "2002026002098"
+    subject: "Villalobos"
+    filed: "01/02/2026"
+    allegations: "Clinical abandonment, fraudulent VA billing"
+
+va_oig_referral:
+  case: "468943461"
+  status: "Referred"
+  subject: "HUD-VASH oversight, program non-compliance"
+
+five_threshold_defects:
+  - id: 1
+    title: "Fatal Service Defect"
+    authority: "CCP § 1162; Liebovich v. Shahrokhkhany (1997) 56 Cal.App.4th 511"
+    consequence: "Court lacks subject matter jurisdiction — mandatory dismissal"
+  - id: 2
+    title: "Verification Defect"
+    authority: "CCP § 2015.5"
+    consequence: "Complaint defaults on evidentiary posture — immediate dismissal"
+  - id: 3
+    title: "Federal Enclave Jurisdiction Bar"
+    authority: "U.S. Const. Art. I, § 8, cl. 17; 16 U.S.C. § 460bb"
+    consequence: "Any judgment void ab initio"
+  - id: 4
+    title: "Statutory Retaliation Presumption"
+    authority: "Cal. Civ. Code § 1942.5(a)"
+    consequence: "Full burden of proof shifts to Plaintiff"
+  - id: 5
+    title: "Federal Grant Compliance Bar"
+    authority: "2 C.F.R. § 200.435; HHS OCR No. 25-621293"
+    consequence: "Federal funding bar on litigation cost allocation"
+
+exhibits_a_through_f:
+  A: "Plaintiff's Proof of Service — 3-Day Notice (defective)"
+  B: "Reasonable Accommodation Request — November 20, 2025"
+  C: "SMTP 550 Mimecast Rejection — Token N7uA_6IQ0CiwQL2ibFQZog.us448"
+  D: "HUD-VASH Housing Agreement — Supportive Services Terms"
+  E: "Tri-Agency Active Enforcement Intake Confirmations (HHS/CRD/CalVCB)"
+  F: "State Bar Disciplinary Referral — Exhibit 2 Backdating"
+
+service_recipients:
+  - name: "John Nicholas Zanghi, Esq."
+    bar: "320531"
+    role: "Lead Counsel for Plaintiff"
+    email: "jzanghi@ztalaw.com"
+  - name: "Bradford Christopher White, Esq."
+    bar: "297746"
+    role: "Co-Counsel for Plaintiff"
+    email: "bwhite@stp-sf.org"
+  - name: "SF Superior Court, Dept. 12"
+    role: "Presiding Court"
+    method: "eCourt e-filing portal"
+  - name: "Amy Horrell"
+    role: "HHS OCR Region IX Federal Lead Investigator"
+    email: "Amy.Horrell@hhs.gov"
+  - name: "Anna Moraga Archila"
+    role: "CA Civil Rights Department State Lead Investigator"
+    email: "anna.1931@calcivilrights.gov"
+  - name: "HUD-OIG"
+    role: "Federal Grant Oversight"
+    email: "hotline@hudoig.gov"
+
+calvcb_case:
+  number: "A26-10224054"
+  agency: "California Victim Compensation Board"
+  status: "ACTIVE"
 
 affirmative_defenses:
   total: 13
