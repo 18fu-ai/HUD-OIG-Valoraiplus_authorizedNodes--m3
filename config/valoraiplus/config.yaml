@@ -95,7 +95,7 @@ esign_framework:
   ca_statute: "UETA (Cal. Civ. Code § 1633.1 et seq.)"
 
 filed_document_registry:
-  total_artifacts: 26
+  total_artifacts: 38
   filing_date: "May 17, 2026"
   documents:
     - doc: 18
@@ -151,6 +151,91 @@ filed_document_registry:
       recipients: ["jzanghi@ztalaw.com", "bwhite@stp-sf.org"]
       authority: "CCP § 128.7; Cal. Civ. Code § 1942.5(h)"
       status: "FILED"
+    # ── Doc 32–38: Expanded Evidentiary Suite ────────────────────────────────
+    - doc: 32
+      title: "Exhibit G — Video Transmittal and Habitability Evidence"
+      file: "CUD-26-682107_Doc32_ExhibitG_VideoTransmittal.pdf"
+      authority: "Cal. Health & Safety Code § 17920.3; Cal. Civ. Code §§ 1941.1, 1942.5(a)"
+      evidence_link: "https://drive.google.com/file/d/1SA-z9GInKvRVttUAv6B6-socvdzoKl1G/view"
+      status: "FILED"
+    - doc: 33
+      title: "Notice of Institutional Conflict of Interest"
+      file: "CUD-26-682107_Doc33_NoticeInstitutionalConflict.pdf"
+      authority: "Title 38 U.S.C.; 2 C.F.R. § 200.435"
+      description: "Documents STP's dual role as VA benefits fiduciary and adverse landlord"
+      status: "FILED"
+    - doc: 35
+      title: "Notice of Physical Trauma Evidence — Photographic Exhibits H-1 through H-5"
+      file: "CUD-26-682107_Doc35_NoticePhysicalTraumaEvidence.pdf"
+      authority: "Cal. Health & Safety Code § 17920.3; 42 U.S.C. §§ 3604, 12132"
+      exhibits:
+        - "H-1: Facial swelling, erythema, chemical burns"
+        - "H-2: Hand lacerations and hemorrhaging"
+        - "H-3: Service animal Jaxx — dermatological trauma, bite wounds"
+        - "H-4: ADA Service Dog Handler ID (ADA-23627741)"
+        - "H-5: Glue boards saturated with Blattella germanica; dead rodent"
+      status: "FILED"
+    - doc: 36
+      title: "Notice of BBS Complaints — Clinical Abandonment"
+      file: "CUD-26-682107_Doc36_NoticeBBSComplaintsClinicialAbandonment.pdf"
+      bbs_cases:
+        - number: "2002026002097"
+          subject: "Kolby Losik — mandated reporter failure, whistleblower suppression"
+        - number: "2002026002098"
+          subject: "Villalobos — clinical abandonment, fraudulent VA billing"
+      status: "FILED"
+    - doc: 37
+      title: "Proposed Cross-Complaint (Lodged)"
+      file: "CUD-26-682107_Doc37_ProposedCrossComplaint.pdf"
+      causes_of_action:
+        - "First: Elder and Dependent Adult Abuse (Cal. Welf. & Inst. Code §§ 15610.07, 15657)"
+        - "Second: Breach of Mandated Corporate Duty of Care"
+        - "Third: Intentional Infliction of Emotional Distress"
+        - "Fourth: Statutory Retaliation (Cal. Civ. Code § 1942.5)"
+      cross_defendants: ["Swords to Plowshares", "William Landrum", "Kolby Losik"]
+      status: "LODGED"
+    - doc: 38
+      title: "Notice of Lodging Proposed Cross-Complaint"
+      file: "CUD-26-682107_Doc38_NoticeOfLodging_ProposedCrossComplaint.pdf"
+      authority: "Cal. Code Civ. Proc. § 428.50(c)"
+      status: "FILED"
+    - doc: "NOC"
+      title: "Notice of Structural Conflict of Interest"
+      file: "VALORAIPLUS_NOTICE_OF_CONFLICT.pdf"
+      description: "Documents irreconcilable ethical conflict — STP as VA fiduciary prosecuting eviction"
+      status: "FILED"
+
+exhibits_h_series:
+  H-1:
+    file: "20251119_204850.jpg"
+    subject: "Defendant — severe facial swelling, erythema, chemical burns"
+  H-2:
+    files: ["20251128_162522.jpg", "20251128_162530.jpg"]
+    subject: "Defendant — hand lacerations, active hemorrhaging"
+  H-3:
+    files: ["20251118_124617.jpg", "20251118_125033.jpg", "20251118_125941.jpg"]
+    subject: "Service animal Jaxx — dermatological trauma, bite wounds, hair loss"
+  H-4:
+    file: "20251201_180520.jpg"
+    subject: "ADA Service Dog Handler ID — Jaxx / Donny Gillson (ADA-23627741)"
+  H-5:
+    files: ["20251128_153752.jpg", "20251128_153755.jpg", "20260226_202747.jpg"]
+    subject: "Glue boards with Blattella germanica; dead rodent in living space"
+
+bbs_regulatory_dockets:
+  - case: "2002026002097"
+    subject: "Kolby Losik"
+    filed: "01/02/2026"
+    allegations: "Mandated reporter failure, whistleblower suppression"
+  - case: "2002026002098"
+    subject: "Villalobos"
+    filed: "01/02/2026"
+    allegations: "Clinical abandonment, fraudulent VA billing"
+
+va_oig_referral:
+  case: "468943461"
+  status: "Referred"
+  subject: "HUD-VASH oversight, program non-compliance"
 
 five_threshold_defects:
   - id: 1
