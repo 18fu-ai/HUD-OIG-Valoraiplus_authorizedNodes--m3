@@ -86,6 +86,7 @@ const navItems = [
   { href: '/terminal-projection', label: 'Terminal Projection', icon: Zap, category: 'system' },
   { href: '/terminal-evidence-map', label: 'Evidence Map', icon: Shield, category: 'legal' },
   { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
+  { href: '/case-filing-index', label: 'Filing Index', icon: FileText, category: 'legal' },
   { href: '/terminal-hud', label: 'Terminal HUD', icon: Zap, category: 'system' },
   { href: '/forensic-architecture', label: 'Forensic Architecture', icon: Shield, category: 'legal' },
   { href: '/token-registry', label: '50-Token Registry', icon: Database, category: 'system' },
