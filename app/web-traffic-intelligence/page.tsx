@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useState, useCallback } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -64,11 +66,19 @@ interface DashboardStats {
 
 // ---------------------------------------------------------------------------
 // Supabase (anon key — RLS protects everything)
+// Initialized in component to avoid build-time evaluation
 // ---------------------------------------------------------------------------
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL        || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY   || '',
-)
+let supabase: ReturnType<typeof createClient> | null = null
+
+function getSupabaseClient() {
+  if (!supabase && typeof window !== 'undefined') {
+    supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL        || '',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY   || '',
+    )
+  }
+  return supabase
+}
 
 // ---------------------------------------------------------------------------
 // Stat builder
@@ -175,14 +185,20 @@ export default function WebTrafficIntelligence() {
   const fetchData = useCallback(async () => {
     setLoading(true)
     try {
+      const client = getSupabaseClient()
+      if (!client) {
+        console.warn('[v0] Supabase client not available')
+        return
+      }
+
       const now  = new Date()
       const t24h = new Date(now.getTime() -       24 * 3600 * 1000).toISOString()
       const t14d = new Date(now.getTime() - 14 * 24 * 3600 * 1000).toISOString()
 
       const [r24h, r14d, rSessions] = await Promise.all([
-        supabase.from('valoraiplus_access_logs').select('*').gte('created_at', t24h).order('created_at', { ascending: false }),
-        supabase.from('valoraiplus_access_logs').select('*').gte('created_at', t14d).order('created_at', { ascending: false }),
-        supabase.from('valoraiplus_session_rollups').select('*').order('last_seen', { ascending: false }).limit(25),
+        client.from('valoraiplus_access_logs').select('*').gte('created_at', t24h).order('created_at', { ascending: false }),
+        client.from('valoraiplus_access_logs').select('*').gte('created_at', t14d).order('created_at', { ascending: false }),
+        client.from('valoraiplus_session_rollups').select('*').order('last_seen', { ascending: false }).limit(25),
       ])
 
       const sessions = rSessions.data || []
