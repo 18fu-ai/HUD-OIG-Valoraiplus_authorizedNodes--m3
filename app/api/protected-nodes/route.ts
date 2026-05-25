@@ -37,3 +37,18 @@ export async function GET(request: Request) {
     },
   });
 }
+
+  return NextResponse.json({
+    success: true,
+    timestamp: new Date().toISOString(),
+    data: {
+      nodes,
+      count: nodes.length,
+    },
+    _meta: {
+      version: 'v1.0.0',
+      governance_model: 'DG77.77X',
+      guardians: ['Michael', 'Gabriel', 'Raphael', 'Uriel'],
+    },
+  });
+}
