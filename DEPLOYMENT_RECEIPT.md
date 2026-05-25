@@ -170,9 +170,25 @@ git push origin mission-creation
 ## GIT STATUS
 
 **Branch:** `mission-creation`
-**Head Commit:** `4aa2683` — "Add automated gate execution system — /execute-gates"
+**Head Commit:** `93e02eb` — "Critical legal correction: remove FILED status and clerk actor from digital lodging system"
 **Locked Receipt State:** `1b9773d` — "Three final receipt fixes per review"
-**Total Commits on Branch:** 9
+**Total Commits on Branch:** 12
+
+**Commit History (mission-creation, most recent first):**
+```
+93e02eb — Critical legal correction: remove FILED status and clerk actor (CRC 2.259)
+0c952b7 — Add digital lodging system for Document 108
+d656a75 — Jurisdiction correction: Los Angeles → San Francisco Superior Court
+4aa2683 — Add automated gate execution system — /execute-gates
+1b9773d — Three final receipt fixes per review (LOCKED RECEIPT STATE)
+05a03f9 — Final receipt corrections: fix seed SQL expected result conflation
+e08c50c — Apply five court-safe corrections per in pro per review
+c1e9160 — Remove all absolute/unsupported claims
+8fee888 — Apply Technical Validation Briefing corrections
+eb0c6b6 — Apply four court-safe precision edits
+c01a2c7 — Add .env.example for environment variable declarations
+dc5f7b2 — Fix: rename ua_family → user_agent_family across all layers
+```
 
 **Files Modified:**
 - `+12` files created (migrations, types, data layer, routes, components)
