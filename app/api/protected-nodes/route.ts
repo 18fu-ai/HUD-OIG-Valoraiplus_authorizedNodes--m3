@@ -17,8 +17,8 @@ export async function GET(request: Request) {
   let nodes = PROTECTED_NODES;
 
   if (nodeFilter) {
-    nodes = nodes.filter(n => 
-      n.symbol.toLowerCase().includes(nodeFilter.toLowerCase()) ||
+    nodes = nodes.filter(n =>
+      n.id.toLowerCase().includes(nodeFilter.toLowerCase()) ||
       n.name.toLowerCase().includes(nodeFilter.toLowerCase())
     );
   }
