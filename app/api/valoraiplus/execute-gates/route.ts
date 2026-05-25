@@ -253,7 +253,7 @@ export async function POST() {
     gate: 8,
     name: "LODGE DOCUMENT 108 — Manual submission to court clerk",
     status: "skipped",
-    detail: "Manual step: physically submit Document 108 to Los Angeles Superior Court Dept 12 clerk. Obtain and preserve filing receipt.",
+    detail: "Manual step: physically submit Document 108 to San Francisco Superior Court, Department 12 clerk (400 McAllister Street, San Francisco, CA 94102). Obtain and preserve filing receipt.",
     timestamp: now(),
   });
 
