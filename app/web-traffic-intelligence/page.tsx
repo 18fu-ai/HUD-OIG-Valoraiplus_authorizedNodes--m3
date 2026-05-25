@@ -124,8 +124,8 @@ function anomalyColor(type: string | null): string {
 }
 
 function anomalyBadgeVariant(score: number): 'destructive' | 'secondary' | 'outline' {
-  if (score >= 0.8) return 'destructive'
-  if (score >= 0.5) return 'secondary'
+  if (score >= 80) return 'destructive'
+  if (score >= 50) return 'secondary'
   return 'outline'
 }
 
@@ -345,7 +345,7 @@ export default function WebTrafficIntelligence() {
                   </div>
                   <div className="flex items-center gap-2 shrink-0 ml-2">
                     {log.country_code && <span className="font-mono text-muted-foreground">{log.country_code}</span>}
-                    <Badge variant={anomalyBadgeVariant(log.anomaly_score)}>{log.anomaly_score.toFixed(2)}</Badge>
+                    <Badge variant={anomalyBadgeVariant(log.anomaly_score)}>{log.anomaly_score}</Badge>
                     <span className={`font-mono text-[10px] ${anomalyColor(log.anomaly_type)}`}>{log.anomaly_type}</span>
                   </div>
                 </div>
@@ -360,7 +360,7 @@ export default function WebTrafficIntelligence() {
         <CardHeader className="pb-3">
           <CardTitle className="font-mono text-sm flex items-center gap-2">
             <BarChart3 className="w-4 h-4" />
-            TOP PAGES — {label.toUpperCase()}
+            TOP PAGES �� {label.toUpperCase()}
           </CardTitle>
         </CardHeader>
         <CardContent>
