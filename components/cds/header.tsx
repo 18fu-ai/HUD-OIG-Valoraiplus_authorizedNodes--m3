@@ -88,6 +88,7 @@ const navItems = [
   { href: '/dept12-briefing', label: 'Dept 12 Briefing', icon: Brain, category: 'legal' },
   { href: '/mission-control', label: 'Mission Control', icon: Zap, category: 'legal' },
   { href: '/case-filing-index', label: 'Filing Index', icon: FileText, category: 'legal' },
+  { href: '/web-traffic-intelligence', label: 'Web Traffic', icon: Globe, category: 'system' },
   { href: '/terminal-hud', label: 'Terminal HUD', icon: Zap, category: 'system' },
   { href: '/forensic-architecture', label: 'Forensic Architecture', icon: Shield, category: 'legal' },
   { href: '/token-registry', label: '50-Token Registry', icon: Database, category: 'system' },
