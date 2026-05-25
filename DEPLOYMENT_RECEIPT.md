@@ -40,9 +40,10 @@
 
 ### Type System (298 Lines)
 ```
-✓ AppRole enum (VIEWER, ANALYST, ATTORNEY, JUDGE, EXPERT, PRIVILEGED)
+✓ AppRole enum (5-tier: admin, editor, viewer, agency_view, court_readonly)
 ✓ Case domain entities (Case, Document, Deadline, Event, Submission)
-✓ Document status tracking (LODGED, FILED, REDACTED, SEALED, PURGED)
+✓ Document status enums (DRAFT, STAGED, FILED, PENDING, LODGED, ACTIVE, EXECUTED, SUPERSEDED, WITHHELD_PRIVATE)
+✓ Visibility enums (public_redacted, court_restricted, agency_restricted, private_evidence, sealed_requested, sealed_by_order)
 ✓ Dashboard statistics interfaces
 ✓ Phase 2 telemetry types (AccessLog, SessionRollup, NetworkFingerprint)
 ```
@@ -87,18 +88,20 @@
 | `public.audit_logs` | 16 | Administrative audit trail |
 
 ### Security Features (RLS)
-- ✅ Row-Level Security on all tables
-- ✅ Role-based access control (AppRole)
-- ✅ Jurisdiction separation
-- ✅ Public/Private document visibility
-- ✅ Redaction enforcement
+- Row-Level Security: Authored for all tables; pending live verification after migration
+- Access role system: 5-tier only (`admin`, `editor`, `viewer`, `agency_view`, `court_readonly`)
+- Jurisdiction separation: Designed into schema; pending live verification
+- Public/Private document visibility: `public_court_documents` view authored; pending activation
+- Redaction enforcement: Designed into schema; pending live verification
 
 ### Telemetry Tables (Phase 2)
 | Table | Purpose |
 |-------|---------|
-| `public.access_logs` | Real-time session tracking |
-| `public.session_rollups` | Aggregated traffic analytics |
-| `public.network_fingerprints` | Request origin fingerprinting |
+| `public.valoraiplus_access_logs` | Request-level session tracking (HMAC-SHA256 hashes only; no raw IP or UA) |
+| `public.valoraiplus_session_rollups` | Aggregated traffic analytics |
+| `public.valoraiplus_network_fingerprints` | Device/network fingerprinting |
+
+**Privacy posture:** `visitor_hash`, `user_agent_hash`, `session_hash` store only HMAC-SHA256 transformed values. Raw IP addresses and raw user-agent strings are not stored. `user_agent_family` (canonical) replaces legacy `ua_family`. Status: authored and ready for activation pending migration application.
 
 ---
 
@@ -210,8 +213,57 @@ git push origin mission-creation
 
 ---
 
-**Status: DEPLOYMENT COMPLETE**  
-**Next Action:** Apply Supabase migrations 001-004 in order, verify schema and document count via SQL, push to Vercel, capture 8 receipt screenshots  
-**Rollback:** If any migration step fails, preserve the exact error, stop further execution, and use a controlled rollback or corrective migration — do not proceed to the next migration until the prior step is confirmed clean
+**Status: DEPLOYMENT RECEIPT ISSUED — PENDING PRODUCTION ACTIVATION**
 
-*End of Receipt*
+```
+RE: VALORAIPLUS System Validation — CUD-26-682107
+
+1. Schema Status:
+   Migrations 001–004: Authored, staged, and pending application on Tuesday morning.
+
+2. Document Count:
+   Confirmed SQL result: Pending. Exact count must be taken only from the post-migration SQL result.
+
+3. Public/Private Separation:
+   public_court_documents view: Authored and ready for activation.
+   Sensitive/private records excluded from public view: Designed into schema; pending live verification after migration.
+
+4. Access Control:
+   RLS on core tables: Authored and ready for activation.
+   Public access limited to redacted/non-sensitive records: Designed into schema; pending live verification.
+   Active role system: 5-tier role matrix only:
+      admin
+      editor
+      viewer
+      agency_view
+      court_readonly
+
+5. Audit/Event Record:
+   document_events table: Authored and ready for activation.
+   valoraiplus_access_logs table: Authored and ready for activation after Phase 2 migration.
+
+6. Telemetry Privacy:
+   visitor_hash, user_agent_hash, session_hash: Designed for HMAC-SHA256 tracking only.
+   user_agent_family column: Locked canonical runtime column replacing legacy ua_family.
+   Raw IP / raw user-agent storage: Not designed to be stored; confirm by schema/code receipts after deployment.
+
+7. Deployment:
+   Vercel preview URL: Implemented and ready for deployment; live status confirmed only after Vercel deploy.
+   Production URL: Pending final branch push / merge / production deployment.
+   Dashboard routes: Code compiled and ready; live database rendering pending migration and deployment receipts.
+
+8. Receipts:
+   Supabase schema screenshot: Pending capture.
+   document_count SQL screenshot: Pending capture.
+   user_agent_family verification screenshot: Pending capture.
+   Vercel deployment screenshot: Pending capture.
+   /case-control screenshot: Pending capture.
+   /web-traffic-intelligence screenshot: Pending capture.
+   API 200 logged response screenshot: Pending capture.
+```
+
+---
+
+## COURT-SAFE POSTURE DECLARATION
+
+VALORAIPLUS is an organizational case-control and privacy-preserving access-audit system for owned infrastructure. It assists with document indexing, visibility separation, event tracking, and technical access-pattern review. It does not replace the official court docket, does not identify individual visitors, does not publish private information, and does not substitute telemetry for testimony, formal service, authentication, admission, or judicial findings.
