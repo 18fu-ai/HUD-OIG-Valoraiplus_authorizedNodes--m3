@@ -30,15 +30,10 @@ type AccessPayload = {
   country_code?: string | null;
   region_code?: string | null;
   city_name?: string | null;
-  continent_code?: string | null;
-  vercel_id?: string | null;
-  deployment_url?: string | null;
   user_agent_family?: UserAgentFamily;
   is_anomaly?: boolean;
   anomaly_type?: string | null;
-  anomaly_flags?: string[];
   anomaly_score?: number;
-  source?: string;
 };
 
 export async function POST(request: NextRequest) {
@@ -87,32 +82,23 @@ export async function POST(request: NextRequest) {
     auth: { persistSession: false },
   });
 
+  // Insert only the columns that exist in migration-003
   const insertPayload = {
-    occurred_at: payload.occurred_at ?? new Date().toISOString(),
-    visitor_hash: payload.visitor_hash,
-    user_agent_hash: payload.user_agent_hash,
-    session_hash: payload.session_hash,
-    request_method: (payload.request_method ?? "GET").slice(0, 16),
-    request_path: payload.request_path.slice(0, 1000),
+    visitor_hash:     payload.visitor_hash,
+    user_agent_hash:  payload.user_agent_hash,
+    session_hash:     payload.session_hash,
+    request_method:   (payload.request_method ?? "GET").slice(0, 16),
+    request_path:     payload.request_path.slice(0, 1000),
     request_category: payload.request_category ?? "unknown",
-    request_class: payload.request_category ?? "unknown",
-    referrer_origin: payload.referrer_origin?.slice(0, 500) ?? null,
-    country_code: payload.country_code?.slice(0, 10) ?? null,
-    region_code: payload.region_code?.slice(0, 32) ?? null,
-    city_name: payload.city_name?.slice(0, 128) ?? null,
-    continent_code: payload.continent_code?.slice(0, 10) ?? null,
-    vercel_id: payload.vercel_id?.slice(0, 128) ?? null,
-    deployment_url: payload.deployment_url?.slice(0, 500) ?? null,
-    user_agent_family: payload.user_agent_family ?? "unknown",
-    is_anomaly: payload.is_anomaly ?? false,
-    anomaly_type: payload.anomaly_type?.slice(0, 128) ?? null,
-    anomaly_flags: Array.isArray(payload.anomaly_flags)
-      ? payload.anomaly_flags.slice(0, 20)
-      : [],
-    anomaly_score: clampScore(payload.anomaly_score),
-    source: payload.source ?? "vercel_edge_middleware",
-    raw_ip_stored: false,
-    raw_user_agent_stored: false,
+    referrer_origin:  payload.referrer_origin?.slice(0, 500)  ?? null,
+    country_code:     payload.country_code?.slice(0, 10)       ?? null,
+    region_code:      payload.region_code?.slice(0, 32)        ?? null,
+    city_name:        payload.city_name?.slice(0, 128)         ?? null,
+    ua_family:        payload.user_agent_family                ?? "unknown",
+    is_anomaly:       payload.is_anomaly                       ?? false,
+    anomaly_type:     payload.anomaly_type?.slice(0, 128)      ?? null,
+    anomaly_score:    clampScore(payload.anomaly_score),
+    created_at:       payload.occurred_at ?? new Date().toISOString(),
   };
 
   const { error } = await supabase

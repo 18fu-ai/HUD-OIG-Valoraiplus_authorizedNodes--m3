@@ -245,7 +245,7 @@ export interface AccessLog {
   request_path: string;
   request_method: string;
   request_category: string;
-  ua_family?: string;
+  user_agent_family?: string;
   referrer_origin?: string;
   country_code?: string;
   region_code?: string;

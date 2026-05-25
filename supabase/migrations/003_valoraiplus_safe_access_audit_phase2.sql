@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.valoraiplus_access_logs (
     request_path     TEXT         NOT NULL,
     request_method   VARCHAR(10)  NOT NULL DEFAULT 'GET',
     request_category TEXT         NOT NULL DEFAULT 'PAGE',
-    ua_family        TEXT,
+    user_agent_family TEXT,
     referrer_origin  TEXT,
     -- Coarse geo (Vercel Edge headers — provider-level, not precise)
     country_code     VARCHAR(10),
