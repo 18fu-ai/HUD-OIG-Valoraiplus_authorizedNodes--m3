@@ -25,19 +25,19 @@ import {
 // Types
 // ---------------------------------------------------------------------------
 interface AccessLog {
-  id              : string
-  visitor_hash    : string
-  session_hash    : string | null
-  request_path    : string
-  request_category: string
-  ua_family       : string | null
-  referrer_origin : string | null
-  country_code    : string | null
-  region_code     : string | null
-  is_anomaly      : boolean
-  anomaly_type    : string | null
-  anomaly_score   : number
-  created_at      : string
+  id                : string
+  visitor_hash      : string
+  session_hash      : string | null
+  request_path      : string
+  request_category  : string
+  user_agent_family : string | null
+  referrer_origin   : string | null
+  country_code      : string | null
+  region_code       : string | null
+  is_anomaly        : boolean
+  anomaly_type      : string | null
+  anomaly_score     : number
+  created_at        : string
 }
 
 interface SessionRollup {
@@ -84,9 +84,9 @@ function buildStats(logs: AccessLog[], sessions: SessionRollup[]): DashboardStat
 
   for (const log of logs) {
     by_path[log.request_path] = (by_path[log.request_path] || 0) + 1
-    if (log.country_code)   by_country[log.country_code] = (by_country[log.country_code] || 0) + 1
+    if (log.country_code)    by_country[log.country_code] = (by_country[log.country_code] || 0) + 1
     if (log.request_category) by_category[log.request_category] = (by_category[log.request_category] || 0) + 1
-    if (log.ua_family)      by_ua_family[log.ua_family]  = (by_ua_family[log.ua_family]  || 0) + 1
+    if (log.user_agent_family) by_ua_family[log.user_agent_family] = (by_ua_family[log.user_agent_family] || 0) + 1
     if (log.referrer_origin) by_referrer[log.referrer_origin] = (by_referrer[log.referrer_origin] || 0) + 1
     if (log.is_anomaly && log.anomaly_type) {
       by_anomaly_type[log.anomaly_type] = (by_anomaly_type[log.anomaly_type] || 0) + 1
@@ -341,7 +341,7 @@ export default function WebTrafficIntelligence() {
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <span className="font-mono text-muted-foreground shrink-0">{new Date(log.created_at).toLocaleTimeString()}</span>
                     <span className="font-mono text-foreground truncate">{log.request_path}</span>
-                    {log.ua_family && <span className={`font-mono text-[10px] shrink-0 ${uaColor(log.ua_family)}`}>{log.ua_family}</span>}
+                    {log.user_agent_family && <span className={`font-mono text-[10px] shrink-0 ${uaColor(log.user_agent_family)}`}>{log.user_agent_family}</span>}
                   </div>
                   <div className="flex items-center gap-2 shrink-0 ml-2">
                     {log.country_code && <span className="font-mono text-muted-foreground">{log.country_code}</span>}
