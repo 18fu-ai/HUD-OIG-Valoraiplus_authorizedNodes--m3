@@ -1,38 +1,33 @@
 import { updateSession } from '@/lib/supabase/proxy'
-import { trafficLogger } from '@/lib/traffic-logger'
 import { type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const startTime = Date.now()
-  
-  // Extract traffic data
-  const ip = request.headers.get('x-forwarded-for') || 
-             request.headers.get('x-real-ip') || 
-             'unknown'
-  const userAgent = request.headers.get('user-agent') || 'unknown'
-  const path = request.nextUrl.pathname + request.nextUrl.search
-  const method = request.method
-  const referer = request.headers.get('referer')
+  // Skip telemetry for the access-log endpoint itself to prevent recursion
+  const isInternalTelemetry = request.nextUrl.pathname.startsWith('/api/valoraiplus/access-log')
 
-  // Update session (existing functionality)
+  // Update session
   const response = await updateSession(request)
-  
-  // Calculate response time
-  const responseTime = Date.now() - startTime
-  const statusCode = response.status
 
-  // Log traffic asynchronously (non-blocking)
-  trafficLogger.logPageView({
-    ip: ip.split(',')[0].trim(),
-    userAgent,
-    path,
-    method,
-    referer: referer || undefined,
-    statusCode,
-    responseTime,
-  }).catch(error => {
-    console.error('[Middleware] Traffic logging error:', error)
-  })
+  if (!isInternalTelemetry) {
+    const rawIp      = (request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown').split(',')[0].trim()
+    const rawUserAgent = request.headers.get('user-agent') || 'unknown'
+    const path       = request.nextUrl.pathname + request.nextUrl.search
+    const referrer   = request.headers.get('referer') || 'DIRECT'
+
+    // Geo headers injected by Vercel Edge Network
+    const country    = request.headers.get('x-vercel-ip-country')      || undefined
+    const region     = request.headers.get('x-vercel-ip-country-region')|| undefined
+    const city       = request.headers.get('x-vercel-ip-city')          || 'UNKNOWN'
+
+    // Fire-and-forget: non-blocking telemetry POST to hardened API route
+    fetch(`${request.nextUrl.origin}/api/valoraiplus/access-log`, {
+      method  : 'POST',
+      headers : { 'Content-Type': 'application/json' },
+      body    : JSON.stringify({ rawIp, rawUserAgent, path, country, region, city, referrer }),
+    }).catch(() => {
+      // Silently discard — telemetry must never block a request
+    })
+  }
 
   return response
 }
