@@ -141,7 +141,9 @@ Once migrations are applied, run:
 -- select c.case_number, count(d.id) as doc_count
 -- from public.cases c left join public.documents d on d.case_id = c.id
 -- where c.case_number = 'CUD-26-682107' group by c.case_number;
--- Expected: {"ok":true,"status":"logged"} or equivalent successful 200 response from access-log endpoint
+-- Expected: one row with case_number = 'CUD-26-682107' and exact integer document count
+-- Record that number — it is the official confirmed seed count
+-- Note: {"ok":true,"status":"logged"} is the expected response for POST /api/valoraiplus/access-log — a separate smoke test, not this SQL query
 ```
 
 ### 3. Environment Variables
@@ -168,7 +170,8 @@ git push origin mission-creation
 ## GIT STATUS
 
 **Branch:** `mission-creation`  
-**Commits:** Latest is "Merge VALORAIPLUS Phase 1 core schema + Phase 2 telemetry + complete app layer..."
+**Head Commit:** `e08c50c` — "Apply five court-safe corrections per in pro per review"  
+**Total Commits on Branch:** 6 (including .env.example, ua_family fix, schema corrections, precision edits, and in pro per review corrections)
 
 **Files Modified:**
 - `+12` files created (migrations, types, data layer, routes, components)
