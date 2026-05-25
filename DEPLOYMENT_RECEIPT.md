@@ -10,7 +10,7 @@
 ## SYSTEM DEPLOYMENT SUMMARY
 
 ### Phase 1: Secure Case Control Core
-- **Database Schema:** ✅ Deployed to `/supabase/migrations/`
+- **Database Schema:** Authored and committed under `/supabase/migrations/`
   - `001_phase1_secure_case_core.sql` - Core tables, RLS policies, forensic architecture
   - `002_seed_cud_26_682107_priority_tranche.sql` - Priority case seed data
   
@@ -83,7 +83,7 @@
 | `public.cases` | 18 | Case metadata, jurisdiction, status |
 | `public.documents` | 22 | Document records, status tracking |
 | `public.document_events` | 15 | Audit trail, event logging |
-| `public.document_deadlines` | 12 | Case deadlines, reminders |
+| `public.deadlines` | 12 | Case deadlines, reminders |
 | `public.agency_submissions` | 14 | Agency submission tracking |
 | `public.audit_log` | 16 | Administrative audit trail |
 
@@ -137,13 +137,11 @@ supabase db push origin main
 Once migrations are applied, run:
 ```sql
 -- Run 002_seed_cud_26_682107_priority_tranche.sql to populate test case
--- Confirm document count via SQL after application:
+-- After running, confirm the exact document count via SQL:
 -- select c.case_number, count(d.id) as doc_count
 -- from public.cases c left join public.documents d on d.case_id = c.id
 -- where c.case_number = 'CUD-26-682107' group by c.case_number;
--- Expected: one row with case_number = 'CUD-26-682107' and exact integer document count
--- Record that number — it is the official confirmed seed count
--- Note: {"ok":true,"status":"logged"} is the expected response for POST /api/valoraiplus/access-log — a separate smoke test, not this SQL query
+-- Do not assert a count until the database returns it. Record the exact integer result.
 ```
 
 ### 3. Environment Variables
