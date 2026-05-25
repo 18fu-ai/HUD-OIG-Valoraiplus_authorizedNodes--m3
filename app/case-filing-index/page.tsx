@@ -26,12 +26,16 @@ import {
   List,
   Download,
   ArrowUpDown,
+  Upload,
 } from 'lucide-react';
 import {
   CASE_DOCUMENTS,
   CASE_INFO,
   STACK_DESCRIPTIONS,
   DOC_TYPE_LABELS,
+  RAPIDLEGAL_UPLOAD_ORDER,
+  RAPIDLEGAL_CATEGORIES,
+  RAPIDLEGAL_CATEGORY_COLORS,
   getRecordSummary,
   type CaseDocument,
   type Stack,
@@ -39,7 +43,7 @@ import {
   type DocType,
 } from '@/lib/case-documents';
 
-type ViewMode = 'list' | 'grid' | 'stack';
+type ViewMode = 'list' | 'grid' | 'stack' | 'upload';
 type SortField = 'docNumber' | 'title' | 'filingDate' | 'status' | 'type';
 type SortDirection = 'asc' | 'desc';
 
@@ -337,7 +341,8 @@ export default function CaseFilingIndexPage() {
           </div>
         </div>
 
-        {/* Search and Filters */}
+        {/* Search and Filters — hidden in upload order view */}
+        {viewMode !== 'upload' && (
         <Card className="bg-card border-border">
           <CardContent className="p-4 space-y-4">
             <div className="flex items-center gap-4 flex-wrap">
@@ -386,6 +391,15 @@ export default function CaseFilingIndexPage() {
                   className="h-7 px-2"
                 >
                   <Folder className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === 'upload' ? 'secondary' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('upload')}
+                  className="h-7 px-2"
+                  title="RapidLegal Upload Order"
+                >
+                  <Upload className="w-4 h-4" />
                 </Button>
               </div>
             </div>
@@ -455,13 +469,16 @@ export default function CaseFilingIndexPage() {
             )}
           </CardContent>
         </Card>
+        )}
 
-        {/* Results Count */}
+        {/* Results Count — hidden in upload order view */}
+        {viewMode !== 'upload' && (
         <div className="flex items-center justify-between">
           <span className="font-mono text-sm text-muted-foreground">
             Showing {filteredDocuments.length} of {CASE_DOCUMENTS.length} documents
           </span>
         </div>
+        )}
 
         {/* Document Views */}
         {viewMode === 'list' && (
@@ -591,6 +608,96 @@ export default function CaseFilingIndexPage() {
                 </Card>
               );
             })}
+          </div>
+        )}
+
+        {viewMode === 'upload' && (
+          <div className="space-y-4">
+            {/* Header */}
+            <Card className="bg-card border-primary/30">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <Upload className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h2 className="font-mono text-sm font-bold text-foreground mb-1">
+                      RapidLegal / LegalConnect Upload Order — 33-Document Priority Tranche
+                    </h2>
+                    <p className="font-mono text-xs text-muted-foreground">
+                      Judge-readable sequencing: court readability → ADA/access → witness preservation → factual declarations → dispositive motions → forensic chronologies → related-case notices → final compliance notices.
+                      Do <strong className="text-foreground">not</strong> upload the Combined Reference Copy as a separate filing. Upload Doc 065 (R2 clerk-ready version) only once.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Category legend */}
+            <div className="flex flex-wrap gap-2">
+              {RAPIDLEGAL_CATEGORIES.map(cat => {
+                const colors = RAPIDLEGAL_CATEGORY_COLORS[cat];
+                return (
+                  <span key={cat} className={`font-mono text-[10px] px-2 py-1 rounded border ${colors.bg} ${colors.text} ${colors.border}`}>
+                    {cat}
+                  </span>
+                );
+              })}
+            </div>
+
+            {/* Upload order table */}
+            <Card className="bg-card border-border">
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-border bg-secondary/30">
+                        <th className="font-mono text-xs text-muted-foreground text-left py-3 px-4 w-16">#</th>
+                        <th className="font-mono text-xs text-muted-foreground text-left py-3 px-4 w-28">DOC</th>
+                        <th className="font-mono text-xs text-muted-foreground text-left py-3 px-4">TITLE</th>
+                        <th className="font-mono text-xs text-muted-foreground text-left py-3 px-4 hidden md:table-cell">CATEGORY</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {RAPIDLEGAL_UPLOAD_ORDER.map(entry => {
+                        const colors = RAPIDLEGAL_CATEGORY_COLORS[entry.category];
+                        return (
+                          <tr
+                            key={entry.uploadOrder}
+                            className={`border-b border-border/50 hover:bg-secondary/30 transition-colors border-l-4 ${colors.border}`}
+                          >
+                            <td className="py-3 px-4">
+                              <span className={`font-mono text-sm font-bold ${colors.text}`}>
+                                {String(entry.uploadOrder).padStart(2, '0')}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <span className="font-mono text-xs font-bold text-primary">
+                                Doc {entry.docNumber}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4">
+                              <span className="font-mono text-xs text-foreground">{entry.title}</span>
+                            </td>
+                            <td className="py-3 px-4 hidden md:table-cell">
+                              <span className={`font-mono text-[10px] px-2 py-1 rounded border ${colors.bg} ${colors.text} ${colors.border}`}>
+                                {entry.category}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-secondary/30 border-muted">
+              <CardContent className="p-4">
+                <p className="font-mono text-xs text-muted-foreground">
+                  <strong className="text-foreground">Note:</strong> The previously staged RapidLegal / LegalConnect materials are not abandoned — they remain preserved for authentication, discovery, agency review, later filing, or evidentiary use if needed. See Doc 099-R1 (Amended RJN) for the court-safe limitation on judicial notice.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         )}
 

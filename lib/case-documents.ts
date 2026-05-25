@@ -929,12 +929,15 @@ export const CASE_DOCUMENTS: CaseDocument[] = [
   },
   {
     docNumber: '091-R2',
-    title: 'Willful Regulatory Non-Compliance Notice',
-    shortDescription: 'Notice alleging willful non-compliance after repeated opportunities to cure',
+    title: 'Notice of Willful Regulatory Non-Compliance — Formal Demand for Corrective Action and Voluntary Dismissal',
+    shortDescription: '7-count predicate non-compliance record (ADA/FEHA failure, Mimecast obstruction, Zanghi misrepresentation, backdated NTQ, insurance obstruction, retaliatory eviction, service withdrawal); regulatory sync table (HHS-OCR 25-621293, CRD 202601-33270627, CalVCB A26-10224054, SFHRC, SFW, SFDA); 10-day demand for voluntary dismissal with prejudice, retainer/insurance production, cessation of retaliation against VTU members',
     type: 'NOT',
     stack: 'J',
     status: 'FILED',
     filingDate: '2026-05-22',
+    relatedDocs: ['068', '076', '067', '088', '089-R2', '056'],
+    priority: 'CRITICAL',
+    clerkNote: 'FORMAL DEMAND — 10-DAY CURE PERIOD INITIATED MAY 22, 2026',
   },
   {
     docNumber: '096',
@@ -948,12 +951,15 @@ export const CASE_DOCUMENTS: CaseDocument[] = [
   },
   {
     docNumber: '099-R1',
-    title: 'Amended Request for Judicial Notice - Court Readability Index',
-    shortDescription: 'Request for judicial notice regarding court readability and accessibility standards',
+    title: 'Amended Request for Judicial Notice — Court-Readability Index and Forensic Repository Orientation',
+    shortDescription: 'Amended RJN orienting the Court to the 32-document priority matrix; four threshold issues (retaliation/pretext, disability access, procedural defects/ESI, witness notice chain); judicial economy focus; court-safe terminology matrix; Master Filing Locker link; notice of distinction between formal service and courtesy transmissions',
     type: 'RJN',
     stack: 'J',
     status: 'FILED',
-    filingDate: '2026-05-23',
+    filingDate: '2026-05-24',
+    relatedDocs: ['000-AA0-R1', '092', '102', '102-R2', '103-R1'],
+    priority: 'HIGH',
+    clerkNote: 'OPEN FIRST — Court orientation document for the 32-document priority tranche',
   },
   {
     docNumber: '102',
@@ -994,6 +1000,78 @@ export const CASE_DOCUMENTS: CaseDocument[] = [
     priority: 'CRITICAL',
   },
 ];
+
+// ─── RapidLegal Upload Order ───────────────────────────────────────────────
+// 33-item judge-readable sequenced upload order generated May 24, 2026.
+// Logic: 1. Court-readability/roadmap → 2. ADA access/preservation →
+//        3. Witness/agency/VTU preservation → 4. Factual declarations →
+//        5. Dispositive/procedural motions → 6. Forensic chronologies →
+//        7. Related-case notices → 8. Final compliance/distribution notices
+
+export interface RapidLegalEntry {
+  uploadOrder: number;
+  docNumber: string;
+  title: string;
+  category: string;
+}
+
+export const RAPIDLEGAL_UPLOAD_ORDER: RapidLegalEntry[] = [
+  { uploadOrder: 1,  docNumber: '099-R1',     title: 'Amended Request for Judicial Notice / Court-Readability Index',              category: 'Court Readability / Roadmap' },
+  { uploadOrder: 2,  docNumber: '000-AA0-R1', title: 'Lead Clerk Filing Statement / Master Repository Roadmap',                    category: 'Court Readability / Roadmap' },
+  { uploadOrder: 3,  docNumber: '092',         title: 'Electronic MC-410 / Reasonable Accommodation / UD-105 Affirmative Defenses', category: 'ADA Access & Preservation' },
+  { uploadOrder: 4,  docNumber: '102',         title: 'Amendment to Statement of Facts / Preservation Record',                     category: 'ADA Access & Preservation' },
+  { uploadOrder: 5,  docNumber: '102-R2',      title: 'Targeted Veterans / VTU Retaliation Notice',                                category: 'Witness / Agency / VTU Preservation' },
+  { uploadOrder: 6,  docNumber: '103-R1',      title: 'Courtesy Transmission / Witness Preservation Notice',                      category: 'Witness / Agency / VTU Preservation' },
+  { uploadOrder: 7,  docNumber: '106',         title: 'FBI San Francisco Notice',                                                  category: 'Witness / Agency / VTU Preservation' },
+  { uploadOrder: 8,  docNumber: '02',          title: 'Declaration of Donald Ernest Gillson',                                      category: 'Factual Declarations' },
+  { uploadOrder: 9,  docNumber: 'Memo',        title: 'Strategic Legal Memorandum — Historical and Doctrinal Parallels R2',        category: 'Factual Declarations' },
+  { uploadOrder: 10, docNumber: '20',          title: 'Pre-Hearing Procedural Briefing Notice R2',                                 category: 'Factual Declarations' },
+  { uploadOrder: 11, docNumber: '21',          title: 'Declaration and Exhibit Packet R2',                                         category: 'Factual Declarations' },
+  { uploadOrder: 12, docNumber: '27',          title: 'Actual Knowledge and ADA Interactive Process Declaration',                  category: 'Factual Declarations' },
+  { uploadOrder: 13, docNumber: '28',          title: 'Motion to Quash Service of Summons',                                       category: 'Dispositive & Procedural Motions' },
+  { uploadOrder: 14, docNumber: '29-R2',       title: 'Reissued Declaration re Kolby Losik',                                      category: 'Factual Declarations' },
+  { uploadOrder: 15, docNumber: '42',          title: 'Motion to Dismiss / Fraud on Court / Void Notice',                         category: 'Dispositive & Procedural Motions' },
+  { uploadOrder: 16, docNumber: '56',          title: 'Consolidated Forensic Dossier',                                            category: 'Forensic Chronologies' },
+  { uploadOrder: 17, docNumber: '57B',         title: 'Omnibus Notice / Reasonable Accommodation / New Evidence R2',              category: 'ADA Access & Preservation' },
+  { uploadOrder: 18, docNumber: '59',          title: 'Notice of Lodging and Transmittal of Docs 56–58',                          category: 'Forensic Chronologies' },
+  { uploadOrder: 19, docNumber: '60',          title: 'Administrative Contradiction and Continued Tenancy Notice',                category: 'Forensic Chronologies' },
+  { uploadOrder: 20, docNumber: '64',          title: 'Bad Faith Litigation Conduct Summary Statement R2',                        category: 'Dispositive & Procedural Motions' },
+  { uploadOrder: 21, docNumber: '65',          title: 'Denial of Reasonable Accommodations Chronological Record R2',              category: 'Forensic Chronologies' },
+  { uploadOrder: 22, docNumber: '66',          title: 'Constructive Eviction Chronological Record R2',                            category: 'Forensic Chronologies' },
+  { uploadOrder: 23, docNumber: '69',          title: 'Amended Clerk-Direct Hard Block / Manual Lodgment Notice',                 category: 'ADA Access & Preservation' },
+  { uploadOrder: 24, docNumber: '70',          title: 'Retaliatory Campaign by Landrum Chronological Record R2',                  category: 'Forensic Chronologies' },
+  { uploadOrder: 25, docNumber: '72',          title: 'Master Gateway Index',                                                     category: 'Court Readability / Roadmap' },
+  { uploadOrder: 26, docNumber: '074',         title: 'Notice of Related Case and Cross-Lodgment R2',                             category: 'Related-Case Notices' },
+  { uploadOrder: 27, docNumber: '075',         title: 'Judge Tong RO Primary Cross-Reference to CUD Case R2',                    category: 'Related-Case Notices' },
+  { uploadOrder: 28, docNumber: '076',         title: 'Zanghi False Representation / March 19 Hearing R2',                       category: 'Related-Case Notices' },
+  { uploadOrder: 29, docNumber: '078',         title: 'Omnibus ADA, Elder Abuse, and Mandated Reporter Notice R2',                category: 'Final Compliance / Distribution' },
+  { uploadOrder: 30, docNumber: '085',         title: 'Declaration Node Map / Residential Address / Business Nodes R2',           category: 'Factual Declarations' },
+  { uploadOrder: 31, docNumber: '089-R2',      title: 'Amended Motion to Compel Financial Disclosure / Retainer',                 category: 'Dispositive & Procedural Motions' },
+  { uploadOrder: 32, docNumber: '091-R2',      title: 'Notice of Willful Regulatory Non-Compliance',                              category: 'Final Compliance / Distribution' },
+  { uploadOrder: 33, docNumber: '094-R1/R2',   title: 'Final Notice Expanded Distribution / MC-410 / ADA E-Filing',              category: 'Final Compliance / Distribution' },
+];
+
+export const RAPIDLEGAL_CATEGORIES = [
+  'Court Readability / Roadmap',
+  'ADA Access & Preservation',
+  'Witness / Agency / VTU Preservation',
+  'Factual Declarations',
+  'Dispositive & Procedural Motions',
+  'Forensic Chronologies',
+  'Related-Case Notices',
+  'Final Compliance / Distribution',
+] as const;
+
+export const RAPIDLEGAL_CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  'Court Readability / Roadmap':          { bg: 'bg-primary/20',       text: 'text-primary',          border: 'border-primary/40' },
+  'ADA Access & Preservation':            { bg: 'bg-emerald-500/20',   text: 'text-emerald-500',      border: 'border-emerald-500/40' },
+  'Witness / Agency / VTU Preservation':  { bg: 'bg-cyan-500/20',      text: 'text-cyan-500',         border: 'border-cyan-500/40' },
+  'Factual Declarations':                 { bg: 'bg-blue-500/20',      text: 'text-blue-500',         border: 'border-blue-500/40' },
+  'Dispositive & Procedural Motions':     { bg: 'bg-destructive/20',   text: 'text-destructive',      border: 'border-destructive/40' },
+  'Forensic Chronologies':                { bg: 'bg-amber-500/20',     text: 'text-amber-500',        border: 'border-amber-500/40' },
+  'Related-Case Notices':                 { bg: 'bg-violet-500/20',    text: 'text-violet-500',       border: 'border-violet-500/40' },
+  'Final Compliance / Distribution':      { bg: 'bg-orange-500/20',    text: 'text-orange-500',       border: 'border-orange-500/40' },
+};
 
 // Utility functions
 export function getDocumentsByStack(stack: Stack): CaseDocument[] {
