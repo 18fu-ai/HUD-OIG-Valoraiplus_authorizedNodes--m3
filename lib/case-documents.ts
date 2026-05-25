@@ -963,8 +963,8 @@ export const CASE_DOCUMENTS: CaseDocument[] = [
   },
   {
     docNumber: '102',
-    title: 'Priority Tranche / Preservation Record',
-    shortDescription: 'Amendment confirming priority filing tranche, preservation of staged materials, and non-abandonment',
+    title: 'Amendment to Statement of Facts / Preservation Record',
+    shortDescription: 'Amendment confirming priority filing tranche, preservation of staged materials, and non-abandonment of prior RapidLegal / LegalConnect staged documents',
     type: 'NOT',
     stack: 'J',
     status: 'FILED',
