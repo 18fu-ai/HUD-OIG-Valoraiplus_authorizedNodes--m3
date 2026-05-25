@@ -20,7 +20,7 @@
   - Server Utils: `lib/valoraiplus/supabase-server.ts` (Authenticated Supabase client)
   - API Routes: `app/api/valoraiplus/case-summary/route.ts` & `access-log/route.ts`
   - Dashboard Component: `components/cds/case-control-dashboard.tsx`
-  - Page Route: `app/case-control/page.tsx` (Live at http://localhost:3000/case-control)
+  - Page Route: `app/case-control/page.tsx` (implemented and ready for deployment; live status confirmed after Vercel deploy)
 
 ### Phase 2: Web Traffic Intelligence
 - **Telemetry Layer:** ✅ Integrated
@@ -134,6 +134,11 @@ supabase db push origin main
 Once migrations are applied, run:
 ```sql
 -- Run 002_seed_cud_26_682107_priority_tranche.sql to populate test case
+-- Confirm document count via SQL after application:
+-- select c.case_number, count(d.id) as doc_count
+-- from public.cases c left join public.documents d on d.case_id = c.id
+-- where c.case_number = 'CUD-26-682107' group by c.case_number;
+-- Expected: {"ok":true,"status":"logged"} or equivalent successful 200 response from access-log endpoint
 ```
 
 ### 3. Environment Variables
@@ -142,7 +147,10 @@ Ensure these are set in your `.env.local` or Vercel deployment:
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGc... (server-side only)
+AUDIT_HASH_SECRET=<secret HMAC salt for visitor hash computation>
+VALORAIPLUS_INGEST_KEY=<secret API key for telemetry ingest authentication>
 ```
+All 5 variables registered in Vercel project Settings > Environment Variables.
 
 ### 4. Deployment
 ```bash
@@ -203,7 +211,7 @@ git push origin mission-creation
 ---
 
 **Status: DEPLOYMENT COMPLETE**  
-**Next Action:** Apply Supabase migrations and seed case data  
-**Timeline to Production:** Ready for immediate deployment
+**Next Action:** Apply Supabase migrations 001-004 in order, verify schema and document count via SQL, push to Vercel, capture 8 receipt screenshots  
+**Rollback:** If any migration step fails, preserve the exact error, stop further execution, and use a controlled rollback or corrective migration — do not proceed to the next migration until the prior step is confirmed clean
 
 *End of Receipt*
