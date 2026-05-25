@@ -101,7 +101,7 @@
 | `public.valoraiplus_session_rollups` | Aggregated traffic analytics |
 | `public.valoraiplus_network_fingerprints` | Device/network fingerprinting |
 
-**Privacy posture:** `visitor_hash`, `user_agent_hash`, `session_hash` store only HMAC-SHA256 transformed values. Raw IP addresses and raw user-agent strings are not stored. `user_agent_family` (canonical) replaces legacy `ua_family`. Status: authored and ready for activation pending migration application.
+**Privacy posture:** `visitor_hash`, `user_agent_hash`, `session_hash` store only HMAC-SHA256 transformed values. The system does not intentionally store raw visitor identity data. It records limited technical request metadata for owned infrastructure. `user_agent_family` (canonical) replaces legacy `ua_family`. Status: authored and ready for activation pending migration application.
 
 ---
 
@@ -180,7 +180,7 @@ git push origin mission-creation
 ## SYSTEM PROPERTIES
 
 ### Trust Boundary
-- **Application build:** Complete and verifiable via commit history on `mission-creation`
+- **Application build:** Complete and verifiable via version-controlled commit history on `mission-creation`
 - **Database migrations:** Authored; not yet applied; pending Tuesday morning execution
 - **Evidence receipts:** Pending capture after deployment
 - **External validation:** Pending third-party confirmation
@@ -237,7 +237,8 @@ RE: VALORAIPLUS System Validation — CUD-26-682107
 6. Telemetry Privacy:
    visitor_hash, user_agent_hash, session_hash: Designed for HMAC-SHA256 tracking only.
    user_agent_family column: Locked canonical runtime column replacing legacy ua_family.
-   Raw IP / raw user-agent storage: Not designed to be stored; confirm by schema/code receipts after deployment.
+   Raw IP / raw user-agent storage: The system does not intentionally store raw visitor identity data. It records limited technical request metadata for owned infrastructure. Confirm by schema/code receipts after deployment.
+   Timestamps: Core receipt timestamps are database-generated where possible. Any application-supplied timestamps (e.g. middleware-emitted occurred_at) should be identified as such in evidentiary use.
 
 7. Deployment:
    Vercel preview URL: Implemented and ready for deployment; live status confirmed only after Vercel deploy.
@@ -258,4 +259,4 @@ RE: VALORAIPLUS System Validation — CUD-26-682107
 
 ## COURT-SAFE POSTURE DECLARATION
 
-VALORAIPLUS is an organizational case-control and privacy-preserving access-audit system for owned infrastructure. It assists with document indexing, visibility separation, event tracking, and technical access-pattern review. It does not replace the official court docket, does not identify individual visitors, does not publish private information, and does not substitute telemetry for testimony, formal service, authentication, admission, or judicial findings.
+VALORAIPLUS organizes and preserves records for Defendant's litigation support. It assists with document indexing, visibility separation, event tracking, and technical access-pattern review for owned infrastructure. It does not replace the official court docket, does not identify individual visitors, does not publish private information, and does not substitute telemetry for testimony, formal service, authentication, admission, or judicial findings. The Court determines admissibility, weight, and legal effect.
