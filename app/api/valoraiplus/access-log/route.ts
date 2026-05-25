@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
     country_code:     payload.country_code?.slice(0, 10)       ?? null,
     region_code:      payload.region_code?.slice(0, 32)        ?? null,
     city_name:        payload.city_name?.slice(0, 128)         ?? null,
-    ua_family:        payload.user_agent_family                ?? "unknown",
+    user_agent_family: payload.user_agent_family                ?? "unknown",
     is_anomaly:       payload.is_anomaly                       ?? false,
     anomaly_type:     payload.anomaly_type?.slice(0, 128)      ?? null,
     anomaly_score:    clampScore(payload.anomaly_score),
