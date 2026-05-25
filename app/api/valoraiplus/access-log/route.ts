@@ -1,160 +1,183 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-import { createHmac } from 'crypto'
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
-// ---------------------------------------------------------------------------
-// Service-role Supabase client — bypasses RLS for telemetry inserts
-// Constructed once at module load; null-safe if env vars are absent
-// ---------------------------------------------------------------------------
-const supabaseUrl        = process.env.NEXT_PUBLIC_SUPABASE_URL    || ''
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY   || ''
+export const runtime = "nodejs";
 
-const supabase = supabaseUrl && supabaseServiceKey
-  ? createClient(supabaseUrl, supabaseServiceKey, { auth: { persistSession: false } })
-  : null
+type AccessPayload = {
+  visitor_hash: string;
+  user_agent_hash?: string | null;
+  session_hash?: string | null;
+  request_method?: string;
+  request_path: string;
+  request_class?: "page" | "pdf" | "api" | "asset" | "unknown";
+  referrer_origin?: string | null;
+  country_code?: string | null;
+  region_code?: string | null;
+  city_name?: string | null;
+  continent_code?: string | null;
+  vercel_id?: string | null;
+  deployment_url?: string | null;
+  user_agent_family?: "bot" | "mobile_browser" | "desktop_browser" | "unknown";
+  is_anomaly?: boolean;
+  anomaly_type?: string | null;
+  anomaly_flags?: string[];
+  anomaly_score?: number;
+  source?: string;
+};
 
-// ---------------------------------------------------------------------------
-// Table-missing error detection (PGRST205 = table not in schema cache)
-// ---------------------------------------------------------------------------
-function isTableMissingError(err: unknown): boolean {
-  const e = err as { code?: string; message?: string }
-  return (
-    e?.code    === 'PGRST205' ||
-    e?.code    === 'PGRST204' ||
-    e?.code    === 'PGRST116' ||
-    e?.code    === '42P01'    ||
-    e?.message?.includes('schema cache')    ||
-    e?.message?.includes('does not exist')  ||
-    e?.message?.includes('relation')        ||
-    false
-  )
-}
+export async function POST(request: NextRequest) {
+  const expectedKey = process.env.VALORAIPLUS_INGEST_KEY;
+  const receivedKey = request.headers.get("x-valoraiplus-ingest-key");
 
-// ---------------------------------------------------------------------------
-// Anomaly classifier
-// ---------------------------------------------------------------------------
-interface AnomalyResult {
-  isAnomaly   : boolean
-  anomalyType : string | null
-  anomalyScore: number
-}
-
-function classifyAnomaly(uaFamily: string, path: string, referrerOrigin: string): AnomalyResult {
-  // Bot/automated agent detection
-  if (uaFamily === 'BOT' || uaFamily === 'SCRIPT') {
-    return { isAnomaly: true, anomalyType: 'AUTOMATED_BOT_DETECTION', anomalyScore: 0.75 }
+  if (!expectedKey || receivedKey !== expectedKey) {
+    return NextResponse.json(
+      { ok: false, status: "rejected", reason: "invalid_ingest_key" },
+      { status: 401 }
+    );
   }
 
-  // Path traversal / scanning
-  if (
-    path.includes('.env')      ||
-    path.includes('.git')      ||
-    path.includes('wp-admin')  ||
-    path.includes('phpMyAdmin')||
-    path.includes('../')       ||
-    path.includes('etc/passwd')
-  ) {
-    return { isAnomaly: true, anomalyType: 'INVALID_PATH_TRAVERSAL', anomalyScore: 0.95 }
-  }
+  let payload: AccessPayload;
 
-  // Direct deep-link (no referrer, non-root path) — low-signal anomaly
-  if (referrerOrigin === 'DIRECT' && path !== '/' && path !== '') {
-    return { isAnomaly: true, anomalyType: 'UNEXPECTED_ENTRY_FLOW', anomalyScore: 0.30 }
-  }
-
-  return { isAnomaly: false, anomalyType: null, anomalyScore: 0.00 }
-}
-
-// ---------------------------------------------------------------------------
-// POST handler
-// ---------------------------------------------------------------------------
-export async function POST(req: NextRequest) {
   try {
-    if (!supabase) {
-      return NextResponse.json({ status: 'SKIPPED', reason: 'Supabase not configured' }, { status: 200 })
-    }
-
-    const secret = process.env.VALORAIPLUS_TELEMETRY_SECRET
-    if (!secret) {
-      return NextResponse.json({ status: 'SKIPPED', reason: 'Telemetry secret not configured' }, { status: 200 })
-    }
-
-    const {
-      rawIp,
-      rawUa,
-      path,
-      method,
-      uaFamily,
-      referrerOrigin,
-      requestCategory,
-      country,
-      region,
-      city,
-    } = await req.json()
-
-    // ------------------------------------------------------------------
-    // HMAC-SHA256 hashing — raw PII used only here, then discarded
-    // ------------------------------------------------------------------
-    const visitorHash = createHmac('sha256', secret)
-      .update(`${rawIp}-${rawUa}`)
-      .digest('hex')
-
-    const userAgentHash = createHmac('sha256', secret)
-      .update(rawUa || 'unknown')
-      .digest('hex')
-
-    // Session hash: visitor + day bucket (rotates daily for privacy)
-    const dayBucket = new Date().toISOString().slice(0, 10) // YYYY-MM-DD
-    const sessionHash = createHmac('sha256', secret)
-      .update(`${rawIp}-${dayBucket}`)
-      .digest('hex')
-
-    // ------------------------------------------------------------------
-    // Anomaly classification — uses safe coarse-grained fields only
-    // ------------------------------------------------------------------
-    const { isAnomaly, anomalyType, anomalyScore } = classifyAnomaly(
-      uaFamily        || 'Other',
-      path            || '/',
-      referrerOrigin  || 'DIRECT',
-    )
-
-    // ------------------------------------------------------------------
-    // Insert into Supabase — no raw PII fields
-    // ------------------------------------------------------------------
-    const { error } = await supabase
-      .from('valoraiplus_access_logs')
-      .insert([{
-        visitor_hash    : visitorHash,
-        user_agent_hash : userAgentHash,
-        session_hash    : sessionHash,
-        request_path    : path,
-        request_method  : method   || 'GET',
-        request_category: requestCategory || 'PAGE',
-        ua_family       : uaFamily || 'Other',
-        referrer_origin : referrerOrigin === 'DIRECT' ? null : referrerOrigin,
-        country_code    : country  || null,
-        region_code     : region   || null,
-        city_name       : city     || null,
-        is_anomaly,
-        anomaly_type    : anomalyType,
-        anomaly_score   : anomalyScore,
-      }])
-
-    if (error) {
-      if (isTableMissingError(error)) {
-        return NextResponse.json({ status: 'SKIPPED', reason: 'Table not yet created' }, { status: 200 })
-      }
-      throw error
-    }
-
-    return NextResponse.json({ status: 'SUCCESS' }, { status: 200 })
-
-  } catch (err: unknown) {
-    if (isTableMissingError(err)) {
-      return NextResponse.json({ status: 'SKIPPED', reason: 'Table not yet created' }, { status: 200 })
-    }
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    console.error('[valoraiplus/access-log] Unexpected error:', message)
-    return NextResponse.json({ status: 'SKIPPED', reason: 'Internal error' }, { status: 200 })
+    payload = await request.json();
+  } catch {
+    return NextResponse.json(
+      { ok: false, status: "rejected", reason: "invalid_json" },
+      { status: 400 }
+    );
   }
+
+  const validationError = validatePayload(payload);
+
+  if (validationError) {
+    return NextResponse.json(
+      { ok: false, status: "rejected", reason: validationError },
+      { status: 400 }
+    );
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    console.warn("[VALORAIPLUS access-log] skipped: Supabase env missing");
+    return NextResponse.json(
+      { ok: true, status: "skipped", reason: "supabase_not_configured" },
+      { status: 200 }
+    );
+  }
+
+  const supabase = createClient(supabaseUrl, serviceRoleKey, {
+    auth: { persistSession: false },
+  });
+
+  const insertPayload = {
+    visitor_hash:          payload.visitor_hash,
+    user_agent_hash:       payload.user_agent_hash       ?? null,
+    session_hash:          payload.session_hash          ?? null,
+    request_method:        payload.request_method        ?? "GET",
+    request_path:          payload.request_path,
+    request_class:         payload.request_class         ?? "unknown",
+    referrer_origin:       payload.referrer_origin       ?? null,
+    country_code:          payload.country_code          ?? null,
+    region_code:           payload.region_code           ?? null,
+    city_name:             payload.city_name             ?? null,
+    continent_code:        payload.continent_code        ?? null,
+    vercel_id:             payload.vercel_id             ?? null,
+    deployment_url:        payload.deployment_url        ?? null,
+    user_agent_family:     payload.user_agent_family     ?? "unknown",
+    is_anomaly:            payload.is_anomaly            ?? false,
+    anomaly_type:          payload.anomaly_type          ?? null,
+    anomaly_flags:         Array.isArray(payload.anomaly_flags)
+                             ? payload.anomaly_flags.slice(0, 20)
+                             : [],
+    anomaly_score:         clampScore(payload.anomaly_score),
+    source:                payload.source                ?? "vercel_edge_middleware",
+    raw_ip_stored:         false,
+    raw_user_agent_stored: false,
+  };
+
+  const { error } = await supabase
+    .from("valoraiplus_access_logs")
+    .insert(insertPayload);
+
+  if (error) {
+    const normalized = normalizeSupabaseError(error);
+    console.warn("[VALORAIPLUS access-log] skipped:", normalized);
+    return NextResponse.json(
+      {
+        ok: true,
+        status: "skipped",
+        reason: normalized.reason,
+        supabase_code: normalized.code,
+      },
+      { status: 200 }
+    );
+  }
+
+  return NextResponse.json({ ok: true, status: "logged" }, { status: 200 });
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function validatePayload(payload: AccessPayload): string | null {
+  if (!payload || typeof payload !== "object") return "missing_payload";
+
+  if (!payload.visitor_hash || !isHexSha256(payload.visitor_hash))
+    return "invalid_visitor_hash";
+
+  if (payload.user_agent_hash && !isHexSha256(payload.user_agent_hash))
+    return "invalid_user_agent_hash";
+
+  if (payload.session_hash && !isHexSha256(payload.session_hash))
+    return "invalid_session_hash";
+
+  if (!payload.request_path || typeof payload.request_path !== "string")
+    return "invalid_request_path";
+
+  if (payload.request_path.length > 1000)
+    return "request_path_too_long";
+
+  return null;
+}
+
+function isHexSha256(value: string): boolean {
+  return /^[a-f0-9]{64}$/.test(value);
+}
+
+function clampScore(score?: number): number {
+  if (typeof score !== "number" || Number.isNaN(score)) return 0;
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function normalizeSupabaseError(error: {
+  code?: string;
+  message?: string;
+  details?: string;
+  hint?: string;
+}) {
+  const message = `${error.message ?? ""} ${error.details ?? ""} ${
+    error.hint ?? ""
+  }`.toLowerCase();
+
+  const tableMissing =
+    error.code === "42P01" ||
+    error.code === "PGRST205" ||
+    message.includes("does not exist") ||
+    message.includes("could not find the table") ||
+    message.includes("schema cache");
+
+  if (tableMissing) {
+    return {
+      reason: "table_missing_run_migration_003",
+      code: error.code ?? "unknown",
+    };
+  }
+
+  return {
+    reason: "supabase_insert_failed",
+    code: error.code ?? "unknown",
+  };
 }
