@@ -1,12 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServiceClient } from "@/lib/valoraiplus/supabase-server";
 
+/**
+ * LEGAL NOTICE — STATUS MODEL
+ *
+ * This API creates an INTERNAL lodging record only.
+ * It does NOT file any document with any court.
+ *
+ * Permitted internal statuses:
+ *   READY_FOR_MANUAL_LODGING     — document is prepared and staged
+ *   SUBMITTED_PENDING_CLERK_REVIEW — submitted to court/Rapid Legal, awaiting confirmation
+ *   RECEIVED_BY_COURT             — court has confirmed receipt
+ *   FILED                         — court has confirmed filing (clerk endorsement required)
+ *
+ * FILED status may ONLY be set after obtaining a court filing confirmation,
+ * transaction number, or clerk endorsement per California Rule of Court 2.259.
+ *
+ * This tool does not replace Rapid Legal, eCourt, the clerk's filing
+ * confirmation, proof of service, or the official court docket.
+ */
+
+type InternalLodgingStatus =
+  | "READY_FOR_MANUAL_LODGING"
+  | "SUBMITTED_PENDING_CLERK_REVIEW"
+  | "RECEIVED_BY_COURT"
+  | "FILED";
+
 interface LodgeDocumentRequest {
   document_id?: string;
   doc_number?: string;
   case_number?: string;
   actor_role?: string;
-  court_filing_reference?: string;
+  internal_status?: InternalLodgingStatus;
+  court_filing_reference?: string | null;
 }
 
 export async function POST(request: NextRequest) {
@@ -17,9 +43,22 @@ export async function POST(request: NextRequest) {
       document_id,
       doc_number,
       case_number,
-      actor_role = "clerk",
-      court_filing_reference,
+      actor_role = "defendant",
+      internal_status = "READY_FOR_MANUAL_LODGING",
+      court_filing_reference = null,
     } = body;
+
+    // Reject FILED status without a court filing reference
+    if (internal_status === "FILED" && !court_filing_reference) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "FILED status requires court_filing_reference (clerk endorsement, transaction number, or eCourt confirmation). Per California Rule of Court 2.259, the court's filing confirmation is required before FILED status may be recorded.",
+        },
+        { status: 400 }
+      );
+    }
 
     if (!document_id && !doc_number) {
       return NextResponse.json(
@@ -62,12 +101,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 2: Update document status to FILED
+    // Step 2: Update document internal status (NOT necessarily FILED)
+    const dbStatus = internal_status === "FILED" ? "FILED" : "STAGED";
     const { error: updateError } = await supabase
       .from("documents")
       .update({
-        doc_status: "FILED",
-        filed_at: now,
+        doc_status: dbStatus,
+        ...(internal_status === "FILED" ? { filed_at: now } : {}),
         updated_at: now,
       })
       .eq("id", doc.id);
@@ -82,19 +122,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 3: Log the filing event
+    // Step 3: Log the internal lodging event
     const { error: eventError } = await supabase
       .from("document_events")
       .insert({
         document_id: doc.id,
-        event_type: "filed",
+        event_type: "internal_lodging_record",
         actor_role,
         event_timestamp: now,
         event_details: {
+          internal_status,
           court: "Superior Court of California, County of San Francisco",
           department: 12,
-          filing_reference: court_filing_reference || "Document 108",
-          digital_lodging: true,
+          court_filing_reference: court_filing_reference ?? null,
+          digital_lodging_note:
+            "INTERNAL RECORD ONLY — not a court filing confirmation. FILED status requires clerk endorsement per California Rule of Court 2.259.",
           timestamp_utc: now,
         },
       });
@@ -109,19 +151,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 4: Generate receipt
+    // Step 4: Generate internal receipt
     const receipt = {
       ok: true,
-      status: "lodged",
+      internal_status,
+      court_filing_status: "NOT FILED BY THIS SYSTEM",
       document_id: doc.id,
       doc_number: doc.doc_number,
       title: doc.title,
-      filed_at: now,
+      recorded_at: now,
       court: "Superior Court of California, County of San Francisco",
       department: 12,
-      filing_reference: court_filing_reference || "Document 108",
+      court_filing_reference: court_filing_reference ?? null,
       actor_role,
-      digital_lodging: true,
+      notice:
+        "This is an internal VALORAIPLUS record only. It does not replace Rapid Legal, eCourt, the clerk's filing confirmation, proof of service, or the official court docket. FILED status requires court filing confirmation per California Rule of Court 2.259.",
       receipt_timestamp: now,
     };
 
@@ -173,7 +217,12 @@ export async function GET(request: NextRequest) {
       {
         ok: true,
         document: doc,
-        is_filed: doc.doc_status === "FILED",
+        court_filing_status:
+          doc.doc_status === "FILED"
+            ? "FILED — court confirmation required to rely on this status"
+            : "NOT FILED — internal status only",
+        notice:
+          "This is an internal VALORAIPLUS record only. Official filing status must be verified against the court docket.",
       },
       { status: 200 }
     );
