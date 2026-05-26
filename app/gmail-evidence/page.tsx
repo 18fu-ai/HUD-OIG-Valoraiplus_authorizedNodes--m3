@@ -3,7 +3,7 @@
 export const runtime = 'edge';
 
 import Link from 'next/link';
-import { Mail, ExternalLink, Shield, CheckCircle, AlertTriangle, FileSearch, Camera, XCircle, Heart, Scale } from 'lucide-react';
+import { Mail, ExternalLink, Shield, CheckCircle, AlertTriangle, FileSearch, Camera, XCircle, Heart, Scale, Clock } from 'lucide-react';
 
 const EMAILS = [
   {

@@ -20,11 +20,8 @@ export * from './types';
 // EIP-712 Signature Layer
 export {
   buildDomain,
-  buildLatchIntentTypedData,
-  buildRevisionIntentTypedData,
-  buildNullifyIntentTypedData,
-  hashTypedData,
-  LatchIntentSchema,
+  getTypedDataHash,
+  AnchorIntentSchema,
   RevisionIntentSchema,
   NullifyIntentSchema,
 } from './eip712';
@@ -33,21 +30,25 @@ export {
 export {
   verifyIntent,
   type VerificationResult,
-  type VerificationReceipt,
 } from './verifyIntent';
 
-// Nonce Management
+// Nonce Management — no class/type exports, only functions
 export {
-  NonceStore,
-  type NonceEntry,
+  getNonce,
+  incrementNonce,
+  resetNonce,
+  getAllNonces,
+  getNoncesBatch,
 } from './nonceStore';
 
 // Event Indexing
 export {
-  EventIndexer,
+  indexEvent,
+  queryEvents,
+  getLatestEvents,
+  getEventStats,
   type IndexedEvent,
   type EventFilter,
-  type EventStats,
 } from './eventIndexer';
 
 // Audit Engine
@@ -203,7 +204,6 @@ export {
   validateIdentityClaim,
   type SovereignInvariant,
   type DeterministicClassification,
-  type ProofArtifact,
   type IdentityStatus,
   type IdentityClaim,
 } from './mevr';

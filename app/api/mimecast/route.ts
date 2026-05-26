@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
   if (action) {
     events = events.filter(e => 
-      e.action.toLowerCase().includes(action.toLowerCase())
+      e.actionType.toLowerCase().includes(action.toLowerCase())
     );
   }
 
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
   // Calculate stats before pagination
   const totalCount = events.length;
   const actionCounts = events.reduce((acc, e) => {
-    acc[e.action] = (acc[e.action] || 0) + 1;
+    acc[e.actionType] = (acc[e.actionType] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 

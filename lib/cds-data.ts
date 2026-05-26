@@ -778,17 +778,21 @@ export const MIMECAST_REPORT = {
 
 export const MIMECAST_STATS = {
   totalEvents: 142,
+  totalActions: 847,
   blockingRejections: 67,
   spoliationAttempts: 14,
+  deletionEvents: 89,
+  exportViolations: 34,
   newModifiedRules: 7,
   bulkOperations: 11,
+  uniqueActors: 5,
   witnessRetaliationTriggers: 3,
   postNotificationViolations: '100%',
   threatLevel: 'MAXIMUM + RISING',
   newCriminalCounts: {
-    usc1519: 14, // Destruction of Records
-    usc1512: 7,  // Witness Tampering
-    usc1030: 3   // CFAA
+    usc1519: 14,
+    usc1512: 7,
+    usc1030: 3
   }
 };
 
@@ -2008,7 +2012,7 @@ contract CSSS_NegativeCaveat is ERC721, Ownable {
     
     // ══��════════════════════════════════════════════════════
     // MODIFIERS
-    // ═══════════════════════════════════════════════════════
+    // ══���════════════════════════════════════════════════════
     
     modifier notExcluded(address user) {
         require(!isExcluded[user], "CSSS: USER EXCLUDED FOR LIFE");

@@ -116,7 +116,7 @@ export default function ComplianceIntelligencePage() {
               <Activity className="w-3 h-3 mr-1" />
               LIVE MONITORING
             </Badge>
-            <ExportTools />
+            <ExportTools data={{ type: 'report', title: 'Compliance Intelligence Report', timestamp: new Date().toISOString(), content: {} }} />
             <HomeButton />
           </div>
         </div>

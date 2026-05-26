@@ -182,7 +182,6 @@ I am the Sovereign Auditor's interface to the VALORAIPLUS intelligence matrix.
 How may I assist you today, Poppa?`
     }
   ],
-  createdAt: new Date(),
 };
 
 /**
@@ -210,7 +209,6 @@ export default function NewtChatRuntime() {
   // AI SDK 6: useChat with stable transport
   const { messages, sendMessage, status, error } = useChat({
     transport: chatTransport,
-    initialMessages: [WELCOME_MESSAGE],
   });
 
   // Derive loading state from status

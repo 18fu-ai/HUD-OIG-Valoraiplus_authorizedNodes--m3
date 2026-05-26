@@ -5,7 +5,7 @@ import { Home, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface HomeButtonProps {
-  variant?: 'default' | 'minimal' | 'floating';
+  variant?: 'default' | 'minimal' | 'floating' | 'ghost';
   className?: string;
   showLabel?: boolean;
 }
