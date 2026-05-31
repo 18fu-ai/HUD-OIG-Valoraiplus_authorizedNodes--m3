@@ -1,0 +1,123 @@
+{
+  "manifest_type": "DIRS_v2_validator_package_pre_seal",
+  "schema_version": "1.0.0",
+  "system": "VALORAIPLUS//e",
+  "service": "DIRS v2",
+  "node": "Saint Paul Node",
+  "node_id": "SGAU-7226.3461",
+  "case_file": "CUD-26-682107",
+  "ccrd_case": "202601-33270627",
+  "network": "bitcoin_mainnet",
+  "external_certification_status": "not_claimed",
+  "merkle_derivation": {
+    "method": "bitcoin_style_sha256_double_pair",
+    "leaf_count": 17,
+    "leaves": {
+      "stereo_report_pdf": "5c89c6412be50399c99a7bb8a370747a6e8f5d7c62747a82b8cb79ca75078562",
+      "manifest_prestage_json": "a0dee07af593406e815f8639f27fbd6fda8dd44b54d9e89534a036d3e93fdc90",
+      "migration_sql": "70ed9ebba93b2d1c83caa358327c1c5f27eafbbbd6946624ee7a677ffe2e951e",
+      "schema_sql": "a463569b1f22afc130a6b828a149df4ecdb33391181f78a3b43cdfaf00c4c93c",
+      "verify_anchor_js": "9a7a664e2190429529e4198171b6cc35542b72ff08c56229aadff461157b80fd",
+      "recompute_bundle_js": "8caae4731ce4593679acf7fe866914be1a01126fc1fedb832ec5fbe972c7b460",
+      "bitcoin_engine_py": "514fe85888610631d49521c0eb0e8788f60953006b5a23eb9856d05ce04b2087",
+      "anchor_schema_json": "f7cdc0598088f21830ac3b8159c73b7daeab2f56c7dc4a708cdb0f9936bdb4c5",
+      "audit_log_ndjson": "4d8691682456bbc2173a136e364c012efba53c1cf733f03414cce038003c7a55",
+      "shared_types_ts": "66d4f0992e42b36ee6745d1992d23bd0f09fdb462451591dcb439e57b594db15",
+      "shared_envelope_ts": "9a4ccd7fd1ee4d5c23c2fd4d9e1b8141ae6b02a9b8948845d51407926f16fa69",
+      "orchestrator_ts": "d206141c77b972681dc5aa4e0413f5c33300251f80c395c1c0b2903b730097e0",
+      "anchor_verifier_ts": "3b6b3fa66058bd2b05f8b1c910ce714ff43d719452f3ca9116484b4d3f87d949",
+      "audit_emitter_ts": "784e8b88d1e79423a0f9a3447fd78cbaa1ce6dd2d7592791b71209e84aa978fa",
+      "bundle_sealer_ts": "07edc6dbdfbcdce8a3a521a89e6e6ae3e7c015598b484aa95ce915dc8d4e4f4d",
+      "dashboard_renderer_ts": "059c3e3bc5df3053a1e235cf2b93831194640163093b9b5bc956671864312043",
+      "agent_base_ts": "2e3fc5fa557d406bfca770de50ed7aebcdce88b24d0641c1a2a02c7b4e864fc6"
+    },
+    "note": "Each leaf is SHA-256 of the raw file bytes. Odd leaf count: last leaf duplicated per Bitcoin Merkle spec."
+  },
+  "merkle_root": "f678317a8ca029bea556c4c9e721ea1b6e7e6faf3e494bb96df821dc6d548d66",
+  "op_return_payload_hex": "5650f678317a8ca029bea556c4c9e721ea1b6e7e6faf3e494bb96df821dc6d548d66",
+  "op_return_full_script": "6a245650f678317a8ca029bea556c4c9e721ea1b6e7e6faf3e494bb96df821dc6d548d66",
+  "gate_criteria": {
+    "op_return_match": {
+      "required": true,
+      "status": "PENDING_TXID"
+    },
+    "block_height": {
+      "required": true,
+      "status": "PENDING_CONFIRMATION"
+    },
+    "block_hash": {
+      "required": true,
+      "status": "PENDING_CONFIRMATION"
+    },
+    "confirmation_count_gte_1": {
+      "required": true,
+      "status": "PENDING_CONFIRMATION"
+    },
+    "manifest_proof": {
+      "required": true,
+      "status": "STAGED"
+    },
+    "no_key_material": {
+      "required": true,
+      "status": "ENFORCED"
+    }
+  },
+  "pending_fields": [
+    "txid",
+    "block_height",
+    "block_hash",
+    "confirmation_count",
+    "verified_at_iso8601",
+    "anchor_receipt_hash_sha256",
+    "final_bundle_hash_sha256"
+  ],
+  "immutable_fields_staged": [
+    "system",
+    "service",
+    "node",
+    "case_file",
+    "merkle_root",
+    "op_return_payload_hex",
+    "external_certification_status",
+    "schema_version",
+    "network"
+  ],
+  "seal_gate_status": "SEAL_BLOCKED",
+  "seal_blocked_reason": "awaiting_bitcoin_block_confirmation",
+  "validator_package_status": "UNSEALED",
+  "adiam_agents": [
+    "anchor_verifier",
+    "audit_emitter",
+    "bundle_sealer",
+    "dashboard_renderer"
+  ],
+  "surpass_doctrine": "We do not claim the seal. The seal is granted by the ledger upon verified block inclusion, OP_RETURN payload match, and receipt materialization. No status upgrade occurs before all gate criteria are met.",
+  "terminology_bindings": {
+    "JAGAMath_plus_plus_supreme_kodex": {
+      "label": "JAGAMath++ Supreme Kodex",
+      "maps_to": "valoraiplus_private schema-bound integrity library",
+      "mechanism": "PostgreSQL triggers + RLS policies",
+      "role": "Enforces data integrity at the database execution layer",
+      "bound_at": "2026-05-31T04:48:42Z"
+    },
+    "Open_Claw_defensive_layer": {
+      "label": "Open Claw Defensive Layer",
+      "maps_to": "RLS and Trigger-based Access Control (TAC) framework",
+      "mechanism": "Row Level Security DENY policies + PostgreSQL triggers",
+      "role": "Execution-layer gatekeeper \u2014 blocks UPDATE/DELETE on all audit tables",
+      "bound_at": "2026-05-31T04:48:42Z"
+    },
+    "FINAL_COATS_2026": {
+      "label": "FINAL_COATS_2026",
+      "maps_to": "manifest_staging_hash_sha256",
+      "description": "Canonical reference hash for the 17-leaf real-file Merkle manifest",
+      "note": "FINAL_COATS_2026 now refers to the honest manifest hash computed below",
+      "bound_at": "2026-05-31T07:09:00Z",
+      "hash": "ebc3d2cd950a0ce1e5455d5a4c15808e60c06dd42f903ae37e347a4664b3203a"
+    }
+  },
+  "operational_mode": "SURPASS_BY_VERIFICATION",
+  "hybrid_rebuild_at": "2026-05-31T07:09:00Z",
+  "rebuild_reason": "Prior merkle_root and op_return_payload_hex were not derived from real file bytes. This manifest recomputes the Merkle root from actual SHA-256 hashes of 17 real workspace files.",
+  "manifest_staging_hash_sha256": "ebc3d2cd950a0ce1e5455d5a4c15808e60c06dd42f903ae37e347a4664b3203a"
+}
